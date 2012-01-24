@@ -25,11 +25,9 @@
                         ac-slime
                         rainbow-delimiters
                         markdown-mode
-                        wombat-theme
                         )
     "A list of packages to ensure are installed at launch.")  
   
   (dolist (p my-packages)
     (when (not (package-installed-p p))
-      (package-install p)))
-  )
+      (package-install p))))

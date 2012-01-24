@@ -1,4 +1,10 @@
-(load-theme 'wombat)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; pick a emacs-23 version of package if it's not available
+(add-to-list 'load-path "~/.emacs.d/local")
+
+(when (not (require 'package nil t))
+  (require 'package "package-23.el")
+  (package-initialize))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; look and feel tweaks
@@ -15,7 +21,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; local (non-elpa) modules
-(add-to-list 'load-path "/Users/neale/.emacs.d/local")
+(add-to-list 'load-path "~/.emacs.d/local")
 
 (require 'auto-complete-config)
 (require 'htmlize)
@@ -40,30 +46,29 @@
     (unless (and proc (eq (process-status proc) 'run))
       (clojure-jack-in))))
 
-(def fancy-functions-defs 
-    `(("(\\(fn\\)[\[[:space:]]"
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "λ")
-                               nil)))
-                    ("\\(#\\)("
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "ƒ")
-                               nil)))
-                    ("\\(#\\){"
-                     (0 (progn (compose-region (match-beginning 1)
-                                               (match-end 1) "∈")
-                               nil)))))
+(defconst fancy-formatting-defs
+  '(("(\\(fn\\)[\[[:space:]]"
+      (0 (progn (compose-region (match-beginning 1)
+                                (match-end 1) "λ")
+                nil)))
+    ("\\(#\\)("
+     (0 (progn (compose-region (match-beginning 1)
+                               (match-end 1) "ƒ")
+               nil)))
+    ("\\(#\\){"
+     (0 (progn (compose-region (match-beginning 1)
+                               (match-end 1) "∈")
+               nil)))))
 
 (eval-after-load 'clojure-mode
   '(font-lock-add-keywords
-    'clojure-mode fancy-function-defs))
+    'clojure-mode fancy-formatting-defs))
 
 (eval-after-load 'slime-repl-mode
   '(font-lock-add-keywords
-    'slime-repl-mode fancy-function-defs))
+    'slime-repl-mode 'fancy-formatting-defs))
 
 (defun neale-custom-lisp-mode ()
-  (defun esk-turn-on-idle-highlight-mode () ())
   (setq cursor-type 'bar)
   (set-cursor-color "green")
   (rainbow-delimiters-mode 1)
@@ -110,20 +115,21 @@
 (add-hook 'inferior-lisp-mode-hook 'neale-custom-inferior-lisp-mode)
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  '(blink-matching-paren-on-screen t)
  '(dired-use-ls-dired nil)
  '(frame-background-mode nil)
  '(ido-enable-flex-matching t))
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "wheat" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(hl-line ((t (:background "#002000"))))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "red"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "green"))))
