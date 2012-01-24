@@ -14,5 +14,5 @@
 /.emacs.d/swank
 /.emacs.d/tramp
 /.emacs.d/url
-/.vim/tmp/*
+/.vim/tmp/*.swp
 /.ssh/id_*
