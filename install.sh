@@ -5,20 +5,24 @@
 set -e
 
 cd $(dirname $0)
-export DOTFILES=$(pwd)
+export DOTFILES="$(pwd)"
+export LOGFILE="${DOTFILES}/install-$(date +'%Y%m%d%H%M%S').log"
 
-source $DOTFILES/install_functions.sh
+. "${DOTFILES}/install_functions.sh"
 
-update_submodules
+cecho "green" "Updating git submodules..."
+update_submodules 2>&1  >> "${LOGFILE}"
 
-link_with_backup .bashrc
-link_with_backup .bash_profile
-link_with_backup .gitconfig
-link_with_backup .rvmrc
-link_with_backup .tmux.conf
+cecho "blue" "Linking dotfiles..."
+ls -A | grep -e  "^\." | grep -v "^\.git$" | while read dotfile
+do
+    link_with_backup "${dotfile}" >> ${LOGFILE}
+done
 
-link_with_backup .emacs.d
-install_elpa
-link_with_backup .emacs
-link_with_backup .emacs-custom.el
+cecho "yellow" "Installing ELPA packages..."
+(install_elpa) 2>&1 >> "${LOGFILE}"
 
+read -p "Finished, review log file? [nY]" yes
+if [ "${yes}" = "Y" -o -z "${yes}" ]; then
+    less "${LOGFILE}"
+fi    

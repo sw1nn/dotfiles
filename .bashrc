@@ -16,8 +16,7 @@ function truncatedir() {
     local dir_fudge_width="$2";
     local tty="$3";
     olddir=${olddir/$HOME/\~};
-    [ -z $tty ] && tty=$(tty)
-    local width=$(stty -f "$tty" size | cut -d' ' -f 2);
+    local width=$(stty size | cut -d' ' -f 2);
     dirmaxlen=$(( $width - dir_fudge_width ));
     if [ "${#olddir}" -gt $dirmaxlen ]
     then
@@ -30,10 +29,12 @@ function truncatedir() {
      echo $newdir;
 }
 
-let prompt_fixed_len=${#USER}+${#HOSTNAME}+5;
 
 function prompt_command() {
+   gitBranch=$(__git_ps1) 
+   prompt_fixed_len=${#USER}+${#HOSTNAME}+${#gitBranch}+5;
    promptPWD=$(truncatedir "$PWD" "$prompt_fixed_len"); 
+
 }
 
 function rjarfind() {
@@ -80,22 +81,11 @@ if [ -f ~/.git_completion.bash ]; then
 fi
 
 export PROMPT_COMMAND=prompt_command
-export PS1='\[\e]0;\w\a\n\e[32m\u\e[36m@\e[31m\h \e[33m${promptPWD}\e[0m\e[36m$(__git_ps1)\e[0m\]\n\$ '
+export PS1='\[\e]0;\w\a\n\e[32m\u\e[36m@\e[31m\h \e[33m${promptPWD}\e[0m\e[36m${gitBranch}\e[0m\]\n\$ '
 export PAGER=vimpager 
 export GIT_PAGER=less # vimpager filters color ;-)
 alias less=$PAGER 
 alias zless=$PAGER 
-
-case $(uname) in
-    "Darwin")
-        export PATH="/opt/local/bin:/opt/local/sbin/:${PATH}"
-        export PATH="/Developer/usr/bin:$PATH"
-        export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
-        export CLICOLOR=1 # turn on colorised ls
-        ;;
-    "cygwin")
-        ;;
-esac
 
 export PATH="~/bin:${PATH}"
 

@@ -1,4 +1,5 @@
 # see http://help.github.com/ignore-files/
+# and maybe this: https://github.com/github/gitignore
 
 # Compiled source #
 
@@ -12,13 +13,19 @@
 # Packages #
 
 *.7z
+*.bz2
 *.dmg
 *.gz
 *.iso
+*.ear
 *.jar
 *.rar
 *.tar
+*.war
+*.tgz
+*.tbz
 *.zip
+*.zipx
 
 # Logs and databases #
 
