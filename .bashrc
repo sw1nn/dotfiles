@@ -87,8 +87,6 @@ export GIT_PAGER=less # vimpager filters color ;-)
 alias less=$PAGER 
 alias zless=$PAGER 
 
+. ~/.bashrc-os-specfic
+
 export PATH="~/bin:${PATH}"
-
-export HADOOP_HOME=/opt/local/share/java/hadoop-0.20.203.0
-
-alias hadoop='hadoop-bin hadoop'
