@@ -1,6 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; pick a emacs-23 version of package if it's not available
+; local (non-elpa) stuff's in here
 (add-to-list 'load-path "~/.emacs.d/local")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; pick a emacs-23 version of package if it's not available
 
 (when (not (require 'package nil t))
   (require 'package "package-23.el")
@@ -20,8 +23,7 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; local (non-elpa) modules
-(add-to-list 'load-path "~/.emacs.d/local")
+; load local (non-elpa) modules
 
 (require 'auto-complete-config)
 (require 'htmlize)
@@ -30,7 +32,6 @@
 ; file associations
 (setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Auto complete config
