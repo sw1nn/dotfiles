@@ -89,4 +89,4 @@ alias zless=$PAGER
 
 . ~/.bashrc-os-specfic
 
-export PATH="~/bin:${PATH}"
+export PATH="~/bin:/usr/local/bin:/usr/local/sbin:${PATH}"
