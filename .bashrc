@@ -82,11 +82,13 @@ fi
 
 export PROMPT_COMMAND=prompt_command
 export PS1='\[\e]0;\w\a\n\e[32m\u\e[36m@\e[31m\h \e[33m${promptPWD}\e[0m\e[36m${gitBranch}\e[0m\]\n\$ '
-export PAGER=vimpager 
-export GIT_PAGER=less # vimpager filters color ;-)
-alias less=$PAGER 
-alias zless=$PAGER 
 
 . ~/.bashrc-os-specfic
 
-export PATH="~/bin:/usr/local/bin:/usr/local/sbin:${PATH}"
+if $(which -s vimpager); then 
+    export PAGER=vimpager 
+    alias less=$PAGER 
+    alias zless=$PAGER 
+fi
+
+export GIT_PAGER=less # vimpager filters color ;-)
