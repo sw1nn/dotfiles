@@ -19,9 +19,6 @@ abbr qw! wq!
 abbr qw1 wq!
 
 syntax on
-au BufRead *.jhtml set syntax=html
-au BufRead server.log set syntax=log4j
-au BufRead server.log silent %s/\r$//g
 au BufRead,BufNewFile *.java set number
 " au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null" 
 map <F2> <Esc>:1,$!xmllint --format -<CR>
