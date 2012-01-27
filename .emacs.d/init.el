@@ -124,7 +124,8 @@
  '(blink-matching-paren-on-screen t)
  '(dired-use-ls-dired nil)
  '(frame-background-mode nil)
- '(ido-enable-flex-matching t))
+ '(ido-enable-flex-matching t)
+ '(inferior-lisp-program "lein repl"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
