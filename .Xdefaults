@@ -1,0 +1,8 @@
+*background: black
+*foreground: wheat
+Xterm*background: black
+Xterm*foreground: wheat
+Rxvt*saveLines: 3000
+Rxvt*scrollBar: on
+Rxvt*scrollBar_right: on
+Rxvt*cutchars: \`"&()*,;<=>?@[]{|}:
