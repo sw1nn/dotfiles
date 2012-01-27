@@ -18,7 +18,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Key binding tweaks
-(global-unset-key "\C-\\") ; remove annoying input-method binding.
+(global-unset-key (kbd "C-\\")) ; remove annoying input-method binding.
+(global-unset-key (kbd "s-p")) ; remove print binding
 (put 'toggle-input-method 'disabled nil)
 
 
