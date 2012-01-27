@@ -25,11 +25,12 @@ update_submodules 2>&1  >> "${LOGFILE}"
 cecho "yellow" "Installing ELPA packages..."
 (install_elpa) 2>&1 >> "${LOGFILE}"
 
-cecho "grey" "Installing local bin"
+cecho "cyan" "Installing local bin"
 mkdir -p ~/bin
-cp vimpager/vimpager ~/bin
+ln -sf "${DOTFILES}/vimpager/vimpager" ~/bin/
 
 read -p "Finished, review log file? [nY]" yes
+
 if [ "${yes}" = "Y" -o -z "${yes}" ]; then
     less "${LOGFILE}"
 fi    

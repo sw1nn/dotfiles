@@ -12,20 +12,20 @@ function cecho {
     fi
 
     case $1 in
-      red) color='\e[31m' ;;
-      green) color='\e[32m' ;;
-      yellow) color='\e[33m' ;;
-      blue) color='\e[34m' ;;
-      magenta) color='\e[35m' ;;
-      cyan) color='\e[36m' ;;
-      grey) color='\e[37m' ;;
+      red) color='\033[31m' ;;
+      green) color='\033[32m' ;;
+      yellow) color='\033[33m' ;;
+      blue) color='\033[34m' ;;
+      magenta) color='\033[35m' ;;
+      cyan) color='\033[36m' ;;
+      grey) color='\033[37m' ;;
     esac  
     text=$2
 
     if [ -z "${nocr}" ] ;then
-        echo -e "${color}${text}\e[0m"
+        echo -e "${color}${text}\033[0m"
     else
-        echo -n -e "${color}${text}\e[0m"
+        echo -n -e "${color}${text}\033[0m"
     fi
 }
 
