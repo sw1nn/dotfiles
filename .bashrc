@@ -7,6 +7,9 @@ export HISTCONTROL=erasedups
 export GREP_COLOR='1;32'
 export GREP_OPTIONS='--color=auto'
 
+ulimit -c 0 # zero length core file
+
+shopt -s checkwinsize # helps with long prompts
 
 # function to truncate a string with ellipsis. There has to be a better way....
 function truncatedir() {
