@@ -41,6 +41,16 @@
 (setq ac-auto-start nil)
 (ac-config-default)
 
+;; note: may have to amend for unicode project names
+(add-to-list 'same-window-regexps "\\*magit: [[:ascii:]]\\*")
+
+(eval-after-load 'magit
+  '(progn
+     (set-face-foreground 'magit-diff-add "green3")
+     (set-face-foreground 'magit-diff-del "red3")
+     (if (fboundp 'magit-completing-read-function) 
+         (setq magit-completing-read-function 'ido-completing-read))))
+
 
 (defun clojure-jack-in-once ()
   "clojure-jack-in if it hasn't been run already, as indicated by presence of *swank* buffer"
@@ -83,7 +93,8 @@
   (modify-syntax-entry ?, "    ")
   (modify-syntax-entry ?^ "'")
   (modify-syntax-entry ?= "'")
-  (paredit-mode t))
+  (paredit-mode t)
+  (flyspell-prog-mode))
 
 (defun neale-custom-clojure-mode () 
   (neale-custom-lisp-mode)
