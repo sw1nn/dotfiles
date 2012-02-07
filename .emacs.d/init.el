@@ -2,7 +2,7 @@
 ; local (non-elpa) stuff's in here
 (add-to-list 'load-path "~/.emacs.d/local")
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;core;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; pick a emacs-23 version of package if it's not available
 
 (when (not (require 'package nil t))
@@ -53,10 +53,9 @@
 
 
 (defun clojure-jack-in-once ()
-  "clojure-jack-in if it hasn't been run already, as indicated by presence of *swank* buffer"
-  (let ((proc (get-buffer-process "*swank*")))
-    (unless (and proc (eq (process-status proc) 'run))
-      (clojure-jack-in))))
+  "clojure-jack-in unless we're already connected"
+  (unless (and (featurep 'slime) (slime-connected-p))
+    (clojure-jack-in)))
 
 (defconst fancy-formatting-defs
   '(("(\\(fn\\)[\[[:space:]]"
@@ -98,7 +97,7 @@
 
 (defun neale-custom-clojure-mode () 
   (neale-custom-lisp-mode)
-  ;(clojure-jack-in-once)
+  (clojure-jack-in-once)
   )
 
 (defun neale-custom-slime-repl-mode () 
@@ -156,3 +155,4 @@
  '(rainbow-delimiters-depth-7-face ((t (:foreground "turquoise1"))))
  '(rainbow-delimiters-unmatched-face ((t (:background "Red" :foreground "White" :box (:line-width 2 :color "grey75" :style released-button) :weight ultra-bold))))
  '(region ((t (:background "#444444")))))
+(put 'downcase-region 'disabled nil)
