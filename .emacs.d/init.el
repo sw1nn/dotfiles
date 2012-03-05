@@ -28,11 +28,13 @@
 
 (require 'auto-complete-config)
 (require 'htmlize)
+(require 'yaml-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; file associations
 (setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.yml" . yaml-mode) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Auto complete config
@@ -107,8 +109,7 @@
   (define-key slime-repl-mode-map
     (kbd "{") 'paredit-open-curly)
   (define-key slime-repl-mode-map
-    (kbd "}") 'paredit-close-curly)
-)
+    (kbd "}") 'paredit-close-curly))
 
 (defun neale-custom-inferior-lisp-mode () 
   (neale-custom-lisp-mode)
@@ -117,8 +118,7 @@
   (define-key inferior-lisp-mode-map
     (kbd "{") 'paredit-open-curly)
   (define-key inferior-lisp-mode-map
-    (kbd "}") 'paredit-close-curly)
-)
+    (kbd "}") 'paredit-close-curly))
 
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'neale-custom-slime-repl-mode)
