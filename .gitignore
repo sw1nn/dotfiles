@@ -15,4 +15,5 @@
 /.emacs.d/tramp
 /.emacs.d/url
 /.vim/tmp/*.swp
+/.vim/.netrwhist
 /.ssh/id_*
