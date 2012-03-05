@@ -1,4 +1,4 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; local (non-elpa) stuff's in here
 (add-to-list 'load-path "~/.emacs.d/local")
 
@@ -42,6 +42,16 @@
 (ac-set-trigger-key "TAB")
 (setq ac-auto-start nil)
 (ac-config-default)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; misc settings
+(setq-default ispell-program-name "/usr/local/bin/aspell")
+(setq-default ispell-list-command "list")
+
+
+(setq slime-lisp-implementations
+      '((clj ("/Users/neale/bin/lein" "repl"))
+        (cljs ("/Users/neale/lein" "repl"))))
 
 ;; note: may have to amend for unicode project names
 (add-to-list 'same-window-regexps "\\*magit: [[:ascii:]]\\*")
@@ -99,7 +109,7 @@
 
 (defun neale-custom-clojure-mode () 
   (neale-custom-lisp-mode)
-  (clojure-jack-in-once)
+;  (clojure-jack-in-once)
   )
 
 (defun neale-custom-slime-repl-mode () 
