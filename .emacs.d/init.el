@@ -145,7 +145,8 @@
  '(dired-use-ls-dired nil)
  '(frame-background-mode nil)
  '(ido-enable-flex-matching t)
- '(inferior-lisp-program "lein repl"))
+ '(inferior-lisp-program "lein repl")
+ '(visible-bell nil))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
