@@ -8,9 +8,9 @@ zstyle ':vcs_info:*' formats \
 zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
 zstyle ':vcs_info:*' enable git svn
 
-add-zsh-hook precmd prompt_jnrowe_precmd
+add-zsh-hook precmd prompt_neale_precmd
 
-prompt_jnrowe_precmd () {
+prompt_neale_precmd () {
     vcs_info
 
     if [ "${vcs_info_msg_0_}" = "" ]; then
@@ -22,11 +22,13 @@ prompt_jnrowe_precmd () {
     else
         dir_status="%F{2}▶%f"
     fi
+    
 }
 
 local ret_status="%(?:%{$fg_bold[green]%}Ξ:%{$fg_bold[red]%}%S↑%s%?)"
 
-PROMPT='%{$fg_bold[green]%}%p%{$fg_bold[yellow]%}%2~ ${vcs_info_msg_0_}
+RPROMPT='${vcs_info_msg_0_}'
+PROMPT='%{%K{black}%B%F{green}%}%n%{%B%F{cyan}%}@%{%B%F{red}%}%m%{%B%F{green}%} %{$fg_bold[green]%}%p%{$fg_bold[yellow]%$2~
 ${ret_status}${dir_status}%{$reset_color%} '
 
 #  vim: set ft=zsh ts=4 sw=4 et:
