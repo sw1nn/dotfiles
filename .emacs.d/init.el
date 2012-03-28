@@ -21,7 +21,7 @@
 (global-unset-key (kbd "C-\\")) ; remove annoying input-method binding.
 (global-unset-key (kbd "s-p")) ; remove print binding
 (put 'toggle-input-method 'disabled nil)
-
+(global-set-key (kbd "C-M-g") 'magit-status)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; load local (non-elpa) modules
@@ -38,10 +38,10 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Auto complete config
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict") (ac-config-default)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict") 
+(ac-config-default)
 (ac-set-trigger-key "TAB")
 (setq ac-auto-start nil)
-(ac-config-default)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; misc settings
@@ -87,6 +87,10 @@
   '(font-lock-add-keywords
     'clojure-mode fancy-formatting-defs))
 
+(eval-after-load 'clojurescript-mode
+  '(font-lock-add-keywords
+    'clojurescript-mode fancy-formatting-defs))
+
 (eval-after-load 'slime-repl-mode
   '(font-lock-add-keywords
     'slime-repl-mode 'fancy-formatting-defs))
@@ -94,8 +98,7 @@
 (defun neale-custom-lisp-mode ()
   (setq cursor-type 'bar)
   (set-cursor-color "green")
-  (rainbow-delimiters-mode 1)
-  (show-paren-mode 0)
+  (rainbow-delimiters-mode t)
   (modify-syntax-entry ?\{ "(}")
   (modify-syntax-entry ?\} "){")
   (modify-syntax-entry ?\[ "(]")
@@ -146,6 +149,7 @@
  '(frame-background-mode nil)
  '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
+ '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(visible-bell nil))
 
 (custom-set-faces
@@ -165,5 +169,6 @@
  '(rainbow-delimiters-depth-6-face ((t (:foreground "yellow1"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "turquoise1"))))
  '(rainbow-delimiters-unmatched-face ((t (:background "Red" :foreground "White" :box (:line-width 2 :color "grey75" :style released-button) :weight ultra-bold))))
- '(region ((t (:background "#444444")))))
+ '(region ((t (:background "#444444"))))
+ '(show-paren-match ((t (:inverse-video t)))))
 (put 'downcase-region 'disabled nil)

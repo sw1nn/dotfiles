@@ -25,6 +25,7 @@
                         ac-slime
                         rainbow-delimiters
                         markdown-mode
+                        magit
                         )
     "A list of packages to ensure are installed at launch.") 
   
