@@ -16,7 +16,7 @@ cecho "green" "Updating git submodules..."
 update_submodules 2>&1  >> "${LOGFILE}"
 
 cecho "blue" "Linking dotfiles..."
-ls -A | grep -e  "^\." | grep -v "^\.git$" | while read dotfile
+ls -A | grep -e  "^\." | grep -v "^\.git$" |grep -v ".gitmodules" | while read dotfile
 do
     link_with_backup "${dotfile}" >> ${LOGFILE}
 done

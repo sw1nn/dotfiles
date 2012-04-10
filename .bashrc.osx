@@ -12,6 +12,8 @@ if [ -f $(brew --prefix)/etc/autojump ]; then
       . $(brew --prefix)/etc/autojump
 fi
 
+alias fix-fonts='defaults -currentHost write -globalDomain AppleFontSmoothing -int 2'
+
 if [ -x /Applications/Emacs.app/Contents/MacOS/Emacs ]; 
 then 
     function emacs {

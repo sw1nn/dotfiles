@@ -1,13 +1,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; local (non-elpa) stuff's in here
-(add-to-list 'load-path "~/.emacs.d/local")
+(add-to-list 'load-path "~/.emacs.d/local" )
+(add-to-list 'load-path "~/dotfiles/submodule/clojure-mode")
 
 ;;;;;;;;;;;;;;;;;core;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; pick a emacs-23 version of package if it's not available
 
 (when (not (require 'package nil t))
-  (require 'package "package-23.el")
-  (package-initialize))
+   (require 'package "package-23.el")
+   (package-initialize))
+
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; look and feel tweaks
@@ -29,12 +33,18 @@
 (require 'auto-complete-config)
 (require 'htmlize)
 (require 'yaml-mode)
-
+(require 'haml-mode)
+(require 'sass-mode)
+(require 'clojure-mode)
+(require 'clojurescript-mode)
+;(require 'clojure-test-mode)
+(require 'octopress)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; file associations
 (setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.yml" . yaml-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.scss" . sass-mode) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Auto complete config
@@ -47,11 +57,6 @@
 ;; misc settings
 (setq-default ispell-program-name "/usr/local/bin/aspell")
 (setq-default ispell-list-command "list")
-
-
-(setq slime-lisp-implementations
-      '((clj ("/Users/neale/bin/lein" "repl"))
-        (cljs ("/Users/neale/lein" "repl"))))
 
 ;; note: may have to amend for unicode project names
 (add-to-list 'same-window-regexps "\\*magit: [[:ascii:]]\\*")

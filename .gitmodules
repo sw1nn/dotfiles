@@ -7,3 +7,9 @@
 [submodule ".oh-my-zsh"]
 	path = .oh-my-zsh
 	url = git@github.com:sw1nn/oh-my-zsh.git
+[submodule "clojure-mode"]
+	path = clojure-mode
+	url = https://github.com/technomancy/clojure-mode.git
+[submodule "submodule/clojure-mode"]
+	path = submodule/clojure-mode
+	url = https://github.com/technomancy/clojure-mode.git
