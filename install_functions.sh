@@ -50,7 +50,7 @@ function link_with_backup {
 
 function install_elpa {
     rm -rf "${DOTFILES}/.emacs.d/elpa"
-    emacs --script "${DOTFILES}/load-elpa-packages.el"
+    _echorun emacs --script "${DOTFILES}/load-elpa-packages.el" || cecho "Problem running emacs. Not installed?"
 }
 
 function update_submodules {
