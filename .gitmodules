@@ -13,3 +13,6 @@
 [submodule "submodule/clojure-mode"]
 	path = submodule/clojure-mode
 	url = https://github.com/technomancy/clojure-mode.git
+[submodule "submodule/yasnippet"]
+	path = submodule/yasnippet
+	url = https://github.com/capitaomorte/yasnippet.git
