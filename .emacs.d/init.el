@@ -18,7 +18,6 @@
 ; look and feel tweaks
 (add-to-list 'default-frame-alist '(height . 60))
 (add-to-list 'default-frame-alist '(width . 232))
-(setq linum-format "%3d")
 (global-linum-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -46,10 +45,33 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Auto complete config
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict") 
 (ac-config-default)
-(ac-set-trigger-key "TAB")
-(setq ac-auto-start nil)
+(ac-flyspell-workaround)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+(setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
+
+(global-auto-complete-mode t)
+(setq ac-auto-show-menu t)
+(setq ac-dwim t)
+(setq ac-use-menu-map t)
+(setq ac-quick-help-delay 1)
+(setq ac-quick-help-height 60)
+
+(set-default 'ac-sources
+             '(ac-source-dictionary
+               ac-source-words-in-buffer
+               ac-source-words-in-same-mode-buffers
+               ac-source-words-in-all-buffer))
+
+(dolist (mode '(magit-log-edit-mode log-edit-mode org-mode text-mode haml-mode
+                sass-mode yaml-mode csv-mode espresso-mode haskell-mode
+                html-mode nxml-mode sh-mode smarty-mode clojure-mode
+                lisp-mode textile-mode markdown-mode tuareg-mode))
+  (add-to-list 'ac-modes mode))
+
+(require 'ac-slime)
+(add-hook 'slime-mode-hook 'set-up-slime-ac)
+(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; misc settings
@@ -152,6 +174,7 @@
  '(frame-background-mode nil)
  '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
+ '(linum-format "%03d ")
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(visible-bell nil))
 
