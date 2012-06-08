@@ -45,3 +45,9 @@ Thumbs.db
 *#
 .#*
 *~
+
+# eclipse project
+.classpath
+.project
+.settings/*
+target/*

@@ -19,12 +19,12 @@
   (defvar my-packages '(starter-kit
                         ;; starter-kit-lisp
                         starter-kit-bindings
-                        clojure-mode
-                        clojure-test-mode
-                        clojurescript-mode
                         ac-slime
                         rainbow-delimiters
                         markdown-mode
+                        magit
+                        slime
+                        slime-repl
                         )
     "A list of packages to ensure are installed at launch.") 
   

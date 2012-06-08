@@ -1,13 +1,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; local (non-elpa) stuff's in here
-(add-to-list 'load-path "~/.emacs.d/local")
+(add-to-list 'load-path "~/.emacs.d/local" )
+(add-to-list 'load-path "~/dotfiles/submodule/clojure-mode")
+(add-to-list 'load-path "~/dotfiles/submodule/yasnippet")
 
 ;;;;;;;;;;;;;;;;;core;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; pick a emacs-23 version of package if it's not available
 
 (when (not (require 'package nil t))
-  (require 'package "package-23.el")
-  (package-initialize))
+   (require 'package "package-23.el")
+   (package-initialize))
+
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; look and feel tweaks
@@ -17,41 +22,39 @@
 (global-linum-mode 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Key binding tweaks
-(global-unset-key (kbd "C-\\")) ; remove annoying input-method binding.
-(global-unset-key (kbd "s-p")) ; remove print binding
-(put 'toggle-input-method 'disabled nil)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; load local (non-elpa) modules
 
 (require 'auto-complete-config)
 (require 'htmlize)
 (require 'yaml-mode)
-
+(require 'haml-mode)
+(require 'sass-mode)
+(require 'clojure-mode)
+(require 'clojurescript-mode)
+;(require 'clojure-test-mode)
+(require 'octopress)
+(require 'yasnippet)
+(yas/global-mode 1)
+(setq yas/prompt-functions '(yas/ido-prompt)) 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; file associations
 (setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.yml" . yaml-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.scss" . sass-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.m" . octave-mode) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Auto complete config
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict") (ac-config-default)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict") 
+(ac-config-default)
 (ac-set-trigger-key "TAB")
 (setq ac-auto-start nil)
-(ac-config-default)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; misc settings
 (setq-default ispell-program-name "/usr/local/bin/aspell")
 (setq-default ispell-list-command "list")
-
-
-(setq slime-lisp-implementations
-      '((clj ("/Users/neale/bin/lein" "repl"))
-        (cljs ("/Users/neale/lein" "repl"))))
 
 ;; note: may have to amend for unicode project names
 (add-to-list 'same-window-regexps "\\*magit: [[:ascii:]]\\*")
@@ -87,6 +90,10 @@
   '(font-lock-add-keywords
     'clojure-mode fancy-formatting-defs))
 
+(eval-after-load 'clojurescript-mode
+  '(font-lock-add-keywords
+    'clojurescript-mode fancy-formatting-defs))
+
 (eval-after-load 'slime-repl-mode
   '(font-lock-add-keywords
     'slime-repl-mode 'fancy-formatting-defs))
@@ -94,8 +101,7 @@
 (defun neale-custom-lisp-mode ()
   (setq cursor-type 'bar)
   (set-cursor-color "green")
-  (rainbow-delimiters-mode 1)
-  (show-paren-mode 0)
+  (rainbow-delimiters-mode t)
   (modify-syntax-entry ?\{ "(}")
   (modify-syntax-entry ?\} "){")
   (modify-syntax-entry ?\[ "(]")
@@ -146,6 +152,7 @@
  '(frame-background-mode nil)
  '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
+ '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(visible-bell nil))
 
 (custom-set-faces
@@ -165,5 +172,40 @@
  '(rainbow-delimiters-depth-6-face ((t (:foreground "yellow1"))))
  '(rainbow-delimiters-depth-7-face ((t (:foreground "turquoise1"))))
  '(rainbow-delimiters-unmatched-face ((t (:background "Red" :foreground "White" :box (:line-width 2 :color "grey75" :style released-button) :weight ultra-bold))))
- '(region ((t (:background "#444444")))))
+ '(region ((t (:background "#444444"))))
+ '(show-paren-match ((t (:inverse-video t)))))
 (put 'downcase-region 'disabled nil)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Key binding tweaks
+; See
+; http://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs
+
+(defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
+
+(define-key my-keys-minor-mode-map (kbd "C-\\") nil) ; remove annoying input-method binding.
+(define-key my-keys-minor-mode-map (kbd "s-p") nil)  ; remove print binding
+(define-key my-keys-minor-mode-map (kbd "C-M-g") 'magit-status)
+(define-key my-keys-minor-mode-map (kbd "M-TAB") 'yas/expand)
+
+(define-minor-mode my-keys-minor-mode
+  "A minor mode so that my key settings override annoying major modes."
+  t " my-keys" 'my-keys-minor-mode-map)
+
+(my-keys-minor-mode 1)
+
+(defun my-minibuffer-setup-hook ()
+  (my-keys-minor-mode 0))
+
+(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
+
+(defadvice load (after give-my-keybindings-priority)
+  "Try to ensure that my keybindings always have priority."
+  (if (not (eq (car (car minor-mode-map-alist)) 'my-keys-minor-mode))
+      (let ((mykeys (assq 'my-keys-minor-mode minor-mode-map-alist)))
+        (assq-delete-all 'my-keys-minor-mode minor-mode-map-alist)
+        (add-to-list 'minor-mode-map-alist mykeys))))
+(ad-activate 'load)
+
+

@@ -10,17 +10,19 @@ export LOGFILE="${DOTFILES}/install-$(date +'%Y%m%d%H%M%S').log"
 
 . "${DOTFILES}/install_functions.sh"
 
+# do this before linking .ssh, cos might lose required keys in that
+# dir otherwise
+cecho "green" "Updating git submodules..."
+update_submodules 2>&1  >> "${LOGFILE}"
+
 cecho "blue" "Linking dotfiles..."
-ls -A | grep -e  "^\." | grep -v "^\.git$" | while read dotfile
+ls -A | grep -e  "^\." | grep -v "^\.git$" |grep -v ".gitmodules" | while read dotfile
 do
     link_with_backup "${dotfile}" >> ${LOGFILE}
 done
 
 cecho "magenta" "Sourcing os specific stuff, just in case"
 . ~/.bashrc-os-specfic
-
-cecho "green" "Updating git submodules..."
-update_submodules 2>&1  >> "${LOGFILE}"
 
 cecho "yellow" "Installing ELPA packages..."
 (install_elpa) 2>&1 >> "${LOGFILE}"
