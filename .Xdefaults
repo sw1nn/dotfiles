@@ -5,3 +5,5 @@ Rxvt*foreground: wheat
 Rxvt*saveLines: 3000
 Rxvt*scrollBar: on
 Rxvt*scrollBar_right: on
+URxvt*font: xft:DejaVu Sans Mono for Powerline:size=14
+
