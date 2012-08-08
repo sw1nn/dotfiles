@@ -1,9 +1,12 @@
-XTerm*background: black
-XTerm*foreground: wheat
-Rxvt*background: black
-Rxvt*foreground: wheat
-Rxvt*saveLines: 3000
-Rxvt*scrollBar: on
-Rxvt*scrollBar_right: on
-URxvt*font: xft:DejaVu Sans Mono for Powerline:size=14
-
+URxvt*background: black
+URxvt*foreground: wheat
+URxvt*saveLines: 3000
+URxvt*cutchars: \`&()*,;<=>?@[]{|}:
+URxvt*font: xft:DejaVu Sans Mono for Powerline:size=11.5
+Xft.dpi: 96
+Xft.lcdfilter: lcddefault
+Xft.antialias: true
+Xft.hinting:true
+Xft.hintstyle: hintfull
+Xft.rgba: rgb
+*customization: -color
