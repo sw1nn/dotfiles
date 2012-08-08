@@ -10,3 +10,6 @@
 [submodule "submodule/yasnippet"]
 	path = submodule/yasnippet
 	url = https://github.com/capitaomorte/yasnippet.git
+[submodule "submodule/vim-powerline"]
+	path = submodule/vim-powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
