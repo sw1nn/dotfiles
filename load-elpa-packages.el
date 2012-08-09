@@ -23,7 +23,6 @@
                         rainbow-delimiters
                         markdown-mode
                         magit
-                        slime
                         slime-repl
                         )
     "A list of packages to ensure are installed at launch.") 
