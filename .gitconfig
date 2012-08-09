@@ -5,3 +5,5 @@
         lg = log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %C(green)(%cr)%Creset' --abbrev-commit --date=relative
 [core]
     excludesfile = ~/.gitignore_global
+[color]
+	ui = true
