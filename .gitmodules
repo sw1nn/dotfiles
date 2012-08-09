@@ -13,3 +13,6 @@
 [submodule "submodule/vim-powerline"]
 	path = submodule/vim-powerline
 	url = https://github.com/Lokaltog/vim-powerline.git
+[submodule "submodule/vim-fugitive"]
+	path = submodule/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
