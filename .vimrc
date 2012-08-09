@@ -6,6 +6,7 @@ set nocompatible
 set laststatus=2
 set encoding=utf-8
 let g:Powerline_symbols = 'fancy'
+let g:vimclojure#ParenRainbow = 1
 
 set background=dark
 set hls
