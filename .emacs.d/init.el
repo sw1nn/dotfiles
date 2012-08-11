@@ -30,7 +30,7 @@
 (require 'sass-mode)
 (require 'clojure-mode)
 (require 'clojurescript-mode)
-;(require 'clojure-test-mode)
+(require 'clojure-test-mode)
 (require 'octopress)
 (require 'yasnippet)
 (yas/global-mode 1)
@@ -75,7 +75,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; misc settings
-(setq-default ispell-program-name "/usr/local/bin/aspell")
+(setq-default ispell-program-name "/usr/bin/aspell")
 (setq-default ispell-list-command "list")
 
 ;; note: may have to amend for unicode project names
@@ -160,17 +160,19 @@
 
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'neale-custom-slime-repl-mode)
-(add-hook 'emacs-lisp-mode-hook 'neale-custom-lisp-mode)
+(add-hook 'lisp-mode-hook 'neale-custom-lisp-mode)
+;(add-hook 'emacs-lisp-mode-hook 'neale-custom-lisp-mode)
 (add-hook 'clojure-mode-hook 'neale-custom-clojure-mode)
 (add-hook 'inferior-lisp-mode-hook 'neale-custom-inferior-lisp-mode)
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  '(blink-matching-paren-on-screen t)
  '(dired-use-ls-dired nil)
+ '(erc-nick "sw1nn")
  '(frame-background-mode nil)
  '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
@@ -179,10 +181,10 @@
  '(visible-bell nil))
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#101010" :foreground "wheat" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "apple" :family "Monaco"))))
  '(hl-line ((t (:background "#002000"))))
  '(magit-item-highlight ((t (:inherit highlight :background "#002000"))))
@@ -211,6 +213,7 @@
 (define-key my-keys-minor-mode-map (kbd "s-p") nil)  ; remove print binding
 (define-key my-keys-minor-mode-map (kbd "C-M-g") 'magit-status)
 (define-key my-keys-minor-mode-map (kbd "M-TAB") 'yas/expand)
+(define-key my-keys-minor-mode-map (kbd "<select>") 'windmove-up)
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."

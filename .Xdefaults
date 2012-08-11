@@ -1,8 +1,9 @@
-*background: black
-*foreground: wheat
-Xterm*background: black
-Xterm*foreground: wheat
+XTerm*background: black
+XTerm*foreground: wheat
+Rxvt*background: black
+Rxvt*foreground: wheat
 Rxvt*saveLines: 3000
 Rxvt*scrollBar: on
 Rxvt*scrollBar_right: on
-Rxvt*cutchars: \`"&()*,;<=>?@[]{|}:
+URxvt*font: xft:DejaVu Sans Mono for Powerline:size=14
+
