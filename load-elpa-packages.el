@@ -19,11 +19,10 @@
   (defvar my-packages '(starter-kit
                         ;; starter-kit-lisp
                         starter-kit-bindings
-                        ac-slime
+                        ac-nrepl
                         rainbow-delimiters
                         markdown-mode
                         magit
-                        slime-repl
                         )
     "A list of packages to ensure are installed at launch.") 
   
