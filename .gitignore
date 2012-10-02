@@ -17,3 +17,4 @@
 /.vim/tmp/*.swp
 /.vim/.netrwhist
 /.ssh/id_*
+/.emacs.d/.erc-auth

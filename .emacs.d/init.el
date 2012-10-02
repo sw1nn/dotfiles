@@ -56,6 +56,23 @@
 (setq-default ispell-program-name "/usr/bin/aspell")
 (setq-default ispell-list-command "list")
 
+;; Load authentication info from an external source.  Put sensitive
+     ;; passwords and the like in here.
+(load "~/.emacs.d/.erc-auth")
+
+(require 'erc-services)
+(erc-services-mode 1)
+(setq erc-prompt-for-nickserv-password nil)
+
+(setq erc-nickserv-passwords
+      `((freenode     (("sw1nn" . ,freenode-nickone-pass)))))     
+
+;;; Finally, connect to the networks.
+(defun irc-maybe ()
+(interactive)
+  (when (y-or-n-p "IRC? ")
+    (erc-ssl :server "irc.freenode.net" :port 6697 :nick "sw1nn" :full-name "Neale Swinnerton")))
+
 ;; note: may have to amend for unicode project names
 (add-to-list 'same-window-regexps "\\*magit: [[:ascii:]]\\*")
 
@@ -148,11 +165,15 @@
  ;; If there is more than one, they won't work right.
  '(blink-matching-paren-on-screen t)
  '(dired-use-ls-dired nil)
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#strataconf" "#clojure"))))
+ '(erc-email-userid "neale@isismanor.com")
  '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-nick "sw1nn")
+ '(erc-port 6697)
+ '(erc-prompt-for-password nil)
  '(erc-scrolltobottom-mode t)
  '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT" "333" "353")))
+ '(erc-user-full-name "Neale Swinnerton")
  '(frame-background-mode nil)
  '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
