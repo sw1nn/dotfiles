@@ -75,7 +75,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; misc settings
-(setq-default ispell-program-name "/usr/local/bin/aspell")
+(setq-default ispell-program-name "/usr/bin/aspell")
 (setq-default ispell-list-command "list")
 
 ;; Load authentication info from an external source.  Put sensitive
