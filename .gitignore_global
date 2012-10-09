@@ -51,4 +51,6 @@ Thumbs.db
 .project
 .settings/*
 target/*
+
+# lein-cljsbuild
 .lein-cljsbuild-compiler-0/*
