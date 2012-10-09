@@ -1,0 +1,255 @@
+\documentclass[footexclude,twocolumn,DIV25,fontsize=10pt]{scrreprt} 
+
+% Author: Fogus (based on Steve Tayon's Clojure and David Liebke's
+% Incanter cheat sheets)
+% Comments, errors, suggestions: fogus -at- clojure -dot- com
+
+% License
+% Eclipse Public License v1.0
+% http://opensource.org/licenses/eclipse-1.0.php
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{verbatim}
+\usepackage[table]{xcolor}
+
+% Set column space
+\setlength{\columnsep}{0.25em}
+
+% Define colours
+\definecolorset{hsb}{}{}{red,0,.4,0.95;orange,.1,.4,0.95;green,.25,.4,0.95;yellow,.15,.4,0.95}
+\definecolorset{hsb}{}{}{blue,.55,.4,0.95;purple,.7,.4,0.95;pink,.8,.4,0.95;blue2,.58,.4,0.95}
+\definecolorset{hsb}{}{}{magenta,.9,.4,0.95;green2,.29,.4,0.95}
+
+\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+\definecolor{lightlightgray}{gray}{0.9}
+
+% Redefine sections
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}
+  {-1.7ex}{0.7ex}{\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}
+  {-1.7ex}{0.5ex}{\normalfont\normalsize\bfseries}}
+\makeatother
+
+% No section numbers
+\setcounter{secnumdepth}{0}
+
+% No indentation
+\setlength{\parindent}{0em}
+
+% No header and footer
+\pagestyle{empty}
+
+
+% A few shortcuts
+\newcommand{\cmd}[1] {\texttt{\textbf{{#1}}}}
+\newcommand{\cmdline}[1] {
+  \begin{tabularx}{\hsize}{X}
+    \texttt{\textbf{{#1}}}
+    \end{tabularx}
+}
+
+\newcommand{\colouredbox}[2] {
+  \colorbox{#1!40}{
+    \begin{minipage}{0.95\linewidth}
+      {
+        \rowcolors[]{1}{#1!20}{#1!10}
+        #2
+        }
+      \end{minipage}
+    }
+}
+
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[small,bf]{caption}
+
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{yellow}{\parbox{0.95\linewidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing}
+
+\begin{document}
+
+\centerline{\Large{\textbf{Magit Cheat Sheet}}}
+
+\newcolumntype{K}{>{\bfseries}lX}
+
+\colouredbox{green} {
+  \section{Buffers}
+  \begin{tabularx}{\hsize}{K lX}
+    M-x magit-status & Magit's status buffer \\
+    \$ & magit-process buffer \\
+    g & reload status buffer \\
+  \end{tabularx}
+}
+
+\colouredbox{red} {
+  \section{Section Visibility}
+  \begin{tabularx}{\hsize}{K lX}
+    TAB & Toggle visibility of current section \\
+    S-TAB & Toggle visibility of current section and its children \\
+    1,2,3,4 & Expand current section to the corresponding level of
+    detail - 1,2,3 or 4 \\
+    M-1,2,3,4 & Expand all sections to the corresponding level of
+    detail - 1,2,3 or 4 \\
+  \end{tabularx}
+}
+
+\colouredbox{orange} {
+  \section{Untracked Files}
+  \begin{tabularx}{\hsize}{K lX}
+    s &  Add untracked file to staging area \\
+    i &  Add file to .gitignore \\
+    C-u i &  Prompt for file/directory to add to .gitignore \\
+    I &  Add file to .git/info/exclude instead of .gitignore \\
+  \end{tabularx}
+}
+
+\colouredbox{pink} {
+  \section{Staging and Committing}
+  \begin{tabularx}{\hsize}{K lX}
+    s &  Stage current hunk \\
+    u &  Unstage current hunk \\
+    S &  Stage all hunks \\
+    U &  Unstage all hunks \\
+    k &  Discard uncommitted changes \\
+    c &  Prepare for commit \\
+    C-c C-c &  Execute commit \\
+    C-c C-a &  Make the next commit an amend \\
+  \end{tabularx}
+}
+\colouredbox{blue} {
+  \section{History}
+  \begin{tabularx}{\hsize}{K lX}
+    l & History \\
+    L &  Verbose history \\
+    C-u l &  History segment \\
+    RET &  Inspect commit \\
+    a &  Stage current commit on your branch \\
+    A &  Commit current commit on your current branch \\
+    C-w &  Copy sha1 of current commit into kill ring \\
+    = &  Show differences between current and marked commits \\
+    .. &  Make current commit \\
+    . &  Unmark current commit if marked \\
+    C-u .. &  Unmake marked commit from anywhere \\
+  \end{tabularx}
+}
+
+\colouredbox{yellow} {
+  \section{Reflogs}
+  \begin{tabularx}{\hsize}{K lX}
+    h &  Browse reflog from HEAD \\
+    H &  Browse reflog from chosen point \\
+  \end{tabularx}
+}
+\colouredbox{blue2} {
+  \section{Diffing}
+  \begin{tabularx}{\hsize}{K lX}
+    d &  Show changes between working tree and HEAD \\
+    D &  Show changes between two arbitrary revisions \\
+    a &  Apply current changes to working tree \\
+    v &  Apply current changes to working tree in reverse \\
+  \end{tabularx}
+}
+
+\colouredbox{green} {
+  \section{Tagging}
+  \begin{tabularx}{\hsize}{K lX}
+    t &  Make lightweight tag \\
+    T &  Prepare annotated tag \\
+    C-c C-c &  Commit annotated tag \\
+  \end{tabularx}
+}
+
+\colouredbox{red} {
+  \section{Resetting}
+  \begin{tabularx}{\hsize}{K lX}
+    x &  Reset your current head to chosen revision \\
+    X &  Reset working tree and staging area to most recent commit state \\
+  \end{tabularx}
+}
+
+\colouredbox{orange} {
+  \section{Stashing}
+  \begin{tabularx}{\hsize}{K lX}
+    z &  Create new stash \\
+    Z &  Create new stash and maintain state \\
+    RET &  View stash \\
+    a &  Apply stash \\
+    A &  Pop stash \\
+    k &  Drop stash \\
+  \end{tabularx}
+}
+
+\colouredbox{pink} {
+  \section{Branching}
+  \begin{tabularx}{\hsize}{K lX}
+    b &  Switch to different branch \\
+    B &  Create and switch to new branch \\
+  \end{tabularx}
+}
+
+\colouredbox{blue} {
+  \section{Wazzup}
+  \begin{tabularx}{\hsize}{K lX}
+    W &  Show summary of how other branches relate to current branch \\
+    i &  Toggle ignore branch \\
+    C-U w &  Show all branches including ignored ones \\
+  \end{tabularx}
+}
+
+\colouredbox{yellow} {
+  \section{Merging}
+  \begin{tabularx}{\hsize}{K lX}
+    m &  Initiate manual merge \\
+    M &  Initiate automatic merge \\
+    R &  Initiate of continue are base \\
+  \end{tabularx}
+}
+
+\colouredbox{blue2} {
+  \section{Rewriting}
+  \begin{tabularx}{\hsize}{K lX}
+    r s &  Start are write \\
+    v &  Revert a given commit \\
+    r t &  remove bookkeeping information from buffer \\
+    r a &  Abort rewriting \\
+    r f &  Finish rewriting \\
+    r * &  Toggle the * mark on pending commit \\
+    r .. &  Toggle the .. mark on pending commit \\
+  \end{tabularx}
+}
+
+\colouredbox{green} {
+  \section{Pushing and Pulling}
+  \begin{tabularx}{\hsize}{K lX}
+    P &  gitpush \\
+    C-u P &  git push to specified remote repository \\
+    f &  git remote update \\
+    F &  git pull \\
+  \end{tabularx}
+}
+
+\colouredbox{red} {
+  \section{Interface with Subversion}
+  \begin{tabularx}{\hsize}{K lX}
+    N r &  git svn rebase \\
+    N c &  git svn commit \\
+  \end{tabularx}
+}
+
+
+\let\thefootnote\relax\footnotetext{
+Based on magit cheatsheet from
+http://daemianmack.com/magit-cheatsheet.html. \\
+Formatting and colour from https://github.com/jafingerhut/clojure-cheatsheets/blob/master/src/cljs-cheatsheet.tex}
+
+\end{document}

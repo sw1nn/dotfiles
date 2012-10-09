@@ -30,7 +30,7 @@
 (require 'sass-mode)
 (require 'clojure-mode)
 (require 'clojurescript-mode)
-(require 'clojure-test-mode)
+;(require 'clojure-test-mode)
 (require 'octopress)
 (require 'yasnippet)
 (yas/global-mode 1)
@@ -88,12 +88,6 @@
      (if (fboundp 'magit-completing-read-function) 
          (setq magit-completing-read-function 'ido-completing-read))))
 
-
-(defun clojure-jack-in-once ()
-  "clojure-jack-in unless we're already connected"
-  (unless (and (featurep 'slime) (slime-connected-p))
-    (clojure-jack-in)))
-
 (defconst fancy-formatting-defs
   '(("(\\(fn\\)[\[[:space:]]"
       (0 (progn (compose-region (match-beginning 1)
@@ -116,9 +110,9 @@
   '(font-lock-add-keywords
     'clojurescript-mode fancy-formatting-defs))
 
-(eval-after-load 'slime-repl-mode
+(eval-after-load 'nrepl-mode
   '(font-lock-add-keywords
-    'slime-repl-mode 'fancy-formatting-defs))
+    'nrepl-mode 'fancy-formatting-defs))
 
 (defun neale-custom-lisp-mode ()
   (setq cursor-type 'bar)
@@ -140,13 +134,13 @@
 ;  (clojure-jack-in-once)
   )
 
-(defun neale-custom-slime-repl-mode () 
+(defun neale-custom-nrepl-mode () 
   (neale-custom-lisp-mode)
-  (define-key slime-repl-mode-map
+  (define-key nrepl-mode-map
     (kbd "DEL") 'paredit-backward-delete)
-  (define-key slime-repl-mode-map
+  (define-key nrepl-mode-map
     (kbd "{") 'paredit-open-curly)
-  (define-key slime-repl-mode-map
+  (define-key nrepl-mode-map
     (kbd "}") 'paredit-close-curly))
 
 (defun neale-custom-inferior-lisp-mode () 
@@ -158,21 +152,29 @@
   (define-key inferior-lisp-mode-map
     (kbd "}") 'paredit-close-curly))
 
-(add-hook 'slime-mode-hook 'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'neale-custom-slime-repl-mode)
+(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
+(add-hook 'clojure-nrepl-mode-hook 'ac-nrepl-setup)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'nrepl-mode))
+
+(add-hook 'nrepl-mode-hook 'neale-custom-nrepl-mode)
 (add-hook 'lisp-mode-hook 'neale-custom-lisp-mode)
-;(add-hook 'emacs-lisp-mode-hook 'neale-custom-lisp-mode)
+(add-hook 'emacs-lisp-mode-hook 'neale-custom-lisp-mode)
 (add-hook 'clojure-mode-hook 'neale-custom-clojure-mode)
 (add-hook 'inferior-lisp-mode-hook 'neale-custom-inferior-lisp-mode)
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(blink-matching-paren-on-screen t)
  '(dired-use-ls-dired nil)
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
+ '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-nick "sw1nn")
+ '(erc-scrolltobottom-mode t)
+ '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT" "333" "353")))
  '(frame-background-mode nil)
  '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
@@ -181,13 +183,13 @@
  '(visible-bell nil))
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#101010" :foreground "wheat" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "apple" :family "Monaco"))))
  '(hl-line ((t (:background "#002000"))))
- '(magit-item-highlight ((t (:inherit highlight :background "#002000"))))
+ '(magit-item-highlight ((t (:inherit highlight :background "#001000"))))
  '(mode-line ((t (:background "#003000" :foreground "wheat" :box (:line-width -1 :style released-button)))))
  '(rainbow-delimiters-depth-1-face ((t (:foreground "red"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "green"))))
