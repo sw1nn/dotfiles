@@ -187,7 +187,7 @@
  ;; If there is more than one, they won't work right.
  '(blink-matching-paren-on-screen t)
  '(dired-use-ls-dired nil)
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#strataconf" "#clojure"))))
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
  '(erc-email-userid "neale@isismanor.com")
  '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-nick "sw1nn")
