@@ -83,8 +83,6 @@
 (load "~/.emacs.d/.erc-auth")
 
 (require 'erc-services)
-(erc-services-mode 1)
-(setq erc-prompt-for-nickserv-password nil)
 
 (setq erc-nickserv-passwords
       `((freenode     (("sw1nn" . ,freenode-nickone-pass)))))     
@@ -189,12 +187,14 @@
  '(dired-use-ls-dired nil)
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
  '(erc-email-userid "neale@isismanor.com")
- '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
+ '(erc-hide-list (quote ("NICK" "PART" "QUIT")))
+ '(erc-modules (quote (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp track)))
  '(erc-nick "sw1nn")
  '(erc-port 6697)
+ '(erc-prompt-for-nickserv-password nil)
  '(erc-prompt-for-password nil)
  '(erc-scrolltobottom-mode t)
- '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT" "333" "353")))
+ '(erc-track-exclude-types (quote ("NICK" "PART" "QUIT" "333" "353")))
  '(erc-user-full-name "Neale Swinnerton")
  '(frame-background-mode nil)
  '(ido-enable-flex-matching t)
