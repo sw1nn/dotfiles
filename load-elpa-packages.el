@@ -27,6 +27,8 @@
                         clojure-mode
                         clojure-test-mode
                         clojurescript-mode
+                        window-layout
+                        undo-tree
                         )
     "A list of packages to ensure are installed at launch.") 
   

@@ -2,7 +2,6 @@
 ; local (non-elpa) stuff's in here
 (add-to-list 'load-path "~/.emacs.d/local" )
 (add-to-list 'load-path "~/dotfiles/submodule/clojure-mode")
-(add-to-list 'load-path "~/dotfiles/submodule/yasnippet")
 
 ;;;;;;;;;;;;;;;;;core;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; pick a emacs-23 version of package if it's not available
