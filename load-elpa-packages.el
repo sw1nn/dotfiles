@@ -9,7 +9,7 @@
       (require 'package "package-23.el"))
 
   (add-to-list 'package-archives
-               '("marmalade" . "http://marmalade-repo.org/packages/") t)
+               '("marmalade" . "http://melpa.milkbox.net/packages/") t)
   (package-initialize)
 
   (when (not package-archive-contents)
@@ -20,9 +20,13 @@
                         ;; starter-kit-lisp
                         starter-kit-bindings
                         ac-nrepl
+                        nrepl-ritz
                         rainbow-delimiters
                         markdown-mode
                         magit
+                        clojure-mode
+                        clojure-test-mode
+                        clojurescript-mode
                         )
     "A list of packages to ensure are installed at launch.") 
   
