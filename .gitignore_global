@@ -54,3 +54,6 @@ target/*
 
 # lein-cljsbuild
 .lein-cljsbuild-compiler-0/*
+
+#octave
+octave-core
