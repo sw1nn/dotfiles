@@ -12,6 +12,8 @@
 (add-to-list 'default-frame-alist '(height . 60))
 (add-to-list 'default-frame-alist '(width . 232))
 
+(load-theme 'sanityinc-solarized-dark t)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; file associations
 (dolist (mode '(("\\.md" . markdown-mode)
@@ -114,6 +116,7 @@
  '(ac-comphist-file "~/.emacs.d/ac-comphist.dat")
  '(ac-dictionary-directories (quote ("~/.emacs.d/ac-dict" "/Users/neale/.emacs.d/elpa/auto-complete-20121022.2254/dict")))
  '(blink-matching-paren-on-screen t)
+ '(custom-safe-themes (quote ("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(dired-use-ls-dired nil)
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
  '(erc-email-userid "neale@isismanor.com")
@@ -137,25 +140,6 @@
  '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
  '(visible-bell nil))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#101010" :foreground "wheat" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "apple" :family "Monaco"))))
- '(hl-line ((t (:background "#002000"))))
- '(magit-item-highlight ((t (:inherit highlight :background "#001000"))))
- '(mode-line ((t (:background "#003000" :foreground "wheat" :box (:line-width -1 :style released-button)))))
- '(rainbow-delimiters-depth-1-face ((t (:foreground "red"))))
- '(rainbow-delimiters-depth-2-face ((t (:foreground "green"))))
- '(rainbow-delimiters-depth-3-face ((t (:foreground "coral"))))
- '(rainbow-delimiters-depth-4-face ((t (:foreground "turquoise1"))))
- '(rainbow-delimiters-depth-5-face ((t (:foreground "maroon1"))))
- '(rainbow-delimiters-depth-6-face ((t (:foreground "yellow1"))))
- '(rainbow-delimiters-depth-7-face ((t (:foreground "turquoise1"))))
- '(rainbow-delimiters-unmatched-face ((t (:background "Red" :foreground "White" :box (:line-width 2 :color "grey75" :style released-button) :weight ultra-bold))))
- '(region ((t (:background "#444444"))))
- '(show-paren-match ((t (:inverse-video t)))))
 (put 'downcase-region 'disabled nil)
 
 
@@ -190,3 +174,9 @@
         (assq-delete-all 'my-keys-minor-mode minor-mode-map-alist)
         (add-to-list 'minor-mode-map-alist mykeys))))
 (ad-activate 'load)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
