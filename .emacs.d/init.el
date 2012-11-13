@@ -127,7 +127,7 @@
  '(dired-use-ls-dired nil)
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
  '(erc-email-userid "neale@isismanor.com")
- '(erc-hide-list (quote ("NICK" "PART" "QUIT")))
+ '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-modules (quote (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp track)))
  '(erc-nick "sw1nn")
  '(erc-port 6697)
