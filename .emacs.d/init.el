@@ -37,8 +37,15 @@
 (dolist (mode '(magit-log-edit-mode log-edit-mode org-mode text-mode haml-mode
                 sass-mode yaml-mode csv-mode espresso-mode haskell-mode
                 html-mode nxml-mode sh-mode smarty-mode clojure-mode
-                lisp-mode textile-mode markdown-mode tuareg-mode))
+                lisp-mode textile-mode markdown-mode tuareg-mode nrepl-mode))
   (add-to-list 'ac-modes mode))
+
+(add-hook 'nrepl-interaction-mode-hook
+  'nrepl-turn-on-eldoc-mode)
+
+(setq nrepl-popup-stacktraces nil)
+
+(add-to-list 'same-window-buffer-names "*nrepl*") 
 
 ;; Load authentication info from an external source.  Put sensitive
      ;; passwords and the like in here.
@@ -129,7 +136,7 @@
  '(erc-scrolltobottom-mode t)
  '(erc-track-exclude-types (quote ("NICK" "PART" "QUIT" "333" "353")))
  '(erc-user-full-name "Neale Swinnerton")
- '(frame-background-mode nil)
+ '(fringe-mode (quote (0)) nil (fringe))
  '(global-auto-complete-mode t)
  '(global-undo-tree-mode t)
  '(ido-enable-flex-matching t)
