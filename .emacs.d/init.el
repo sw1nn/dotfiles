@@ -79,8 +79,6 @@
                        nil)))))))
 
 (defun neale-custom-lisp-mode ()
-  (setq cursor-type 'bar)
-  (set-cursor-color "green")
   (rainbow-delimiters-mode t)
   (modify-syntax-entry ?\{ "(}")
   (modify-syntax-entry ?\} "){")
