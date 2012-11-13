@@ -16,3 +16,6 @@
 [submodule "submodule/vimclojure"]
 	path = submodule/vimclojure
 	url = https://github.com/kotarak/vimclojure.git
+[submodule "submodule/vim-colors-solarized"]
+	path = submodule/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized.git

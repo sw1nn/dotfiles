@@ -29,6 +29,7 @@
                         clojurescript-mode
                         window-layout
                         undo-tree
+                        color-theme-sanityinc-solarized
                         )
     "A list of packages to ensure are installed at launch.") 
   
