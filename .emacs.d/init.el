@@ -58,24 +58,28 @@
 
 ;;; Finally, connect to the networks.
 (defun irc-maybe ()
-(interactive)
+  (interactive)
   (when (y-or-n-p "IRC? ")
     (erc-ssl :server "irc.freenode.net" :port 6697 :nick "sw1nn" :full-name "Neale Swinnerton")))
 
 (dolist (mode '(clojure-mode clojurescript-mode nrepl-mode))
   (eval-after-load mode 
     (font-lock-add-keywords
-     mode '(("(\\(fn\\)[\[[:space:]]"
+     mode '(("(\\(fn\\)[\[[:space:]]"  ; anon funcs 1
              (0 (progn (compose-region (match-beginning 1)
                                        (match-end 1) "λ")
                        nil)))
-            ("\\(#\\)("
+            ("\\(#\\)("                ; anon funcs 2
              (0 (progn (compose-region (match-beginning 1)
                                        (match-end 1) "ƒ")
                        nil)))
-            ("\\(#\\){"
+            ("\\(#\\){"                 ; sets
              (0 (progn (compose-region (match-beginning 1)
                                        (match-end 1) "∈")
+                       nil)))
+            ("\\(#\\)\""                ; regexes
+             (0 (progn (compose-region (match-beginning 1)
+                                       (match-end 1) "®")
                        nil)))))))
 
 (defun neale-custom-lisp-mode ()
