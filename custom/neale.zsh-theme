@@ -1,34 +1,20 @@
-autoload -U add-zsh-hook
-autoload -Uz vcs_info
+# https://github.com/blinks zsh theme
 
-zstyle ':vcs_info:*' actionformats \
-    '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
-zstyle ':vcs_info:*' formats \
-    '%F{2}%s%F{7}:%F{2}(%F{1}%b%F{2})%f '
-zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
-zstyle ':vcs_info:*' enable git svn
-
-add-zsh-hook precmd prompt_neale_precmd
-
-prompt_neale_precmd () {
-    vcs_info
-
-    if [ "${vcs_info_msg_0_}" = "" ]; then
-        dir_status="%F{2}→%f"
-    elif [[ $(git diff --cached --name-status 2>/dev/null ) != "" ]]; then
-        dir_status="%F{1}▶%f"
-    elif [[ $(git diff --name-status 2>/dev/null ) != "" ]]; then
-        dir_status="%F{3}▶%f"
-    else
-        dir_status="%F{2}▶%f"
-    fi
-    
+function _prompt_char() {
+  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
+    echo "%{%F{blue}%}±%{%f%k%b%}"
+  else
+    echo ' '
+  fi
 }
 
-local ret_status="%(?:%{$fg_bold[green]%}Ξ:%{$fg_bold[red]%}%S↑%s%?)"
+ZSH_THEME_GIT_PROMPT_PREFIX=" [%{%B%F{blue}%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{%f%k%b%B%F{green}%}]"
+ZSH_THEME_GIT_PROMPT_DIRTY=" %{%F{red}%}⚫%{%f%k%b%}"
+ZSH_THEME_GIT_PROMPT_CLEAN=" %{%F{green}⚫%{%f%k%b%}%}"
 
-RPROMPT='${vcs_info_msg_0_}'
-PROMPT='%{%K{black}%B%F{green}%}%n%{%B%F{cyan}%}@%{%B%F{red}%}%m%{%B%F{green}%} %{$fg_bold[green]%}%p%{$fg_bold[yellow]%$2~
-${ret_status}${dir_status}%{$reset_color%} '
+PROMPT='%{%f%k%b%}
+%{%B%F{green}%}%n%{%B%F{blue}%}@%{%B%F{cyan}%}%m%{%B%F{green}%} %{%b%F{yellow}%~%{%B%F{green}%}$(git_prompt_info)%E%{%f%k%b%}
+$(_prompt_char)%#%{%f%k%b%} '
 
-#  vim: set ft=zsh ts=4 sw=4 et:
+RPROMPT='!%{%B%F{cyan}%}%!%{%f%k%b%}'
