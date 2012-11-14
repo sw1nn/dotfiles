@@ -22,6 +22,19 @@
       (mode 16 16 :left :elide)
       " " filename-and-process)))
 
+(setq ibuffer-saved-filter-groups
+          (quote (("default"
+                   ("dired" (mode . dired-mode))
+                   ("clojure" (or (mode . clojure-mode)
+                                  (mode . clojurescript-mode)))
+                   ("erc" (mode . erc-mode))
+                   ("emacs" (or
+                             (name . "^\\*scratch\\*$")
+                             (name . "^\\*Messages\\*$")))))))
+    (add-hook 'ibuffer-mode-hook
+              (lambda ()
+                (ibuffer-switch-to-saved-filter-groups "default")))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; look and feel tweaks
 (add-to-list 'default-frame-alist '(height . 60))
