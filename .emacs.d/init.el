@@ -160,7 +160,7 @@
  '(global-undo-tree-mode t)
  '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
- '(ispell-program-name "/usr/bin/aspell")
+ '(ispell-program-name "/usr/bin/hunspell")
  '(linum-format "%03d ")
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
