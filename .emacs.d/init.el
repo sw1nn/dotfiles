@@ -1,16 +1,50 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; local (non-elpa) stuff's in here
 (add-to-list 'load-path "~/.emacs.d/local" )
+(add-to-list 'load-path "~/dotfiles/submodule/expand-region" )
 
 (package-initialize)
 
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 
+
+(require 'expand-region)
+
+(require 'align-cljlet)
+
+(require 'ibuffer-git)
+
+;;nicely format the ibuffer and include git-status
+(setq ibuffer-formats '((mark modified read-only git-status-mini " "
+      (name 18 18 :left :elide)
+      " "
+      (size 9 -1 :right)
+      " "
+      (git-status 8 8 :left :elide)
+      " "
+      (mode 16 16 :left :elide)
+      " " filename-and-process)))
+
+(setq ibuffer-saved-filter-groups
+          (quote (("default"
+                   ("dired" (mode . dired-mode))
+                   ("clojure" (or (mode . clojure-mode)
+                                  (mode . clojurescript-mode)))
+                   ("erc" (mode . erc-mode))
+                   ("emacs" (or
+                             (name . "^\\*scratch\\*$")
+                             (name . "^\\*Messages\\*$")))))))
+    (add-hook 'ibuffer-mode-hook
+              (lambda ()
+                (ibuffer-switch-to-saved-filter-groups "default")))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; look and feel tweaks
 (add-to-list 'default-frame-alist '(height . 60))
 (add-to-list 'default-frame-alist '(width . 232))
+
+(load-theme 'sanityinc-solarized-dark t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; file associations
@@ -35,8 +69,15 @@
 (dolist (mode '(magit-log-edit-mode log-edit-mode org-mode text-mode haml-mode
                 sass-mode yaml-mode csv-mode espresso-mode haskell-mode
                 html-mode nxml-mode sh-mode smarty-mode clojure-mode
-                lisp-mode textile-mode markdown-mode tuareg-mode))
+                lisp-mode textile-mode markdown-mode tuareg-mode nrepl-mode))
   (add-to-list 'ac-modes mode))
+
+(add-hook 'nrepl-interaction-mode-hook
+  'nrepl-turn-on-eldoc-mode)
+
+(setq nrepl-popup-stacktraces nil)
+
+(add-to-list 'same-window-buffer-names "*nrepl*") 
 
 ;; Load authentication info from an external source.  Put sensitive
      ;; passwords and the like in here.
@@ -44,34 +85,39 @@
   (when (file-exists-p auth-file)
     (load auth-file)
     (require 'erc-services)
+    (setq erc-email-user-id freenode-email-user-id)
     (setq erc-nickserv-passwords
           `((freenode (("sw1nn" . ,freenode-nickone-pass)))))))     
 
+(require 'erc-highlight-nicknames)
+
 ;;; Finally, connect to the networks.
 (defun irc-maybe ()
-(interactive)
+  (interactive)
   (when (y-or-n-p "IRC? ")
     (erc-ssl :server "irc.freenode.net" :port 6697 :nick "sw1nn" :full-name "Neale Swinnerton")))
 
 (dolist (mode '(clojure-mode clojurescript-mode nrepl-mode))
   (eval-after-load mode 
     (font-lock-add-keywords
-     mode '(("(\\(fn\\)[\[[:space:]]"
+     mode '(("(\\(fn\\)[\[[:space:]]"  ; anon funcs 1
              (0 (progn (compose-region (match-beginning 1)
                                        (match-end 1) "λ")
                        nil)))
-            ("\\(#\\)("
+            ("\\(#\\)("                ; anon funcs 2
              (0 (progn (compose-region (match-beginning 1)
                                        (match-end 1) "ƒ")
                        nil)))
-            ("\\(#\\){"
+            ("\\(#\\){"                 ; sets
              (0 (progn (compose-region (match-beginning 1)
                                        (match-end 1) "∈")
+                       nil)))
+            ("\\(#\\)\""                ; regexes
+             (0 (progn (compose-region (match-beginning 1)
+                                       (match-end 1) "®")
                        nil)))))))
 
 (defun neale-custom-lisp-mode ()
-  (setq cursor-type 'bar)
-  (set-cursor-color "green")
   (rainbow-delimiters-mode t)
   (modify-syntax-entry ?\{ "(}")
   (modify-syntax-entry ?\} "){")
@@ -114,11 +160,11 @@
  '(ac-comphist-file "~/.emacs.d/ac-comphist.dat")
  '(ac-dictionary-directories (quote ("~/.emacs.d/ac-dict" "/Users/neale/.emacs.d/elpa/auto-complete-20121022.2254/dict")))
  '(blink-matching-paren-on-screen t)
+ '(custom-safe-themes (quote ("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(dired-use-ls-dired nil)
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
- '(erc-email-userid "neale@isismanor.com")
- '(erc-hide-list (quote ("NICK" "PART" "QUIT")))
- '(erc-modules (quote (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp track)))
+ '(erc-autojoin-channels-alist (quote (("freenode.net"))))
+ '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
+ '(erc-modules (quote (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp track highlight-nicknames)))
  '(erc-nick "sw1nn")
  '(erc-port 6697)
  '(erc-prompt-for-nickserv-password nil)
@@ -126,7 +172,7 @@
  '(erc-scrolltobottom-mode t)
  '(erc-track-exclude-types (quote ("NICK" "PART" "QUIT" "333" "353")))
  '(erc-user-full-name "Neale Swinnerton")
- '(frame-background-mode nil)
+ '(fringe-mode (quote (0)) nil (fringe))
  '(global-auto-complete-mode t)
  '(global-undo-tree-mode t)
  '(ido-enable-flex-matching t)
@@ -137,25 +183,6 @@
  '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
  '(visible-bell nil))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#101010" :foreground "wheat" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "apple" :family "Monaco"))))
- '(hl-line ((t (:background "#002000"))))
- '(magit-item-highlight ((t (:inherit highlight :background "#001000"))))
- '(mode-line ((t (:background "#003000" :foreground "wheat" :box (:line-width -1 :style released-button)))))
- '(rainbow-delimiters-depth-1-face ((t (:foreground "red"))))
- '(rainbow-delimiters-depth-2-face ((t (:foreground "green"))))
- '(rainbow-delimiters-depth-3-face ((t (:foreground "coral"))))
- '(rainbow-delimiters-depth-4-face ((t (:foreground "turquoise1"))))
- '(rainbow-delimiters-depth-5-face ((t (:foreground "maroon1"))))
- '(rainbow-delimiters-depth-6-face ((t (:foreground "yellow1"))))
- '(rainbow-delimiters-depth-7-face ((t (:foreground "turquoise1"))))
- '(rainbow-delimiters-unmatched-face ((t (:background "Red" :foreground "White" :box (:line-width 2 :color "grey75" :style released-button) :weight ultra-bold))))
- '(region ((t (:background "#444444"))))
- '(show-paren-match ((t (:inverse-video t)))))
 (put 'downcase-region 'disabled nil)
 
 
@@ -171,6 +198,9 @@
 (define-key my-keys-minor-mode-map (kbd "C-M-g") 'magit-status)
 (define-key my-keys-minor-mode-map (kbd "M-TAB") 'yas/expand)
 (define-key my-keys-minor-mode-map (kbd "<select>") 'windmove-up)
+(define-key my-keys-minor-mode-map (kbd "C-x C-b") 'ibuffer)
+(define-key my-keys-minor-mode-map (kbd "C-M-z") 'align-cljlet)
+(define-key my-keys-minor-mode-map (kbd "C-=") 'er/expand-region)
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
@@ -190,3 +220,9 @@
         (assq-delete-all 'my-keys-minor-mode minor-mode-map-alist)
         (add-to-list 'minor-mode-map-alist mykeys))))
 (ad-activate 'load)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
