@@ -68,6 +68,7 @@
   (when (file-exists-p auth-file)
     (load auth-file)
     (require 'erc-services)
+    (setq erc-email-user-id freenode-email-user-id)
     (setq erc-nickserv-passwords
           `((freenode (("sw1nn" . ,freenode-nickone-pass)))))))     
 
@@ -145,7 +146,6 @@
  '(custom-safe-themes (quote ("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(dired-use-ls-dired nil)
  '(erc-autojoin-channels-alist (quote (("freenode.net"))))
- '(erc-email-userid "neale@isismanor.com")
  '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-modules (quote (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp track highlight-nicknames)))
  '(erc-nick "sw1nn")
