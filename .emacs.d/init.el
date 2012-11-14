@@ -1,11 +1,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; local (non-elpa) stuff's in here
 (add-to-list 'load-path "~/.emacs.d/local" )
+(add-to-list 'load-path "~/dotfiles/submodule/expand-region" )
 
 (package-initialize)
 
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
+
+
+(require 'expand-region)
 
 (require 'align-cljlet)
 
