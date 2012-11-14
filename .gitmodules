@@ -19,3 +19,6 @@
 [submodule "submodule/vim-colors-solarized"]
 	path = submodule/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
+[submodule "submodule/expand-region"]
+	path = submodule/expand-region
+	url = https://github.com/magnars/expand-region.el.git
