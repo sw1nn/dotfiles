@@ -12,8 +12,8 @@ function _prompt_char() {
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" [%{%B%F{blue}%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{%f%k%b%B%F{green}%}]"
-ZSH_THEME_GIT_PROMPT_DIRTY=" %{%F{red}%}⚫%{%f%k%b%}"
-ZSH_THEME_GIT_PROMPT_CLEAN=" %{%F{green}⚫%{%f%k%b%}%}"
+ZSH_THEME_GIT_PROMPT_DIRTY=" %{%F{red}%}●%{%f%k%b%}"
+ZSH_THEME_GIT_PROMPT_CLEAN=" %{%F{green}●%{%f%k%b%}%}"
 
 PROMPT='%{%f%k%b%}
 %{$fg[green]%}%n%{$fg[blue]%}@%{$fg[cyan]%}%m%{%B%F{green}%} %{$fg[yellow]%~%{$fg[green]%}$(git_prompt_info)%E%{%f%k%b%}
