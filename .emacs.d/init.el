@@ -7,6 +7,8 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 
+(require 'align-cljlet)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; look and feel tweaks
 (add-to-list 'default-frame-alist '(height . 60))
@@ -166,6 +168,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-M-g") 'magit-status)
 (define-key my-keys-minor-mode-map (kbd "M-TAB") 'yas/expand)
 (define-key my-keys-minor-mode-map (kbd "<select>") 'windmove-up)
+(define-key my-keys-minor-mode-map (kbd "C-M-z") 'align-cljlet)
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
