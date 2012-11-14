@@ -189,7 +189,7 @@
  '(ibuffer-show-empty-filter-groups nil)
  '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
- '(ispell-program-name "/usr/bin/aspell")
+ '(ispell-program-name "/usr/bin/hunspell")
  '(linum-disabled-modes-list (quote (eshell-mode wl-summary-mode compilation-mode org-mode text-mode dired-mode erc-mode)))
  '(linum-format "%03d ")
  '(nrepl-popup-stacktraces nil)
