@@ -56,6 +56,8 @@
     (setq erc-nickserv-passwords
           `((freenode (("sw1nn" . ,freenode-nickone-pass)))))))     
 
+(require 'erc-highlight-nicknames)
+
 ;;; Finally, connect to the networks.
 (defun irc-maybe ()
   (interactive)
@@ -127,10 +129,10 @@
  '(blink-matching-paren-on-screen t)
  '(custom-safe-themes (quote ("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(dired-use-ls-dired nil)
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
+ '(erc-autojoin-channels-alist (quote (("freenode.net"))))
  '(erc-email-userid "neale@isismanor.com")
  '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
- '(erc-modules (quote (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp track)))
+ '(erc-modules (quote (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp track highlight-nicknames)))
  '(erc-nick "sw1nn")
  '(erc-port 6697)
  '(erc-prompt-for-nickserv-password nil)
