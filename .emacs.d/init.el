@@ -200,6 +200,7 @@
 (define-key my-keys-minor-mode-map (kbd "<select>") 'windmove-up)
 (define-key my-keys-minor-mode-map (kbd "C-x C-b") 'ibuffer)
 (define-key my-keys-minor-mode-map (kbd "C-M-z") 'align-cljlet)
+(define-key my-keys-minor-mode-map (kbd "C-=") 'er/expand-region)
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
