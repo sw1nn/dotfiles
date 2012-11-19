@@ -30,6 +30,7 @@
                         window-layout
                         undo-tree
                         color-theme-sanityinc-solarized
+                        ibuffer-vc
                         )
     "A list of packages to ensure are installed at launch.") 
   
