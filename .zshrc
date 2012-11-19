@@ -28,9 +28,6 @@ plugins=(git osx rvm autojump)
 
 source $ZSH/oh-my-zsh.sh
 
-export HIST_IGNORE_ALL_DUPS=true
-export JAVA_OPTS="-Dfile.encoding=UTF-8 -Dslime.encoding=UTF-8 -Xmx4096m -XX:+HeapDumpOnOutOfMemoryError"
-
 if [[ "$SSH_CLIENT" =~ "205\.228\.82\.139.*" ]] ; then
     export POWERLINE_SYMBOLS=compatible
 else
@@ -42,4 +39,3 @@ alias ghb='nice -20 /opt/handbrake/bin/ghb'
 function goo() {
     links "http://www.google.co.uk/search?q=$*"
 }
-export PATH=${HOME}/bin:${PATH}
