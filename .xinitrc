@@ -13,7 +13,7 @@ xcompmgr &
 xset -b b off
 xsetroot -cursor_name left_ptr
 setxkbmap -option ctrl:nocaps
-xrdb -load ${HOME}/.Xdefaults
+xrdb -load ${HOME}/.Xresources
 xmodmap -e 'remove mod4 = Super_R'
 xmodmap -e 'add mod3 = Super_R'
 xrandr --output DVI-0 --primary 
