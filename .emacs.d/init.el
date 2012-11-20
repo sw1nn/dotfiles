@@ -29,6 +29,7 @@
 
 (add-hook 'ibuffer-hook
           (lambda ()
+            (ibuffer-auto-mode 1)
             (ibuffer-vc-set-filter-groups-by-vc-root)
             (unless (eq ibuffer-sorting-mode 'alphabetic)
               (ibuffer-do-sort-by-alphabetic))))
@@ -169,6 +170,7 @@
  '(fringe-mode (quote (0)) nil (fringe))
  '(global-auto-complete-mode t)
  '(global-undo-tree-mode t)
+ '(ibuffer-show-empty-filter-groups nil)
  '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
  '(ispell-program-name "/usr/bin/aspell")
