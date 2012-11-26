@@ -175,6 +175,7 @@
  '(inferior-lisp-program "lein repl")
  '(ispell-program-name "/usr/bin/aspell")
  '(linum-format "%03d ")
+ '(nrepl-popup-stacktraces nil)
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
  '(visible-bell nil))
