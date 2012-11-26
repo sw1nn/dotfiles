@@ -1,7 +1,7 @@
-# name: defmacro
-# key: defm
+# -*- mode: snippet -*-
+# -*- coding: utf-8 -*-
+#name: defmethod
 # --
-(defmacro $1
-  "$2"
-  [$3]
+(defmethod ${1:name} ${2:match}
+  [${3:args}]
   $0)

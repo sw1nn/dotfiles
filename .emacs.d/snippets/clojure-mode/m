@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # -*- coding: utf-8 -*-
-# name: bp
-# key: bp
+#name: method
 # --
-(swank.core/break)
+(${1:name} [${2:this} ${3:args}]
+  $0)

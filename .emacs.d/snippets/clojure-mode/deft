@@ -1,6 +1,7 @@
-# name: deftest
-# key: deft
+# -*- mode: snippet -*-
+# -*- coding: utf-8 -*-
+#name: deftype
 # --
-(deftest $1
-    (is (= $2)))
+(deftype ${1:Name} [${2:fields}]
+  ${3:Protocol}
   $0)

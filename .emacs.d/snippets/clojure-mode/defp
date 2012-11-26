@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # -*- coding: utf-8 -*-
-# name: bp
-# key: bp
+#name: defprotocol
 # --
-(swank.core/break)
+(defprotocol ${1:Name}
+  $0)

@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # -*- coding: utf-8 -*-
-# name: bp
-# key: bp
+#name: condp
 # --
-(swank.core/break)
+(condp ${1:pred} ${2:expr}
+  $0)
