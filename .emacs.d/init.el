@@ -36,8 +36,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; look and feel tweaks
-(add-to-list 'default-frame-alist '(height . 60))
-(add-to-list 'default-frame-alist '(width . 232))
+(add-to-list 'default-frame-alist '(height . 55))
+(add-to-list 'default-frame-alist '(width . 212))
 
 (load-theme 'sanityinc-solarized-dark t)
 
@@ -186,7 +186,7 @@
  '(inferior-lisp-program "lein repl")
  '(ispell-program-name "/usr/bin/aspell")
  '(linum-format "%03d ")
- '(nrepl-popup-stacktraces nil)
+ '(nrepl-popup-stacktraces t)
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
  '(visible-bell nil))
