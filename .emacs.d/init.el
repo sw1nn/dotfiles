@@ -37,8 +37,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; look and feel tweaks
-(add-to-list 'default-frame-alist '(height . 60))
-(add-to-list 'default-frame-alist '(width . 232))
+(add-to-list 'default-frame-alist '(height . 55))
+(add-to-list 'default-frame-alist '(width . 212))
 
 (load-theme 'sanityinc-solarized-dark t)
 
@@ -192,7 +192,7 @@
  '(ispell-program-name "/usr/bin/aspell")
  '(linum-disabled-modes-list (quote (eshell-mode wl-summary-mode compilation-mode org-mode text-mode dired-mode erc-mode)))
  '(linum-format "%03d ")
- '(nrepl-popup-stacktraces nil)
+ '(nrepl-popup-stacktraces t)
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
  '(visible-bell nil))
