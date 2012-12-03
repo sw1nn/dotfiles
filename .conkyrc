@@ -112,10 +112,10 @@ ${font Deja Vu Sans for Powerline:weight=bold:size=10}${color5}INTERNET ${font D
 $font${color4}Down:$color6  ${downspeed eth0}/s${alignr}${color4}Up:$color6 ${upspeed eth0}/s
 ${color6}${downspeedgraph eth0 25,145 859900 586e75} ${alignr}${upspeedgraph eth0 25,145  859900 586e75}
 ${color4}Session:    ${color6}${totaldown eth0} $alignr ${goto 160}${totalup eth0}
-${color4}Today:      ${color6}${execi 300 vnstat|awk '/today/{print $2 $3}'}${goto 160}$color7${execi 300 vnstat|awk '/today/{print $5 $6}'}${goto 245}$color${execi 300 vnstat|awk '/today/{print $8 $9}'}
-${color4}Yesterday: ${color6} ${execi 300 vnstat|awk '/yesterday/{print $2 $3}'}${goto 160}${color7}${execi 300 vnstat|awk '/yesterday/{print $5 $6}'}${goto 245}${color}${execi 300 vnstat|awk '/yesterday/{print $8 $9}'}
-${color4}Week:       ${color6}${execi 300 vnstat -w|awk '/current week/{print $3 $4}'}${goto 160}${color7}${execi 300 vnstat -w|awk '/current week/{print $6 $7}'}${goto 245}${color}${execi 300 vnstat -w|awk '/current week/{print $9 $10}'}
-${color4}Month:      ${color6}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $3 $4}'}${goto 160}${color7}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $6 $7}'}${goto 245}${color}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $9 $10}'}${font}
+${color4}Today:      ${color6}${execi 300 vnstat|awk '/today/{print $2 $3}'}${goto 160}${execi 300 vnstat|awk '/today/{print $5 $6}'}${goto 245}$color${execi 300 vnstat|awk '/today/{print $8 $9}'}
+${color4}Yesterday:  ${color6}${execi 300 vnstat|awk '/yesterday/{print $2 $3}'}${goto 160}${execi 300 vnstat|awk '/yesterday/{print $5 $6}'}${goto 245}${color}${execi 300 vnstat|awk '/yesterday/{print $8 $9}'}
+${color4}Week:       ${color6}${execi 300 vnstat -w|awk '/current week/{print $3 $4}'}${goto 160}${execi 300 vnstat -w|awk '/current week/{print $6 $7}'}${goto 245}${color}${execi 300 vnstat -w|awk '/current week/{print $9 $10}'}
+${color4}Month:      ${color6}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $3 $4}'}${goto 160}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $6 $7}'}${goto 245}${color}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $9 $10}'}${font}
 
 
 
