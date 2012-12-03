@@ -137,8 +137,7 @@
   (modify-syntax-entry ?= "'")
   (paredit-mode t)
   (flyspell-prog-mode)
-  (yas-minor-mode)
-  (linum-mode))
+  (yas-minor-mode))
 
 (defun neale-custom-clojure-mode () 
   (neale-custom-lisp-mode)
