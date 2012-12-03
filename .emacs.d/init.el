@@ -8,7 +8,6 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 
-
 (require 'expand-region)
 
 (require 'align-cljlet)
@@ -161,6 +160,7 @@
 (add-hook 'clojure-mode-hook 'neale-custom-clojure-mode)
 (add-hook 'inferior-lisp-mode-hook 'neale-custom-inferior-lisp-mode)
 
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -234,9 +234,7 @@
         (assq-delete-all 'my-keys-minor-mode minor-mode-map-alist)
         (add-to-list 'minor-mode-map-alist mykeys))))
 (ad-activate 'load)
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+;; not sure why this has to go at the bottom. but it works here.
+(require 'yasnippet)
+(yas/reload-all)
