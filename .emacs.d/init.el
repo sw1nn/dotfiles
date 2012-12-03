@@ -13,6 +13,8 @@
 
 (require 'align-cljlet)
 
+(require 'linum-off)
+
 (require 'ibuffer-git)
 
 ;;nicely format the ibuffer and include git-status
@@ -180,11 +182,13 @@
  '(erc-user-full-name "Neale Swinnerton")
  '(fringe-mode (quote (0)) nil (fringe))
  '(global-auto-complete-mode t)
+ '(global-linum-mode t)
  '(global-undo-tree-mode t)
  '(ibuffer-show-empty-filter-groups nil)
  '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
  '(ispell-program-name "/usr/bin/aspell")
+ '(linum-disabled-modes-list (quote (eshell-mode wl-summary-mode compilation-mode org-mode text-mode dired-mode erc-mode)))
  '(linum-format "%03d ")
  '(nrepl-popup-stacktraces nil)
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
