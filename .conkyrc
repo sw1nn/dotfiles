@@ -85,8 +85,8 @@ ${color1}RAM$color   $memperc%   ${color5}${membar 6}$color
 ${color1}Swap$color  $swapperc%   ${color5}${swapbar 6}$color
 
 ${font Deja Vu Sans for Powerline:weight=bold:size=10}${color0}DISK I/O${hr 2}
-$font${color1}sda$color   ${diskio_read /dev/sda} ${diskio_write /dev/sda} ${alignr}${color1}sdb$color   ${diskio_read /dev/sdb} ${diskio_write /dev/sdb}
-${color0}${diskiograph /dev/sda 25,145 ffbb55 66dd00 -t -l} ${alignr}${diskiograph /dev/sdb 25,145 ffbb55 66dd00 -t -l}
+$font${color1}Linux$color   ${diskio_read /dev/sdb} ${diskio_write /dev/sdb} ${alignr}${color1}Windows$color   ${diskio_read /dev/sda} ${diskio_write /dev/sda}
+${color0}${diskiograph /dev/sdb 25,145 ffbb55 66dd00 -t -l} ${alignr}${diskiograph /dev/sda 25,145 ffbb55 66dd00 -t -l}
 
 ${font Deja Vu Sans for Powerline:weight=bold:size=10}${color0}DISK USAGE${hr 2}
 $font${color1}Home -  $color${fs_free /home} of ${fs_size /home}  ${fs_free_perc /home}% free
