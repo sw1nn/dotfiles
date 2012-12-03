@@ -23,6 +23,7 @@ xrandr --output DisplayPort-0 --right-of DVI-0
 
 conky &
 emacs --daemon &
+amarok &
 
 case $1 in 
     xmonad)
