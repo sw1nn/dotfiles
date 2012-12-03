@@ -11,10 +11,7 @@ fi
 export LANG=en_GB.UTF-8
 
 dropboxd &
-xcompmgr &
 
-xset -b b off
-xsetroot -cursor_name left_ptr
 setxkbmap -option ctrl:nocaps
 xrdb -load ${HOME}/.Xresources
 xrandr --output DVI-0 --primary 
