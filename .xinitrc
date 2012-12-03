@@ -18,6 +18,7 @@ setxkbmap -option ctrl:nocaps
 xrdb -load ${HOME}/.Xresources
 xmodmap -e 'remove mod4 = Super_R'
 xmodmap -e 'add mod3 = Super_R'
+xmodmap -e 'keycode 197 = XF86ModeLock'
 xrandr --output DVI-0 --primary 
 xrandr --output DVI-1 --left-of DVI-0 
 xrandr --output DisplayPort-0 --right-of DVI-0
