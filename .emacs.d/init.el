@@ -170,6 +170,21 @@
                        nil)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; nRepl tweaks
+
+(add-hook 'nrepl-interaction-mode-hook
+          (lambda ()
+
+            (defun ns-interactive-eval-to-repl (form)
+              (let ((buffer nrepl-nrepl-buffer))
+                (nrepl-send-string form (nrepl-handler buffer) nrepl-buffer-ns)))
+
+            (defun ns-eval-last-expression-to-repl ()
+              (interactive)
+              (ns-interactive-eval-to-repl (nrepl-last-expression)))
+
+            (define-key nrepl-interaction-mode-map (kbd "C-x M-e") 'ns-eval-last-expression-to-repl)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; lisp mode tweaks
