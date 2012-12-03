@@ -12,6 +12,7 @@ export LANG=en_GB.UTF-8
 
 dropboxd &
 xcompmgr &
+
 xset -b b off
 xsetroot -cursor_name left_ptr
 setxkbmap -option ctrl:nocaps
@@ -23,6 +24,7 @@ xrandr --output DVI-0 --primary
 xrandr --output DVI-1 --left-of DVI-0 
 xrandr --output DisplayPort-0 --right-of DVI-0
 
+conky &
 emacs --daemon &
 
 case $1 in 
