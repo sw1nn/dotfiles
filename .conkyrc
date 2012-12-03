@@ -49,11 +49,9 @@ draw_borders no
 font Monospace:size=8:weight=bold
 uppercase no
 draw_shades yes
-override_utf8_locale no
-
 
 TEXT
-#${iconv_start UTF-8 ISO_8859-1}°${iconv_stop}
+${iconv_start UTF-8 ISO_8859-1}°${iconv_stop}
 ${color6}${font DejaVu Sans Mono for Powerline:weight=bold:size=16}${alignc}${time %H:%M:%S}
 ${font DejaVu Sans:weight=bold:size=14}${alignc}${time %A}, ${time %e} ${time %B} ${time %G}
 
