@@ -102,6 +102,8 @@ $font${color4}Linux$color   ${diskio_read /dev/sdb} ${diskio_write /dev/sdb} ${a
 ${color6}${diskiograph /dev/sdb 25,145 859900 586e75 -t -l} ${alignr}${diskiograph /dev/sda 25,145 859900 586e75 -t -l}
 
 ${font Deja Vu Sans for Powerline:weight=bold:size=10}${color5}DISK USAGE${hr 2}
+$font${color4}Root -  $color${fs_free /} of ${fs_size /}  ${fs_free_perc /}% free
+${color6}${fs_bar 6 /}
 $font${color4}Home -  $color${fs_free /home} of ${fs_size /home}  ${fs_free_perc /home}% free
 ${color6}${fs_bar 6 /home}
 $font${color4}Windows - $color${fs_free /mnt/windows} of ${fs_size /mnt/windows}  ${fs_free_perc /mnt/windows}% free
