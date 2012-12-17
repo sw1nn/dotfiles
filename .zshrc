@@ -34,8 +34,6 @@ else
     export POWERLINE_SYMBOLS=fancy
 fi
 
-alias ghb='nice -20 /opt/handbrake/bin/ghb'
-
 function goo() {
     links "http://www.google.co.uk/search?q=$*"
 }
