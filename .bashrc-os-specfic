@@ -1,0 +1,28 @@
+# OS Specfic tweaks/overrides
+case $(uname -s) in
+    Linux) linux=1 ;;
+    SunOS) solaris=1 ;;
+    Darwin) osx=1; ;;
+    CYGWIN*) cygwin=1 ;;
+    MINGW*) msys=1 ;;
+esac
+    
+if [ -n "$linux" -a -f ~/.bashrc.linux ]; then
+    . ~/.bashrc.linux
+fi    
+
+if [ -n "$solaris" -a -f ~/.bashrc.solaris ]; then
+    . ~/.bashrc.solaris
+fi    
+
+if [ -n "$osx" -a -f ~/.bashrc.osx ]; then
+    . ~/.bashrc.osx
+fi    
+
+if [ -n "$cygwin" -a -f ~/.bashrc.cygwin ]; then
+    . ~/.bashrc.cygwin
+fi    
+
+if [ -n "$msys" -a -f ~/.bashrc.msys ]; then
+    . ~/.bashrc.msys
+fi    

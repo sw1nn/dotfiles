@@ -1,0 +1,24 @@
+[submodule "submodule/oh-my-zsh"]
+	path = submodule/oh-my-zsh
+	url = https://github.com/sw1nn/oh-my-zsh.git
+[submodule "submodule/clojure-mode"]
+	path = submodule/clojure-mode
+	url = https://github.com/technomancy/clojure-mode.git
+[submodule "submodule/vimpager"]
+	path = submodule/vimpager
+	url = https://github.com/rkitover/vimpager.git
+[submodule "submodule/vim-powerline"]
+	path = submodule/vim-powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
+[submodule "submodule/vim-fugitive"]
+	path = submodule/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "submodule/vimclojure"]
+	path = submodule/vimclojure
+	url = https://github.com/kotarak/vimclojure.git
+[submodule "submodule/vim-colors-solarized"]
+	path = submodule/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized.git
+[submodule "submodule/expand-region"]
+	path = submodule/expand-region
+	url = https://github.com/magnars/expand-region.el.git

@@ -1,0 +1,6 @@
+set hls
+set incsearch
+set background=dark
+set number
+set dir=~/.vim/tmp
+syn on
