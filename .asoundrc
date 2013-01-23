@@ -1,23 +1,18 @@
-pcm.upmix51 {
-    type upmix
-    slave.pcm "surround51"
-    delay 15
-    channels 6
-}
-
 pcm.usb
 {
     type hw
     card U0x46d0x809 
 }
-pcm.!default {
-    type asym
-    playback.pcm {
-        type plug
-        slave.pcm "upmix51"
-    }
-    capture.pcm {
-        type plug
-        slave.pcm "usb"
-    }
+pcm.pulse {
+        type pulse
 }
+ctl.pulse {
+        type pulse
+}
+pcm.!default {
+        type pulse
+}
+ctl.!default {
+        type pulse
+}
+
