@@ -14,13 +14,14 @@ dropboxd &
 
 setxkbmap -option ctrl:nocaps
 xrdb -load ${HOME}/.Xresources
-xrandr --output DVI-0 --primary 
-xrandr --output DVI-1 --left-of DVI-0 
-xrandr --output DisplayPort-0 --right-of DVI-0
+xrandr --output DFP1 --right-of DFP3
+xrandr --output DFP4 --left-of DFP3
 
+pulseaudio --start
 conky &
 emacs --daemon &
 amarok &
+thunar --daemon &
 
 case $1 in 
     xmonad)
