@@ -78,6 +78,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; file associations
+
 (dolist (mode '(("\\.md\\$" . markdown-mode)
                 ("\\.markdown\\$" . markdown-mode)
                 ("\\.yml\\$" . yaml-mode)
