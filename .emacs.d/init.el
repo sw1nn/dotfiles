@@ -244,4 +244,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#002b36" :foreground "#839496" :inverse-video nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown" :family "DejaVu Sans Mono for Powerline"))))
+ '(eldoc-highlight-function-argument ((t (:inherit bold :foreground "#859900"))))
  '(idle-highlight ((t (:inverse-video t)))))
