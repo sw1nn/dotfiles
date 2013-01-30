@@ -1,6 +1,5 @@
 {:user {:plugins []
         :jvm-opts ["-Xmx4G"]
-        :injections [(require 'clojure.repl)
-                     (require 'clojure.pprint)]
+        :injections [(require 'clojure.repl)]
         :warn-on-reflection true}
  }
