@@ -10,3 +10,4 @@ cache
 /.emacs.d/.erc-auth
 /.emacs.d/.smex-items
 /.emacs.d/ac-comphist.dat
+/.ssh/id_rsa*
