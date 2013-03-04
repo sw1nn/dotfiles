@@ -66,6 +66,7 @@
     (require 'pastebin)
     (load auth-file)
     (pastebin-login)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; w3m tweaks
@@ -79,7 +80,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; file associations
-
 (dolist (mode '(("\\.md\\$" . markdown-mode)
                 ("\\.markdown\\$" . markdown-mode)
                 ("\\.yml\\$" . yaml-mode)
@@ -172,23 +172,6 @@
                        nil)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; nRepl tweaks
-
-(add-hook 'nrepl-interaction-mode-hook
-          (lambda ()
-
-            (defun ns-interactive-eval-to-repl (form)
-              (let ((buffer nrepl-nrepl-buffer))
-                (nrepl-send-string form (nrepl-handler buffer) nrepl-buffer-ns)))
-
-            (defun ns-eval-last-expression-to-repl ()
-              (interactive)
-              (ns-interactive-eval-to-repl (nrepl-last-expression)))
-
-            (define-key nrepl-interaction-mode-map (kbd "C-x M-e") 'ns-eval-last-expression-to-repl)))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; lisp mode tweaks
 
 (defun neale-custom-lisp-mode ()
@@ -225,6 +208,10 @@
 (add-hook 'inferior-lisp-mode-hook 'neale-custom-inferior-lisp-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+<<<<<<< HEAD
+=======
+
+>>>>>>> various additions, tidy up file.
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -260,7 +247,10 @@
  '(linum-format "%03d ")
  '(pastebin-domain-versions (quote (("pastebin.com" "/api") ("pastebin.example.com" "/pastebin.php"))))
 <<<<<<< HEAD
+<<<<<<< HEAD
  '(nrepl-popup-stacktraces t)
+=======
+>>>>>>> various additions, tidy up file.
 =======
 >>>>>>> various additions, tidy up file.
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
