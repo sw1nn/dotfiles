@@ -75,6 +75,7 @@
     (if (one-window-p) (split-window-horizontally))
     (other-window 1)
     (w3m-browse-url url newwin)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; file associations
@@ -258,10 +259,17 @@
  '(linum-disabled-modes-list (quote (eshell-mode wl-summary-mode compilation-mode org-mode text-mode dired-mode erc-mode)))
  '(linum-format "%03d ")
  '(pastebin-domain-versions (quote (("pastebin.com" "/api") ("pastebin.example.com" "/pastebin.php"))))
+<<<<<<< HEAD
  '(nrepl-popup-stacktraces t)
+=======
+>>>>>>> various additions, tidy up file.
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
- '(visible-bell nil))
+ '(visible-bell nil)
+ '(w3m-filter-configuration (quote ((nil ("Strip Google's click-tracking code from link urls" "Google の click-tracking コードをリンクの url から取り除きます") "\\`https?://[a-z]+\\.google\\." w3m-filter-google-click-tracking) (nil ("Align table columns vertically to shrink the table width in Google" "Google 検索結果のテーブルを縦方向で揃えて幅を狭めます") "\\`http://\\(www\\|images\\|news\\|maps\\|groups\\)\\.google\\." w3m-filter-google-shrink-table-width) (nil ("Add name anchors that w3m can handle in all pages" "すべてのページに w3m が扱える name アンカーを追加します") "" w3m-filter-add-name-anchors) (nil ("Remove garbage in http://www.geocities.co.jp/*" "http://www.geocities.co.jp/* でゴミを取り除きます") "\\`http://www\\.geocities\\.co\\.jp/" (w3m-filter-delete-regions "<DIV ALIGN=CENTER>
+<!--*/GeoGuide/*-->" "<!--*/GeoGuide/*-->
+</DIV>")) (nil ("Remove ADV in http://*.hp.infoseek.co.jp/*" "http://*.hp.infoseek.co.jp/* で広告を取り除きます") "\\`http://[a-z]+\\.hp\\.infoseek\\.co\\.jp/" (w3m-filter-delete-regions "<!-- start AD -->" "<!-- end AD -->")) (nil ("Remove ADV in http://linux.ascii24.com/linux/*" "http://linux.ascii24.com/linux/* で広告を取り除きます") "\\`http://linux\\.ascii24\\.com/linux/" (w3m-filter-delete-regions "<!-- DAC CHANNEL AD START -->" "<!-- DAC CHANNEL AD END -->")) (nil "A filter for Google" "\\`http://\\(www\\|images\\|news\\|maps\\|groups\\)\\.google\\." w3m-filter-google) (nil "A filter for Amazon" "\\`https?://\\(?:www\\.\\)?amazon\\.\\(?:com\\|co\\.\\(?:jp\\|uk\\)\\|fr\\|de\\)/" w3m-filter-amazon) (nil ("A filter for Mixi.jp" "ミクシィ用フィルタ") "\\`https?://mixi\\.jp" w3m-filter-mixi) (nil "A filter for http://eow.alc.co.jp/*/UTF-8*" "\\`http://eow\\.alc\\.co\\.jp/[^/]+/UTF-8" w3m-filter-alc) (nil ("A filter for Asahi Shimbun" "朝日新聞用フィルタ") "\\`http://www\\.asahi\\.com/" w3m-filter-asahi-shimbun) (nil "A filter for http://imepita.jp/NUM/NUM*" "\\`http://imepita\\.jp/[0-9]+/[0-9]+" w3m-filter-imepita) (nil "A filter for http://allatanys.jp/*" "\\`http://allatanys\\.jp/" w3m-filter-allatanys) (nil "A filter for Wikipedia" "\\`http://.*\\.wikipedia\\.org/" w3m-filter-wikipedia) (nil ("Remove inline frames in all pages" "すべてのページでインラインフレームを取り除きます") "" w3m-filter-iframe) (t "Remove navbars from jdk7 javadocs" "\\`http://docs.oracle.com/javase/7/docs/api" (w3m-filter-delete-regions "<!-- +=+ +START OF TOP NAVBAR +=+ +-->" "<!-- +=+ +END OF TOP NAVBAR +=+ +-->")))))
+ '(w3m-use-filter t nil (w3m-filter)))
 
 (put 'downcase-region 'disabled nil)
 

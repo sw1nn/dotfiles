@@ -14,12 +14,23 @@ dropboxd &
 
 setxkbmap -option ctrl:nocaps
 xrdb -load ${HOME}/.Xresources
-#xrandr --output DFP1 --right-of DFP3
-#xrandr --output DFP4 --left-of DFP3
+xrandr --output DVI-0 --primary 
+xrandr --output DVI-1 --left-of DVI-0 
+xrandr --output DisplayPort-0 --right-of DVI-0
 
 conky &
 emacs --daemon &
 amarok &
-thunar --daemon &
 
-exec ssh-agent xfce4-session
+case $1 in 
+    xmonad)
+	nitrogen --restore &
+	xmobar &
+	conky &
+	exec ssh-agent xmonad
+        ;;
+    xfce4)
+	exec ssh-agent xfce4-session
+        ;;
+    *)
+esac
