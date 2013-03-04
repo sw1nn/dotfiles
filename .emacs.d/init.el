@@ -1,12 +1,25 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; local (non-elpa) stuff's in here
-(add-to-list 'load-path "~/.emacs.d/local" )
+(add-to-list 'load-path "~/.emacs.d/local" ) ; local (non-elpa)
+                                        ; stuff's in here
 (add-to-list 'load-path "~/dotfiles/submodule/expand-region" )
 
 (package-initialize)
 
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
+             '("melpa" . "http://melpa.milkbox.net/packages/")
+             ;; '("marmalade" . "http://marmalade-repo.org/packages/")
+             )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; look and feel tweaks
+(add-to-list 'default-frame-alist '(height . 55))
+(add-to-list 'default-frame-alist '(width . 212))
+
+(load-theme 'sanityinc-solarized-dark t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Local requires
 
 (require 'expand-region)
 
@@ -15,6 +28,9 @@
 (require 'linum-off)
 
 (require 'ibuffer-git)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Ibuffer tweaks
 
 ;;nicely format the ibuffer and include git-status
 (setq ibuffer-formats '((mark modified read-only git-status-mini " "
@@ -36,23 +52,35 @@
               (ibuffer-do-sort-by-alphabetic))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; look and feel tweaks
-(add-to-list 'default-frame-alist '(height . 60))
-(add-to-list 'default-frame-alist '(width . 232))
+;; pastebin
 
-(load-theme 'sanityinc-solarized-dark t)
+(let ((auth-file "~/.emacs.d/.pastebin-auth"))
+  (when (file-exists-p auth-file)
+    (require 'pastebin)
+    (load auth-file)
+    (pastebin-login)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; file associations
+;; w3m tweaks
+
+(defun w3m-browse-url-other-window (url &optional newwin)
+  (let ((w3m-pop-up-windows t))
+    (if (one-window-p) (split-window-horizontally))
+    (other-window 1)
+    (w3m-browse-url url newwin)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; file associations
 (dolist (mode '(("\\.md\\$" . markdown-mode)
                 ("\\.markdown\\$" . markdown-mode)
                 ("\\.yml\\$" . yaml-mode)
                 ("\\.scss\\$" . sass-mode)
                 ("\\.m\\$" . octave-mode)))
   (add-to-list 'auto-mode-alist mode))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Auto complete config
+;; Auto complete config
 (require 'auto-complete-config) 
 (ac-config-default)
 (ac-flyspell-workaround)
@@ -67,16 +95,12 @@
                 html-mode nxml-mode sh-mode smarty-mode clojure-mode
                 lisp-mode textile-mode markdown-mode tuareg-mode nrepl-mode))
   (add-to-list 'ac-modes mode))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-hook 'nrepl-interaction-mode-hook
-  'nrepl-turn-on-eldoc-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ERC Tweaks
 
-(setq nrepl-popup-stacktraces nil)
-
-(add-to-list 'same-window-buffer-names "*nrepl*") 
-
-;; Load authentication info from an external source.  Put sensitive
-     ;; passwords and the like in here.
+;; Load authentication info from an external source.
 (let ((auth-file "~/.emacs.d/.erc-auth"))
   (when (file-exists-p auth-file)
     (load auth-file)
@@ -92,7 +116,32 @@
   (interactive)
   (when (y-or-n-p "IRC? ")
     (erc-ssl :server "irc.freenode.net" :port 6697 :nick "sw1nn" :full-name "Neale Swinnerton")))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; nRepl tweaks
+(setq nrepl-javadoc-local-paths (list "/usr/local/share/javadoc-w3m/7/docs/api"))
+
+(add-hook 'nrepl-interaction-mode-hook
+          'nrepl-turn-on-eldoc-mode)
+
+(add-to-list 'same-window-buffer-names "*nrepl*") 
+(add-hook 'nrepl-interaction-mode-hook
+          (lambda ()
+
+            (defun ns-interactive-eval-to-repl (form)
+              (let ((buffer nrepl-nrepl-buffer))
+                (nrepl-send-string form (nrepl-handler buffer) nrepl-buffer-ns)))
+
+            (defun ns-eval-last-expression-to-repl ()
+              (interactive)
+              (ns-interactive-eval-to-repl (nrepl-last-expression)))
+
+            (define-key nrepl-interaction-mode-map (kbd "C-x M-e") 'ns-eval-last-expression-to-repl)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; font-lock tweaks
 (dolist (mode '(clojure-mode clojurescript-mode nrepl-mode))
   (eval-after-load mode 
     (font-lock-add-keywords
@@ -113,19 +162,10 @@
                                        (match-end 1) "®")
                        nil)))))))
 
-;; nRepl tweaks
-(add-hook 'nrepl-interaction-mode-hook
-          (lambda ()
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-            (defun ns-interactive-eval-to-repl (form)
-              (let ((buffer nrepl-nrepl-buffer))
-                (nrepl-send-string form (nrepl-handler buffer) nrepl-buffer-ns)))
-
-            (defun ns-eval-last-expression-to-repl ()
-              (interactive)
-              (ns-interactive-eval-to-repl (nrepl-last-expression)))
-
-            (define-key nrepl-interaction-mode-map (kbd "C-x M-e") 'ns-eval-last-expression-to-repl)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lisp mode tweaks
 
 (defun neale-custom-lisp-mode ()
   (rainbow-delimiters-mode t)
@@ -160,6 +200,8 @@
 (add-hook 'clojure-mode-hook 'neale-custom-clojure-mode)
 (add-hook 'inferior-lisp-mode-hook 'neale-custom-inferior-lisp-mode)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -170,9 +212,10 @@
  '(ac-comphist-file "~/.emacs.d/ac-comphist.dat")
  '(ac-dictionary-directories (quote ("~/.emacs.d/ac-dict" "/Users/neale/.emacs.d/elpa/auto-complete-20121022.2254/dict")))
  '(blink-matching-paren-on-screen t)
+ '(browse-url-browser-function (quote w3m-browse-url-other-window))
  '(custom-safe-themes (quote ("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(dired-use-ls-dired nil)
- '(erc-autojoin-channels-alist (quote (("freenode.net"))))
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
  '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
  '(erc-modules (quote (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp track highlight-nicknames)))
  '(erc-nick "sw1nn")
@@ -192,13 +235,12 @@
  '(ispell-program-name "/usr/bin/aspell")
  '(linum-disabled-modes-list (quote (eshell-mode wl-summary-mode compilation-mode org-mode text-mode dired-mode erc-mode)))
  '(linum-format "%03d ")
- '(nrepl-popup-stacktraces nil)
+ '(pastebin-domain-versions (quote (("pastebin.com" "/api") ("pastebin.example.com" "/pastebin.php"))))
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
  '(visible-bell nil))
 
 (put 'downcase-region 'disabled nil)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Key binding tweaks
@@ -215,6 +257,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-x C-b") 'ibuffer)
 (define-key my-keys-minor-mode-map (kbd "C-M-z") 'align-cljlet)
 (define-key my-keys-minor-mode-map (kbd "C-=") 'er/expand-region)
+(define-key my-keys-minor-mode-map (kbd "C-S-c C-S-c") 'mc/edit-lines)
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
@@ -238,3 +281,11 @@
 ;; not sure why this has to go at the bottom. but it works here.
 (require 'yasnippet)
 (yas/reload-all)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#002b36" :foreground "#839496" :inverse-video nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown" :family "DejaVu Sans Mono for Powerline"))))
+ '(eldoc-highlight-function-argument ((t (:inherit bold :foreground "#859900"))))
+ '(idle-highlight ((t (:inverse-video t)))))
