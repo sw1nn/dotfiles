@@ -125,8 +125,8 @@
 (add-to-list 'same-window-buffer-names "*nrepl*") 
 (add-hook 'nrepl-interaction-mode-hook
           (lambda ()
-
             (nrepl-turn-on-eldoc-mode)
+            (nrepl-ritz-break-on-exception t)
             (defun ns-interactive-eval-to-repl (form)
               (let ((buffer nrepl-nrepl-buffer))
                 (nrepl-send-string form (nrepl-handler buffer) nrepl-buffer-ns)))
