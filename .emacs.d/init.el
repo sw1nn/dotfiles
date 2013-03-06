@@ -208,10 +208,6 @@
 (add-hook 'inferior-lisp-mode-hook 'neale-custom-inferior-lisp-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-<<<<<<< HEAD
-=======
-
->>>>>>> various additions, tidy up file.
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -246,13 +242,7 @@
  '(linum-disabled-modes-list (quote (eshell-mode wl-summary-mode compilation-mode org-mode text-mode dired-mode erc-mode)))
  '(linum-format "%03d ")
  '(pastebin-domain-versions (quote (("pastebin.com" "/api") ("pastebin.example.com" "/pastebin.php"))))
-<<<<<<< HEAD
-<<<<<<< HEAD
  '(nrepl-popup-stacktraces t)
-=======
->>>>>>> various additions, tidy up file.
-=======
->>>>>>> various additions, tidy up file.
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
  '(visible-bell nil)
