@@ -10,4 +10,6 @@ cache
 /.emacs.d/.erc-auth
 /.emacs.d/.smex-items
 /.emacs.d/ac-comphist.dat
+/.emacs.d/.pastebin-auth
+/.emacs.d/image-dired
 /.ssh/id_rsa*
