@@ -31,6 +31,10 @@
                         undo-tree
                         color-theme-sanityinc-solarized
                         ibuffer-vc
+                        flymake-python-pyflakes
+                        flymake-sass
+                        flymake-shell
+                        flymake-css
                         )
     "A list of packages to ensure are installed at launch.") 
   
