@@ -135,8 +135,7 @@
             (defun ns-eval-last-expression-to-repl ()
               (interactive)
               (ns-interactive-eval-to-repl (nrepl-last-expression)))
-
-            (define-key nrepl-interaction-mode-map (kbd "C-x M-e") 'ns-eval-last-expression-to-repl)))
+            (define-key nrepl-interaction-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
