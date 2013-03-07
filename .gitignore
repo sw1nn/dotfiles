@@ -13,3 +13,4 @@ cache
 /.emacs.d/.pastebin-auth
 /.emacs.d/image-dired
 /.ssh/id_rsa*
+/.emacs.d/.refheap-auth
