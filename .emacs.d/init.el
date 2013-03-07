@@ -61,6 +61,15 @@
     (pastebin-login)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; refheap
+
+(let ((auth-file "~/.emacs.d/.refheap-auth"))
+  (when (file-exists-p auth-file)
+    (require 'refheap)
+    (load auth-file)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; w3m tweaks
 
 (defun w3m-browse-url-other-window (url &optional newwin)

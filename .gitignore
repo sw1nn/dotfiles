@@ -11,3 +11,4 @@ cache
 /.emacs.d/.smex-items
 /.emacs.d/ac-comphist.dat
 /.ssh/id_rsa*
+/.emacs.d/.refheap-auth
