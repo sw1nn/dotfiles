@@ -12,3 +12,4 @@ cache
 /.emacs.d/ac-comphist.dat
 /.ssh/id_rsa*
 /.emacs.d/.pastebin-auth
+/.emacs.d/.refheap-auth
