@@ -31,6 +31,8 @@
 
 (require 'ace-jump-mode)
 
+(require 'volatile-highlights)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ibuffer tweaks
 
@@ -247,7 +249,8 @@
  '(pastebin-domain-versions (quote (("pastebin.com" "/api") ("pastebin.example.com" "/pastebin.php"))))
  '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
  '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
- '(visible-bell nil))
+ '(visible-bell nil)
+ '(volatile-highlights-mode t))
 
 (put 'downcase-region 'disabled nil)
 
