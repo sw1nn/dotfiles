@@ -224,7 +224,7 @@
  '(ac-dictionary-directories (quote ("~/.emacs.d/ac-dict" "/Users/neale/.emacs.d/elpa/auto-complete-20121022.2254/dict")))
  '(blink-matching-paren-on-screen t)
  '(browse-url-browser-function (quote w3m-browse-url-other-window))
- '(custom-safe-themes (quote ("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
+ '(custom-safe-themes (quote ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
  '(dired-use-ls-dired nil)
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
  '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
@@ -302,4 +302,6 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#002b36" :foreground "#839496" :inverse-video nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "unknown" :family "DejaVu Sans Mono for Powerline"))))
  '(eldoc-highlight-function-argument ((t (:inherit bold :foreground "#859900"))))
+ '(default ((t (:slant normal :weight normal :height 113 :width normal :foundry "unknown" :family "DejaVu Sans Mono for Powerline"))))
+ '(eldoc-highlight-function-argument ((t (:inherit bold :foreground "#859900"))) t)
  '(idle-highlight ((t (:inverse-video t)))))
