@@ -33,6 +33,8 @@
 
 (require 'volatile-highlights)
 
+(require 'git-gutter-fringe)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ibuffer tweaks
 
@@ -237,9 +239,9 @@
  '(erc-scrolltobottom-mode t)
  '(erc-track-exclude-types (quote ("NICK" "PART" "QUIT" "333" "353")))
  '(erc-user-full-name "Neale Swinnerton")
- '(fringe-mode (quote (0)) nil (fringe))
+ '(git-gutter-fr:side (quote left-fringe))
  '(global-auto-complete-mode t)
- '(global-linum-mode t)
+ '(global-git-gutter-mode t)
  '(global-undo-tree-mode t)
  '(ibuffer-show-empty-filter-groups nil)
  '(ido-enable-flex-matching t)
@@ -274,6 +276,12 @@
 (define-key my-keys-minor-mode-map (kbd "C-c SPC") 'ace-jump-mode)
 (define-key my-keys-minor-mode-map (kbd "C-c C-SPC") 'ace-jump-mode-pop-mark)
 (define-key my-keys-minor-mode-map (kbd "M-SPC") (lambda () (interactive) (just-one-space -1)))
+(define-key my-keys-minor-mode-map (kbd "C-x g") 'magit-status)
+(define-key my-keys-minor-mode-map (kbd "C-c g g") 'git-gutter:toggle)
+(define-key my-keys-minor-mode-map (kbd "C-c g p") 'git-gutter:previous-diff)
+(define-key my-keys-minor-mode-map (kbd "C-c g n") 'git-gutter:next-diff)
+(define-key my-keys-minor-mode-map (kbd "C-c g d") 'git-gutter:popup-diff)
+(define-key my-keys-minor-mode-map (kbd "C-c g r") 'git-gutter:revert-hunk)
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
