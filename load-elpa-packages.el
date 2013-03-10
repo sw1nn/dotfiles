@@ -31,6 +31,8 @@
                         undo-tree
                         color-theme-sanityinc-solarized
                         ibuffer-vc
+                        git-gutter
+                        git-gutter-fringe
                         flymake-python-pyflakes
                         flymake-sass
                         flymake-shell
