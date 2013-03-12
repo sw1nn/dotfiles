@@ -22,3 +22,24 @@
 [submodule "submodule/expand-region"]
 	path = submodule/expand-region
 	url = https://github.com/magnars/expand-region.el.git
+[submodule "submodule/ac-nrepl"]
+	path = submodule/ac-nrepl
+	url = git://github.com/purcell/ac-nrepl.git
+[submodule "submodule/auto-complete"]
+	path = submodule/auto-complete
+	url = git://github.com/auto-complete/auto-complete.git
+[submodule "submodule/browse-kill-ring"]
+	path = submodule/browse-kill-ring
+	url = git://github.com/browse-kill-ring/browse-kill-ring.git
+[submodule "submodule/multiple-cursors"]
+	path = submodule/multiple-cursors
+	url = git://github.com/magnars/multiple-cursors.el.git
+[submodule "submodule/nrepl"]
+	path = submodule/nrepl
+	url = git://github.com/kingtim/nrepl.el.git
+[submodule "submodule/align-cljlet"]
+	path = submodule/align-cljlet
+	url = git://github.com/gstamp/align-cljlet
+[submodule "submodule/popup"]
+	path = submodule/popup
+	url = git://github.com/auto-complete/popup-el.git

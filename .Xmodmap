@@ -1,0 +1,6 @@
+keycode 197 = XF86ModeLock
+
+clear mod4
+remove mod1 = Meta_L
+add mod4 = Meta_L
+remove mod4 = Alt_L

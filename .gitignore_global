@@ -54,6 +54,8 @@ target/*
 
 # lein-cljsbuild
 .lein-cljsbuild-compiler-0/*
+.lein-repl-history
+.lein/repl-port
 
 #octave
 octave-core
