@@ -3,6 +3,7 @@ log/.zsh_history
 projects.zsh
 cache
 *.swp
+*.elc
 /.emacs.d/eshell/history
 /.emacs.d/places
 /.emacs.d/tramp
