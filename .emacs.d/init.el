@@ -1,24 +1,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(package-initialize)
-
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/")
-             ;; '("marmalade" . "http://marmalade-repo.org/packages/")
-             )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Local requires
-
 ;; Add .emacs.d/local to load-path
-(setq dotfiles-dir (file-name-directory
-                    (or (buffer-file-name) load-file-name)))
-(add-to-list 'load-path (concat dotfiles-dir "local"))
+(add-to-list 'load-path (concat user-emacs-directory "local"))
 
 ;; Add every subdirectory of ~/.emacs.d/vendor to the load path
 (dolist
-    (project (directory-files (concat dotfiles-dir "vendor") t "\\w+"))
+    (project (directory-files (concat user-emacs-directory "vendor") t "\\w+"))
   (when (file-directory-p project)
     (add-to-list 'load-path project)))
+
+(require 'package)
+(dolist (source '(;; ("melpa" . "http://melpa.milkbox.net/packages/")
+                  ("marmalade" . "http://marmalade-repo.org/packages/")
+                  ("elpa" . "http://tromey.com/elpa/")))
+  (add-to-list 'package-archives source t))
+(package-initialize)
 
 (require 'clojure-mode)
 
@@ -39,7 +34,7 @@
 (require 'git-gutter-fringe)
 
 (dolist 
-    (config (directory-files (concat dotfiles-dir "conf.d") t "\\w+"))
+    (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+"))
   (load-file config))
 
 (custom-set-variables
@@ -48,8 +43,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ac-auto-show-menu 0.0)
- '(ac-comphist-file "~/.emacs.d/ac-comphist.dat")
- '(ac-dictionary-directories (quote ("~/.emacs.d/ac-dict" "/Users/neale/.emacs.d/elpa/auto-complete-20121022.2254/dict")))
+ '(ac-comphist-file (concat user-emacs-directory "ac-comphist.dat"))
  '(blink-matching-paren-on-screen t)
  '(browse-url-browser-function (quote w3m-browse-url-other-window))
  '(custom-safe-themes (quote ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
