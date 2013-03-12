@@ -22,6 +22,30 @@
 (define-key my-keys-minor-mode-map (kbd "C-c g n") 'git-gutter:next-diff)
 (define-key my-keys-minor-mode-map (kbd "C-c g d") 'git-gutter:popup-diff)
 (define-key my-keys-minor-mode-map (kbd "C-c g r") 'git-gutter:revert-hunk)
+(define-key my-keys-minor-mode-map (kbd "M-x") 'smex)
+(define-key my-keys-minor-mode-map (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
+(define-key my-keys-minor-mode-map (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
+
+;; If you want to be able to M-x without meta (phones, etc)
+(define-key my-keys-minor-mode-map (kbd "C-c x") 'execute-extended-command)
+
+;; Use regex searches by default.
+(define-key my-keys-minor-mode-map (kbd "C-s") 'isearch-forward-regexp)
+(define-key my-keys-minor-mode-map (kbd "\C-r") 'isearch-backward-regexp)
+(define-key my-keys-minor-mode-map (kbd "M-%") 'query-replace-regexp)
+(define-key my-keys-minor-mode-map (kbd "C-M-s") 'isearch-forward)
+(define-key my-keys-minor-mode-map (kbd "C-M-r") 'isearch-backward)
+(define-key my-keys-minor-mode-map (kbd "C-M-%") 'query-replace)
+
+;; Jump to a definition in the current file. (Protip: this is awesome.)
+(define-key my-keys-minor-mode-map (kbd "C-x C-i") 'imenu)
+
+;; File finding
+(define-key my-keys-minor-mode-map (kbd "C-x M-f") 'ido-find-file-other-window)
+(define-key my-keys-minor-mode-map (kbd "C-c y") 'bury-buffer)
+(define-key my-keys-minor-mode-map (kbd "C-c r") 'revert-buffer)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
