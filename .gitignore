@@ -4,6 +4,7 @@ projects.zsh
 cache
 *.swp
 *.elc
+/.emacs.d/archives
 /.emacs.d/eshell/history
 /.emacs.d/places
 /.emacs.d/tramp
@@ -15,3 +16,4 @@ cache
 /.emacs.d/image-dired
 /.ssh/id_rsa*
 /.emacs.d/.refheap-auth
+/.emacs.d/.mc-lists.el
