@@ -8,5 +8,4 @@
                        [clojure-complete "0.2.2"]]
         :repl-options {:nrepl-middleware 
                        [ritz.nrepl.middleware.javadoc/wrap-javadoc
-                        ritz.nrepl.middleware.simple-complete/wrap-simple-complete]}
-        :hooks [ritz.add-sources]}}
+                        ritz.nrepl.middleware.simple-complete/wrap-simple-complete]}}}
