@@ -3,10 +3,12 @@
 ; See
 ; http://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs
 
+(global-unset-key (kbd "s-p"))
+
 (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
 
 (define-key my-keys-minor-mode-map (kbd "C-\\") nil) ; remove annoying input-method binding.
-(define-key my-keys-minor-mode-map (kbd "s-p") nil)  ; remove print binding
+
 (define-key my-keys-minor-mode-map (kbd "M-TAB") 'yas/expand)
 (define-key my-keys-minor-mode-map (kbd "<select>") 'windmove-up)
 (define-key my-keys-minor-mode-map (kbd "C-x C-b") 'ibuffer)
@@ -45,6 +47,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-c y") 'bury-buffer)
 (define-key my-keys-minor-mode-map (kbd "C-c r") 'revert-buffer)
 
+(define-key my-keys-minor-mode-map (kbd "C-x C-m") 'shell)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-minor-mode my-keys-minor-mode

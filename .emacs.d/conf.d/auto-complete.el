@@ -8,10 +8,10 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-flyspell-workaround)
 
-(setq ac-auto-show-menu t)
-(setq ac-dwim t)
-(setq ac-use-menu-map t)
-(setq ac-quick-help-delay 1)
+(setq ac-auto-show-menu t
+      ac-dwim t
+      ac-use-menu-map t
+      ac-quick-help-delay 1)
 
 ;; ac-slime
 ;; (require 'ac-slime)
