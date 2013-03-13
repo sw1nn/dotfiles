@@ -33,6 +33,8 @@
 
 (require 'git-gutter-fringe)
 
+(require 'flyspell)
+
 (dolist 
     (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+"))
   (load-file config))
@@ -42,46 +44,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ac-auto-show-menu 0.0)
- '(ac-comphist-file (concat user-emacs-directory "ac-comphist.dat"))
- '(blink-matching-paren-on-screen t)
- '(browse-url-browser-function (quote w3m-browse-url-other-window))
  '(custom-safe-themes (quote ("4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default)))
- '(dired-use-ls-dired nil)
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure"))))
- '(erc-hide-list (quote ("JOIN" "NICK" "PART" "QUIT")))
- '(erc-modules (quote (autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp track highlight-nicknames)))
- '(erc-nick "sw1nn")
- '(erc-port 6697)
- '(erc-prompt-for-nickserv-password nil)
- '(erc-prompt-for-password nil)
- '(erc-scrolltobottom-mode t)
- '(erc-track-exclude-types (quote ("NICK" "PART" "QUIT" "333" "353")))
- '(erc-user-full-name "Neale Swinnerton")
- '(git-gutter-fr:side (quote left-fringe))
- '(global-auto-complete-mode t)
- '(global-git-gutter-mode t)
- '(global-linum-mode t)
- '(global-undo-tree-mode t)
- '(ibuffer-show-empty-filter-groups nil)
- '(ido-enable-flex-matching t)
  '(inferior-lisp-program "lein repl")
- '(ispell-program-name "/usr/bin/aspell")
- '(linum-disabled-modes-list (quote (eshell-mode wl-summary-mode compilation-mode org-mode text-mode dired-mode erc-mode)))
- '(linum-format "%03d ")
- '(pastebin-domain-versions (quote (("pastebin.com" "/api") ("pastebin.example.com" "/pastebin.php"))))
- '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
- '(same-window-regexps (quote ("\\*magit: [[:ascii:]]\\*")))
- '(visible-bell nil)
- '(volatile-highlights-mode t)
- '(winner-mode t nil (winner)))
+ '(ispell-program-name "/usr/local/bin/aspell"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:foundry "unknown" :family "DejaVu Sans Mono for Powerline"))))
- '(eldoc-highlight-function-argument ((t (:inherit bold :foreground "#859900"))))
- '(git-gutter-fr:modified ((t (:foreground "#d33682" :weight bold))))
- '(idle-highlight ((t (:inverse-video t)))))
+ '(default ((t (:foundry "unknown" :family "DejaVu Sans Mono for Powerline")))))
