@@ -1,6 +1,6 @@
 [submodule "submodule/oh-my-zsh"]
 	path = submodule/oh-my-zsh
-	url = https://github.com/sw1nn/oh-my-zsh.git
+	url = git://github.com/sw1nn/oh-my-zsh.git
 [submodule "submodule/clojure-mode"]
 	path = submodule/clojure-mode
 	url = https://github.com/technomancy/clojure-mode.git
@@ -34,12 +34,15 @@
 [submodule "submodule/multiple-cursors"]
 	path = submodule/multiple-cursors
 	url = git://github.com/magnars/multiple-cursors.el.git
-[submodule "submodule/nrepl"]
-	path = submodule/nrepl
-	url = git://github.com/kingtim/nrepl.el.git
 [submodule "submodule/align-cljlet"]
 	path = submodule/align-cljlet
 	url = git://github.com/gstamp/align-cljlet
 [submodule "submodule/popup"]
 	path = submodule/popup
 	url = git://github.com/auto-complete/popup-el.git
+[submodule "submodule/ritz"]
+	path = submodule/ritz
+	url = https://github.com/pallet/ritz.git
+[submodule "submodule/nrepl"]
+	path = submodule/nrepl
+	url = git://github.com/sw1nn/nrepl.el.git
