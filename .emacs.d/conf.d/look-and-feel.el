@@ -69,4 +69,5 @@
 
 (windmove-default-keybindings) ;; Shift+direction
 
+(setq-default indent-tabs-mode nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
