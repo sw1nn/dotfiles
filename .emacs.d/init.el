@@ -35,6 +35,8 @@
 
 (require 'flyspell)
 
+(require 'powerline)
+
 (dolist 
     (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+"))
   (load-file config))
