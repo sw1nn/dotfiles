@@ -25,6 +25,9 @@
 
 (set-face-attribute 'git-gutter-fr:modified nil :foreground "#d33682")
 
+(set-face-attribute 'mode-line nil :box nil :weight 'bold)
+(set-face-attribute 'mode-line-inactive nil :box nil :weight 'bold)
+
 (ido-mode t)
 (ido-ubiquitous t)
 (setq ido-enable-prefix nil
