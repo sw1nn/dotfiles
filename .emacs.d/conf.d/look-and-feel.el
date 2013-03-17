@@ -49,11 +49,10 @@
 
 (global-git-gutter-mode t)
 
-
 (setq global-undo-tree-mode t)
 
+(setq recenter-positions '(0.2 0.4 0.6 0.8 bottom top))
 
-; '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
 (setq same-window-regexps (quote '(("\\*magit: [[:ascii:]]\\*")))
       visible-bell nil
       volatile-highlights-mode t)
