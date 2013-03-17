@@ -16,11 +16,13 @@
 (load-theme 'sanityinc-solarized-dark t)
 
 (set-face-attribute 'eldoc-highlight-function-argument nil :foreground "#859900")
-(set-face-attribute 'nrepl-error-highlight-face nil :inherit nil :underline '(:color "red" :style wave))
-(set-face-attribute 'flyspell-duplicate nil :inherit nil :underline '(:color "red" :style wave))
-(set-face-attribute 'flyspell-incorrect nil :inherit nil :underline '(:color "red" :style wave))
 (set-face-attribute 'git-gutter-fr:modified nil :foreground "#d33682")
 
+(set-face-attribute 'flyspell-duplicate nil :inherit nil :underline '(:color "gold4" :style wave))
+(set-face-attribute 'flyspell-incorrect nil :inherit nil :underline '(:color "red4" :style wave))
+
+(set-face-attribute 'nrepl-error-highlight-face nil :inherit nil :underline '(:color "red4" :style wave))
+(set-face-attribute 'nrepl-warning-highlight-face nil :inherit nil :underline '(:color "gold4" :style wave))
 (ido-mode t)
 (ido-ubiquitous t)
 (setq ido-enable-prefix nil
