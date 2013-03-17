@@ -34,17 +34,16 @@
       ido-handle-duplicate-virtual-buffers 2
       ido-max-prospects 10)
 
-(setq global-linum-mode t
-      linum-disabled-modes-list '(eshell-mode 
-				  wl-summary-mode 
-				  compilation-mode 
-				  org-mode 
-				  text-mode 
-				  dired-mode 
-				  erc-mode)
+(setq linum-disabled-modes-list '(eshell-mode
+                                  wl-summary-mode
+                                  compilation-mode
+                                  org-mode
+                                  text-mode
+                                  dired-mode
+                                  erc-mode
+                                  magit-mode)
       linum-format "%03d")
-
-
+(global-linum-mode t)
 
 (setq git-gutter-fr:side 'left-fringe)
 
