@@ -23,7 +23,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-c g p") 'git-gutter:previous-diff)
 (define-key my-keys-minor-mode-map (kbd "C-c g n") 'git-gutter:next-diff)
 (define-key my-keys-minor-mode-map (kbd "C-c g d") 'git-gutter:popup-diff)
-(define-key my-keys-minor-mode-map (kbd "C-c g r") 'git-gutter:revert-hunk)
+(define-key my-keys-minor-mode-map (kbd "C-c g v") 'git-gutter:revert-hunk)
 (define-key my-keys-minor-mode-map (kbd "M-x") 'smex)
 (define-key my-keys-minor-mode-map (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
 (define-key my-keys-minor-mode-map (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
@@ -33,7 +33,7 @@
 
 ;; Use regex searches by default.
 (define-key my-keys-minor-mode-map (kbd "C-s") 'isearch-forward-regexp)
-(define-key my-keys-minor-mode-map (kbd "\C-r") 'isearch-backward-regexp)
+(define-key my-keys-minor-mode-map (kbd "C-r") 'isearch-backward-regexp)
 (define-key my-keys-minor-mode-map (kbd "M-%") 'query-replace-regexp)
 (define-key my-keys-minor-mode-map (kbd "C-M-s") 'isearch-forward)
 (define-key my-keys-minor-mode-map (kbd "C-M-r") 'isearch-backward)
@@ -45,9 +45,12 @@
 ;; File finding
 (define-key my-keys-minor-mode-map (kbd "C-x M-f") 'ido-find-file-other-window)
 (define-key my-keys-minor-mode-map (kbd "C-c y") 'bury-buffer)
-(define-key my-keys-minor-mode-map (kbd "C-c r") 'revert-buffer)
+(define-key my-keys-minor-mode-map (kbd "C-c v") 'revert-buffer)
 
 (define-key my-keys-minor-mode-map (kbd "C-x C-m") 'shell)
+
+(define-key my-keys-minor-mode-map (kbd "C-+") 'text-scale-increase)
+(define-key my-keys-minor-mode-map (kbd "C--") 'text-scale-decrease)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-minor-mode my-keys-minor-mode
