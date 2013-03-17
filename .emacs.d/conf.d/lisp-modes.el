@@ -37,11 +37,12 @@
   (modify-syntax-entry ?= "'")
   (paredit-mode t)
   (flyspell-prog-mode)
-  (yas-minor-mode))
+  (yas-minor-mode)
+  (eldoc-mode)
+  (show-paren-mode))
 
 (defun neale-custom-clojure-mode () 
-  (neale-custom-lisp-mode)
-  )
+  (neale-custom-lisp-mode))
 
 (defun neale-custom-nrepl-mode () 
   (neale-custom-lisp-mode))
