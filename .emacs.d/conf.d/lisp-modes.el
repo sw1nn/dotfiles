@@ -40,6 +40,7 @@
   (yas-minor-mode)
   (eldoc-mode)
   (show-paren-mode))
+  (hl-sexp-mode))
 
 (defun neale-custom-clojure-mode () 
   (neale-custom-lisp-mode))
