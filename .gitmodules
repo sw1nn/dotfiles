@@ -46,3 +46,9 @@
 [submodule "submodule/nrepl"]
 	path = submodule/nrepl
 	url = git://github.com/sw1nn/nrepl.el.git
+[submodule "submodule/emacs-git-gutter-fringe"]
+	path = submodule/emacs-git-gutter-fringe
+	url = git://github.com/syohex/emacs-git-gutter-fringe.git
+[submodule "submodule/emacs-git-gutter"]
+	path = submodule/emacs-git-gutter
+	url = git://github.com/syohex/emacs-git-gutter.git

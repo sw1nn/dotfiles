@@ -31,7 +31,8 @@
 
 (require 'volatile-highlights)
 
-(require 'git-gutter-fringe)
+(when (window-system)
+  (require 'git-gutter-fringe))
 
 (require 'flyspell)
 
