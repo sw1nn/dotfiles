@@ -4,6 +4,7 @@ projects.zsh
 cache
 *.swp
 *.elc
+/.emacs.d/var
 /.emacs.d/eshell/history
 /.emacs.d/places
 /.emacs.d/tramp
@@ -11,5 +12,8 @@ cache
 /.emacs.d/.erc-auth
 /.emacs.d/.smex-items
 /.emacs.d/ac-comphist.dat
+/.emacs.d/.pastebin-auth
+/.emacs.d/image-dired
 /.ssh/id_rsa*
 /.emacs.d/.refheap-auth
+/.emacs.d/.mc-lists.el

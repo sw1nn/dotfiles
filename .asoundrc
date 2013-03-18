@@ -1,0 +1,18 @@
+pcm.usb
+{
+    type hw
+    card U0x46d0x809 
+}
+pcm.pulse {
+        type pulse
+}
+ctl.pulse {
+        type pulse
+}
+pcm.!default {
+        type pulse
+}
+ctl.!default {
+        type pulse
+}
+

@@ -43,3 +43,12 @@
 [submodule "submodule/popup"]
 	path = submodule/popup
 	url = git://github.com/auto-complete/popup-el.git
+[submodule "submodule/ritz"]
+	path = submodule/ritz
+	url = git@github.com:pallet/ritz
+[submodule "submodule/emacs-git-gutter-fringe"]
+	path = submodule/emacs-git-gutter-fringe
+	url = git://github.com/syohex/emacs-git-gutter-fringe.git
+[submodule "submodule/emacs-git-gutter"]
+	path = submodule/emacs-git-gutter
+	url = git://github.com/syohex/emacs-git-gutter.git

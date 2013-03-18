@@ -1,0 +1,120 @@
+# --- Window Layout & Options --- #
+own_window yes
+own_window_type panel
+own_window_transparent no
+alignment middle_left
+
+double_buffer yes
+use_spacer right
+use_xft yes
+xftfont DejaVu Sans Mono for Powerline:size=8
+xftalpha 1
+short_units yes
+
+maximum_width 300
+gap_x 5
+gap_y 0
+if_up_strictness address
+
+# --- Colours, Sizes, Fonts & Margins --- #
+update_interval 2
+stippled_borders 3
+border_width 0
+default_color 657b83
+own_window_colour 002b36 
+
+# Solarized colors Source http://github.com/altercation/solarized
+# color0 073624
+# color1 dc322f
+color2 859900
+# color3 b58900
+color4 268bd2
+# color5 d33682
+# color6 2aa198
+# color7 eee8d5
+
+# these are really solarized 8-15
+color0 002b36
+color1 cb4b16
+#color2 586e75
+color3 657b83
+#color4 839496
+color5 6c71c4
+color6 93a1a1
+color7 fdf6e3
+
+# --- Text --- #
+draw_outline no
+draw_borders no
+font Monospace:size=8:weight=bold
+uppercase no
+draw_shades yes
+
+TEXT
+${iconv_start UTF-8 ISO_8859-1}°${iconv_stop}
+${color6}${font DejaVu Sans Mono for Powerline:weight=bold:size=16}${alignc}${time %H:%M:%S}
+${font DejaVu Sans:weight=bold:size=14}${alignc}${time %A}, ${time %e} ${time %B} ${time %G}
+
+${font DejaVu Sans:weight=bold:size=10}${color5}SYSTEM INFORMATION ($nodename)${hr 2}
+$font${color4}Uptime$color $uptime 
+${color4}Kernel$color $kernel
+${color4}Arch$color $machine
+
+${font DejaVu Sans Mono for Powerline:weight=bold:size=10}${color5}CPU ${hr 2}$color$font
+${execi 99999 cat /proc/cpuinfo|awk '{$1=$1; if (sub(/model +name +: +/, "")) {if (!m) print $0; m=1;}}'}
+${color4}Core 0: $color${execi 10 sensors|awk '/Core 0/{$1=$1; print $3}'}
+${color4}Freq:$color $font$color${freq_g 1}GHz ${color4}${alignr}Freq:$color $font$color${freq_g 5}GHz
+${color6}${cpugraph cpu1 25,145 859900 586e75} ${color6}${cpugraph cpu5 25,145 859900 586e75}
+${color6}${cpubar cpu1 4,145} ${cpubar cpu5 4,145}
+${color4}Core 1: $color${execi 10 sensors|awk '/Core 1/{$1=$1;print $3}'}
+${color4}Freq:$color $font$color${freq_g 2}GHz ${color4}${alignr}Freq:$color $font$color${freq_g 6}GHz
+${color6}${cpugraph cpu2 25,145 859900 586e75} ${cpugraph cpu5 25,145 859900 586e75}
+${color6}${cpubar cpu2 4,145} ${cpubar cpu6 4,145}
+
+${color4}Core 2: $color${execi 10 sensors|awk '/Core 2/{$1=$1; print $3}'}
+${color4}Freq:$color $font$color${freq_g 3}GHz ${color4}${alignr}Freq:$color $font$color${freq_g 7}GHz
+${color6}${cpugraph cpu3 25,145 859900 586e75} ${color6}${cpugraph cpu7 25,145 859900 586e75}
+${color6}${cpubar cpu3 4,145} ${cpubar cpu7 4,145}
+${color4}Core 3: $color${execi 10 sensors|awk '/Core 3/{$1=$1;print $3}'}
+${color4}Freq:$color $font$color${freq_g 4}GHz ${color4}${alignr}Freq:$color $font$color${freq_g 8}GHz
+${color6}${cpugraph cpu4 25,145 859900 586e75} ${cpugraph cpu8 25,145 859900 586e75}
+${color6}${cpubar cpu4 4,145} ${cpubar cpu8 4,145}
+
+${font DejaVu Sans:weight=bold:size=10}${color5}TOP 5 PROCESSES ${hr 2}
+$font${color4}Processes:$color $running_processes / $processes
+${color4}   NAME              PID      CPU      MEM
+${color2}1. ${top name 1}${top pid 1}   ${top cpu 1}   ${top mem 1}$color
+2. ${top name 2}${top pid 2}   ${top cpu 2}   ${top mem 2}
+3. ${top name 3}${top pid 3}   ${top cpu 3}   ${top mem 3}
+4. ${top name 4}${top pid 4}   ${top cpu 4}   ${top mem 4}
+5. ${top name 5}${top pid 5}   ${top cpu 5}   ${top mem 5}
+6. ${top name 6}${top pid 6}   ${top cpu 6}   ${top mem 6}
+7. ${top name 7}${top pid 7}   ${top cpu 7}   ${top mem 7}
+8. ${top name 8}${top pid 8}   ${top cpu 8}   ${top mem 8}
+
+${font DejaVu Sans:weight=bold:size=10}${color5}MEMORY & SWAP ${hr 2}
+$font${color4}RAM$color   $mem / $memmax
+${color4}RAM$color   $memperc%   ${color6}${membar 6}$color
+${color4}Swap$color  $swapperc%   ${color6}${swapbar 6}$color
+
+${font Deja Vu Sans for Powerline:weight=bold:size=10}${color5}DISK I/O${hr 2}
+$font${color4}Linux$color   ${diskio_read /dev/sdb} ${diskio_write /dev/sdb} ${alignr}${color4}Windows$color   ${diskio_read /dev/sda} ${diskio_write /dev/sda}
+${color6}${diskiograph /dev/sdb 25,145 859900 586e75 -t -l} ${alignr}${diskiograph /dev/sda 25,145 859900 586e75 -t -l}
+
+${font Deja Vu Sans for Powerline:weight=bold:size=10}${color5}DISK USAGE${hr 2}
+$font${color4}Root -  $color${fs_free /} of ${fs_size /}  ${fs_free_perc /}% free
+${color6}${fs_bar 6 /}
+$font${color4}Home -  $color${fs_free /home} of ${fs_size /home}  ${fs_free_perc /home}% free
+${color6}${fs_bar 6 /home}
+$font${color4}Windows - $color${fs_free /mnt/windows} of ${fs_size /mnt/windows}  ${fs_free_perc /mnt/windows}% free
+${color6}${fs_bar 6 /mnt/windows}
+
+${font Deja Vu Sans for Powerline:weight=bold:size=10}${color5}INTERNET ${font Deja Vu Sans for Powerline:weight=bold:size=9}(${addr eth0}) ${hr 2}
+$font${color4}Down:$color6  ${downspeed eth0}/s${alignr}${color4}Up:$color6 ${upspeed eth0}/s
+${color6}${downspeedgraph eth0 25,145 859900 586e75} ${alignr}${upspeedgraph eth0 25,145  859900 586e75}
+${color4}Session:    ${color6}${totaldown eth0} $alignr ${goto 160}${totalup eth0}
+${color4}Today:      ${color6}${execi 300 vnstat|awk '/today/{print $2 $3}'}${goto 160}${execi 300 vnstat|awk '/today/{print $5 $6}'}${goto 245}$color${execi 300 vnstat|awk '/today/{print $8 $9}'}
+${color4}Yesterday:  ${color6}${execi 300 vnstat|awk '/yesterday/{print $2 $3}'}${goto 160}${execi 300 vnstat|awk '/yesterday/{print $5 $6}'}${goto 245}${color}${execi 300 vnstat|awk '/yesterday/{print $8 $9}'}
+${color4}Week:       ${color6}${execi 300 vnstat -w|awk '/current week/{print $3 $4}'}${goto 160}${execi 300 vnstat -w|awk '/current week/{print $6 $7}'}${goto 245}${color}${execi 300 vnstat -w|awk '/current week/{print $9 $10}'}
+${color4}Month:      ${color6}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $3 $4}'}${goto 160}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $6 $7}'}${goto 245}${color}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $9 $10}'}${font}
+
