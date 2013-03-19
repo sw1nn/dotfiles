@@ -1,3 +1,9 @@
+(require 'clojure-mode)
+
+(require 'align-cljlet)
+
+(require 'nrepl)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; font-lock tweaks
 (dolist (mode '(clojure-mode clojurescript-mode nrepl-mode))

@@ -1,3 +1,11 @@
+(require 'expand-region)
+
+(require 'linum-off)
+
+(require 'volatile-highlights)
+
+(require 'powerline)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; look and feel tweaks
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode)) (when (fboundp mode) (funcall mode -1)))
@@ -8,26 +16,13 @@
   (mouse-wheel-mode t)
   (blink-cursor-mode -1))
 
-(setq inhibit-splash-screen t)
-
 (add-to-list 'default-frame-alist '(height . 55))
 (add-to-list 'default-frame-alist '(width . 212))
 
-(load-theme 'sanityinc-solarized-dark t)
+(setq inhibit-splash-screen t)
 
-(set-face-attribute 'eldoc-highlight-function-argument nil :foreground "#859900")
-
-(when (fboundp 'nrepl-warning-highlight-face)
-  (set-face-attribute 'nrepl-error-highlight-face nil :inherit nil :underline '(:color "red4" :style wave))
-  (set-face-attribute 'nrepl-warning-highlight-face nil :inherit nil :underline '(:color "red" :style wave)))
-
-(set-face-attribute 'flyspell-duplicate nil :inherit nil :underline '(:color "gold4" :style wave))
-(set-face-attribute 'flyspell-incorrect nil :inherit nil :underline '(:color "red4" :style wave))
-
-(set-face-attribute 'git-gutter-fr:modified nil :foreground "#d33682")
-
-(set-face-attribute 'mode-line nil :box nil :weight 'bold)
-(set-face-attribute 'mode-line-inactive nil :box nil :weight 'bold)
+(setq custom-theme-directory (concat user-emacs-directory "themes"))
+(load-theme 'sw1nn t)
 
 (ido-mode t)
 (ido-ubiquitous t)
@@ -49,16 +44,6 @@
 				  dired-mode 
 				  erc-mode)
       linum-format "%03d")
-
-
-
-(setq git-gutter-fr:side 'left-fringe)
-
-(global-git-gutter-mode t)
-
-
-(setq global-undo-tree-mode t)
-
 
 ; '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
 (setq same-window-regexps (quote '(("\\*magit: [[:ascii:]]\\*")))
