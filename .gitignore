@@ -17,3 +17,4 @@ cache
 /.ssh/id_rsa*
 /.emacs.d/.refheap-auth
 /.emacs.d/.mc-lists.el
+/.vim/.netrwhist
