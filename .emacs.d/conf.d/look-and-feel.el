@@ -7,8 +7,10 @@
 (require 'powerline)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; look and feel tweaks
-(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode)) (when (fboundp mode) (funcall mode -1)))
+;; look and feel tweaks
+(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode)) 
+  (when (fboundp mode) 
+    (funcall mode -1)))
 
 (when window-system
   (setq frame-title-format '(buffer-file-name "%f" ("%b")))
@@ -35,6 +37,8 @@
       ido-handle-duplicate-virtual-buffers 2
       ido-max-prospects 10)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; turn on linum mode globally except for certain modes.
 (setq global-linum-mode t
       linum-disabled-modes-list '(eshell-mode 
 				  wl-summary-mode 
