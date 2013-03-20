@@ -8,8 +8,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
-(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode)) 
-  (when (fboundp mode) 
+(dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
+  (when (fboundp mode)
     (funcall mode -1)))
 
 (when window-system
@@ -40,13 +40,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; turn on linum mode globally except for certain modes.
 (setq global-linum-mode t
-      linum-disabled-modes-list '(eshell-mode 
-				  wl-summary-mode 
-				  compilation-mode 
-				  org-mode 
-				  text-mode 
-				  dired-mode 
-				  erc-mode)
+      linum-disabled-modes-list '(eshell-mode
+                                  wl-summary-mode
+                                  compilation-mode
+                                  org-mode
+                                  text-mode
+                                  dired-mode
+                                  erc-mode)
       linum-format "%03d")
 
 (setq same-window-regexps (quote '(("\\*magit: [[:ascii:]]\\*")))
