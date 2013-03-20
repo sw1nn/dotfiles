@@ -52,3 +52,6 @@
 [submodule "submodule/emacs-git-gutter"]
 	path = submodule/emacs-git-gutter
 	url = git://github.com/syohex/emacs-git-gutter.git
+[submodule "submodule/popwin-el"]
+	path = submodule/popwin-el
+	url = git://github.com/m2ym/popwin-el.git
