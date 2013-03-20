@@ -51,6 +51,8 @@
 
 (define-key my-keys-minor-mode-map (kbd "C-+") 'text-scale-increase)
 (define-key my-keys-minor-mode-map (kbd "C--") 'text-scale-decrease)
+
+(define-key my-keys-minor-mode-map (kbd "M-y") 'browse-kill-ring)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-minor-mode my-keys-minor-mode
