@@ -15,8 +15,8 @@
   (add-to-list 'package-archives source t))
 (package-initialize)
 
-(dolist 
-    (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+"))
+(dolist
+    (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+\\.el"))
   (load-file config))
 
 (custom-set-variables
