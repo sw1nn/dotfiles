@@ -60,4 +60,6 @@
 
 (windmove-default-keybindings) ;; Shift+direction
 
+;; die tabs, DIE!
+(setq indent-tabs-mode nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
