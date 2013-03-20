@@ -49,11 +49,10 @@
 				  erc-mode)
       linum-format "%03d")
 
-; '(recenter-positions (quote (0.2 0.4 0.6 0.8 bottom top)))
 (setq same-window-regexps (quote '(("\\*magit: [[:ascii:]]\\*")))
-      visible-bell nil
-      volatile-highlights-mode t)
+      visible-bell nil)
 
+(volatile-highlights-mode t)
 (winner-mode t)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
