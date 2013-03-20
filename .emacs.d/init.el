@@ -19,13 +19,10 @@
     (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+"))
   (load-file config))
 
-(require 'flyspell)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(inferior-lisp-program "lein repl")
- '(ispell-program-name "/usr/local/bin/aspell"))
+ '(inferior-lisp-program "lein repl"))
 
