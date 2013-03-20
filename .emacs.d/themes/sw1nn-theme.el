@@ -1,5 +1,5 @@
 (deftheme sw1nn
-  "Created 2013-03-19.")
+  "Created 2013-03-20.")
 
 (custom-theme-set-faces
  'sw1nn
@@ -13,7 +13,7 @@
  '(flymake-errline ((t (:underline (:color "Red4" :style wave) :inherit nil))))
  '(flymake-warnline ((t (:underline (:color "Gold4" :style wave) :inherit nil))))
  '(flyspell-duplicate ((t (:underline (:color "Gold4" :style wave) :inherit nil))))
- '(flyspell-incorrect ((t (:underline (:color "Red4" :style wave)) :inherit nil)))
+ '(flyspell-incorrect ((t (:underline (:color "Red4" :style wave) :inherit nil))))
  '(font-lock-builtin-face ((t (:foreground "#5859b7"))))
  '(font-lock-comment-delimiter-face ((t (:slant italic :foreground "#465a61") :inherit font-lock-comment-face)))
  '(font-lock-comment-face ((t (:slant italic :foreground "#52676f"))))
