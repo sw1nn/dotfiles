@@ -15,6 +15,8 @@
   (add-to-list 'package-archives source t))
 (package-initialize)
 
+(setq custom-file (concat user-emacs-directory "conf.d/customize.el"))
+
 (dolist
     (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+\\.el"))
   (load-file config))
@@ -25,4 +27,3 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(inferior-lisp-program "lein repl"))
-
