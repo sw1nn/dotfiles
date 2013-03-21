@@ -63,6 +63,7 @@
 
 (windmove-default-keybindings) ;; Shift+direction
 
+(global-undo-tree-mode t)
 ;; die tabs, DIE!
 (setq indent-tabs-mode nil)
 
