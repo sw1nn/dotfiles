@@ -42,7 +42,7 @@
 
 (defun neale-custom-clojure-mode ()
   (neale-custom-lisp-mode)
-  )
+  (add-clj-compile-on-save))
 
 (defun neale-custom-nrepl-mode ()
   (neale-custom-lisp-mode))
