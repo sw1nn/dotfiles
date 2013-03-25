@@ -28,11 +28,7 @@ plugins=(git rvm autojump)
 
 source $ZSH/oh-my-zsh.sh
 
-if [[ "$SSH_CLIENT" =~ "205\.228\.82\.139.*" ]] ; then
-    export POWERLINE_SYMBOLS=compatible
-else
-    export POWERLINE_SYMBOLS=fancy
-fi
+export POWERLINE_SYMBOLS=fancy
 
 function goo() {
     links "http://www.google.co.uk/search?q=$*"
