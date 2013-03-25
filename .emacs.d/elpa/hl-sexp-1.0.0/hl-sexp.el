@@ -55,13 +55,7 @@
   :group 'editing)
 
 (defface hl-sexp-face
-  '((((type tty))
-     (:bold t))
-    (((class color) (background light))
-     (:background "lightgray"))
-    (((class color) (background dark))
-     (:background "gray10"))
-    (t (:bold t)))
+  '((t (:inherit highlight)))
   "Face used to fontify the sexp you're looking at."
   :group 'faces)
 
@@ -70,11 +64,11 @@
 (defun hl-sexp-highlight ()
   "Active the Hl-Sexp overlay on the current sexp in the current window.
 \(Unless it's a minibuffer window.)"
-  (when hl-sexp-mode			; Could be made buffer-local.
+  (when hl-sexp-mode                    ; Could be made buffer-local.
     (unless (window-minibuffer-p (selected-window)) ; silly in minibuffer
       (unless hl-sexp-overlay
-	(setq hl-sexp-overlay (make-overlay 1 1)) ; to be moved
-	(overlay-put hl-sexp-overlay 'face 'hl-sexp-face))
+        (setq hl-sexp-overlay (make-overlay 1 1)) ; to be moved
+        (overlay-put hl-sexp-overlay 'face 'hl-sexp-face))
       (overlay-put hl-sexp-overlay 'window (selected-window))
       (save-excursion
         (condition-case nil
@@ -100,8 +94,8 @@ Uses functions `hl-sexp-unhighlight' and `hl-sexp-highlight' on
   nil nil nil
   (if hl-sexp-mode
       (progn
-	(add-hook 'pre-command-hook #'hl-sexp-unhighlight)
-	(add-hook 'post-command-hook #'hl-sexp-highlight))
+        (add-hook 'pre-command-hook #'hl-sexp-unhighlight)
+        (add-hook 'post-command-hook #'hl-sexp-highlight))
     (hl-sexp-unhighlight)
     (remove-hook 'pre-command-hook #'hl-sexp-unhighlight)
     (remove-hook 'post-command-hook #'hl-sexp-highlight)))
