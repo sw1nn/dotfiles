@@ -16,7 +16,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (define-key my-keys-minor-mode-map (kbd "C-c SPC") 'ace-jump-mode)
 (define-key my-keys-minor-mode-map (kbd "C-c C-SPC") 'ace-jump-mode-pop-mark)
-(define-key my-keys-minor-mode-map (kbd "M-SPC") (lambda () (interactive) (just-one-space -1)))
+(define-key my-keys-minor-mode-map (kbd "M-SPC") (lambda () (interactive) (just-one-space -1) (fixup-whitespace)))
 (define-key my-keys-minor-mode-map (kbd "C-M-g") 'magit-status)
 (define-key my-keys-minor-mode-map (kbd "C-c g g") 'git-gutter:toggle)
 (define-key my-keys-minor-mode-map (kbd "C-c g p") 'git-gutter:previous-diff)
