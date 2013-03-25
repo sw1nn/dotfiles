@@ -24,7 +24,6 @@
 (setq inhibit-splash-screen t)
 
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
-(load-theme 'sw1nn t)
 
 (ido-mode t)
 (ido-ubiquitous t)
