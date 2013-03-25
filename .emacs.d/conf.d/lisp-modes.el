@@ -38,6 +38,7 @@
   (yas-minor-mode)
   (show-paren-mode)
   (eldoc-mode)
+  (hl-line-mode -1)
   (hl-sexp-mode))
 
 (defun neale-custom-clojure-mode ()

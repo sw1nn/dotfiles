@@ -71,4 +71,6 @@
 
 (add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(global-hl-line-mode t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
