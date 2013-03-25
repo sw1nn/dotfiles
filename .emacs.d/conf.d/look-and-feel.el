@@ -67,6 +67,8 @@
 ;; die tabs, DIE!
 (setq indent-tabs-mode nil)
 
+(setq-default cursor-type 'bar)
+
 (add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

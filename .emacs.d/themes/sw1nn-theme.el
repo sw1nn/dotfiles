@@ -1,5 +1,5 @@
 (deftheme sw1nn
-  "Created 2013-03-20.")
+  "Created 2013-03-25.")
 
 (custom-theme-set-faces
  'sw1nn
@@ -59,6 +59,7 @@
  '(show-paren-match ((t (:inverse-video t :foreground "white" :background "dodgerblue1"))))
  '(show-paren-mismatch ((t (:foreground "#042028" :background "#c61b6e"))))
  '(warning ((t (:underline (:color "Red4" :style wave)))))
- '(default ((t (:background "#042028" :foreground "#708183" :family "DejaVu Sans Mono for Powerline")))))
+ '(default ((t (:background "#042028" :foreground "#708183" :family "DejaVu Sans Mono for Powerline"))))
+ '(cursor ((t (:background "OliveDrab2")))))
 
 (provide-theme 'sw1nn)
