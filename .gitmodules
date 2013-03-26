@@ -34,9 +34,6 @@
 [submodule "submodule/multiple-cursors"]
 	path = submodule/multiple-cursors
 	url = git://github.com/magnars/multiple-cursors.el.git
-[submodule "submodule/nrepl"]
-	path = submodule/nrepl
-	url = git://github.com/kingtim/nrepl.el.git
 [submodule "submodule/align-cljlet"]
 	path = submodule/align-cljlet
 	url = git://github.com/gstamp/align-cljlet
@@ -55,3 +52,6 @@
 [submodule "submodule/popwin-el"]
 	path = submodule/popwin-el
 	url = git://github.com/m2ym/popwin-el.git
+[submodule "submodule/nrepl"]
+	path = submodule/nrepl
+	url = git://github.com/sw1nn/nrepl.el
