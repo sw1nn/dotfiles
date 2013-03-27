@@ -1,27 +1,27 @@
 [submodule "submodule/oh-my-zsh"]
 	path = submodule/oh-my-zsh
-	url = git@github.com:sw1nn/oh-my-zsh.git
+	url = git://github.com/sw1nn/oh-my-zsh.git
 [submodule "submodule/clojure-mode"]
 	path = submodule/clojure-mode
-	url = https://github.com/technomancy/clojure-mode.git
+	url = git://github.com/technomancy/clojure-mode.git
 [submodule "submodule/vimpager"]
 	path = submodule/vimpager
-	url = https://github.com/rkitover/vimpager.git
+	url = git://github.com/rkitover/vimpager.git
 [submodule "submodule/vim-powerline"]
 	path = submodule/vim-powerline
-	url = https://github.com/Lokaltog/vim-powerline.git
+	url = git://github.com/Lokaltog/vim-powerline.git
 [submodule "submodule/vim-fugitive"]
 	path = submodule/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
+	url = git://github.com/tpope/vim-fugitive.git
 [submodule "submodule/vimclojure"]
 	path = submodule/vimclojure
-	url = https://github.com/kotarak/vimclojure.git
+	url = git://github.com/kotarak/vimclojure.git
 [submodule "submodule/vim-colors-solarized"]
 	path = submodule/vim-colors-solarized
-	url = https://github.com/altercation/vim-colors-solarized.git
+	url = git://github.com/altercation/vim-colors-solarized.git
 [submodule "submodule/expand-region"]
 	path = submodule/expand-region
-	url = https://github.com/magnars/expand-region.el.git
+	url = git://github.com/magnars/expand-region.el.git
 [submodule "submodule/ac-nrepl"]
 	path = submodule/ac-nrepl
 	url = git://github.com/purcell/ac-nrepl.git
@@ -42,7 +42,7 @@
 	url = git://github.com/auto-complete/popup-el.git
 [submodule "submodule/ritz"]
 	path = submodule/ritz
-	url = git@github.com:pallet/ritz
+	url = git://github.com:pallet/ritz
 [submodule "submodule/emacs-git-gutter-fringe"]
 	path = submodule/emacs-git-gutter-fringe
 	url = git://github.com/syohex/emacs-git-gutter-fringe.git
