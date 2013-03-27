@@ -1,6 +1,6 @@
 [submodule "submodule/oh-my-zsh"]
 	path = submodule/oh-my-zsh
-	url = git://github.com/sw1nn/oh-my-zsh.git
+	url = git@github.com:sw1nn/oh-my-zsh.git
 [submodule "submodule/clojure-mode"]
 	path = submodule/clojure-mode
 	url = git://github.com/technomancy/clojure-mode.git
@@ -54,4 +54,4 @@
 	url = git://github.com/m2ym/popwin-el.git
 [submodule "submodule/nrepl"]
 	path = submodule/nrepl
-	url = git://github.com/sw1nn/nrepl.el
+	url = git@github.com:sw1nn/nrepl.el
