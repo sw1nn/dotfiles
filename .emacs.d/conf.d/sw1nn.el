@@ -4,7 +4,8 @@
 
 (defun toggle-clj-compile-on-save ()
   (interactive)
-  (setq clj-compile-on-save (not clj-compile-on-save)))
+  (setq clj-compile-on-save (not clj-compile-on-save))
+  (message "clj-compile-on-save %s" (if clj-compile-on-save "Enabled" "Disabled")))
 
 (defun add-clj-compile-on-save ()
   (add-hook 'after-save-hook
