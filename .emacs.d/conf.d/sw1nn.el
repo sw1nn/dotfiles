@@ -11,7 +11,9 @@
   (add-hook 'after-save-hook
             (lambda ()
               (if (and clj-compile-on-save
-                       (symbol-value 'nrepl-interaction-mode))
+                       (symbol-value 'nrepl-interaction-mode)
+                       (not (string-match "project.clj"
+                                          (file-name-nondirectory (buffer-file-name)))))
                   (progn (message "Compiling...")
                          (nrepl-load-current-buffer))))))
 
