@@ -18,7 +18,7 @@
 (setq custom-file (concat user-emacs-directory "conf.d/customize.el"))
 
 (dolist
-    (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+\\.el"))
+    (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+\\.el\\'"))
   (load-file config))
 
 (load-theme 'sw1nn t)
