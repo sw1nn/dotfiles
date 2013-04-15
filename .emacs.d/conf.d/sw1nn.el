@@ -1,11 +1,9 @@
-
-
 (defcustom clj-compile-on-save nil "non-nil means clj files should be compiled after save."  )
 
 (defun toggle-clj-compile-on-save ()
   (interactive)
   (setq clj-compile-on-save (not clj-compile-on-save))
-  (message "clj-compile-on-save %s" (if clj-compile-on-save "Enabled" "Disabled")))
+  (message "clj-compile-on-save %s" (if clj-compile-on-save "enabled" "disabled")))
 
 (defun add-clj-compile-on-save ()
   (add-hook 'after-save-hook
