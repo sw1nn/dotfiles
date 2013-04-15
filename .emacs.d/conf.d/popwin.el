@@ -1,6 +1,7 @@
 (add-to-list 'load-path (concat user-emacs-directory "vendor/popwin-el/misc"))
 
 (require 'popwin)
+(popwin-mode t)
 
 (setq display-buffer-function 'popwin:display-buffer)
 
@@ -16,6 +17,8 @@
 (push "*nrepl-macroexpansion*" popwin:special-display-config)
 (push "*nrepl-description*" popwin:special-display-config)
 (push "*nrepl*" popwin:special-display-config)
+
+(push "*inferior-lisp*" popwin:special-display-config)
 
 ;; slime
 (push "*slime-apropos*" popwin:special-display-config)
