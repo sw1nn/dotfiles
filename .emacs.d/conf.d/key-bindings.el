@@ -5,8 +5,8 @@
 
 (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
 
-(define-key my-keys-minor-mode-map (kbd "C-\\") nil) ; remove annoying input-method binding.
-
+(define-key my-keys-minor-mode-map (kbd "C-\\") (lambda () (interactive))) ; remove annoying input-method binding.
+(define-key my-keys-minor-mode-map (kbd "C-x C-z") (lambda () (interactive)))
 (define-key my-keys-minor-mode-map (kbd "s-p") (lambda () (interactive)))
 (define-key my-keys-minor-mode-map (kbd "M-TAB") 'yas/expand)
 (define-key my-keys-minor-mode-map (kbd "<select>") 'windmove-up)
@@ -14,6 +14,9 @@
 (define-key my-keys-minor-mode-map (kbd "C-M-z") 'align-cljlet)
 (define-key my-keys-minor-mode-map (kbd "C-=") 'er/expand-region)
 (define-key my-keys-minor-mode-map (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(define-key my-keys-minor-mode-map (kbd "C->") 'mc/mark-next-like-this)
+(define-key my-keys-minor-mode-map (kbd "C-<") 'mc/mark-previous-like-this)
+(define-key my-keys-minor-mode-map (kbd "C-c C-<") 'mc/mark-all-like-this-dwim)
 (define-key my-keys-minor-mode-map (kbd "C-c SPC") 'ace-jump-mode)
 (define-key my-keys-minor-mode-map (kbd "C-c C-SPC") 'ace-jump-mode-pop-mark)
 (define-key my-keys-minor-mode-map (kbd "M-SPC") (lambda () (interactive) (just-one-space -1) (fixup-whitespace)))
@@ -42,6 +45,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-x C-i") 'imenu)
 
 ;; File finding
+(define-key my-keys-minor-mode-map (kbd "C-x C-f") 'ido-find-file) ; needed to override ibuffer-find-file
 (define-key my-keys-minor-mode-map (kbd "C-x M-f") 'ido-find-file-other-window)
 (define-key my-keys-minor-mode-map (kbd "C-c y") 'bury-buffer)
 
@@ -57,7 +61,7 @@
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
-  t " ߐ" 'my-keys-minor-mode-map)
+  t "my-keys" 'my-keys-minor-mode-map)
 
 (my-keys-minor-mode 1)
 
