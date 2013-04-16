@@ -57,6 +57,10 @@
 (define-key my-keys-minor-mode-map (kbd "C--") 'text-scale-decrease)
 
 (define-key my-keys-minor-mode-map (kbd "M-y") 'browse-kill-ring)
+(define-key my-keys-minor-mode-map (kbd "<f10>") 'toggle-nrepl-popup-stacktraces-in-repl)
+(define-key my-keys-minor-mode-map (kbd "<f11>") 'toggle-fullscreen)
+(define-key my-keys-minor-mode-map (kbd "<f12>") 'toggle-clj-compile-on-save)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-minor-mode my-keys-minor-mode
