@@ -15,6 +15,11 @@
                   (progn (message "Compiling...")
                          (nrepl-load-current-buffer))))))
 
+;; make files opened in .jar etc read-only by default.
+(add-hook 'archive-extract-hook
+          (lambda ()
+            (read-only-mode)))
+
 (defun toggle-fullscreen ()
   "Toggle full screen on X11"
   (interactive)
