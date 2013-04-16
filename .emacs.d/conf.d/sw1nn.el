@@ -5,6 +5,11 @@
   (setq clj-compile-on-save (not clj-compile-on-save))
   (message "clj-compile-on-save %s" (if clj-compile-on-save "enabled" "disabled")))
 
+(defun toggle-nrepl-popup-stacktraces-in-repl ()
+  (interactive)
+  (setq nrepl-popup-stacktraces-in-repl (not nrepl-popup-stacktraces-in-repl))
+  (message "nrepl-popup-stacktraces-in-repl %s" (if nrepl-popup-stacktraces-in-repl "enabled" "disabled")))
+
 (defun add-clj-compile-on-save ()
   (add-hook 'after-save-hook
             (lambda ()
