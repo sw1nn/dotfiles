@@ -2,7 +2,8 @@
                   [lein-midje "3.0.0"]]
         :jvm-opts ["-Xmx4G"]
         :injections [(require 'spyscope.core)
-                     (require 'clojure.repl)]
+                     (require 'clojure.repl)
+                     (require 'clojure.pprint)]
         ;; :warn-on-reflection true
         :dependencies [[ritz/ritz-nrepl-middleware "0.7.0"]
                        [ritz/ritz-debugger "0.7.0"]
