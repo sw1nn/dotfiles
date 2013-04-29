@@ -25,6 +25,10 @@
           (lambda ()
             (read-only-mode)))
 
+(add-hook 'diff-mode-hook
+          (lambda ()
+            (read-only-mode)))
+
 (defun toggle-fullscreen ()
   "Toggle full screen on X11"
   (interactive)
