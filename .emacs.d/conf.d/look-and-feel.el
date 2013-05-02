@@ -6,6 +6,10 @@
 
 (require 'powerline)
 
+(require 'uniquify)
+
+(require 'saveplace)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
@@ -31,10 +35,20 @@
       ido-enable-flex-matching t
       ido-auto-merge-work-directories-length nil
       ido-create-new-buffer 'always
-      ido-use-filename-at-point 'guess
+      ido-use-filename-at-point nil
       ido-use-virtual-buffers t
       ido-handle-duplicate-virtual-buffers 2
       ido-max-prospects 10)
+
+(setq-default save-place t)
+
+(setq uniquify-buffer-name-style 'forward
+      x-select-enable-clipboard t
+      x-select-enable-primary t
+      save-interprogram-paste-before-kill t
+      apropos-do-all t
+      mouse-yank-at-point t
+      save-place-file (concat user-emacs-directory "places"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; turn on linum mode globally except for certain modes.
