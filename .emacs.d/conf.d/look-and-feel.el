@@ -86,4 +86,6 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (global-hl-line-mode t)
+
+(powerline-default-theme)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
