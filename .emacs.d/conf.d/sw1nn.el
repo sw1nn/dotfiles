@@ -33,4 +33,12 @@
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
 
+(defun find-grep-in-repository ()
+  "Run `find-grep' in repository"
+  (interactive)
+  (let ((prompt (concat "find " (or (locate-dominating-file default-directory ".git") ".") " -type f ! -wholename \"*/.*\" ! -wholename \"*~\" -exec grep -nH -e {} +")))
+    (grep-apply-setting 'grep-find-command prompt)
+    (call-interactively 'find-grep)))
+
+
 (provide 'sw1nn)
