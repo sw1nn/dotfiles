@@ -2,7 +2,7 @@
   (let ((cmd (concat "automator \"/Users/neale/Library/Services/" name ".workflow\"")))
     (when (shell-command cmd))))
 
-(defun google-music-play-(point)ause ()
+(defun google-music-play-pause ()
   (interactive)
   (automator-workflow "GoogleMusic - PlayPause"))
 
@@ -14,6 +14,6 @@
   (interactive)
   (automator-workflow "GoogleMusic - NextSong"))
 
-(define-key my-keys-minor-mode-map (kbd "<f7>") 'google-music-prev-song)
-(define-key my-keys-minor-mode-map (kbd "<f8>") 'google-music-play-pause)
-(define-key my-keys-minor-mode-map (kbd "<f9>") 'google-music-next-song)
+(defalias 'music-play-pause 'google-music-play-pause)
+(defalias 'music-next-song  'google-music-next-song)
+(defalias 'music-prev-song  'google-music-prev-song)
