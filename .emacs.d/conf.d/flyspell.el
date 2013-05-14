@@ -1,3 +1,3 @@
 (require 'flyspell)
 
-(setq ispell-program-name "/usr/bin/aspell")
+(setq ispell-program-name (executable-find "aspell"))
