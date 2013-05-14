@@ -12,11 +12,14 @@
           `((freenode (("sw1nn" . ,freenode-nickone-pass)))
             (nixhelp  (("qass" . ,nixhelp-nickone-pass)))))))
 
-(require 'erc-highlight-nicknames)
+(require 'erc-match)
+;(require 'erc-highlight-nicknames)
 
 (setq erc-user-full-name "Neale Swinnerton"
       erc-nick "sw1nn"
-      erc-autojoin-channels-alist '(("freenode.net" "#clojure"))
+      erc-away-nickname "sw1nn|away"
+      erc-nick-uniquifier "`"
+      erc-autojoin-channels-alist '(("freenode.net" "#clojure" "#cascalog" "#pallet"))
       erc-hide-list '("JOIN" "NICK" "PART" "QUIT")
       erc-track-exclude-types '("NICK" "PART" "QUIT" "333" "353")
       erc-modules '(autojoin button completion fill irccontrols
@@ -26,11 +29,16 @@
       erc-port 6667
       erc-prompt-for-nickserv-password nil
       erc-prompt-for-password nil
+      erc-server-auto-reconnect t
       erc-scrolltobottom-mode t
       erc-insert-timestamp-function 'erc-insert-timestamp-left
       erc-timestamp-format "%H:%M "
       erc-timestamp-only-if-changed-flag nil
       erc-hide-timestamps nil)
+
+(let ((erc-custom-file "~/.emacs.d/.erc-custom"))
+  (when (file-exists-p erc-custom-file)
+    (load-file erc-custom-file)))
 
 ;;; Finally, connect to the networks.
 (defun irc-maybe ()
