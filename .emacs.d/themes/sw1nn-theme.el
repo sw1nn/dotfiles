@@ -13,6 +13,7 @@
  '(diff-refine-change ((t (:background "DarkGoldenrod3"))))
  '(diff-refine-removed ((t (:inherit diff-refine-change :background "IndianRed3"))))
  '(eldoc-highlight-function-argument ((t (:foreground "#859900" :weight bold))))
+ '(erc-notice-face ((t (:foreground "gray20"))))
  '(flymake-errline ((t (:underline (:color "Red4" :style wave) :inherit nil))))
  '(flymake-warnline ((t (:underline (:color "Gold4" :style wave) :inherit nil))))
  '(flyspell-duplicate ((t (:underline (:color "Gold4" :style wave) :inherit nil))))
