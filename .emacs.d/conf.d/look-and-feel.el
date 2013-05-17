@@ -67,7 +67,14 @@
 
 (volatile-highlights-mode t)
 (winner-mode t)
-
+(setq winner-boring-buffers '("*Completions*"
+                              "*Help*"
+                              "*Kill Ring*"
+                              "*magit-edit-log*"
+                              "*Backtrace*"
+                              "*Compile-Log*"
+                              "*Packages*"
+                              "*Apropos*"))
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq smex-save-file (concat user-emacs-directory ".smex-items"))
