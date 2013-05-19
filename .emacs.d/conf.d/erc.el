@@ -30,6 +30,8 @@
       erc-prompt-for-nickserv-password nil
       erc-prompt-for-password nil
       erc-server-auto-reconnect t
+      erc-server-reconnect-attempts 16
+      erc-server-reconnect-timeout 30
       erc-scrolltobottom-mode t
       erc-insert-timestamp-function 'erc-insert-timestamp-left
       erc-timestamp-format "%H:%M "
