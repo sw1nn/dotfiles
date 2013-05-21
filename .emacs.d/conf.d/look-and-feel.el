@@ -40,16 +40,18 @@
       ido-handle-duplicate-virtual-buffers 2
       ido-max-prospects 10)
 
-(setq-default save-place t)
+(setq-default save-place t
+              uniquify-buffer-name-style 'forward
+              x-select-enable-clipboard t
+              x-select-enable-primary t
+              save-interprogram-paste-before-kill t
+              apropos-do-all t
+              mouse-yank-at-point t
+              save-place-file (concat user-emacs-directory "places"))
 
-(setq uniquify-buffer-name-style 'forward
-      x-select-enable-clipboard t
-      x-select-enable-primary t
-      save-interprogram-paste-before-kill t
-      apropos-do-all t
-      mouse-yank-at-point t
-      save-place-file (concat user-emacs-directory "places"))
+(savehist-mode t)
 
+(global-auto-revert-mode t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; turn on linum mode globally except for certain modes.
 (setq global-linum-mode t
