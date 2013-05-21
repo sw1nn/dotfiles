@@ -52,3 +52,6 @@
 [submodule "submodule/nrepl"]
 	path = submodule/nrepl
 	url = git@github.com:sw1nn/nrepl.el
+[submodule "submodule/ritz"]
+	path = submodule/ritz
+	url = git://github.com/pallet/ritz.git
