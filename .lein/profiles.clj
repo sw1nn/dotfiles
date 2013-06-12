@@ -1,5 +1,6 @@
 {:user {:plugins [[lein-ritz "0.7.0"]
-                  [lein-midje "3.0.0"]]
+                  [lein-midje "3.0.0"]
+                  [lein-marginalia "0.7.1"]]
         :jvm-opts ["-Xmx4G"]
         :injections [(require 'spyscope.core)
                      (require 'clojure.repl)
