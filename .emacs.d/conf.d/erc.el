@@ -47,6 +47,8 @@
   (interactive)
   ;; (select-frame (make-frame '((name . "IRC Frame")
   ;;                             (minibuffer . t))))
+  (when (y-or-n-p "Bitlbee? ")
+    (erc :server "localhost" :port 6667 :nick "sw1nn" :password "foobarbaz" :full-name "Neale Swinnerton"))
   (when (y-or-n-p "Freenode? ")
     (erc-ssl :server "irc.freenode.net" :port 6697 :nick "sw1nn" :full-name "Neale Swinnerton"))
   (when (y-or-n-p "AA ISP? ")
