@@ -2,7 +2,8 @@
                   [lein-midje "3.0.0"]
                   [lein-marginalia "0.7.1"]]
         :jvm-opts ["-Xmx4G"]
-        :injections [(require 'spyscope.core)
+        :injections [(try (require 'spyscope.core)
+                       (catch RuntimeException e)) ;; try-catch to workaround lein repl outside workspace
                      (require 'clojure.repl)
                      (require 'clojure.pprint)
                      (require 'alembic.still)]
