@@ -24,7 +24,6 @@
         (".*overtone.log" :regexp t :height 30)
         ("*gists*" :height 30)
         ("*sldb.*":regexp t :height 30)
-        ("*nrepl*" :height 30)
         ("*nrepl-error*" :height 30 :stick t)
         ("*nrepl-doc*" :height 30 :stick t)
         ("*nrepl-src*" :height 30 :stick t)

@@ -1,9 +1,15 @@
-(defcustom clj-compile-on-save nil "non-nil means clj files should be compiled after save."  )
+(defcustom clj-compile-on-save nil "non-nil means clj files should be compiled after save.")
+(defcustom clj-test-on-save nil "non-nil means clj test files should be executed after save.")
 
 (defun toggle-clj-compile-on-save ()
   (interactive)
   (setq clj-compile-on-save (not clj-compile-on-save))
   (message "clj-compile-on-save %s" (if clj-compile-on-save "enabled" "disabled")))
+
+(defun toggle-clj-test-on-save ()
+  (interactive)
+  (setq clj-test-on-save (not clj-compile-on-save))
+  (message "clj-test-on-save %s" (if clj-test-on-save "enabled" "disabled")))
 
 (defun toggle-nrepl-popup-stacktraces-in-repl ()
   (interactive)
@@ -18,7 +24,10 @@
                        (not (string-match "project.clj"
                                           (file-name-nondirectory (buffer-file-name)))))
                   (progn (message "Compiling...")
-                         (nrepl-load-current-buffer))))))
+                         (nrepl-load-current-buffer)))
+              (if (and clj-test-on-save
+                       (assq 'clojure-test minor-mode-alist))
+                  (clojure-test-run-tests)))))
 
 ;; make files opened in .jar etc read-only by default.
 (add-hook 'archive-extract-hook
@@ -32,6 +41,22 @@
     (set-frame-parameter
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
+
+(defun nrepl-perspective ()
+  (interactive)
+  (delete-other-windows)
+  (let ((nrepl-buff (get-buffer "*nrepl*")))
+    (when nrepl-buff
+      (split-window-right)
+      (switch-to-buffer "*nrepl*")))
+  (let ((nrepl-server-buff (get-buffer "*nrepl-server*")))
+    (when nrepl-server-buff
+      (split-window-below)
+      (windmove-down)
+      (switch-to-buffer "*nrepl-server*")))
+  (select-window (get-buffer-window "*nrepl*")))
+
+(require 'grep)
 
 (defun find-grep-in-repository ()
   "Run `find-grep' in repository"
