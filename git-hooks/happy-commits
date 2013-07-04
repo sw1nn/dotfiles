@@ -1,0 +1,5 @@
+#!/bin/sh
+
+HAPPY_FILE=~/dotfiles/git-hooks/resources/job-well-done.mp3
+
+afplay "${HAPPY_FILE}" || aplay "${HAPPY_FILE}"
