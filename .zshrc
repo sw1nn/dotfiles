@@ -30,6 +30,4 @@ source $ZSH/oh-my-zsh.sh
 
 export POWERLINE_SYMBOLS=fancy
 
-function goo() {
-    links "http://www.google.co.uk/search?q=$*"
-}
+export PATH=${HOME}/bin:/usr/local/bin:/usr/local/elasticmapreduce:${HOME}/.rvm/bin:${JAVA_HOME}/bin:/usr/bin:/usr/sbin:/bin:/sbin
