@@ -55,3 +55,6 @@
 [submodule "submodule/ritz"]
 	path = submodule/ritz
 	url = git://github.com/pallet/ritz.git
+[submodule "submodule/powerline"]
+	path = submodule/powerline
+	url = https://github.com/milkypostman/powerline.git
