@@ -1,4 +1,5 @@
 (require 'clojure-mode)
+(require 'clojure-test-mode)
 
 (require 'align-cljlet)
 
