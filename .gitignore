@@ -18,3 +18,5 @@ cache
 /.emacs.d/.refheap-auth
 /.emacs.d/.mc-lists.el
 /.vim/.netrwhist
+/.emacs.d/history
+/.lein/repl-history
