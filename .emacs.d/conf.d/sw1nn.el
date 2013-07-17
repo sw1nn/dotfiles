@@ -1,4 +1,4 @@
-(defcustom clj-compile-on-save nil "non-nil means clj files should be compiled after save.")
+(defcustom clj-compile-on-save t "non-nil means clj files should be compiled after save.")
 (defcustom clj-test-on-save nil "non-nil means clj test files should be executed after save.")
 
 (defun toggle-clj-compile-on-save ()
