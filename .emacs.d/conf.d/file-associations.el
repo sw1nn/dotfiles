@@ -5,6 +5,7 @@
                 ("\\.markdown\\'" . markdown-mode)
                 ("\\.yml\\'" . yaml-mode)
                 ("\\.scss\\'" . sass-mode)
-                ("\\.m\\'" . octave-mode)))
+                ("\\.m\\'" . octave-mode)
+                ("\\.json\\'" . json-mode)))
   (add-to-list 'auto-mode-alist mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
