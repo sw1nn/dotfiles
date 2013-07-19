@@ -10,6 +10,7 @@
                      (require 'alembic.still)]
         ;; :warn-on-reflection true
         :dependencies [
+                       [nrepl-inspect "0.3.0"]
                        [ritz/ritz-nrepl-middleware "0.7.0"]
 ;                       [ritz/ritz-debugger "0.7.0"]
 ;                       [ritz/ritz-repl-utils "0.7.0"]
@@ -18,7 +19,9 @@
                        [alembic "0.1.0"]
                       ]
         :repl-options {:nrepl-middleware
-                       [ritz.nrepl.middleware.javadoc/wrap-javadoc
+                       [
+                        inspector.middleware/wrap-inspect
+                        ritz.nrepl.middleware.javadoc/wrap-javadoc
                         ritz.nrepl.middleware.simple-complete/wrap-simple-complete]
 ;                       :host "0.0.0.0"
 ;                       :port 4001

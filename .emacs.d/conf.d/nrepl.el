@@ -1,5 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; nRepl tweaks
+(require 'nrepl-inspect)
+
 (setq nrepl-javadoc-local-paths (list "/usr/local/share/javadoc-w3m/7/docs/api"))
 (setq-default nrepl-port "4001")
 
@@ -14,10 +16,10 @@
 (add-hook 'nrepl-interaction-mode-hook 'ensure-yasnippet-is-first-ac-source)
 (add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
 (add-hook 'nrepl-mode-hook 'ensure-yasnippet-is-first-ac-source)
-
 (add-hook 'nrepl-interaction-mode-hook
           (lambda ()
             (define-key nrepl-interaction-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
+            (define-key nrepl-interaction-mode-map (kbd "C-c C-i") 'nrepl-inspect)
             (nrepl-turn-on-eldoc-mode)))
 
 (add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)
