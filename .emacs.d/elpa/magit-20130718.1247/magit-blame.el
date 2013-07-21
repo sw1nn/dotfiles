@@ -1,15 +1,14 @@
-;;; magit-blame.el --- blame support for magit
+;;; magit-blame.el --- blame support for Magit
 
-;; Copyright (C) 2012  Rüdiger Sonderfeld
-;; Copyright (C) 2012  Yann Hodique
-;; Copyright (C) 2011  byplayer
-;; Copyright (C) 2010  Alexander Prusov
-;; Copyright (C) 2009  Tim Moore
 ;; Copyright (C) 2008  Linh Dang
 ;; Copyright (C) 2008  Marius Vollmer
+;; Copyright (C) 2009  Tim Moore
+;; Copyright (C) 2010  Alexander Prusov
+;; Copyright (C) 2011  byplayer
+;; Copyright (C) 2012  Rüdiger Sonderfeld
+;; Copyright (C) 2012  Yann Hodique
 
 ;; Author: Yann Hodique <yann.hodique@gmail.com>
-;; Keywords:
 
 ;; Magit is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
@@ -26,12 +25,19 @@
 
 ;;; Commentary:
 
-;; This code has been backported from Egg (Magit fork) to Magit
+;; Control git-blame from Magit.
+;; This code has been backported from Egg (Magit fork) to Magit.
 
 ;;; Code:
 
-(eval-when-compile (require 'cl))
+(eval-when-compile (require 'cl-lib))
 (require 'magit)
+(require 'easymenu)
+
+(defcustom magit-blame-ignore-whitespace t
+  "Ignore whitespace when determining blame information."
+  :group 'magit
+  :type 'boolean)
 
 (defface magit-blame-header
   '((t :inherit magit-header))
@@ -69,8 +75,16 @@
     map)
   "Keymap for an annotated section.\\{magit-blame-map}")
 
-(defvar magit-blame-buffer-read-only)
-(make-variable-buffer-local 'magit-blame-buffer-read-only)
+(easy-menu-define magit-blame-mode-menu magit-blame-map
+  "Magit blame menu"
+  '("Blame"
+    ["Locate Commit" magit-blame-locate-commit t]
+    ["Next" magit-blame-next-chunk t]
+    ["Previous" magit-blame-previous-chunk t]
+    "---"
+    ["Quit" magit-blame-mode t]))
+
+(defvar-local magit-blame-buffer-read-only nil)
 
 ;;;###autoload
 (define-minor-mode magit-blame-mode
@@ -109,9 +123,11 @@
     (with-current-buffer buffer
       (save-restriction
         (with-temp-buffer
-          (magit-git-insert (list "blame" "--porcelain" "--"
-                                  (file-name-nondirectory
-                                   (buffer-file-name buffer))))
+          (magit-git-insert (append
+                             (list "blame" "--porcelain")
+                             (and magit-blame-ignore-whitespace (list "-w"))
+                             (list "--" (file-name-nondirectory
+                                         (buffer-file-name buffer)))))
           (magit-blame-parse buffer (current-buffer)))))))
 
 (defun magit-blame-locate-commit (pos)
@@ -125,35 +141,32 @@
     (if sha1
         (magit-show-commit sha1))))
 
-(defun magit-find-next-overlay-change (BEG END PROP)
+(defun magit-find-next-overlay-change (beg end prop)
   "Return the next position after BEG where an overlay matching a
 property PROP starts or ends. If there are no matching overlay
 boundaries from BEG to END, the return value is nil."
+  (when (> beg end)
+    (let ((swap beg))
+      (setq beg end end swap)))
   (save-excursion
-    (goto-char BEG)
+    (goto-char beg)
     (catch 'found
-      (flet ((overlay-change (pos)
-                             (if (< BEG END) (next-overlay-change pos)
-                               (previous-overlay-change pos)))
-             (within-bounds-p (pos)
-                              (if (< BEG END) (< pos END)
-                                (> pos END))))
-        (let ((ov-pos BEG))
-          ;; iterate through overlay changes from BEG to END
-          (while (within-bounds-p ov-pos)
-            (let* ((next-ov-pos (overlay-change ov-pos))
-                   ;; search for an overlay with a PROP property
-                   (next-ov
-                    (let ((overlays (overlays-at next-ov-pos)))
-                      (while (and overlays
-                                  (not (overlay-get (car overlays) PROP)))
-                        (setq overlays (cdr overlays)))
-                      (car overlays))))
-              (if next-ov
-                  ;; found the next overlay with prop PROP at next-ov-pos
-                  (throw 'found next-ov-pos)
-                ;; no matching overlay found, keep looking
-                (setq ov-pos next-ov-pos)))))))))
+      (let ((ov-pos beg))
+        ;; iterate through overlay changes from BEG to END
+        (while (< ov-pos end)
+          (let* ((next-ov-pos (next-overlay-change ov-pos))
+                 ;; search for an overlay with a PROP property
+                 (next-ov
+                  (let ((overlays (overlays-at next-ov-pos)))
+                    (while (and overlays
+                                (not (overlay-get (car overlays) prop)))
+                      (setq overlays (cdr overlays)))
+                    (car overlays))))
+            (if next-ov
+                ;; found the next overlay with prop PROP at next-ov-pos
+                (throw 'found next-ov-pos)
+              ;; no matching overlay found, keep looking
+              (setq ov-pos next-ov-pos))))))))
 
 (defun magit-blame-next-chunk (pos)
   "Go to the next blame chunk."
@@ -179,8 +192,8 @@ boundaries from BEG to END, the return value is nil."
 
 The second argument TZ can be used to add the timezone in (-)HHMM
 format to UNIXTIME.  UNIXTIME should be either a number
-containing seconds since epoch or Emacs's (HIGH LOW
-. IGNORED) format."
+containing seconds since epoch or Emacs's (HIGH LOW . IGNORED)
+format."
   (when (numberp tz)
     (unless (numberp unixtime)
       (setq unixtime (float-time unixtime)))

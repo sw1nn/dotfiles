@@ -1,7 +1,9 @@
 ;;; magit-stgit.el --- StGit plug-in for Magit
 
-;; Copyright (C) 2011  Lluis Vilanova
-;;
+;; Copyright (C) 2011  Lluís Vilanova
+
+;; Author: Lluís Vilanova <vilanova@ac.upc.edu>
+
 ;; Magit is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 3, or (at your option)
@@ -40,8 +42,7 @@
 ;;; Code:
 
 (require 'magit)
-(eval-when-compile
-  (require 'cl))
+(eval-when-compile (require 'cl-lib))
 
 ;;; Customizables:
 
@@ -77,9 +78,8 @@
 
 ;;; Common code:
 
-(defvar magit-stgit--enabled nil
+(defvar-local magit-stgit--enabled nil
   "Whether this buffer has StGit support.")
-(make-variable-buffer-local 'magit-stgit--enabled)
 
 (defvar magit-stgit-mode)
 
@@ -101,9 +101,8 @@
   "Reset the StGit enabled state."
   (kill-local-variable 'magit-stgit--enabled))
 
-(defvar magit-stgit--marked-patch nil
+(defvar-local magit-stgit--marked-patch nil
   "The (per-buffer) currently marked patch in an StGit series.")
-(make-variable-buffer-local 'magit-stgit--marked-patch)
 
 ;;; Menu:
 
@@ -202,16 +201,16 @@
              (magit-mode-init dir 'magit-commit-mode
                               #'magit-stgit--refresh-patch-buffer patch))))))
 
-(magit-add-action (item info "visit")
+(magit-add-action-clauses (item info "visit")
   ((series)
    (magit-stgit--show-patch info)
    (pop-to-buffer magit-commit-buffer-name)))
 
-(magit-add-action (item info "apply")
+(magit-add-action-clauses (item info "apply")
   ((series)
    (magit-run magit-stgit-executable "goto" info)))
 
-(magit-add-action (item info "discard")
+(magit-add-action-clauses (item info "discard")
   ((series)
    (let ((patch (or magit-stgit--marked-patch info)))
      (if (yes-or-no-p (format "Delete patch '%s' in series? " patch))
@@ -226,7 +225,7 @@
             nil
           patch)))
 
-(magit-add-action (item info "mark")
+(magit-add-action-clauses (item info "mark")
   ((series)
    (magit-stgit--set-marked-patch info)
    (magit-refresh-all)))
@@ -236,8 +235,7 @@
 (defun magit-stgit-refresh ()
   "Refresh the contents of a patch in an StGit series.
 If there is no marked patch in the series, refreshes the current
-patch.
-Otherwise, refreshes the marked patch."
+patch.  Otherwise, refreshes the marked patch."
   (interactive)
   (if magit-stgit--marked-patch
       (magit-run magit-stgit-executable "refresh" "-p" magit-stgit--marked-patch)
