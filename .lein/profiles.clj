@@ -22,6 +22,7 @@
                        [
                         inspector.middleware/wrap-inspect
                         ritz.nrepl.middleware.javadoc/wrap-javadoc
+                        ritz.nrepl.middleware.apropos/wrap-apropos
                         ritz.nrepl.middleware.simple-complete/wrap-simple-complete]
 ;                       :host "0.0.0.0"
 ;                       :port 4001
