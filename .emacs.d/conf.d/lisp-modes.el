@@ -56,14 +56,17 @@
   (show-paren-mode)
   (eldoc-mode)
   (hl-line-mode -1)
-  (hl-sexp-mode))
+  (hl-sexp-mode)
+  )
 
 (defun neale-custom-clojure-mode ()
   (neale-custom-lisp-mode)
   (add-clj-compile-on-save))
 
 (defun neale-custom-nrepl-mode ()
-  (neale-custom-lisp-mode))
+  (neale-custom-lisp-mode)
+  (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
+  )
 
 (defun neale-custom-inferior-lisp-mode ()
   (neale-custom-lisp-mode))

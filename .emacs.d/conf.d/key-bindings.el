@@ -62,7 +62,6 @@
 (define-key my-keys-minor-mode-map (kbd "<f9>") 'toggle-clj-compile-on-save)
 (define-key my-keys-minor-mode-map (kbd "<f10>") 'toggle-nrepl-popup-stacktraces-in-repl)
 (define-key my-keys-minor-mode-map (kbd "<f11>") 'toggle-fullscreen)
-(define-key my-keys-minor-mode-map (kbd "RET") 'electrify-return-if-match)
 
 (when (eq system-type 'darwin)
   (load-file (concat user-emacs-directory "conf.d/google-music-key-bodge.el")))
