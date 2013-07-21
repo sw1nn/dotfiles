@@ -9,10 +9,14 @@
     (add-to-list 'load-path project)))
 
 (require 'package)
-(dolist (source '(;; ("melpa" . "http://melpa.milkbox.net/packages/")
-                  ("marmalade" . "http://marmalade-repo.org/packages/")
+(dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
                   ("elpa" . "http://tromey.com/elpa/")))
   (add-to-list 'package-archives source t))
+
+
+;;
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+
 (package-initialize)
 
 (setq custom-file (concat user-emacs-directory "conf.d/customize.el"))
