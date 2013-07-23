@@ -61,12 +61,13 @@
 
 (defun neale-custom-clojure-mode ()
   (neale-custom-lisp-mode)
-  (add-clj-compile-on-save))
+  (add-clj-compile-on-save)
+  (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
+  (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
+  (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly))
 
 (defun neale-custom-nrepl-mode ()
-  (neale-custom-lisp-mode)
-  (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
-  )
+  (neale-custom-lisp-mode))
 
 (defun neale-custom-inferior-lisp-mode ()
   (neale-custom-lisp-mode))
