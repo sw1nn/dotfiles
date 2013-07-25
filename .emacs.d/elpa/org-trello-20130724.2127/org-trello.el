@@ -4,7 +4,7 @@
 
 ;; Author: Antoine R. Dumont <eniotna.t AT gmail.com>
 ;; Maintainer: Antoine R. Dumont <eniotna.t AT gmail.com>
-;; Version: 0.0.4.1
+;; Version: 0.0.6
 ;; Package-Requires: ((org "7.9.2") (dash "1.4.0") (request "0.1.0") (cl-lib "0.3.0") (json "1.3"))
 ;; Keywords: org-mode trello sync org-trello
 ;; URL: https://github.com/ardumont/org-trello
@@ -439,46 +439,88 @@
   (let* ((orgtrello/--card-kwd (gethash :keyword card-meta *TODO*)))
     (if orgtrello/--card-kwd orgtrello/--card-kwd *TODO*)))
 
+(defun orgtrello/--checks-before-sync-card (card-meta)
+  "Checks done before synchronizing the cards."
+  (let ((orgtrello/--card-name (gethash :title card-meta)))
+    (if orgtrello/--card-name
+        :ok
+      "Cannot synchronize the card - missing mandatory label. Skip it...")))
+
 (defun orgtrello/--card (card-meta &optional parent-meta grandparent-meta)
-  "Deal with create/update card query build"
-  ;; parent and grandparent are useless here
-  (let* ((orgtrello/--card-kwd  (orgtrello/--retrieve-state-of-card card-meta))
-         (orgtrello/--list-id   (assoc-default orgtrello/--card-kwd org-file-properties))
-         (orgtrello/--card-id   (gethash :id    card-meta))
-         (orgtrello/--card-name (gethash :title card-meta)))
-    (if orgtrello/--card-id
-        ;; update
-        (orgtrello-api/move-card orgtrello/--card-id orgtrello/--list-id orgtrello/--card-name)
-      ;; create
-      (orgtrello-api/add-card orgtrello/--card-name orgtrello/--list-id))))
+  "Deal with create/update card query build. If the checks are ko, the error message is returned."
+  (let ((checks-ok-or-error-message (orgtrello/--checks-before-sync-card card-meta)))
+    ;; title is mandatory
+    (if (equal :ok checks-ok-or-error-message)
+        ;; parent and grandparent are useless here
+        (let* ((orgtrello/--card-kwd  (orgtrello/--retrieve-state-of-card card-meta))
+               (orgtrello/--list-id   (assoc-default orgtrello/--card-kwd org-file-properties))
+               (orgtrello/--card-id   (gethash :id    card-meta))
+               (orgtrello/--card-name (gethash :title card-meta)))
+          (if orgtrello/--card-id
+              ;; update
+              (orgtrello-api/move-card orgtrello/--card-id orgtrello/--list-id orgtrello/--card-name)
+            ;; create
+            (orgtrello-api/add-card orgtrello/--card-name orgtrello/--list-id)))
+      checks-ok-or-error-message)))
+
+(defun orgtrello/--checks-before-sync-checklist (checklist-meta card-meta)
+  "Checks done before synchronizing the checklist."
+  (let ((orgtrello/--checklist-name (gethash :title checklist-meta))
+        (orgtrello/--card-id        (gethash :id card-meta)))
+    (if orgtrello/--checklist-name
+        (if orgtrello/--card-id
+            :ok
+          "Cannot synchronize the checklist - the card must be synchronized first. Skip it...")
+      "Cannot synchronize the checklist - missing mandatory label. Skip it...")))
 
 (defun orgtrello/--checklist (checklist-meta &optional card-meta grandparent-meta)
-  "Deal with create/update checklist query build"
-  ;; grandparent is useless here
-  (let* ((orgtrello/--checklist-id   (gethash :id checklist-meta))
-         (orgtrello/--card-id        (gethash :id card-meta))
-         (orgtrello/--checklist-name (gethash :title checklist-meta)))
-    (if orgtrello/--checklist-id
-        ;; update
-        (orgtrello-api/update-checklist orgtrello/--checklist-id orgtrello/--checklist-name)
-      ;; create
-      (orgtrello-api/add-checklist orgtrello/--card-id orgtrello/--checklist-name))))
+  "Deal with create/update checklist query build. If the checks are ko, the error message is returned."
+  (let ((checks-ok-or-error-message (orgtrello/--checks-before-sync-checklist checklist-meta card-meta)))
+    ;; title is mandatory
+    (if (equal :ok checks-ok-or-error-message)
+        ;; grandparent is useless here
+        (let* ((orgtrello/--checklist-id   (gethash :id checklist-meta))
+               (orgtrello/--card-id        (gethash :id card-meta))
+               (orgtrello/--checklist-name (gethash :title checklist-meta)))
+          (if orgtrello/--checklist-id
+              ;; update
+              (orgtrello-api/update-checklist orgtrello/--checklist-id orgtrello/--checklist-name)
+            ;; create
+            (orgtrello-api/add-checklist orgtrello/--card-id orgtrello/--checklist-name)))
+      checks-ok-or-error-message)))
+
+(defun orgtrello/--checks-before-sync-item (task-meta checklist-meta card-meta)
+  "Checks done before synchronizing the checklist."
+  (let ((orgtrello/--task-name    (gethash :title task-meta))
+        (orgtrello/--checklist-id (gethash :id checklist-meta))
+        (orgtrello/--card-id      (gethash :id card-meta)))
+    (if orgtrello/--task-name
+        (if orgtrello/--checklist-id
+            (if orgtrello/--card-id
+                :ok
+              "Cannot synchronize the item - the card must be synchronized first. Skip it...")
+          "Cannot synchronize the item - the checklist must be synchronized first. Skip it...")
+      "Cannot synchronize the item - missing mandatory label. Skip it...")))
 
 (defun orgtrello/--task (task-meta &optional checklist-meta card-meta)
-  "Deal with create/update task query build"
-  ;; card-meta is only usefull for the update part
-  (let* ((orgtrello/--task-id      (gethash :id task-meta))
-         (orgtrello/--checklist-id (gethash :id checklist-meta))
-         (orgtrello/--card-id      (gethash :id card-meta))
-         (orgtrello/--task-name    (gethash :title task-meta))
-         ;; FIXME - the trello api is strange - extract those calls into function
-         (orgtrello/--task-state   (if (string= *DONE* (gethash :keyword task-meta)) "complete" "incomplete")) ;; update api call
-         (orgtrello/--task-check   (if (string= *DONE* (gethash :keyword task-meta)) 't nil))) ;; create api call
-    (if orgtrello/--task-id
-        ;; update - rename, check or uncheck the task
-        (orgtrello-api/update-task orgtrello/--card-id orgtrello/--checklist-id orgtrello/--task-id orgtrello/--task-name orgtrello/--task-state)
-      ;; create
-      (orgtrello-api/add-tasks orgtrello/--checklist-id orgtrello/--task-name orgtrello/--task-check))))
+  "Deal with create/update task query build. If the checks are ko, the error message is returned."
+  (let ((checks-ok-or-error-message (orgtrello/--checks-before-sync-item task-meta checklist-meta card-meta)))
+    ;; title is mandatory
+    (if (equal :ok checks-ok-or-error-message)
+        ;; card-meta is only usefull for the update part
+        (let* ((orgtrello/--task-id      (gethash :id task-meta))
+               (orgtrello/--checklist-id (gethash :id checklist-meta))
+               (orgtrello/--card-id      (gethash :id card-meta))
+               (orgtrello/--task-name    (gethash :title task-meta))
+               ;; FIXME - the trello api is strange - extract those calls into function
+               (orgtrello/--task-state   (if (string= *DONE* (gethash :keyword task-meta)) "complete" "incomplete")) ;; update api call
+               (orgtrello/--task-check   (if (string= *DONE* (gethash :keyword task-meta)) 't nil))) ;; create api call
+          (if orgtrello/--task-id
+              ;; update - rename, check or uncheck the task
+              (orgtrello-api/update-task orgtrello/--card-id orgtrello/--checklist-id orgtrello/--task-id orgtrello/--task-name orgtrello/--task-state)
+            ;; create
+            (orgtrello-api/add-tasks orgtrello/--checklist-id orgtrello/--task-name orgtrello/--task-check)))
+      checks-ok-or-error-message)))
 
 (defun orgtrello/--too-deep-level (meta &optional parent-meta grandparent-meta)
   "Deal with too deep level."
@@ -501,8 +543,6 @@
 (defun orgtrello/--dispatch-create (meta &optional parent-meta grandparent-meta)
   (let* ((level       (gethash :level meta))
          (dispatch-fn (gethash level *MAP-DISPATCH-CREATE-UPDATE* 'orgtrello/--too-deep-level)))
-    ;; set the consumer-key to make a pointer to get back to when the request is finished
-    (orgtrello/--set-marker)
     ;; then execute the call
     (funcall dispatch-fn meta parent-meta grandparent-meta)))
 
@@ -511,11 +551,21 @@
   (let ((entry-metadata (orgtrello-data/entry-get-full-metadata)))
     (if entry-metadata
         (let ((query-http (orgtrello/--dispatch-create (gethash :current entry-metadata) (gethash :parent entry-metadata) (gethash :grandparent entry-metadata))))
-          ;; FIXME? can't we do better than this?
           (if (hash-table-p query-http)
-              (if sync (orgtrello-query/http-sync query-http 'orgtrello-query/--post-put-success-callback-update-id)
-                       (orgtrello-query/http      query-http 'orgtrello-query/--post-put-success-callback-update-id))
-            (message query-http))))))
+              ;; if it's a hash-table we can do the sync
+              (progn
+                ;; set the consumer-key to make a pointer to get back to when the request is finished
+                (orgtrello/--set-marker)
+                ;; is the request synchroneous or not?
+                (if sync
+                    ;; synchroneous request
+                    (orgtrello-query/http-sync query-http 'orgtrello-query/--post-put-success-callback-update-id)
+                  ;; asynchroneous one
+                  (orgtrello-query/http query-http 'orgtrello-query/--post-put-success-callback-update-id)))
+            ;; else it's a string to display
+            (message query-http))
+          ;; query-http returns nil so we cannot do any sync, the only reason possible is that some mandatory field (for example, the entity label is missing)
+          ))))
 
 (defun orgtrello/--merge-map (entry map-ids-by-name)
   "Given a map of (id . name) and an entry, return the entry updated with the id if not already present."
@@ -597,29 +647,74 @@
   "Given a checklist id, retrieve all the items from the checklist and return a list containing first the checklist, then the items."
   (--map it (assoc-default 'checkItems checklist)))
 
+(defun orgtrello/--compute-full-entities-from-trello (cards)
+  "Given a list of cards, compute the full cards data from the trello boards"
+  ;; will compute the hash-table from such list
+  (cl-reduce
+   (lambda (orgtrello/--acc-hash orgtrello/--entity)
+     (puthash (assoc-default 'id orgtrello/--entity) orgtrello/--entity orgtrello/--acc-hash)
+     orgtrello/--acc-hash)
+   ;; will compute the full list of entities
+   (cl-reduce
+    (lambda (orgtrello/--acc-list orgtrello/--entity-card)
+      (message "Computing card '%s' data..." (assoc-default 'name orgtrello/--entity-card))
+      (append (cons orgtrello/--entity-card (orgtrello/--do-retrieve-checklists-from-card orgtrello/--entity-card)) orgtrello/--acc-list))
+    cards
+    :initial-value nil)
+   :initial-value (make-hash-table :test 'equal)))
+
+(defun orgtrello/--update-buffer-with-remaining-trello-data (entities)
+  "Given a map of entities, dump those entities in the current buffer."
+  (if entities ;; could be empty
+      (with-current-buffer (current-buffer)
+        ;; go at the end of the file
+        (goto-char (point-max))
+        ;; dump the remaining entities
+        (maphash
+         (lambda (orgtrello/--entry-new-id orgtrello/--entity)
+           (let ((orgtrello/--entry-new-name (assoc-default 'name orgtrello/--entity)))
+             (message "Synchronizing new entity '%s' with id '%s'..." orgtrello/--entry-new-name orgtrello/--entry-new-id)
+             (insert (orgtrello/--compute-entity-to-org-entry orgtrello/--entity))
+             (org-set-property *ORGTRELLO-ID* orgtrello/--entry-new-id)))
+         entities)
+        (save-buffer))))
+
+(defun orgtrello/--sync-buffer-with-trello-data (entities)
+  "Given all the entites, update the current buffer with those."
+  (with-current-buffer (current-buffer)
+    (org-map-entries
+     (lambda ()
+       (let ((entry-metadata (orgtrello-data/entry-get-full-metadata)))
+         (if entry-metadata ;; if level > 4, entry-metadata is not considered as this is not represented in trello board
+             ;; will search 'entities' hash table for updates (do not compute diffs, take them as is)
+             (let* ((orgtrello/--entity         (gethash :current entry-metadata))
+                    (orgtrello/--entity-id      (gethash :id orgtrello/--entity))
+                    (orgtrello/--entity-updated (gethash orgtrello/--entity-id entities)))
+               (if orgtrello/--entity-updated
+                   ;; found something, we update by squashing the current contents
+                   (let* ((orgtrello/--entry-new-id   (assoc-default 'id   orgtrello/--entity-updated))
+                          (orgtrello/--entry-new-name (assoc-default 'name orgtrello/--entity-updated)))
+                     ;; update the buffer with the new updates (there may be none but naively we will overwrite at the moment)
+                     (message "Synchronizing entity '%s' with id '%s'..." orgtrello/--entry-new-name orgtrello/--entry-new-id)
+                     (org-show-entry)
+                     (kill-whole-line)
+                     (insert (orgtrello/--compute-entity-to-org-entry orgtrello/--entity-updated))
+                     ;; remove the entry from the hash-table
+                     (remhash orgtrello/--entity-id entities)))))))
+     t
+     'file)
+    (save-buffer))
+  ;; return the entities which has been dryed
+  entities)
+
 (defun orgtrello/do-sync-full-from-trello ()
   "Full org-mode file synchronisation. Beware, this will block emacs as the request is synchronous."
   (message "Synchronizing the trello board '%s' to the org-mode file. This may take a moment, some coffee may be a good idea..." (orgtrello/--board-name))
-  (let* ((orgtrello/--board-id (assoc-default *BOARD-ID* org-file-properties))
-         (orgtrello/--cards    (orgtrello-query/http-sync (orgtrello-api/get-cards orgtrello/--board-id) 'standard-success-callback))
-         (orgtrello/--entities (cl-reduce
-                                (lambda (orgtrello/--acc-list orgtrello/--entity-card)
-                                  (message "Synchronizing card '%s'..." (assoc-default 'name orgtrello/--entity-card))
-                                  (append (cons orgtrello/--entity-card (orgtrello/--do-retrieve-checklists-from-card orgtrello/--entity-card)) orgtrello/--acc-list))
-                                orgtrello/--cards
-                                :initial-value nil))) ;; FIXME filter on only the todo, doing, done lists
-
-    (with-current-buffer (current-buffer)
-      (cl-reduce
-       (lambda (str-acc entity)
-         (let ((orgtrello/--entry-new-id   (assoc-default 'id   entity))
-               (orgtrello/--entry-new-name (assoc-default 'name entity)))
-           (message "Synchronizing entity '%s' with id '%s'..." orgtrello/--entry-new-name orgtrello/--entry-new-id)
-           (insert (orgtrello/--compute-entity-to-org-entry entity))
-           (org-set-property *ORGTRELLO-ID* orgtrello/--entry-new-id)))
-       orgtrello/--entities
-       :initial-value "")
-      (save-buffer))))
+  (let* ((orgtrello/--board-id           (assoc-default *BOARD-ID* org-file-properties))
+         (orgtrello/--cards              (orgtrello-query/http-sync (orgtrello-api/get-cards orgtrello/--board-id) 'standard-success-callback))
+         (orgtrello/--entities-hash-map  (orgtrello/--compute-full-entities-from-trello orgtrello/--cards))
+         (orgtrello/--remaining-entities (orgtrello/--sync-buffer-with-trello-data orgtrello/--entities-hash-map)))
+    (orgtrello/--update-buffer-with-remaining-trello-data orgtrello/--remaining-entities)))
 
 (defun orgtrello/describe-heading ()
   (interactive)

@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (org-trello-mode) "org-trello" "org-trello.el"
-;;;;;;  (20967 61614 0 0))
+;;;;;;  (20976 60514 0 0))
 ;;; Generated autoloads from org-trello.el
 
 (autoload 'org-trello-mode "org-trello" "\
@@ -14,7 +14,7 @@ Sync your org-mode and your trello together.
 
 ;;;***
 
-;;;### (autoloads nil nil ("org-trello-pkg.el") (20967 61614 528333
+;;;### (autoloads nil nil ("org-trello-pkg.el") (20976 60515 11196
 ;;;;;;  0))
 
 ;;;***
