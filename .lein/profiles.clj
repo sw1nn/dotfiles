@@ -17,6 +17,7 @@
                        [clojure-complete "0.2.2"]
                        [spyscope "0.1.3"]
                        [alembic "0.1.0"]
+                       [slamhound "1.3.3"]
                       ]
         :repl-options {:nrepl-middleware
                        [
