@@ -24,7 +24,7 @@
 	url = git://github.com/magnars/expand-region.el.git
 [submodule "submodule/ac-nrepl"]
 	path = submodule/ac-nrepl
-	url = git://github.com/purcell/ac-nrepl.git
+	url = git://github.com/clojure-emacs/ac-nrepl.git
 [submodule "submodule/auto-complete"]
 	path = submodule/auto-complete
 	url = git://github.com/auto-complete/auto-complete.git
@@ -51,7 +51,7 @@
 	url = git://github.com/m2ym/popwin-el.git
 [submodule "submodule/nrepl"]
 	path = submodule/nrepl
-	url = git@github.com:sw1nn/nrepl.el
+	url = git://github.com/clojure-emacs/nrepl.el
 [submodule "submodule/ritz"]
 	path = submodule/ritz
 	url = git://github.com/pallet/ritz.git
