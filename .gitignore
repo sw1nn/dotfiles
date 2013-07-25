@@ -20,3 +20,4 @@ cache
 /.vim/.netrwhist
 /.emacs.d/history
 /.lein/repl-history
+/.emacs.d/org-clock-save.el
