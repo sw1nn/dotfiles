@@ -10,6 +10,7 @@
 
 (require 'saveplace)
 
+(require 'fold-dwim)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
