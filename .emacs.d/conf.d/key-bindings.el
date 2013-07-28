@@ -59,6 +59,8 @@
 
 (define-key my-keys-minor-mode-map (kbd "M-y") 'browse-kill-ring)
 (define-key my-keys-minor-mode-map (kbd "M-/") 'hippie-expand)
+(define-key my-keys-minor-mode-map (kbd "C-c M-i") 'idle-highlight-mode)
+
 (define-key my-keys-minor-mode-map (kbd "<f9>") 'toggle-clj-compile-on-save)
 (define-key my-keys-minor-mode-map (kbd "<f10>") 'toggle-nrepl-popup-stacktraces-in-repl)
 (define-key my-keys-minor-mode-map (kbd "<f11>") 'toggle-fullscreen)
