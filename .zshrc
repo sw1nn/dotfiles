@@ -31,3 +31,5 @@ source $ZSH/oh-my-zsh.sh
 export POWERLINE_SYMBOLS=fancy
 
 export PATH=${HOME}/bin:/usr/local/bin:/usr/local/elasticmapreduce:${HOME}/.rvm/bin:${JAVA_HOME}/bin:/usr/bin:/usr/sbin:/bin:/sbin
+
+[[ $EMACS = t ]] && unsetopt zle
