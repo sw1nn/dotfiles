@@ -3,7 +3,7 @@
 	url = git@github.com:sw1nn/oh-my-zsh.git
 [submodule "submodule/clojure-mode"]
 	path = submodule/clojure-mode
-	url = git://github.com/technomancy/clojure-mode.git
+	url = git://github.com/clojure-emacs/clojure-mode.git 
 [submodule "submodule/vimpager"]
 	path = submodule/vimpager
 	url = git://github.com/rkitover/vimpager.git
