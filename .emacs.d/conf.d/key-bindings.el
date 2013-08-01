@@ -29,7 +29,6 @@
 (define-key my-keys-minor-mode-map (kbd "M-x") 'smex)
 (define-key my-keys-minor-mode-map (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
 (define-key my-keys-minor-mode-map (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
-(define-key my-keys-minor-mode-map (kbd "C-c C-z") 'nrepl-perspective)
 
 ;; If you want to be able to M-x without meta (phones, etc)
 (define-key my-keys-minor-mode-map (kbd "C-c x") 'execute-extended-command)
