@@ -10,8 +10,6 @@ export LOGFILE="${DOTFILES}/install-$(date +'%Y%m%d%H%M%S').log"
 
 . "${DOTFILES}/install_functions.sh"
 
-# do this before linking .ssh, cos might lose required keys in that
-# dir otherwise
 cecho "green" "Updating git submodules..."
 update_submodules 2>&1  >> "${LOGFILE}"
 
