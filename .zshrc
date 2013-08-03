@@ -35,4 +35,5 @@ export PATH=${HOME}/bin:/usr/local/bin:/usr/local/elasticmapreduce:${HOME}/.rvm/
 if [[ $EMACS = t ]]; then
   unsetopt zle
   export GIT_PAGER=cat
+  export MANPAGER=cat
 fi
