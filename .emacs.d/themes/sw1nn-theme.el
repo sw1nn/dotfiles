@@ -9,7 +9,7 @@
  '(compilation-line-number ((t (:foreground "#259185") :inherit font-lock-keyword-face)))
  '(diff-file-header ((t (:background "grey15" :weight bold))))
  '(diff-header ((t (:background "grey15"))))
- '(diff-refine-added ((t (:inherit diff-refine-change :background "DarkOliveGreen1"))))
+ '(diff-refine-added ((t (:inherit diff-refine-change :background "green3"))))
  '(diff-refine-change ((t (:background "DarkGoldenrod3"))))
  '(diff-refine-removed ((t (:inherit diff-refine-change :background "IndianRed3"))))
  '(eldoc-highlight-function-argument ((t (:foreground "#859900" :weight bold))))
