@@ -103,5 +103,11 @@
 (add-to-list 'custom-safe-themes "a663548b547afbc2975904b29ea855eb467522d287b008a9897a8174fa1d262f")
 (add-to-list 'custom-safe-themes "af4ed275cddf70e5f53cec12ddecdeeb4ced75796e910aee779725ab211aba89")
 
+(setq scroll-margin 3
+      scroll-conservatively 1000 ; > 100 => never recentre point
+      scroll-up-aggressively 0.01
+      scroll-down-aggressively 0.01)
+
+
 (load-theme 'sw1nn t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
