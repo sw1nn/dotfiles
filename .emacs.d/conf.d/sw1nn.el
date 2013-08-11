@@ -22,7 +22,9 @@
               (if (and clj-compile-on-save
                        (symbol-value 'nrepl-interaction-mode)
                        (not (string-match "project.clj"
-                                          (file-name-nondirectory (buffer-file-name)))))
+                                          (file-name-nondirectory (buffer-file-name))))
+                       (not (string-match ".lein/profiles.clj"
+                                          (substring (buffer-file-name) -18))))
                   (progn (message "Compiling...")
                          (nrepl-load-current-buffer)))
               (if (and clj-test-on-save
