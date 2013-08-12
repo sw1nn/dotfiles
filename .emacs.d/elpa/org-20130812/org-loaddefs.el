@@ -667,7 +667,7 @@ Set `org-capture-templates' to be similar to `org-remember-templates'.
 ;;;### (autoloads (org-dblock-write:clocktable org-clock-report org-clock-get-clocktable
 ;;;;;;  org-clock-display org-clock-sum org-clock-goto org-clock-cancel
 ;;;;;;  org-clock-out org-clock-in-last org-clock-in org-resolve-clocks)
-;;;;;;  "org-clock" "org-clock.el" "47a416ff36bb88a1b81e5fec05c17517")
+;;;;;;  "org-clock" "org-clock.el" "74f9b47906322bab0e7c3929d671761d")
 ;;; Generated autoloads from org-clock.el
 
 (autoload 'org-resolve-clocks "org-clock" "\
@@ -838,7 +838,7 @@ tree can be found.
 ;;;***
 
 ;;;### (autoloads (org-element-context org-element-at-point org-element-interpret-data)
-;;;;;;  "org-element" "org-element.el" "209769da8282fbb5c8b1fd5819b1532f")
+;;;;;;  "org-element" "org-element.el" "63f37029da475dfaf7d33aa9b1ced9fa")
 ;;; Generated autoloads from org-element.el
 
 (autoload 'org-element-interpret-data "org-element" "\
@@ -1753,7 +1753,7 @@ replace any running timer.
 ;;;***
 
 ;;;### (autoloads (org-git-version org-release) "org-version" "org-version.el"
-;;;;;;  (20959 48244))
+;;;;;;  (21000 27615))
 ;;; Generated autoloads from org-version.el
 
 (autoload 'org-release "org-version" "\
@@ -1779,7 +1779,7 @@ The location of ODT styles.")
 ;;;;;;  org-run-like-in-org-mode turn-on-orgstruct++ turn-on-orgstruct
 ;;;;;;  orgstruct-mode org-global-cycle org-cycle org-mode org-clock-persistence-insinuate
 ;;;;;;  turn-on-orgtbl org-version org-babel-load-file org-babel-do-load-languages)
-;;;;;;  "org" "org.el" (20959 48142))
+;;;;;;  "org" "org.el" (20999 7342))
 ;;; Generated autoloads from org.el
 
 (autoload 'org-babel-do-load-languages "org" "\
@@ -2002,7 +2002,7 @@ Call the customize function with org as argument.
 
 ;;;### (autoloads (org-export-dispatch org-export-insert-default-template
 ;;;;;;  org-export-replace-region-by org-export-string-as org-export-to-file
-;;;;;;  org-export-to-buffer org-export-as) "ox" "ox.el" "99d1fc5866af29c919dcb2dcb2981832")
+;;;;;;  org-export-to-buffer org-export-as) "ox" "ox.el" "a672e0437b661d8520d8173f2fc542dd")
 ;;; Generated autoloads from ox.el
 
 (autoload 'org-export-as "ox" "\
@@ -2120,7 +2120,7 @@ When ARG is \\[universal-argument] \\[universal-argument], display the asynchron
 
 ;;;### (autoloads (org-ascii-publish-to-utf8 org-ascii-publish-to-latin1
 ;;;;;;  org-ascii-publish-to-ascii org-ascii-export-to-ascii org-ascii-export-as-ascii)
-;;;;;;  "ox-ascii" "ox-ascii.el" "5f7a6cd3b95f22ce8e88639a2b243fce")
+;;;;;;  "ox-ascii" "ox-ascii.el" "72165d255d7d81f0b0b000d71134daea")
 ;;; Generated autoloads from ox-ascii.el
 
 (autoload 'org-ascii-export-as-ascii "ox-ascii" "\
@@ -2852,7 +2852,7 @@ Return output file name.
 
 ;;;### (autoloads (org-publish-current-project org-publish-current-file
 ;;;;;;  org-publish-all org-publish) "ox-publish" "ox-publish.el"
-;;;;;;  "aac87974ee4e2fd65a8dc3a7803d2808")
+;;;;;;  "7fa49956d8a48c0ddd4ef26dbf7e6b6c")
 ;;; Generated autoloads from ox-publish.el
 
 (defalias 'org-publish-project 'org-publish)
@@ -2922,7 +2922,7 @@ this command to convert it.
 
 ;;;### (autoloads (org-export-dispatch org-export-insert-default-template
 ;;;;;;  org-export-replace-region-by org-export-string-as org-export-to-file
-;;;;;;  org-export-to-buffer org-export-as) "ox" "ox.el" "99d1fc5866af29c919dcb2dcb2981832")
+;;;;;;  org-export-to-buffer org-export-as) "ox" "ox.el" "a672e0437b661d8520d8173f2fc542dd")
 ;;; Generated autoloads from ox.el
 
 (autoload 'org-export-as "ox" "\

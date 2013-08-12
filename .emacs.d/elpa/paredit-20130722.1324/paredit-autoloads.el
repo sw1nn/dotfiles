@@ -3,23 +3,30 @@
 ;;; Code:
 
 
-;;;### (autoloads (paredit-mode) "paredit" "paredit.el" (20799 7778))
+;;;### (autoloads (enable-paredit-mode paredit-mode) "paredit" "paredit.el"
+;;;;;;  (21000 61037 0 0))
 ;;; Generated autoloads from paredit.el
 
 (autoload 'paredit-mode "paredit" "\
 Minor mode for pseudo-structurally editing Lisp code.
 With a prefix argument, enable Paredit Mode even if there are
-  imbalanced parentheses in the buffer.
-Paredit behaves badly if parentheses are imbalanced, so exercise
+  unbalanced parentheses in the buffer.
+Paredit behaves badly if parentheses are unbalanced, so exercise
   caution when forcing Paredit Mode to be enabled, and consider
-  fixing imbalanced parentheses instead.
+  fixing unbalanced parentheses instead.
 \\<paredit-mode-map>
 
 \(fn &optional ARG)" t nil)
 
+(autoload 'enable-paredit-mode "paredit" "\
+Turn on pseudo-structural editing of Lisp code.
+
+\(fn)" t nil)
+
 ;;;***
 
-;;;### (autoloads nil nil ("paredit-pkg.el") (20799 7778 410449))
+;;;### (autoloads nil nil ("paredit-pkg.el") (21000 61037 211596
+;;;;;;  0))
 
 ;;;***
 
