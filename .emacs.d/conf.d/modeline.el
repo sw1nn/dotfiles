@@ -23,4 +23,4 @@
              (when old-mode-str
                (setcar old-mode-str mode-str)))))
 
-(add-hook 'after-change-major-mode-hook 'clean-mode-line)
+;(add-hook 'after-change-major-mode-hook 'clean-mode-line)

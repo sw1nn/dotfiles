@@ -4,7 +4,7 @@
 
 (require 'volatile-highlights)
 
-(require 'powerline)
+;(require 'powerline)
 
 (require 'uniquify)
 
@@ -97,7 +97,7 @@
 
 (global-hl-line-mode t)
 
-(powerline-default-theme)
+;(powerline-default-theme)
 
 ;; allow sw1nn and sw1nn-whiteboard themes.
 (add-to-list 'custom-safe-themes "a663548b547afbc2975904b29ea855eb467522d287b008a9897a8174fa1d262f")
