@@ -108,6 +108,7 @@
       scroll-up-aggressively 0.01
       scroll-down-aggressively 0.01)
 
+(setq dired-use-ls-dired nil)
 
 (load-theme 'sw1nn t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
