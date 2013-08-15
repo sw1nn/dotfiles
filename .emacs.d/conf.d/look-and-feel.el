@@ -100,7 +100,7 @@
 ;(powerline-default-theme)
 
 ;; allow sw1nn and sw1nn-whiteboard themes.
-(add-to-list 'custom-safe-themes "a663548b547afbc2975904b29ea855eb467522d287b008a9897a8174fa1d262f")
+(add-to-list 'custom-safe-themes "f87193727466d522c48e4b665b8df10de18c2923b3f7747e86437fae4680197a")
 (add-to-list 'custom-safe-themes "af4ed275cddf70e5f53cec12ddecdeeb4ced75796e910aee779725ab211aba89")
 
 (setq scroll-margin 3
