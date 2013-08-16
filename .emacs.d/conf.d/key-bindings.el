@@ -47,6 +47,7 @@
 ;; File finding
 (define-key my-keys-minor-mode-map (kbd "C-x C-f") 'ido-find-file) ; needed to override ibuffer-find-file
 (define-key my-keys-minor-mode-map (kbd "C-x M-f") 'ido-find-file-other-window)
+(define-key my-keys-minor-mode-map (kbd "C-x p") 'magit-find-file-completing-read)
 (define-key my-keys-minor-mode-map (kbd "C-c y") 'bury-buffer)
 
 (define-key my-keys-minor-mode-map (kbd "C-c v") 'revert-buffer)
