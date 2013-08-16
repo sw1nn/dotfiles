@@ -30,6 +30,32 @@
 
 (eval-when-compile (require 'cl-lib))
 
+(defvar magit-key-mode-keymaps)
+(defvar magit-key-mode-last-buffer)
+(defvar magit-pre-key-mode-window-conf)
+
+;;; Faces
+
+(defface magit-key-mode-header-face
+  '((t :inherit font-lock-keyword-face))
+  "Face for key mode header lines."
+  :group 'magit-faces)
+
+(defface magit-key-mode-button-face
+  '((t :inherit font-lock-builtin-face))
+  "Face for key mode buttons."
+  :group 'magit-faces)
+
+(defface magit-key-mode-switch-face
+  '((t :inherit font-lock-warning-face))
+  "Face for key mode switches."
+  :group 'magit-faces)
+
+(defface magit-key-mode-args-face
+  '((t :inherit widget-field))
+  "Face for key mode switch arguments."
+  :group 'magit-faces)
+
 ;;; Keygroups
 
 (defvar magit-key-mode-groups
@@ -38,11 +64,11 @@
      (actions
       ("l" "Short" magit-log)
       ("L" "Long" magit-log-long)
-      ("h" "Reflog" magit-reflog)
+      ("h" "Head Reflog" magit-reflog-head)
       ("f" "File log" magit-single-file-log)
       ("rl" "Ranged short" magit-log-ranged)
       ("rL" "Ranged long" magit-log-long-ranged)
-      ("rh" "Ranged reflog" magit-reflog-ranged))
+      ("rh" "Reflog" magit-reflog))
      (switches
       ("-m" "Only merge commits" "--merges")
       ("-do" "Date Order" "--date-order")
@@ -52,7 +78,6 @@
       ("-g" "Show Graph" "--graph")
       ("-n" "Name only" "--name-only")
       ("-am" "All match" "--all-match")
-      ("-ab" "All branches" "--branches")
       ("-al" "All" "--all"))
      (arguments
       ("=r" "Relative" "--relative=" read-directory-name)
@@ -147,7 +172,8 @@
     (merging
      (man-page "git-merge")
      (actions
-      ("m" "Merge" magit-manual-merge))
+      ("m" "Merge" magit-merge)
+      ("A" "Abort" magit-merge-abort))
      (switches
       ("-ff" "Fast-forward only" "--ff-only")
       ("-nf" "No fast-forward" "--no-ff")
@@ -208,7 +234,8 @@ same name."
   (when (assoc group magit-key-mode-groups)
     (magit-key-mode-delete-group group))
   (setq magit-key-mode-groups
-        (cons (list group (list 'actions) (list 'switches)) magit-key-mode-groups)))
+        (cons (list group (list 'actions) (list 'switches))
+              magit-key-mode-groups)))
 
 (defun magit-key-mode-key-defined-p (for-group key)
   "Return t if KEY is defined as any option within FOR-GROUP.
@@ -265,7 +292,7 @@ The user is prompted for the key."
          (seq (read-key-sequence
                (format "Enter command prefix%s: "
                        (if man-page
-                         (format ", `?' for man `%s'" man-page)
+                           (format ", `?' for man `%s'" man-page)
                          ""))))
          (actions (cdr (assoc 'actions opts))))
     (cond
@@ -455,13 +482,14 @@ the key combination highlighted before the description."
       (setq new-exec-pos
             (cdr (assoc current-exec
                         (magit-key-mode-build-exec-point-alist)))))
-    (if (and is-first actions-p)
-        (progn (goto-char actions-p)
-               (magit-key-mode-jump-to-next-exec))
-      (if new-exec-pos
-          (progn (goto-char new-exec-pos)
-                 (skip-chars-forward " "))
-        (goto-char old-point))))
+    (cond ((and is-first actions-p)
+           (goto-char actions-p)
+           (magit-key-mode-jump-to-next-exec))
+          (new-exec-pos
+           (goto-char new-exec-pos)
+           (skip-chars-forward " "))
+          (t
+           (goto-char old-point))))
   (setq buffer-read-only t)
   (fit-window-to-buffer))
 
@@ -469,7 +497,7 @@ the key combination highlighted before the description."
   (save-excursion
     (goto-char (point-min))
     (let* ((exec (get-text-property (point) 'key-group-executor))
-           (exec-alist (if exec `((,exec . ,(point))) nil)))
+           (exec-alist (and exec `((,exec . ,(point))))))
       (cl-do nil ((eobp) (nreverse exec-alist))
         (when (not (eq exec (get-text-property (point) 'key-group-executor)))
           (setq exec (get-text-property (point) 'key-group-executor))
@@ -480,7 +508,7 @@ the key combination highlighted before the description."
 
 (defun magit-key-mode-draw-header (header)
   "Draw a header with the correct face."
-  (insert (propertize header 'face 'font-lock-keyword-face) "\n"))
+  (insert (propertize header 'face 'magit-key-mode-header-face) "\n"))
 
 (defvar magit-key-mode-args-in-cols nil
   "When true, draw arguments in columns as with switches and options.")
@@ -494,7 +522,7 @@ the key combination highlighted before the description."
      (format "(%s) %s"
              (nth 2 x)
              (propertize (gethash (nth 2 x) magit-key-mode-current-args "")
-                         'face 'widget-field)))
+                         'face 'magit-key-mode-args-face)))
    (not magit-key-mode-args-in-cols)))
 
 (defun magit-key-mode-draw-switches (switches)
@@ -505,7 +533,7 @@ the key combination highlighted before the description."
    (lambda (x)
      (format "(%s)" (let ((s (nth 2 x)))
                       (if (member s magit-key-mode-current-options)
-                        (propertize s 'face 'font-lock-warning-face)
+                          (propertize s 'face 'magit-key-mode-switch-face)
                         s))))))
 
 (defun magit-key-mode-draw-actions (actions)
@@ -518,7 +546,7 @@ the key combination highlighted before the description."
     (magit-key-mode-draw-header section)
     (magit-key-mode-draw-in-cols
      (mapcar (lambda (x)
-               (let* ((head (propertize (car x) 'face 'font-lock-builtin-face))
+               (let* ((head (propertize (car x) 'face 'magit-key-mode-button-face))
                       (desc (nth 1 x))
                       (more (and maker (funcall maker x)))
                       (text (format " %s: %s%s%s"

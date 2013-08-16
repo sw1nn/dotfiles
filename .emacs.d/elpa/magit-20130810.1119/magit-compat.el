@@ -28,12 +28,9 @@
 (declare-function magit-git-exit-code 'magit)
 
 ;;; Old Emacsen
-
 ;;;; Without Prefix
 
 (eval-and-compile
-
-  ;; make-local-variable
 
   ;; Added in Emacs 24.3.
   (unless (fboundp 'setq-local)
@@ -42,7 +39,7 @@
       (list 'set (list 'make-local-variable (list 'quote var)) val)))
 
   ;; Added in Emacs 24.3.
-  (unless (fboundp 'setq-local)
+  (unless (fboundp 'defvar-local)
     (defmacro defvar-local (var val &optional docstring)
       "Define VAR as a buffer-local variable with default value VAL.
 Like `defvar' but additionally marks the variable as being automatically
@@ -50,6 +47,15 @@ buffer-local wherever it is set."
       (declare (debug defvar) (doc-string 3))
       (list 'progn (list 'defvar var val docstring)
             (list 'make-variable-buffer-local (list 'quote var)))))
+
+  ;; Added in Emacs 23.3.
+  (unless (fboundp 'string-prefix-p)
+    (defun string-prefix-p (str1 str2 &optional ignore-case)
+      "Return non-nil if STR1 is a prefix of STR2.
+If IGNORE-CASE is non-nil, the comparison is done without paying attention
+to case differences."
+      (eq t (compare-strings str1 nil nil
+                             str2 0 (length str1) ignore-case))))
 
   ;; Added in Emacs 23.3.
   (unless (fboundp 'string-match-p)
@@ -85,6 +91,12 @@ Also, do not record undo information."
       (defalias 'magit-start-process 'start-file-process)
     (defalias 'magit-start-process 'start-process))
   )
+
+;; Added in Emacs 22.2.
+(defun magit-use-region-p ()
+  (if (fboundp 'use-region-p)
+      (use-region-p)
+    (and transient-mark-mode mark-active)))
 
 ;; Added in Emacs 22.2.
 (defun magit-server-running-p ()
@@ -138,11 +150,9 @@ Return values:
        (delete-directory directory)))))
 
 ;;; Old Git
-
 ;;;; Common
 
-(defvar magit-have-config-param 'unset)
-(make-variable-buffer-local 'magit-have-config-param)
+(defvar-local magit-have-config-param 'unset)
 (put 'magit-have-config-param 'permanent-local t)
 
 (defun magit-configure-have-config-param ()
@@ -152,20 +162,17 @@ Return values:
 
 ;;;; Config
 
-(defvar magit-have-graph 'unset)
-(defvar magit-have-decorate 'unset)
-(defvar magit-have-abbrev 'unset)
-(defvar magit-have-grep-reflog 'unset)
-
-(make-variable-buffer-local 'magit-have-graph)
-(make-variable-buffer-local 'magit-have-decorate)
-(make-variable-buffer-local 'magit-have-abbrev)
-(make-variable-buffer-local 'magit-have-grep-reflog)
+(defvar-local magit-have-graph 'unset)
+(defvar-local magit-have-decorate 'unset)
+(defvar-local magit-have-abbrev 'unset)
+(defvar-local magit-have-grep-reflog 'unset)
+(defvar-local magit-have-revlist-count 'unset)
 
 (put 'magit-have-graph 'permanent-local t)
 (put 'magit-have-decorate 'permanent-local t)
 (put 'magit-have-abbrev 'permanent-local t)
 (put 'magit-have-grep-reflog 'permanent-local t)
+(put 'magit-have-revlist-count 'permanent-local t)
 
 (defun magit-configure-have-graph ()
   (when (eq magit-have-graph 'unset)
@@ -187,6 +194,12 @@ Return values:
     (setq magit-have-grep-reflog
           (= 0 (magit-git-exit-code
                 "log" "--walk-reflogs" "--grep-reflog" "." "-n" "0")))))
+
+(defun magit-configure-have-revlist-count ()
+  (when (eq magit-have-revlist-count 'unset)
+    (setq magit-have-revlist-count
+          (= 0 (magit-git-exit-code
+                "rev-list" "--count" "--left-right" "HEAD")))))
 
 (provide 'magit-compat)
 ;;; magit-compat.el ends here
