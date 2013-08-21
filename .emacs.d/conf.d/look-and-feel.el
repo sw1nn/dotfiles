@@ -97,6 +97,8 @@
 
 (global-hl-line-mode t)
 
+(hideshowvis-symbols)
+
 ;(powerline-default-theme)
 
 ;; allow sw1nn and sw1nn-whiteboard themes.
