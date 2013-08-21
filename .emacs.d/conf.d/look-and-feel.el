@@ -24,7 +24,7 @@
   (blink-cursor-mode -1))
 
 (add-to-list 'default-frame-alist '(height . 50))
-(add-to-list 'default-frame-alist '(width . 180))
+(add-to-list 'default-frame-alist '(width . 160))
 
 (setq inhibit-splash-screen t)
 
