@@ -66,7 +66,7 @@
 (define-key my-keys-minor-mode-map (kbd "<f11>") 'toggle-fullscreen)
 
 (define-key my-keys-minor-mode-map (kbd "C-c a") 'org-agenda)
-
+(define-key my-keys-minor-mode-map (kbd "C-c f") 'fold-dwim-toggle)
 (when (eq system-type 'darwin)
   (load-file (concat user-emacs-directory "conf.d/google-music-key-bodge.el")))
 
