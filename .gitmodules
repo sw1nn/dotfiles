@@ -28,9 +28,6 @@
 [submodule "submodule/auto-complete"]
 	path = submodule/auto-complete
 	url = git://github.com/auto-complete/auto-complete.git
-[submodule "submodule/browse-kill-ring"]
-	path = submodule/browse-kill-ring
-	url = git://github.com/browse-kill-ring/browse-kill-ring.git
 [submodule "submodule/multiple-cursors"]
 	path = submodule/multiple-cursors
 	url = git://github.com/magnars/multiple-cursors.el.git
