@@ -1,4 +1,4 @@
-(require 'org-trello)
+;(require 'org-trello)
 (require 'org-agenda)
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
