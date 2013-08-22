@@ -23,8 +23,8 @@
   (mouse-wheel-mode t)
   (blink-cursor-mode -1))
 
-(add-to-list 'default-frame-alist '(height . 55))
-(add-to-list 'default-frame-alist '(width . 188))
+(add-to-list 'default-frame-alist '(height . 50))
+(add-to-list 'default-frame-alist '(width . 180))
 
 (setq inhibit-splash-screen t)
 
@@ -100,9 +100,8 @@
 ;(powerline-default-theme)
 
 ;; allow sw1nn and sw1nn-whiteboard themes.
-(add-to-list 'custom-safe-themes "f87193727466d522c48e4b665b8df10de18c2923b3f7747e86437fae4680197a")
-(add-to-list 'custom-safe-themes "af4ed275cddf70e5f53cec12ddecdeeb4ced75796e910aee779725ab211aba89")
-
+(add-to-list 'custom-safe-themes "831eeb827996868961b773fb512148b82cb7334ce459885250ad7d007e66d0eb") ; sw1nn
+(add-to-list 'custom-safe-themes "af4ed275cddf70e5f53cec12ddecdeeb4ced75796e910aee779725ab211aba89") ; sw1nn-whiteboard
 (setq scroll-margin 3
       scroll-conservatively 1000 ; > 100 => never recentre point
       scroll-up-aggressively 0.01
