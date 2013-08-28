@@ -5,7 +5,7 @@
 
 (setq display-buffer-function 'popwin:display-buffer)
 
-(require 'popwin-browse-kill-ring)
+(require 'popup-kill-ring)
 
 (setq popwin:special-display-config
       '(("*Help*"  :height 30)
