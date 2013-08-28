@@ -21,3 +21,4 @@ cache
 /.emacs.d/history
 /.lein/repl-history
 /.emacs.d/org-clock-save.el
+/.emacs.d/.nrepl-history

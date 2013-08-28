@@ -3,7 +3,8 @@
 (require 'nrepl-inspect)
 (require 'slamhound)
 
-(setq nrepl-javadoc-local-paths (list "/usr/local/share/javadoc-w3m/7/docs/api"))
+(setq nrepl-javadoc-local-paths (list "/usr/local/share/javadoc-w3m/7/docs/api")
+      nrepl-history-file (concat user-emacs-directory ".nrepl-history"))
 (setq-default nrepl-port "4001")
 
 (add-to-list 'same-window-buffer-names "*nrepl*")
