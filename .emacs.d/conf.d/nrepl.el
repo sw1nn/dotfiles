@@ -1,5 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; nRepl tweaks
+(require 'nrepl-eval-sexp-fu)
 (require 'nrepl-inspect)
 (require 'slamhound)
 
