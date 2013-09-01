@@ -5,9 +5,8 @@
 
 ;;;### (autoloads (nrepl nrepl-jack-in nrepl-disable-on-existing-clojure-buffers
 ;;;;;;  nrepl-enable-on-existing-clojure-buffers nrepl-interaction-mode)
-;;;;;;  "nrepl" "../../../../.emacs.d/elpa/nrepl-20130827.1421/nrepl.el"
-;;;;;;  "2cba201543f4cb9507c10dd056a1abfc")
-;;; Generated autoloads from ../../../../.emacs.d/elpa/nrepl-20130827.1421/nrepl.el
+;;;;;;  "nrepl" "nrepl.el" (21026 64428 331533 535000))
+;;; Generated autoloads from nrepl.el
 
 (autoload 'nrepl-interaction-mode "nrepl" "\
 Minor mode for nrepl interaction from a Clojure buffer.
@@ -46,9 +45,7 @@ Connect nrepl to HOST and PORT.
 
 ;;;***
 
-;;;### (autoloads nil nil ("../../../../.emacs.d/elpa/nrepl-20130827.1421/nrepl-pkg.el"
-;;;;;;  "../../../../.emacs.d/elpa/nrepl-20130827.1421/nrepl.el")
-;;;;;;  (21021 37743 658862 0))
+;;;### (autoloads nil nil ("nrepl-pkg.el") (21026 64428 363361 138000))
 
 ;;;***
 
