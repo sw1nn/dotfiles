@@ -6,6 +6,7 @@
                 ("\\.yml\\'" . yaml-mode)
                 ("\\.scss\\'" . sass-mode)
                 ("\\.m\\'" . octave-mode)
+                ("\\.js\\'" . js2-mode)
                 ("\\.json\\'" . json-mode)))
   (add-to-list 'auto-mode-alist mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
