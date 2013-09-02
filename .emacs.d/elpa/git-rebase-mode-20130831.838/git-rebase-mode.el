@@ -5,7 +5,7 @@
 
 ;; Author: Phil Jackson <phil@shellarchive.co.uk>
 ;; Maintainer: Jonas Bernoulli <jonas@bernoul.li>
-;; Version: 20130819.1430
+;; Version: 20130831.838
 ;; X-Original-Version: 0.14.0
 ;; Homepage: https://github.com/magit/git-modes
 ;; Keywords: convenience vc git
@@ -23,7 +23,7 @@
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with Magit.  If not, see <http://www.gnu.org/licenses/>.
+;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -40,31 +40,31 @@
 
 ;;; Options
 
-(defgroup git-rebase-mode nil
+(defgroup git-rebase nil
   "Customize Git-Rebase mode"
   :group 'tools)
 
 (defcustom git-rebase-auto-advance nil
   "If non-nil, moves point forward a line after running an action."
-  :group 'git-rebase-mode
+  :group 'git-rebase
   :type 'boolean)
 
-(defgroup git-rebase-mode-faces nil
+(defgroup git-rebase-faces nil
   "Customize Git-Rebase mode faces."
   :group 'faces
-  :group 'git-rebase-mode)
+  :group 'git-rebase)
 
 (defface git-rebase-killed-action-face
   '((((class color))
      :inherit font-lock-comment-face
      :strike-through t))
   "Action lines in the rebase TODO list that have been commented out."
-  :group 'git-rebase-mode-faces)
+  :group 'git-rebase-faces)
 
 (defface git-rebase-description-face
   '((t :inherit font-lock-comment-face))
   "Face for one-line commit descriptions."
-  :group 'git-rebase-mode-faces)
+  :group 'git-rebase-faces)
 
 ;;; Regexps
 
@@ -111,8 +111,8 @@
 
 (defvar git-rebase-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "q")       'server-edit)
-    (define-key map (kbd "C-c C-c") 'server-edit)
+    (define-key map (kbd "q")       'git-rebase-server-edit)
+    (define-key map (kbd "C-c C-c") 'git-rebase-server-edit)
     (define-key map (kbd "a")       'git-rebase-abort)
     (define-key map (kbd "C-c C-k") 'git-rebase-abort)
     (define-key map [remap undo]    'git-rebase-undo)
@@ -130,7 +130,7 @@
     (define-key map (kbd "M-n") 'git-rebase-move-line-down)
     map)
   "Keymap for Git-Rebase mode.
-Note this will be added to by the top-level code which defines
+Note that this will be added to the top-level code which defines
 the edit functions.")
 
 (easy-menu-define git-rebase-mode-menu git-rebase-mode-map
@@ -147,7 +147,7 @@ the edit functions.")
     ["Execute" git-rebase-exec t]
     "---"
     ["Abort" git-rebase-abort t]
-    ["Done" server-edit t]))
+    ["Done" git-rebase-server-edit t]))
 
 ;;; Utilities
 
@@ -210,8 +210,10 @@ that of CHANGE-TO."
   (when (git-rebase-looking-at-action-or-exec)
     (let ((buffer-read-only nil)
           (col (current-column)))
-      (transpose-lines 1)
-      (forward-line -2)
+      (goto-char (point-at-bol))
+      (unless (bobp)
+        (transpose-lines 1)
+        (forward-line -2))
       (move-to-column col))))
 
 (defun git-rebase-move-line-down ()
@@ -229,6 +231,12 @@ that of CHANGE-TO."
       (forward-line -1)
       (move-to-column col))))
 
+(defun git-rebase-server-edit ()
+  "Save the action buffer and end the session."
+  (interactive)
+  (save-buffer)
+  (server-edit))
+
 (defun git-rebase-abort ()
   "Abort this rebase.
 This is dune by emptying the buffer, saving and closing server
@@ -237,7 +245,7 @@ connection."
   (when (or (not (buffer-modified-p))
             (y-or-n-p "Abort this rebase? "))
     (let ((buffer-read-only nil))
-      (delete-region (point-min) (point-max))
+      (erase-buffer)
       (save-buffer)
       (server-edit))))
 
@@ -304,7 +312,8 @@ exec line was commented out, also uncomment it."
     (when (looking-at git-rebase-action-line-re)
       (let ((commit (match-string 2)))
         (if (fboundp 'magit-show-commit)
-            (magit-show-commit commit nil nil 'select)
+            (let ((default-directory (expand-file-name "../../")))
+              (magit-show-commit commit nil nil 'select))
           (shell-command (concat "git show " commit)))))))
 
 (defun git-rebase-backward-line (&optional n)
@@ -316,7 +325,7 @@ Like `forward-line' but go into the opposite direction."
 ;;; Mode
 
 ;;;###autoload
-(define-derived-mode git-rebase-mode special-mode "Rebase"
+(define-derived-mode git-rebase-mode special-mode "Git Rebase"
   "Major mode for editing of a Git rebase file.
 
 Rebase files are generated when you run 'git rebase -i' or run
