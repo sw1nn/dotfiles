@@ -1,6 +1,12 @@
 ;;; magit-cherry.el --- "git cherry" support for Magit
 
-;; Copyright (C) 2013  Moritz Bunkus
+;; Copyright (C) 2013  The Magit Project Developers.
+;;
+;; For a full list of contributors, see the AUTHORS.md file
+;; at the top-level directory of this distribution and at
+;; https://raw.github.com/magit/magit/master/AUTHORS.md
+
+;; Author: Moritz Bunkus <moritz@bunkus.org>
 
 ;; Magit is free software; you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
@@ -37,7 +43,7 @@
                             (magit-remote-branch-for branch t)))
            (magit-read-rev "Cherry head" branch))))
   (let ((topdir (magit-get-top-dir default-directory)))
-    (magit-buffer-switch magit--cherry-buffer-name)
+    (magit-display-mode-buffer magit--cherry-buffer-name)
     (magit-mode-init topdir
                      #'magit-cherry-mode
                      #'magit--refresh-cherry-buffer

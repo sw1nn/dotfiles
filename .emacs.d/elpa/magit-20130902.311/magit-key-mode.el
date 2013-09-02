@@ -1,6 +1,10 @@
 ;;; magit-key-mode.el --- interactively tune git invocation
 
-;; Copyright (C) 2010-2011  Phil Jackson
+;; Copyright (C) 2010-2013  The Magit Project Developers.
+;;
+;; For a full list of contributors, see the AUTHORS.md file
+;; at the top-level directory of this distribution and at
+;; https://raw.github.com/magit/magit/master/AUTHORS.md
 
 ;; Author: Phil Jackson <phil@shellarchive.co.uk>
 
@@ -33,6 +37,13 @@
 (defvar magit-key-mode-keymaps)
 (defvar magit-key-mode-last-buffer)
 (defvar magit-pre-key-mode-window-conf)
+
+;;; Options
+
+(defcustom magit-key-mode-show-usage t
+  "Whether to show usage information when entering a popup."
+  :group 'magit
+  :type 'boolean)
 
 ;;; Faces
 
@@ -176,7 +187,7 @@
      (actions
       ("c" "Commit" magit-commit))
      (switches
-      ("-a" "Replace the tip of current branch" "--amend")
+      ("-r" "Replace the tip of current branch" "--amend")
       ("-A" "Stage all modified and deleted files" "--all")
       ("-e" "Allow empty commit" "--allow-empty")
       ("-n" "Bypass git hooks" "--no-verify")
@@ -484,10 +495,10 @@ the key combination highlighted before the description."
          (make-hash-table))
     (set (make-local-variable 'magit-key-mode-prefix) current-prefix-arg)
     (magit-key-mode-redraw for-group))
-  (message
-   (concat
-    "Type a prefix key to toggle it. Run 'actions' with their prefixes. "
-    "'?' for more help.")))
+  (when magit-key-mode-show-usage
+    (message (concat "Type a prefix key to toggle it. "
+                     "Run 'actions' with their prefixes. "
+                     "'?' for more help."))))
 
 (defun magit-key-mode-get-key-map (for-group)
   "Get or build the keymap for FOR-GROUP."
