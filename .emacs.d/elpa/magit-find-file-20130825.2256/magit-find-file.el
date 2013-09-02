@@ -5,8 +5,8 @@
 ;; Author: Bradley Wright <brad@intranation.com>
 ;; Keywords: git
 ;; URL: https://github.com/bradleywright/magit-find-file.el
-;; Version: 20130816.2050
-;; X-Original-Version: 1.0.0
+;; Version: 20130825.2256
+;; X-Original-Version: 1.0.2
 ;; Package-Requires: ((magit "1.2.0"))
 
 ;; This file is not part of GNU Emacs.
@@ -30,7 +30,6 @@
 ;; Cmd-t.
 
 ;; Uses a configurable completing-read to open any file in the
-
 ;; Git repository of the current buffer.
 
 ;; Usage:
@@ -46,7 +45,8 @@
 
 ;;; Code:
 
-(require 'cl)
+(require 'cl-lib)
+(require 'magit)
 
 (defgroup magit-find-file nil
   "Use Magit to completing-read over files"

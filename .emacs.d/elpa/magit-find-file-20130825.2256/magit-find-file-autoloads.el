@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (magit-find-file-completing-read) "magit-find-file"
-;;;;;;  "magit-find-file.el" (21013 37937 0 0))
+;;;;;;  "magit-find-file.el" (21028 25101 0 0))
 ;;; Generated autoloads from magit-find-file.el
 
 (autoload 'magit-find-file-completing-read "magit-find-file" "\
@@ -14,8 +14,8 @@ Uses a completing read to open a file from git ls-files
 
 ;;;***
 
-;;;### (autoloads nil nil ("magit-find-file-pkg.el") (21013 37937
-;;;;;;  328400 0))
+;;;### (autoloads nil nil ("magit-find-file-pkg.el") (21028 25101
+;;;;;;  396720 0))
 
 ;;;***
 
