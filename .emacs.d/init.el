@@ -13,13 +13,16 @@
                   ("elpa" . "http://tromey.com/elpa/")))
   (add-to-list 'package-archives source t))
 
-
 ;;
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 
 (package-initialize)
 
 (setq custom-file (concat user-emacs-directory "conf.d/customize.el"))
+
+(let ((user-info "~/.emacs.d/.user-info"))
+  (when (file-exists-p user-info)
+    (load user-info)))
 
 (dolist
     (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+\\.el\\'"))
