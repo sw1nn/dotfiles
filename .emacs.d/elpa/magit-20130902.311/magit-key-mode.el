@@ -652,6 +652,10 @@ Return the point before the actions part, if any, nil otherwise."
             (logging
              '(when magit-have-graph
                 (list "--graph")))
+            (committing
+             '(list "--gpg-sign"))
+            (tagging
+             '(list "--sign"))
             (diff-options
              '(when (local-variable-p 'magit-diff-options)
                 magit-diff-options))))))))
