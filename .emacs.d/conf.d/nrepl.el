@@ -23,7 +23,7 @@
           (lambda ()
             (define-key nrepl-interaction-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
             (define-key nrepl-interaction-mode-map (kbd "C-c C-i") 'nrepl-inspect)
-            (define-key nrepl-interaction-mode-map (kbd "C-c C-z") 'nrepl-perspective)
+            (define-key nrepl-interaction-mode-map (kbd "C-c C-z") 'sw1nn-nrepl-perspective)
             (nrepl-turn-on-eldoc-mode)))
 
 (add-hook 'nrepl-mode-hook 'set-auto-complete-as-completion-at-point-function)

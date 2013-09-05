@@ -1,17 +1,26 @@
-(defcustom clj-compile-on-save t "non-nil means clj files should be compiled after save.")
-(defcustom clj-test-on-save nil "non-nil means clj test files should be executed after save.")
+(defgroup sw1nn nil
+  "sw1nn customizations"
+  :prefix "sw1nn-"
+  :group 'applications)
 
-(defun toggle-clj-compile-on-save ()
+(defcustom sw1nn-clj-compile-on-save t "non-nil means clj files should be compiled after save."
+  :type 'boolean
+  :group 'sw1nn)
+(defcustom sw1nn-clj-test-on-save nil "non-nil means clj test files should be executed after save."
+  :type 'boolean
+  :group 'sw1nn)
+
+(defun sw1nn-toggle-clj-compile-on-save ()
   (interactive)
-  (setq clj-compile-on-save (not clj-compile-on-save))
-  (message "clj-compile-on-save %s" (if clj-compile-on-save "enabled" "disabled")))
+  (setq sw1nn-clj-compile-on-save (not sw1nn-clj-compile-on-save))
+  (message "sw1nn-clj-compile-on-save %s" (if sw1nn-clj-compile-on-save "enabled" "disabled")))
 
-(defun toggle-clj-test-on-save ()
+(defun sw1nn-toggle-clj-test-on-save ()
   (interactive)
-  (setq clj-test-on-save (not clj-compile-on-save))
-  (message "clj-test-on-save %s" (if clj-test-on-save "enabled" "disabled")))
+  (setq sw1nn-clj-test-on-save (not sw1nn-clj-compile-on-save))
+  (message "sw1nn-clj-test-on-save %s" (if sw1nn-clj-test-on-save "enabled" "disabled")))
 
-(defun toggle-nrepl-popup-stacktraces-in-repl ()
+(defun sw1nn-toggle-nrepl-popup-stacktraces-in-repl ()
   (interactive)
   (setq nrepl-popup-stacktraces-in-repl (not nrepl-popup-stacktraces-in-repl))
   (message "nrepl-popup-stacktraces-in-repl %s" (if nrepl-popup-stacktraces-in-repl "enabled" "disabled")))
@@ -19,7 +28,7 @@
 (defun add-clj-compile-on-save ()
   (add-hook 'after-save-hook
             (lambda ()
-              (if (and clj-compile-on-save
+              (if (and sw1nn-clj-compile-on-save
                        (symbol-value 'nrepl-interaction-mode)
                        (not (string-match "project.clj"
                                           (file-name-nondirectory (buffer-file-name))))
@@ -27,7 +36,7 @@
                                           (substring (buffer-file-name) -18))))
                   (progn (message "Compiling...")
                          (nrepl-load-current-buffer)))
-              (if (and clj-test-on-save
+              (if (and sw1nn-clj-test-on-save
                        (assq 'clojure-test minor-mode-alist))
                   (clojure-test-run-tests)))))
 
@@ -36,7 +45,7 @@
           (lambda ()
             (read-only-mode)))
 
-(defun toggle-fullscreen ()
+(defun sw1nn-toggle-fullscreen ()
   "Toggle full screen on X11"
   (interactive)
   (when (eq window-system 'x)
@@ -44,19 +53,16 @@
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
 
-(defun nrepl-perspective ()
+(defun sw1nn-nrepl-perspective ()
   (interactive)
   (delete-other-windows)
-  (let ((nrepl-buff (get-buffer "*nrepl*")))
-    (when nrepl-buff
-      (split-window-right)
-      (switch-to-buffer "*nrepl*")))
+  (pop-to-buffer (nrepl-find-or-create-repl-buffer))
   (let ((nrepl-server-buff (get-buffer "*nrepl-server*")))
     (when nrepl-server-buff
       (split-window-below)
       (windmove-down)
-      (switch-to-buffer "*nrepl-server*")))
-  (select-window (get-buffer-window "*nrepl*")))
+      (switch-to-buffer "*nrepl-server*")
+      (windmove-up))))
 
 (require 'grep)
 
