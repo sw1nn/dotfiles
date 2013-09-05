@@ -11,5 +11,6 @@ esac
 
 export JAVA_OPTS="-Dfile.encoding=UTF-8 -Dslime.encoding=UTF-8 -Xmx4096m -XX:+HeapDumpOnOutOfMemoryError"
 
+export CUPS_SERVER=localhost
 export SSH_ASKPASS=/usr/lib/openssh/ssh-askpass-fullscreen
 export PATH=${HOME}/bin:/usr/local/bin:/usr/local/elasticmapreduce:${HOME}/.rvm/bin:${JAVA_HOME}/bin:/usr/bin:/usr/sbin:/bin:/sbin

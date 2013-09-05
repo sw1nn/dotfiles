@@ -32,6 +32,7 @@ export POWERLINE_SYMBOLS=fancy
 
 export PATH=${HOME}/bin:/usr/local/bin:/usr/local/elasticmapreduce:${HOME}/.rvm/bin:${JAVA_HOME}/bin:/usr/bin:/usr/sbin:/bin:/sbin
 
+export CUPS_SERVER=localhost
 if [[ $EMACS = t ]]; then
   unsetopt zle
   export GIT_PAGER=cat
