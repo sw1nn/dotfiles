@@ -11,7 +11,7 @@ xftfont DejaVu Sans Mono for Powerline:size=8
 xftalpha 1
 short_units yes
 
-maximum_width 300
+maximum_width 325 
 gap_x 5
 gap_y 0
 if_up_strictness address
