@@ -23,3 +23,4 @@ cache
 /.emacs.d/org-clock-save.el
 /.emacs.d/.nrepl-history
 /.emacs.d/.user-info
+/.emacs.d/session.*
