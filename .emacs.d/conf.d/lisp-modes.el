@@ -64,7 +64,8 @@
   (hs-minor-mode)
   (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
   (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
-  (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly))
+  (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
+  (define-key clojure-mode-map (kbd "M-t") 'sw1nn-transpose-words-with-hyphens))
 
 (defun neale-custom-nrepl-mode ()
   (neale-custom-lisp-mode))
