@@ -37,4 +37,5 @@ if [[ $EMACS = t ]]; then
   unsetopt zle
   export GIT_PAGER=cat
   export MANPAGER=cat
+  export EDITOR=emacsclient
 fi
