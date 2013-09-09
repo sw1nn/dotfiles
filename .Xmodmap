@@ -1,6 +1,7 @@
-keycode 197 = XF86ModeLock
-
-clear mod4
-remove mod1 = Meta_L
-add mod4 = Meta_L
-remove mod4 = Alt_L
+remove mod4 = Hyper_L
+add mod3 = Hyper_R
+keycode 135 = Hyper_R
+keycode 12 = 3 numbersign sterling
+keycode 13 = 4 dollar EuroSign
+keycode 14 = 5 percent cent
+keycode 94 = grave asciitilde
