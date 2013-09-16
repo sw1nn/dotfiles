@@ -5,3 +5,5 @@
 (setq org-agenda-files '("~/Dropbox/orgmode/home.org"
                          "~/Dropbox/orgmode/0-current-sprint.org"))
 (setq org-log-done t)
+
+(add-hook 'org-mode-hook 'visual-line-mode)
