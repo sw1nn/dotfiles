@@ -7,6 +7,7 @@
 
 (define-key my-keys-minor-mode-map (kbd "C-\\") (lambda () (interactive))) ; remove annoying input-method binding.
 (define-key my-keys-minor-mode-map (kbd "C-x C-z") (lambda () (interactive)))
+(define-key my-keys-minor-mode-map (kbd "C-z") (lambda () (interactive)))
 (define-key my-keys-minor-mode-map (kbd "s-p") (lambda () (interactive)))
 (define-key my-keys-minor-mode-map (kbd "M-TAB") 'yas/expand)
 (define-key my-keys-minor-mode-map (kbd "<select>") 'windmove-up)
