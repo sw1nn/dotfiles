@@ -5,7 +5,7 @@ export CLOJURESCRIPT_HOME=~/workspace/clojurescript
 case "$(uname -s)" in
     "Linux") JAVA_HOME=/opt/java
               ;;
-    "Darwin") JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_25.jdk/Contents/Home
+    "Darwin") JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_40.jdk/Contents/Home
               ;;
 esac
 
