@@ -52,7 +52,7 @@ draw_shades yes
 
 TEXT
 ${iconv_start UTF-8 ISO_8859-1}°${iconv_stop}
-${color6}${font DejaVu Sans Mono for Powerline:weight=bold:size=16}${alignc}${time %H:%M:%S}
+${color6}${font DejaVu Sans Mono for Powerline:weight=bold:size=22}${alignc}${time %H:%M:%S}
 ${font DejaVu Sans:weight=bold:size=14}${alignc}${time %a}, ${time %e} ${time %B} ${time %G}
 
 ${font DejaVu Sans:weight=bold:size=10}${color5}SYSTEM INFORMATION ($nodename)${hr 2}
