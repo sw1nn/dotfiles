@@ -15,9 +15,9 @@
                        [ritz/ritz-nrepl-middleware "0.7.0"]
 ;                       [ritz/ritz-debugger "0.7.0"]
 ;                       [ritz/ritz-repl-utils "0.7.0"]
-                       [clojure-complete "0.2.2"]
+                       [clojure-complete "0.2.3"]
                        [spyscope "0.1.3"]
-                       [alembic "0.1.0"]
+                       [alembic "0.2.0"]
                        [slamhound "1.3.3"]
                       ]
         :repl-options {:nrepl-middleware
