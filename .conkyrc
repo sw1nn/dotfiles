@@ -11,7 +11,7 @@ xftfont DejaVu Sans Mono for Powerline:size=8
 xftalpha 1
 short_units yes
 
-maximum_width 325 
+maximum_width 325
 gap_x 5
 gap_y 0
 if_up_strictness address
@@ -21,7 +21,7 @@ update_interval 2
 stippled_borders 3
 border_width 0
 default_color 657b83
-own_window_colour 002b36 
+own_window_colour 002b36
 
 # Solarized colors Source http://github.com/altercation/solarized
 # color0 073624
@@ -53,10 +53,10 @@ draw_shades yes
 TEXT
 ${iconv_start UTF-8 ISO_8859-1}°${iconv_stop}
 ${color6}${font DejaVu Sans Mono for Powerline:weight=bold:size=16}${alignc}${time %H:%M:%S}
-${font DejaVu Sans:weight=bold:size=14}${alignc}${time %A}, ${time %e} ${time %B} ${time %G}
+${font DejaVu Sans:weight=bold:size=14}${alignc}${time %a}, ${time %e} ${time %B} ${time %G}
 
 ${font DejaVu Sans:weight=bold:size=10}${color5}SYSTEM INFORMATION ($nodename)${hr 2}
-$font${color4}Uptime$color $uptime 
+$font${color4}Uptime$color $uptime
 ${color4}Kernel$color $kernel
 ${color4}Arch$color $machine
 
@@ -117,4 +117,3 @@ ${color4}Today:      ${color6}${execi 300 vnstat|awk '/today/{print $2 $3}'}${go
 ${color4}Yesterday:  ${color6}${execi 300 vnstat|awk '/yesterday/{print $2 $3}'}${goto 160}${execi 300 vnstat|awk '/yesterday/{print $5 $6}'}${goto 245}${color}${execi 300 vnstat|awk '/yesterday/{print $8 $9}'}
 ${color4}Week:       ${color6}${execi 300 vnstat -w|awk '/current week/{print $3 $4}'}${goto 160}${execi 300 vnstat -w|awk '/current week/{print $6 $7}'}${goto 245}${color}${execi 300 vnstat -w|awk '/current week/{print $9 $10}'}
 ${color4}Month:      ${color6}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $3 $4}'}${goto 160}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $6 $7}'}${goto 245}${color}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $9 $10}'}${font}
-
