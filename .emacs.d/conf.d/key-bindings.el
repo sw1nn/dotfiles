@@ -53,7 +53,7 @@
 
 (define-key my-keys-minor-mode-map (kbd "C-c v") 'revert-buffer)
 
-(define-key my-keys-minor-mode-map (kbd "C-x C-m") 'shell)
+(define-key my-keys-minor-mode-map (kbd "C-x C-m") 'multi-term)
 
 (define-key my-keys-minor-mode-map (kbd "C-+") 'text-scale-increase)
 (define-key my-keys-minor-mode-map (kbd "C--") 'text-scale-decrease)
