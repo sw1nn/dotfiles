@@ -24,13 +24,11 @@ DISABLE_AUTO_UPDATE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(archlinux autojump colored-man colorize git github gpg-agent lein tmux vagrant)
-
-source $ZSH/oh-my-zsh.sh
+plugins=(archlinux autojump rvm colored-man colorize git github gpg-agent lein tmux vagrant)
 
 export POWERLINE_SYMBOLS=fancy
 
-export PATH=${HOME}/bin:/usr/local/bin:/usr/local/elasticmapreduce:${HOME}/.rvm/bin:${JAVA_HOME}/bin:/usr/bin:/usr/sbin:/bin:/sbin
+export PATH=${HOME}/bin:/usr/local/bin::${JAVA_HOME}/bin:$PATH
 
 export CUPS_SERVER=localhost
 if [[ $EMACS = t ]]; then
@@ -39,3 +37,7 @@ if [[ $EMACS = t ]]; then
   export MANPAGER=cat
   export EDITOR=emacsclient
 fi
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+source $ZSH/oh-my-zsh.sh
