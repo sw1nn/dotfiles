@@ -74,11 +74,12 @@
 (defun sw1nn-nrepl-perspective ()
   (interactive)
   (delete-other-windows)
-  (pop-to-buffer (nrepl-find-or-create-repl-buffer))
   (split-window-below)
   (windmove-down)
+  (shrink-window 15)
   (switch-to-buffer (sw1nn-nrepl-current-server-buffer))
-  (windmove-up))
+  (windmove-up)
+  (pop-to-buffer (nrepl-find-or-create-repl-buffer)))
 
 (require 'grep)
 
