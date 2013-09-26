@@ -1,17 +1,17 @@
 [user]
-	name = Neale Swinnerton
-	email = neale@isismanor.com
-	signingkey = Neale Swinnerton (sw1nn) <neale@isismanor.com>
+        name = Neale Swinnerton
+        email = neale@isismanor.com
+        signingkey = Neale Swinnerton (sw1nn) <neale@isismanor.com>
 [alias]
         lg = log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %C(green)(%cr)%Creset' --abbrev-commit --date=relative
-	wdiff = diff --word-diff=color
+        wdiff = diff --word-diff=color
 [core]
     excludesfile = ~/.gitignore_global
 [color]
-	ui = true
+        ui = true
 [push]
-	default = tracking
+        default = tracking
 [diff]
-	algorithm = patience
+        algorithm = patience
 [include]
         path= ~/.gitconfig_private
