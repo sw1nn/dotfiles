@@ -13,3 +13,5 @@
 	default = tracking
 [diff]
 	algorithm = patience
+[include]
+        path= ~/.gitconfig_private
