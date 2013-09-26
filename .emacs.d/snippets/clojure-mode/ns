@@ -5,8 +5,8 @@
 # key: ns
 # --
 (ns `(let* ((nsname '())
-        (dirs (split-string (replace-regexp-in-string 
-                              "src/\\(main\\|test\\)/clj" "src" (buffer-file-name)) "/"))
+        (dirs (split-string (replace-regexp-in-string
+                              "src/\\(main\\|test\\)/\\(clj\\|clojure\\)" "src" (buffer-file-name)) "/"))
 
         (aftersrc nil))
      (dolist (dir dirs)
