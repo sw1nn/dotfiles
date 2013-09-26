@@ -66,16 +66,19 @@
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
 
+(defun sw1nn-nrepl-current-server-buffer ()
+  (let ((nrepl-server-buf (replace-regexp-in-string "connection" "server" (nrepl-current-connection-buffer))))
+    (when nrepl-server-buf
+      (get-buffer nrepl-server-buf))))
+
 (defun sw1nn-nrepl-perspective ()
   (interactive)
   (delete-other-windows)
   (pop-to-buffer (nrepl-find-or-create-repl-buffer))
-  (let ((nrepl-server-buff (get-buffer "*nrepl-server*")))
-    (when nrepl-server-buff
-      (split-window-below)
-      (windmove-down)
-      (switch-to-buffer "*nrepl-server*")
-      (windmove-up))))
+  (split-window-below)
+  (windmove-down)
+  (switch-to-buffer (sw1nn-nrepl-current-server-buffer))
+  (windmove-up))
 
 (require 'grep)
 
