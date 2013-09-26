@@ -67,6 +67,8 @@
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key clojure-mode-map (kbd "M-t") 'sw1nn-transpose-words-with-hyphens)
   (set (make-local-variable 'font-lock-extra-managed-props) '(composition)) ; revert fancy characters.
+  (hl-line-mode 0)
+  (set (make-local-variable 'scroll-margin) 3)
   )
 
 (defun neale-custom-nrepl-mode ()

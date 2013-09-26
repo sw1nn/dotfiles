@@ -95,8 +95,6 @@
 (add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(global-hl-line-mode t)
-
 (hideshowvis-symbols)
 
 ;(powerline-default-theme)
@@ -104,10 +102,9 @@
 ;; allow sw1nn and sw1nn-whiteboard themes.
 (add-to-list 'custom-safe-themes "831eeb827996868961b773fb512148b82cb7334ce459885250ad7d007e66d0eb") ; sw1nn
 (add-to-list 'custom-safe-themes "af4ed275cddf70e5f53cec12ddecdeeb4ced75796e910aee779725ab211aba89") ; sw1nn-whiteboard
-(setq scroll-margin 3
-      scroll-conservatively 1000 ; > 100 => never recentre point
-      scroll-up-aggressively 0.01
-      scroll-down-aggressively 0.01)
+(setq scroll-conservatively 1000 ; > 100 => never recentre point
+      scroll-up-aggressively 0.1
+      scroll-down-aggressively 0.1)
 
 (setq dired-use-ls-dired nil)
 
