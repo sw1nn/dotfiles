@@ -910,9 +910,8 @@ DONE-HANDLER, and EVAL-ERROR-HANDLER as appropriate."
                                     buffer err))
                                  '()
                                  (lambda (buffer ex root-ex session)
-                                   (let ((nrepl-popup-on-error nil))
-                                     (funcall nrepl-err-handler
-                                              buffer ex root-ex session))))))
+                                   (funcall nrepl-err-handler
+                                            buffer ex root-ex session)))))
 
 (defun nrepl-interactive-eval-print-handler (buffer)
   "Make a handler for evaluating and printing result in BUFFER."
@@ -997,7 +996,7 @@ They exist for compatibility with `next-error'."
                               (lambda (buffer value)
                                 (nrepl-emit-into-color-buffer buffer value)
                                 (when nrepl-popup-on-error
-                                  (nrepl-popup-buffer-display buffer)))
+                                  (nrepl-popup-buffer-display buffer t)))
                               nil nil) nil session))
         (with-current-buffer nrepl-error-buffer
           (compilation-minor-mode +1))))))

@@ -5,7 +5,9 @@
 (require 'slamhound)
 
 (setq nrepl-javadoc-local-paths (list "/usr/local/share/javadoc-w3m/7/docs/api")
-      nrepl-history-file (concat user-emacs-directory ".nrepl-history"))
+      nrepl-history-file (concat user-emacs-directory ".nrepl-history")
+      nrepl-popup-on-error t
+      nrepl-popup-stacktrace t)
 (setq-default nrepl-port "4001")
 
 (add-to-list 'same-window-buffer-names "*nrepl*")
@@ -20,7 +22,7 @@
 (add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
 (add-hook 'nrepl-mode-hook 'ensure-yasnippet-is-first-ac-source)
 (add-hook 'nrepl-interaction-mode-hook
-          (lambda ()
+          (lambda nil
             (define-key nrepl-interaction-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
             (define-key nrepl-interaction-mode-map (kbd "C-c C-i") 'nrepl-inspect)
             (define-key nrepl-interaction-mode-map (kbd "C-c C-z") 'sw1nn-nrepl-perspective)
