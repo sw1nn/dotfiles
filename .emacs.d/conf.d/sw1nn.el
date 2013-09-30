@@ -40,7 +40,7 @@
 
 (defun add-clj-compile-on-save ()
   (add-hook 'after-save-hook
-            (lambda ()
+            (lambda nil
               (if (and sw1nn-clj-compile-on-save
                        (symbol-value 'nrepl-interaction-mode)
                        (not (string-match "project.clj"
@@ -55,7 +55,7 @@
 
 ;; make files opened in .jar etc read-only by default.
 (add-hook 'archive-extract-hook
-          (lambda ()
+          (lambda nil
             (read-only-mode)))
 
 (defun sw1nn-toggle-fullscreen ()

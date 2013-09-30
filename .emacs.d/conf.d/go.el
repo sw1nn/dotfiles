@@ -1,3 +1,3 @@
 (add-hook 'go-mode-hook
-          (lambda ()
+          (lambda nil
             (add-hook 'before-save-hook 'gofmt-before-save)))

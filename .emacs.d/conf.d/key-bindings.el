@@ -5,10 +5,10 @@
 
 (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
 
-(define-key my-keys-minor-mode-map (kbd "C-\\") (lambda () (interactive))) ; remove annoying input-method binding.
-(define-key my-keys-minor-mode-map (kbd "C-x C-z") (lambda () (interactive)))
-(define-key my-keys-minor-mode-map (kbd "C-z") (lambda () (interactive)))
-(define-key my-keys-minor-mode-map (kbd "s-p") (lambda () (interactive)))
+(define-key my-keys-minor-mode-map (kbd "C-\\") (lambda nil (interactive))) ; remove annoying input-method binding.
+(define-key my-keys-minor-mode-map (kbd "C-x C-z") (lambda nil (interactive)))
+(define-key my-keys-minor-mode-map (kbd "C-z") (lambda nil (interactive)))
+(define-key my-keys-minor-mode-map (kbd "s-p") (lambda nil (interactive)))
 (define-key my-keys-minor-mode-map (kbd "M-TAB") 'yas/expand)
 (define-key my-keys-minor-mode-map (kbd "<select>") 'windmove-up)
 (define-key my-keys-minor-mode-map (kbd "C-x C-b") 'ibuffer)
@@ -20,7 +20,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-c C-<") 'mc/mark-all-like-this-dwim)
 (define-key my-keys-minor-mode-map (kbd "C-c SPC") 'ace-jump-mode)
 (define-key my-keys-minor-mode-map (kbd "C-c M-SPC") 'ace-jump-mode-pop-mark)
-(define-key my-keys-minor-mode-map (kbd "C-x C-SPC") (lambda () (interactive) (just-one-space -1) (fixup-whitespace)))
+(define-key my-keys-minor-mode-map (kbd "C-x C-SPC") (lambda nil (interactive) (just-one-space -1) (fixup-whitespace)))
 (define-key my-keys-minor-mode-map (kbd "C-M-g") 'magit-status)
 (define-key my-keys-minor-mode-map (kbd "C-c g g") 'git-gutter:toggle)
 (define-key my-keys-minor-mode-map (kbd "C-c g p") 'git-gutter:previous-diff)
@@ -28,8 +28,8 @@
 (define-key my-keys-minor-mode-map (kbd "C-c g d") 'git-gutter:popup-diff)
 (define-key my-keys-minor-mode-map (kbd "C-c g v") 'git-gutter:revert-hunk)
 (define-key my-keys-minor-mode-map (kbd "M-x") 'smex)
-(define-key my-keys-minor-mode-map (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
-(define-key my-keys-minor-mode-map (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
+(define-key my-keys-minor-mode-map (kbd "C-x O") (lambda nil (interactive) (other-window -1))) ;; back one
+(define-key my-keys-minor-mode-map (kbd "C-x C-o") (lambda nil (interactive) (other-window 2))) ;; forward two
 
 ;; If you want to be able to M-x without meta (phones, etc)
 (define-key my-keys-minor-mode-map (kbd "C-c x") 'execute-extended-command)

@@ -16,7 +16,7 @@
       ibuffer-show-empty-filter-groups nil)
 
 (add-hook 'ibuffer-hook
-          (lambda ()
+          (lambda nil
             (ibuffer-auto-mode 1)
             (ibuffer-vc-set-filter-groups-by-vc-root)
             (unless (eq ibuffer-sorting-mode 'alphabetic)
