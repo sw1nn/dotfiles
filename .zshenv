@@ -13,3 +13,5 @@ export JAVA_OPTS="-Dfile.encoding=UTF-8 -Dslime.encoding=UTF-8 -Xmx4096m -XX:+He
 
 export CUPS_SERVER=localhost
 export SSH_ASKPASS=/usr/lib/openssh/ssh-askpass-fullscreen
+
+export PATH=${HOME}/bin:/usr/local/bin:${JAVA_HOME}/bin:$PATH
