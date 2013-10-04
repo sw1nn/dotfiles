@@ -92,8 +92,11 @@
 
 (setq-default cursor-type 'bar)
 
-(add-hook 'before-save-hook (lambda () (untabify (point-min) (point-max))))
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook
+          (lambda nil
+            (unless (equal (file-name-extension (buffer-file-name)) "tsv")
+              (untabify (point-min) (point-max))
+              (delete-trailing-whitespace))))
 
 (hideshowvis-symbols)
 
