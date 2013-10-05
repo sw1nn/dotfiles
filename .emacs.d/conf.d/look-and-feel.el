@@ -77,7 +77,16 @@
                               "*Backtrace*"
                               "*Compile-Log*"
                               "*Packages*"
-                              "*Apropos*"))
+                              "*Apropos*"
+                              "*nrepl-error*"
+                              "*nrepl-doc*"
+                              "*nrepl-src*"
+                              "*nrepl-result*"
+                              "*nrepl-macroexpansion*"
+                              "*magit-commit*"
+                              "*magit-diff*"
+                              "*magit-edit-log*"))
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (setq smex-save-file (concat user-emacs-directory ".smex-items"))
