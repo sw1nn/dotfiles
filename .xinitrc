@@ -10,6 +10,8 @@ fi
 
 export LANG=en_GB.UTF-8
 
+eval $(gpg-agent --daemon) &
+
 xrdb -load ${HOME}/.Xresources
 xsetroot -cursor_name left_ptr -solid '#002b36'
 
@@ -22,5 +24,8 @@ xscreensaver &
 unclutter &
 conky &
 rescuetime &
+urxvtd &
+urxvtc &
 xmodmap ~/.Xmodmap
+
 exec xmonad

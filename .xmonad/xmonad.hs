@@ -177,7 +177,7 @@ smeLogHook h = do
            dynamicLogWithPP $ smePP { ppOutput = hPutStrLn h }
 
 smeConfig = defaultConfig
-       { terminal = "urxvt"
+       { terminal = "urxvtc"
        , focusFollowsMouse      = False
        , modMask                = mod3Mask -- command key
        , focusedBorderColor     = soGreen
