@@ -34,6 +34,7 @@ import XMonad.Layout.Named
 import System.IO (hPutStrLn)
 import Data.Char (isSpace)
 import qualified XMonad.StackSet as W
+import qualified Data.Map        as M
 
 -- import Graphics.X11.ExtraTypes.XF86
 
@@ -111,47 +112,105 @@ gimp     = reflectHoriz $
 messaging = named "Messaging" $
             withIM (1/8) (Role "buddy_list") Grid
 
-smeKeys :: [([Char], X ())]
-smeKeys =
-    [ ("M-p"        , safeSpawn "yeganesh_run" [])
-    , ("M-g"        , runOrRaise "thunar" (className =? "Thunar"))
-    , ("M-s"        , runOrRaise "skype"    (className =? "Skype"))
-    , ("M-m"        , safeSpawn "mumble" [] )
-    -- , ("M-S-g"      , safePromptSelection "firefox-nightly")
-    -- , ("M-w"        , goToSelected defaultGSConfig)
-    -- , ("M-C-n"      , appendFilePrompt largeXPConfig { bgColor = colorOrange, fgColor = colorDarkGray } notesFile)
-    , ("M-`"    , focusUrgent)
-    , ("M-i"    , raiseMaybe (runInTerm "-title irssi" "sh -c 'tmux -D -R -S irc irssi'") (title =? "irssi"))
-    -- , ("M-S-i"  , raiseMaybe (runInTerm "-title irssi" "sh -c 'ssh -t webframp@astrotrain screen -D -R -S irc irssi'") (title =? "irssi"))
-    -- , ("M-m"    , raiseMaybe (runInTerm "-title mutt" "sh -c 'screen -D -R -S mail mutt'") (title =? "mutt"))
-    , ("M-b"    , sendMessage ToggleStruts)
-    -- move window to and focus NonEmpty wss except scratchpad
-    , ("M-C-s"    , shiftAndView Next)
-    , ("M-C-d"    , shiftAndView Prev)
-    , ("M-f"      , nextScreen)
-    , ("M-a"      , prevScreen)
-    , ("M-S-f"    , shiftNextScreen)
-    , ("M-S-a"    , shiftPrevScreen)
-    , ("M-<Tab>"  , toggleWS)
-    , ("M--"      , toggleWS)
-    -- Media keys
-    , ("<F4>", unsafeSpawn "amixer -q set Master toggle")
-    , ("<F5>", unsafeSpawn "amixer -q set Master 1000- unmute")
-    , ("<F6>", unsafeSpawn "amixer -q set Master 1000+ unmute")
-    -- Screenshot
-    , ("<XF86LaunchA>" , unsafeSpawn "scrot '%Y-%m-%d-%H%M_$wx$h.png' -e 'mv $f ~/screenshots/'")
-    , ("<XF86LaunchB>" , unsafeSpawn "scrot '%Y-%m-%d-%H%M_$wx$h.png' -e '/usr/bin/imgurbash $f'")
-    , ("<XF86MonBrightnessUp>", unsafeSpawn "xbacklight -inc 5")
-    , ("<XF86MonBrightnessDown>", unsafeSpawn "xbacklight -dec 5")
-    , ("<XF86KbdBrightnessUp>", unsafeSpawn "xbacklight -dec 5")
-    , ("<XF86KbdBrightnessDown>", unsafeSpawn "xbacklight -dec 5")
-    ]
-    where -- | non-empty workspaces less scratchpad
-        shiftAndView dir = findWorkspace getSortByIndexNoSP dir NonEmptyWS 1
-                >>= \t -> (windows . W.shift $ t) >> (windows . W.greedyView $ t)
-        getSortByIndexNoSP =
-                fmap (.scratchpadFilterOutWorkspace) getSortByIndex
+------------------------------------------------------------------------
+-- Key bindings. Add, modify or remove key bindings here.
+--
+myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
+    -- launch a terminal
+    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+
+    -- launch dmenu
+    , ((modm,               xK_p     ), spawn "yeganesh")
+
+    -- launch gmrun
+    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+
+    -- close focused window
+    , ((modm .|. shiftMask, xK_c     ), kill)
+
+     -- Rotate through the available layout algorithms
+    , ((modm,               xK_space ), sendMessage NextLayout)
+
+    --  Reset the layouts on the current workspace to default
+    , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+
+    -- Resize viewed windows to the correct size
+    , ((modm,               xK_n     ), refresh)
+
+    -- Move focus to the next window
+    , ((modm,               xK_Tab   ), windows W.focusDown)
+
+    -- Move focus to the next window
+    , ((modm,               xK_j     ), windows W.focusDown)
+
+    -- Move focus to the previous window
+    , ((modm,               xK_k     ), windows W.focusUp  )
+
+    -- Move focus to the master window
+    , ((modm,               xK_m     ), windows W.focusMaster  )
+
+    -- Swap the focused window and the master window
+    , ((modm,               xK_Return), windows W.swapMaster)
+
+    -- Swap the focused window with the next window
+    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+
+    -- Swap the focused window with the previous window
+    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+
+    -- Shrink the master area
+    , ((modm,               xK_h     ), sendMessage Shrink)
+
+    -- Expand the master area
+    , ((modm,               xK_l     ), sendMessage Expand)
+
+    -- Push window back into tiling
+    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+
+    -- Increment the number of windows in the master area
+    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+
+    -- Deincrement the number of windows in the master area
+    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+
+    -- Toggle the status bar gap
+    -- Use this binding with avoidStruts from Hooks.ManageDocks.
+    -- See also the statusBar function from Hooks.DynamicLog.
+    --
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
+
+    -- Quit xmonad
+    --, ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+
+    -- Restart xmonad
+    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+
+    , ((0 , xK_F4), spawn "amixer -q set Master toggle")
+    , ((0 , xK_F5), spawn "amixer -q set Master 1000- unmute")
+    , ((0 , xK_F6), spawn "amixer -q set Master 1000+ unmute")
+    , ((0 , xK_F7), spawn "googleplay-ctl prev")
+    , ((0 , xK_F8), spawn "googleplay-ctl pause-play")
+    , ((0 , xK_F9), spawn "googleplay-ctl next")
+    ]
+    ++
+
+    --
+    -- mod-[1..9], Switch to workspace N
+    -- mod-shift-[1..9], Move client to workspace N
+    --
+    [((m .|. modm, k), windows $ f i)
+        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+    ++
+
+    --
+    -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
+    -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
+    --
+    [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_e, xK_r, xK_w] [0..]
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 -- smeMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 --     -- mod-button1, Set the window to floating mode and move by dragging
@@ -169,6 +228,8 @@ smeManageHook :: ManageHook
 smeManageHook = composeAll
               [ resource  =? "desktop_window" --> doIgnore
               , className =? "MPlayer" --> doFloat
+              , className =? "Pidgin"  --> doShift "8:IM"
+              , title     =? "RescueTime Offline Time" --> doFloat
               , isFullscreen           --> doFullFloat
               , isDialog               --> doCenterFloat
               ] <+> manageDocks
@@ -186,10 +247,10 @@ smeConfig = defaultConfig
                                   smartBorders (
                                                onWorkspace "5-art" gimp standardLayouts
                                                )
+       , keys                   = myKeys
        , manageHook             = smeManageHook
        -- , mouseBindings          = smeMouseBindings
        }
-       `additionalKeysP` smeKeys
 
 strutsKey XConfig { XMonad.modMask = modMask } = (modMask, xK_b)
 
