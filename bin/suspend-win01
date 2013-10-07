@@ -1,0 +1,3 @@
+#!/bin/sh
+
+VBoxManage controlvm win01 savestate

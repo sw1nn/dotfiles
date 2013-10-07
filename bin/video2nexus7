@@ -1,0 +1,6 @@
+#!/bin/sh
+
+infile="$1"
+outfile="/mnt/video/05-Android/${infile##*/}"
+
+/opt/handbrake/bin/HandBrakeCLI -i "${infile}" -o "${outfile}" --preset "Nexus 7" -X 1280 --crop autocrop 

@@ -1,0 +1,35 @@
+#!/bin/sh
+
+function dispatch_to_google_music {
+    xdotool \
+      search --classname "Google-chrome" \
+      search --name "My Library - Google Play - Google Chrome" \
+      key --clearmodifiers $1
+}
+
+case $1 in
+    pause-play)
+        dispatch_to_google_music space
+        ;;
+    prev)
+        dispatch_to_google_music Left
+        ;;
+    next)
+        dispatch_to_google_music Right
+        ;;
+    thumbs-up)
+        dispatch_to_google_music alt+equal
+        ;;
+    thumbs-down)
+        dispatch_to_google_music alt+minus
+        ;;
+    currently-playing)
+        xdotool \
+          search --classname "Google-chrome" \
+          search --name "My Library - Google Play - Google Chrome" \
+          getwindowname | awk -F'-' '!/^(Listen Now|Artists|Radio|Featured|Queue|Thumbs up|Last Added|Free and Purchased|Shared with me)/{gsub(/(^ +| +$)/,"", $2); print $1 "\n" $2}'
+        ;;
+    *)
+        echo "No Such command"
+        ;;
+esac
