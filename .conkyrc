@@ -52,14 +52,13 @@ draw_shades yes
 
 TEXT
 ${iconv_start UTF-8 ISO_8859-1}°${iconv_stop}
-${color6}${font DejaVu Sans Mono for Powerline:weight=bold:size=22}${alignc}${time %H:%M:%S}
+${color6}${font DejaVu Sans Mono for Powerline:weight=bold:size=24}${alignc}${time %H:%M:%S}
 ${font DejaVu Sans:weight=bold:size=14}${alignc}${time %a}, ${time %e} ${time %B} ${time %G}
-
+${font DejaVu Sans:weight=bold:size=10}${color5}CURRENTLY PLAYING${hr 2}
+${execi 15 googleplay-ctl currently-playing}
 ${font DejaVu Sans:weight=bold:size=10}${color5}SYSTEM INFORMATION ($nodename)${hr 2}
 $font${color4}Uptime$color $uptime
 ${color4}Kernel$color $kernel
-${color4}Arch$color $machine
-
 ${font DejaVu Sans Mono for Powerline:weight=bold:size=10}${color5}CPU ${hr 2}$color$font
 ${execi 99999 cat /proc/cpuinfo|awk '{$1=$1; if (sub(/model +name +: +/, "")) {if (!m) print $0; m=1;}}'}
 ${color4}Core 0: $color${execi 10 sensors|awk '/Core 0/{$1=$1; print $3}'}
@@ -70,7 +69,6 @@ ${color4}Core 1: $color${execi 10 sensors|awk '/Core 1/{$1=$1;print $3}'}
 ${color4}Freq:$color $font$color${freq_g 2}GHz ${color4}${alignr}Freq:$color $font$color${freq_g 6}GHz
 ${color6}${cpugraph cpu2 25,145 859900 586e75} ${cpugraph cpu5 25,145 859900 586e75}
 ${color6}${cpubar cpu2 4,145} ${cpubar cpu6 4,145}
-
 ${color4}Core 2: $color${execi 10 sensors|awk '/Core 2/{$1=$1; print $3}'}
 ${color4}Freq:$color $font$color${freq_g 3}GHz ${color4}${alignr}Freq:$color $font$color${freq_g 7}GHz
 ${color6}${cpugraph cpu3 25,145 859900 586e75} ${color6}${cpugraph cpu7 25,145 859900 586e75}
@@ -79,28 +77,26 @@ ${color4}Core 3: $color${execi 10 sensors|awk '/Core 3/{$1=$1;print $3}'}
 ${color4}Freq:$color $font$color${freq_g 4}GHz ${color4}${alignr}Freq:$color $font$color${freq_g 8}GHz
 ${color6}${cpugraph cpu4 25,145 859900 586e75} ${cpugraph cpu8 25,145 859900 586e75}
 ${color6}${cpubar cpu4 4,145} ${cpubar cpu8 4,145}
-
-${font DejaVu Sans:weight=bold:size=10}${color5}TOP 5 PROCESSES ${hr 2}
+${font DejaVu Sans:weight=bold:size=10}${color5}TOP 10 PROCESSES ${hr 2}
 $font${color4}Processes:$color $running_processes / $processes
 ${color4}   NAME              PID      CPU      MEM
-${color2}1. ${top name 1}${top pid 1}   ${top cpu 1}   ${top mem 1}$color
-2. ${top name 2}${top pid 2}   ${top cpu 2}   ${top mem 2}
-3. ${top name 3}${top pid 3}   ${top cpu 3}   ${top mem 3}
-4. ${top name 4}${top pid 4}   ${top cpu 4}   ${top mem 4}
-5. ${top name 5}${top pid 5}   ${top cpu 5}   ${top mem 5}
-6. ${top name 6}${top pid 6}   ${top cpu 6}   ${top mem 6}
-7. ${top name 7}${top pid 7}   ${top cpu 7}   ${top mem 7}
-8. ${top name 8}${top pid 8}   ${top cpu 8}   ${top mem 8}
-
+${color2}1.  ${top name 1}${top pid 1}   ${top cpu 1}   ${top mem 1}$color
+2.  ${top name 2}${top pid 2}   ${top cpu 2}   ${top mem 2}
+3.  ${top name 3}${top pid 3}   ${top cpu 3}   ${top mem 3}
+4.  ${top name 4}${top pid 4}   ${top cpu 4}   ${top mem 4}
+5.  ${top name 5}${top pid 5}   ${top cpu 5}   ${top mem 5}
+6.  ${top name 6}${top pid 6}   ${top cpu 6}   ${top mem 6}
+7.  ${top name 7}${top pid 7}   ${top cpu 7}   ${top mem 7}
+8.  ${top name 8}${top pid 8}   ${top cpu 8}   ${top mem 8}
+9.  ${top name 9}${top pid 9}   ${top cpu 9}   ${top mem 9}
+10. ${top name 10}${top pid 10}   ${top cpu 10}   ${top mem 10}
 ${font DejaVu Sans:weight=bold:size=10}${color5}MEMORY & SWAP ${hr 2}
 $font${color4}RAM$color   $mem / $memmax
 ${color4}RAM$color   $memperc%   ${color6}${membar 6}$color
 ${color4}Swap$color  $swapperc%   ${color6}${swapbar 6}$color
-
 ${font Deja Vu Sans for Powerline:weight=bold:size=10}${color5}DISK I/O${hr 2}
 $font${color4}Linux$color   ${diskio_read /dev/sdb} ${diskio_write /dev/sdb} ${alignr}${color4}Windows$color   ${diskio_read /dev/sda} ${diskio_write /dev/sda}
 ${color6}${diskiograph /dev/sdb 25,145 859900 586e75 -t -l} ${alignr}${diskiograph /dev/sda 25,145 859900 586e75 -t -l}
-
 ${font Deja Vu Sans for Powerline:weight=bold:size=10}${color5}DISK USAGE${hr 2}
 $font${color4}Root -  $color${fs_free /} of ${fs_size /}  ${fs_free_perc /}% free
 ${color6}${fs_bar 6 /}
@@ -108,7 +104,6 @@ $font${color4}Home -  $color${fs_free /home} of ${fs_size /home}  ${fs_free_perc
 ${color6}${fs_bar 6 /home}
 $font${color4}Windows - $color${fs_free /mnt/windows} of ${fs_size /mnt/windows}  ${fs_free_perc /mnt/windows}% free
 ${color6}${fs_bar 6 /mnt/windows}
-
 ${font Deja Vu Sans for Powerline:weight=bold:size=10}${color5}INTERNET ${font Deja Vu Sans for Powerline:weight=bold:size=9}(${addr eth0}) ${hr 2}
 $font${color4}Down:$color6  ${downspeed eth0}/s${alignr}${color4}Up:$color6 ${upspeed eth0}/s
 ${color6}${downspeedgraph eth0 25,145 859900 586e75} ${alignr}${upspeedgraph eth0 25,145  859900 586e75}
