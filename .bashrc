@@ -88,10 +88,6 @@ export PS1='\[\e]0;\w\a\n\e[32m\u\e[36m@\e[31m\h \e[33m${promptPWD}\e[0m\e[36m${
 
 . ~/.bashrc-os-specfic
 
-if $(which -s vimpager); then 
-    export PAGER=vimpager 
-    alias less=$PAGER 
-    alias zless=$PAGER 
-fi
-
 export GIT_PAGER=less # vimpager filters color ;-)
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
