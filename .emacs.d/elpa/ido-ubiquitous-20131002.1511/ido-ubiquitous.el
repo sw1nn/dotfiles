@@ -4,8 +4,8 @@
 
 ;; Author: Ryan C. Thompson
 ;; URL: https://github.com/DarwinAwardWinner/ido-ubiquitous
-;; Version: 20130924.1230
-;; X-Original-Version: 2.4
+;; Version: 20131002.1511
+;; X-Original-Version: 2.8
 ;; Created: 2011-09-01
 ;; Keywords: convenience
 ;; EmacsWiki: InteractivelyDoThings
@@ -41,8 +41,11 @@
 
 ;;; Code:
 
-(defconst ido-ubiquitous-version "2.4"
-  "Currently running version of ido-ubiquitous.")
+(defconst ido-ubiquitous-version "2.8"
+  "Currently running version of ido-ubiquitous.
+
+Note that when you update ido-ubiquitous, this variable may not
+be updated until you restart Emacs.")
 
 (eval-when-compile
   (when (or (not (boundp 'completing-read-function))
@@ -52,6 +55,9 @@
 (require 'ido)
 (require 'advice)
 (require 'cl)
+;; Only exists in emacs 24.4 and up; we use a workaround for earlier
+;; versions.
+(require 'nadvice nil 'noerror)
 
 ;; Declare this ahead of time to quiet the compiler
 (defvar ido-ubiquitous-fallback-completing-read-function)
@@ -172,9 +178,10 @@
     (ad-activate 'completing-read))
   ;; Actually enable/disable the mode
   (setq completing-read-function
-	(if ido-ubiquitous-mode
-	    'completing-read-ido
-	  ido-ubiquitous-fallback-completing-read-function)))
+        (if ido-ubiquitous-mode
+            'completing-read-ido
+          (or ido-ubiquitous-fallback-completing-read-function
+              'completing-read-default))))
 
 (defcustom ido-ubiquitous-max-items 5000
   "Max collection size to use ido-ubiquitous on.
@@ -211,8 +218,8 @@ or if ido cannot handle the completion arguments.
 If you turn off ido-ubiquitous mode, `completing-read-function'
 will be set back to this."
   :type '(choice (const :tag "Standard emacs completion"
-			completing-read-default)
-		 (function :tag "Other function"))
+                        completing-read-default)
+                 (function :tag "Other function"))
   :group 'ido-ubiquitous)
 
 (define-obsolete-variable-alias
@@ -265,7 +272,13 @@ specific commands or functions, set appropriate overrides in
     ;; https://github.com/technomancy/ido-ubiquitous/issues/7
     (enable-old prefix "Info-")
     ;; https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/4
-    (enable exact "webjump"))
+    (enable exact "webjump")
+    ;; https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/28
+    (enable regexp "\\`\\(find\\|load\\|locate\\)-library\\'")
+    ;; https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/37
+    ;; Org and Magit already support ido natively
+    (disable prefix "org-")
+    (disable prefix "magit-"))
   "Default value of `ido-ubiquitous-command-overrides'.
 
 You can restore these using the command `ido-ubiquitous-restore-default-overrides'.")
@@ -277,12 +290,20 @@ You can restore these using the command `ido-ubiquitous-restore-default-override
     (disable exact "gnus-emacs-completing-read")
     (disable exact "gnus-iswitchb-completing-read")
     (disable exact "grep-read-files")
+    ;; https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/36
     (enable exact "bookmark-completing-read")
     ;; https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/4
     (enable-old exact "webjump-read-choice")
     (enable-old exact "webjump-read-url-choice")
     ;; https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/9
-    (disable exact "isearchp-read-unicode-char"))
+    (disable exact "isearchp-read-unicode-char")
+    ;; https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/37
+    (disable exact "org-completing-read")
+    (disable exact "org-completing-read-no-i")
+    (disable exact "org-iswitchb-completing-read")
+    (disable exact "org-icompleting-read")
+    ;; https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/38
+    (enable exact "read-char-by-name"))
   "Default value of `ido-ubiquitous-function-overrides'.
 
 You can restore these using the command `ido-ubiquitous-restore-default-overrides'.")
@@ -338,8 +359,7 @@ literal symbol, it must be quoted.
 
 See `ido-ubiquitous-command-overrides' for valid override types."
   ;; Eval override
-  (setq override (ignore-errors (eval override)))
-  `(let ((ido-ubiquitous-next-override ',override))
+  `(let ((ido-ubiquitous-next-override ,override))
      ,@body))
 (put 'ido-ubiquitous-with-override 'lisp-indent-function
      (get 'prog1 'lisp-indent-function))
@@ -396,19 +416,6 @@ Setting this variable directly has no effect. You must set it
 through Customize."
   :type '(repeat ido-ubiquitous-function-override-spec)
   :set 'ido-ubiquitous-set-function-overrides
-  :group 'ido-ubiquitous)
-
-(defcustom ido-ubiquitous-collection-function-whitelist
-  '(locate-file-completion-table)
-  "List of functions that are ok for COLLECTION in `completing-read-ido'.
-
-Normally if the COLLECTION argument to `completing-read' is a
-function instead of a list of choices, ido-ubiquitous is
-automatically disabled, since some such functions actually
-implement their own completion method. However, other such
-functions just return a list of items, and these can be
-whitelisted for use with ido-ubiquitous."
-  :type '(repeat function)
   :group 'ido-ubiquitous)
 
 ;;; ido-ubiquitous core
@@ -480,23 +487,6 @@ This advice implements the logic required for
              prompt choices predicate require-match initial-input
              hist def inherit-input-method)))))
 
-(defun ido-ubiquitous--partially-applied-function-name (func)
-  "Return the name of the partially applied function in FUNC.
-
-If func is not a closure resulting from a call to
-`apply-partially', or if the contained function is
-anonymous (e.g. a lambda form), return nil."
-  (condition-case nil
-      (cl-destructuring-bind (x1 x2 x3 (x4 (x5 fname) . x6)) func
-        (when (and (equal x1 'closure)
-                   (equal x2 '(t))
-                   (equal x3 '(&rest args))
-                   (equal x4 'apply)
-                   (equal x5 'quote)
-                   (symbolp fname))
-          fname))
-    (error nil)))
-
 (defun completing-read-ido (prompt collection &optional predicate
                                    require-match initial-input
                                    hist def inherit-input-method)
@@ -512,21 +502,11 @@ completion for them."
          ;; doesn't apply to nested calls.
          (ido-ubiquitous-active-override ido-ubiquitous-next-override)
          (ido-ubiquitous-next-override nil)
-         ;; Check if ido can handle this function
+         ;; Check if ido can handle this collection. If collection is
+         ;; a function, require an override to be ok.
          (collection-ok
-          (if (functionp collection)
-              ;; Check if function is on the whitelist
-              (let ((fname (if (symbolp collection)
-                               collection
-                             ;; Allow collection to be a partially applied
-                             ;; instance of a whitelisted function. (See
-                             ;; e.g. `find-library').
-                             (ido-ubiquitous--partially-applied-function-name
-                              collection))))
-                (and fname
-                     (memq fname ido-ubiquitous-collection-function-whitelist)))
-            ;; Collection is not a function
-            t))
+          (or (not (functionp collection))
+              (memq ido-ubiquitous-active-override '(enable enable-old))))
          ;; Check for conditions that ido can't or shouldn't handle
          (ido-allowed
           (and ido-mode
@@ -537,11 +517,11 @@ completion for them."
                (not inherit-input-method)
                ;; Can't handle this being set
                (not (bound-and-true-p completion-extra-properties))))
-         ;; Pre-expand list of possible completions (but we can't
-         ;; handle a collection that is a function unless it is
-         ;; whitelisted). This executed after the ido-allowed check to
-         ;; avoid unnecessary work if ido isn't going to used.
-         (__ignore ;; (Return value doesn't matter).
+         ;; Pre-expand list of possible completions, but only if we
+         ;; have a chance of using ido. This is executed after the
+         ;; ido-allowed check to avoid unnecessary work if ido isn't
+         ;; going to used.
+         (_ignore ;; (Return value doesn't matter).
           (when (and ido-allowed collection-ok)
             (setq collection (all-completions "" collection predicate)
                   ;; Don't need this any more
@@ -675,10 +655,10 @@ If there is no override set for CMD in
 `ido-ubiquitous-command-overrides', return nil."
   (when (and cmd (symbolp cmd))
     (loop for (action . spec) in ido-ubiquitous-command-overrides
-             when (memq action '(disable enable enable-old nil))
-             when (ido-ubiquitous-spec-match spec cmd)
-             return action
-             finally return nil)))
+          when (memq action '(disable enable enable-old nil))
+          when (ido-ubiquitous-spec-match spec cmd)
+          return action
+          finally return nil)))
 
 ;;; Workaround for https://github.com/DarwinAwardWinner/ido-ubiquitous/issues/24
 
@@ -788,43 +768,33 @@ See the C source for the logic behind this function."
     ;; `call-interactively', using a more permissive test than the default.
     (ido-ubiquitous--looks-like-call-interactively (cadadr stack))))
 
-(if (boundp 'called-interactively-p-functions)
-    ;; Emacs trunk, in which called-interactively-p logic has
-    ;; changed, so we can't work around the "advice on
-    ;; call-interactively" bug. Define advice instead on
-    ;; `command-execute', which will not work for key bindings, but
-    ;; will work for many other things.
-    (defadvice command-execute (around ido-ubiquitous activate)
-      "Implements the behavior specified in `ido-ubiquitous-command-overrides'.
+(defadvice call-interactively (around ido-ubiquitous activate)
+  "Implements the behavior specified in `ido-ubiquitous-command-overrides'."
+  (ido-ubiquitous-with-override
+      (ido-ubiquitous-get-command-override (ad-get-arg 0))
+    ad-do-it))
 
-Does not work for keybindings or anything else that skips `command-execute'."
-      (ido-ubiquitous-with-override
-          (ido-ubiquitous-get-command-override
-           ;; Ugly hack because Emacs byte compiler doesn't know that CMD
-           ;; is defined for some reason
-           (bound-and-true-p cmd))
-        ad-do-it))
-
-  ;; Emacs release 24.3.1: Old called-interactively-p logic & advice
-  ;; system, which we know how to manipulate.
-  (defadvice call-interactively (around ido-ubiquitous activate)
-    "Implements the behavior specified in `ido-ubiquitous-command-overrides'."
-    (ido-ubiquitous-with-override
-        (ido-ubiquitous-get-command-override (ad-get-arg 0))
-      ad-do-it))
+;; Work around `called-interactively-p' in Emacs 24.3 and earlier,
+;; which always returns nil when `call-interactively' is advised.
+(when (not (and (featurep 'nadvice)
+                (boundp 'called-interactively-p-functions)))
 
   (defadvice interactive-p (around ido-ubiquitous activate)
-    "Return the correct result when `call-interactively' is advised."
+    "Return the correct result when `call-interactively' is advised.
+
+This advice completely overrides the original definition."
     (condition-case nil
         (setq ad-return-value
               (and (ido-ubiquitous--interactive-internal)
                    (ido-ubiquitous--interactive-p-internal)))
       ;; In case of error in the advice, fall back to the default
       ;; implementation
-      ad-do-it))
+      (error ad-do-it)))
 
   (defadvice called-interactively-p (around ido-ubiquitous activate)
-    "Return the correct result when `call-interactively' is advised."
+    "Return the correct result when `call-interactively' is advised.
+
+This advice completely overrides the original definition."
     (condition-case nil
         (setq ad-return-value
               (and (or (ido-ubiquitous--interactive-internal)
@@ -832,7 +802,7 @@ Does not work for keybindings or anything else that skips `command-execute'."
                    (ido-ubiquitous--interactive-p-internal)))
       ;; In case of error in the advice, fall back to the default
       ;; implementation
-      ad-do-it)))
+      (error ad-do-it))))
 
 ;;; Other
 
