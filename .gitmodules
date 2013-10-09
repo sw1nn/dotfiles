@@ -54,4 +54,4 @@
         url = https://github.com/milkypostman/powerline.git
 [submodule "submodule/prezto"]
         path = submodule/prezto
-        url = https://github.com/sorin-ionescu/prezto.git
+        url = git@github.com:sw1nn/prezto.git
