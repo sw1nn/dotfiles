@@ -1,7 +1,8 @@
 (require 'multi-term)
 
 (setq multi-term-program "/bin/zsh"
-      shell-prompt-pattern "^λ ")
+      multi-term-program-switches "-l"
+      shell-prompt-pattern "❯❯❯ ")
 
 (defun term-send-tab ()
   "Send tab in term mode."
