@@ -1,57 +1,57 @@
-[submodule "submodule/oh-my-zsh"]
-	path = submodule/oh-my-zsh
-	url = git@github.com:sw1nn/oh-my-zsh.git
 [submodule "submodule/clojure-mode"]
-	path = submodule/clojure-mode
-	url = git://github.com/clojure-emacs/clojure-mode.git 
+        path = submodule/clojure-mode
+        url = git://github.com/clojure-emacs/clojure-mode.git
 [submodule "submodule/vimpager"]
-	path = submodule/vimpager
-	url = git://github.com/rkitover/vimpager.git
+        path = submodule/vimpager
+        url = git://github.com/rkitover/vimpager.git
 [submodule "submodule/vim-powerline"]
-	path = submodule/vim-powerline
-	url = git://github.com/Lokaltog/vim-powerline.git
+        path = submodule/vim-powerline
+        url = git://github.com/Lokaltog/vim-powerline.git
 [submodule "submodule/vim-fugitive"]
-	path = submodule/vim-fugitive
-	url = git://github.com/tpope/vim-fugitive.git
+        path = submodule/vim-fugitive
+        url = git://github.com/tpope/vim-fugitive.git
 [submodule "submodule/vimclojure"]
-	path = submodule/vimclojure
-	url = git://github.com/kotarak/vimclojure.git
+        path = submodule/vimclojure
+        url = git://github.com/kotarak/vimclojure.git
 [submodule "submodule/vim-colors-solarized"]
-	path = submodule/vim-colors-solarized
-	url = git://github.com/altercation/vim-colors-solarized.git
+        path = submodule/vim-colors-solarized
+        url = git://github.com/altercation/vim-colors-solarized.git
 [submodule "submodule/expand-region"]
-	path = submodule/expand-region
-	url = git://github.com/magnars/expand-region.el.git
+        path = submodule/expand-region
+        url = git://github.com/magnars/expand-region.el.git
 [submodule "submodule/ac-nrepl"]
-	path = submodule/ac-nrepl
-	url = git://github.com/clojure-emacs/ac-nrepl.git
+        path = submodule/ac-nrepl
+        url = git://github.com/clojure-emacs/ac-nrepl.git
 [submodule "submodule/auto-complete"]
-	path = submodule/auto-complete
-	url = git://github.com/auto-complete/auto-complete.git
+        path = submodule/auto-complete
+        url = git://github.com/auto-complete/auto-complete.git
 [submodule "submodule/multiple-cursors"]
-	path = submodule/multiple-cursors
-	url = git://github.com/magnars/multiple-cursors.el.git
+        path = submodule/multiple-cursors
+        url = git://github.com/magnars/multiple-cursors.el.git
 [submodule "submodule/align-cljlet"]
-	path = submodule/align-cljlet
-	url = git://github.com/gstamp/align-cljlet
+        path = submodule/align-cljlet
+        url = git://github.com/gstamp/align-cljlet
 [submodule "submodule/popup"]
-	path = submodule/popup
-	url = git://github.com/auto-complete/popup-el.git
+        path = submodule/popup
+        url = git://github.com/auto-complete/popup-el.git
 [submodule "submodule/emacs-git-gutter-fringe"]
-	path = submodule/emacs-git-gutter-fringe
-	url = git://github.com/syohex/emacs-git-gutter-fringe.git
+        path = submodule/emacs-git-gutter-fringe
+        url = git://github.com/syohex/emacs-git-gutter-fringe.git
 [submodule "submodule/emacs-git-gutter"]
-	path = submodule/emacs-git-gutter
-	url = git://github.com/syohex/emacs-git-gutter.git
+        path = submodule/emacs-git-gutter
+        url = git://github.com/syohex/emacs-git-gutter.git
 [submodule "submodule/popwin-el"]
-	path = submodule/popwin-el
-	url = git://github.com/m2ym/popwin-el.git
+        path = submodule/popwin-el
+        url = git://github.com/m2ym/popwin-el.git
 [submodule "submodule/nrepl"]
-	path = submodule/nrepl
-	url = git://github.com/clojure-emacs/nrepl.el
+        path = submodule/nrepl
+        url = git://github.com/clojure-emacs/nrepl.el
 [submodule "submodule/ritz"]
-	path = submodule/ritz
-	url = git://github.com/pallet/ritz.git
+        path = submodule/ritz
+        url = git://github.com/pallet/ritz.git
 [submodule "submodule/powerline"]
-	path = submodule/powerline
-	url = https://github.com/milkypostman/powerline.git
+        path = submodule/powerline
+        url = https://github.com/milkypostman/powerline.git
+[submodule "submodule/prezto"]
+        path = submodule/prezto
+        url = https://github.com/sorin-ionescu/prezto.git
