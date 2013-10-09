@@ -19,13 +19,14 @@ xrandr --output DVI-0 --primary
 xrandr --output DVI-1 --left-of DVI-0
 xrandr --output DisplayPort-0 --right-of DVI-0
 
+urxvtd &
 emacs --daemon &
 xscreensaver &
 unclutter &
 conky &
 rescuetime &
-urxvtd &
 urxvtc &
-xmodmap ~/.Xmodmap
-
+(sleep 3 && xmodmap ~/.Xmodmap) &
+# needed for some jvm apps :-/
+export _JAVA_AWT_WM_NONREPARENTING=1
 exec xmonad
