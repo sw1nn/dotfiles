@@ -2,7 +2,9 @@
 
 (setq multi-term-program "/bin/zsh"
       multi-term-program-switches "-l"
-      shell-prompt-pattern "❯❯❯ ")
+      shell-prompt-pattern "❯❯❯ "
+      default-process-coding-system '(utf-8-unix . utf-8-unix)
+      system-uses-terminfo nil)
 
 (defun term-send-tab ()
   "Send tab in term mode."
