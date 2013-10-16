@@ -2,7 +2,7 @@
 own_window yes
 own_window_type panel
 own_window_transparent no
-alignment middle_left
+alignment middle_right
 
 double_buffer yes
 use_spacer right

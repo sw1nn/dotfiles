@@ -16,7 +16,7 @@ import XMonad.Actions.UpdatePointer
 -- Utils
 import XMonad.Util.Run (safeSpawn, unsafeSpawn, runInTerm, spawnPipe)
 import XMonad.Util.EZConfig hiding (additionalMouseBindings, removeMouseBindings)
-import XMonad.Util.Scratchpad (scratchpadSpawnAction, scratchpadManageHook, scratchpadFilterOutWorkspace)
+import XMonad.Util.Scratchpad (scratchpadSpawnActionTerminal, scratchpadManageHook, scratchpadFilterOutWorkspace)
 import XMonad.Util.WorkspaceCompare (getSortByIndex)
 -- Layouts
 import XMonad.Layout.NoBorders (smartBorders)
@@ -27,6 +27,8 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.IM
 import XMonad.Layout.Reflect (reflectHoriz)
 import XMonad.Layout.Named
+
+import Control.Monad (liftM2)
 
 -- Prompt
 -- import XMonad.Prompt
@@ -80,16 +82,21 @@ statusBarCmd = "dzen2" ++
                " -w 1300 -x 0 -y 0 -ta l -expand r -e ''" ++
                " -xs 1"
 
-mTerm    = "urxvtc"
+myTerminal    = "urxvtc"
 
-smePP = defaultPP
+nwsPP h = defaultPP
         { ppCurrent = dzenColor soBrightRed soBackground . wrap "" ""
         , ppVisible = dzenColor soBrightBlue soBackground . wrap "" ""
         , ppSep     = dzenColor soWhite soBackground " ^r(1x8) "
         , ppUrgent  = dzenColor soBackground soYellow . wrap "[" "]"
         , ppTitle   = dzenColor soWhite "" . trim
-        }
-
+        , ppOutput  = hPutStrLn h
+        , ppLayout  = dzenColor soWhite "" . (\x -> case x of
+                                                            "Mirror Tall"                               -> pad "^i(/home/neale/.xmonad/icons/layout-mirror-black.xbm)"
+                                                            "Messaging"                                 -> pad "^i(/home/neale/.xmonad/icons/layout-im.xbm)"
+                                                            "Full"                                      -> pad "^i(/home/neale/.xmonad/icons/layout-full.xbm)"
+                                                            _                                           -> pad $ shorten 10 x
+                                                )}
 standardLayouts = Mirror tiled |||
                   defaultTall  |||
                   Full         |||
@@ -121,10 +128,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "yeganesh")
+    , ((modm,               xK_p     ), spawn "yeganesh_run")
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+
+    -- launch scratchpad
+    , ((modm,               xK_grave ), scratchpadSpawnActionTerminal $ XMonad.terminal conf)
+
+    -- launch scratchpad
+    , ((modm,               xK_a ), focusUrgent)
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -146,6 +159,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Move focus to the previous window
     , ((modm,               xK_k     ), windows W.focusUp  )
+
+    -- Move focus to the previous window
+    , ((0,                  xK_Pause ), spawn "xflock4"  )
 
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
@@ -224,21 +240,45 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 --     , ((controlMask .|. modMask, button5), prevScreen)
 --     ]
 
-smeManageHook :: ManageHook
-smeManageHook = composeAll
-              [ resource  =? "desktop_window" --> doIgnore
-              , className =? "MPlayer" --> doFloat
-              , className =? "Pidgin"  --> doShift "8:IM"
-              , title     =? "RescueTime Offline Time" --> doFloat
-              , isFullscreen           --> doFullFloat
-              , isDialog               --> doCenterFloat
-              ] <+> manageDocks
+myManageHook = composeAll . concat $
+    [ [isDialog --> doFloat]
+    , [className =? c --> doFloat | c <- myCFloats]
+    , [title =? t --> doFloat | t <- myTFloats]
+    , [resource =? r --> doFloat | r <- myRFloats]
+    , [resource =? i --> doIgnore | i <- myIgnores]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "1:web" | x <- my1Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "2:edit" | x <- my2Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift "3:term" | x <- my3Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "4" | x <- my4Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "5:art" | x <- my5Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "6:virt" | x <- my6Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "7" | x <- my7Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "8:IM" | x <- my8Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "9:music" | x <- my9Shifts]
+    ]
+    where
+    doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
+    myCFloats = ["MPlayer", "Nitrogen", "Skype", "Sysinfo", "XCalc", "XFontSel", "Xmessage"]
+    myTFloats = ["Downloads", "Save As...", "RescueTime Offline Time", "Google+ Hangouts - Google Chrome"]
+    myRFloats = []
+    myIgnores = ["desktop_window", "kdesktop"]
+    my1Shifts = ["google-chrome"]
+    my2Shifts = ["Emacs"]
+    my3Shifts = ["URxvt"]
+    my4Shifts = ["Eog", "Evince", "Gthumb", "Nautilus", "Pcmanfm", "Pinta"]
+    my5Shifts = ["Gimp"]
+    my6Shifts = ["VirtualBox", "Wine"]
+    my7Shifts = []
+    my8Shifts = ["Pidgin"]
+    my9Shifts = []
 
-smeLogHook h = do
-           dynamicLogWithPP $ smePP { ppOutput = hPutStrLn h }
 
-smeConfig = defaultConfig
-       { terminal = "urxvtc"
+
+nwsLogHook h = do
+           dynamicLogWithPP $ nwsPP h
+
+nwsConfig = defaultConfig
+       { terminal = myTerminal
        , focusFollowsMouse      = False
        , modMask                = mod3Mask -- command key
        , focusedBorderColor     = soGreen
@@ -248,7 +288,7 @@ smeConfig = defaultConfig
                                                onWorkspace "5-art" gimp standardLayouts
                                                )
        , keys                   = myKeys
-       , manageHook             = smeManageHook
+       , manageHook             = myManageHook <+> manageDocks
        -- , mouseBindings          = smeMouseBindings
        }
 
@@ -257,4 +297,4 @@ strutsKey XConfig { XMonad.modMask = modMask } = (modMask, xK_b)
 -- Main
 main = do
      h <- spawnPipe statusBarCmd
-     xmonad $ withUrgencyHook NoUrgencyHook $ ewmh smeConfig { logHook = smeLogHook h }
+     xmonad $ withUrgencyHook NoUrgencyHook $ ewmh nwsConfig { logHook = nwsLogHook h }
