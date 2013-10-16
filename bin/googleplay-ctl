@@ -1,15 +1,32 @@
 #!/bin/sh
 
+GOOGLE_PLAY_CLASS_WM_CLASS="play.google.com__music"
+
 function dispatch_to_google_music {
     xdotool \
-      search --classname "play.google.com__music" \
+      search --classname ${GOOGLE_PLAY_CLASS_WM_CLASS} \
       key --clearmodifiers $1
 }
 
+function currently_playing {
+    xdotool \
+      search --classname ${GOOGLE_PLAY_CLASS_WM_CLASS} \
+      getwindowname | awk -F'-' '!/^(Listen Now|Artists|Radio|Featured|Queue|Thumbs up|Last Added|Free and Purchased|Shared with me)/{gsub(/(^ +| +$)/,"", $2); print $1 "\n" $2}'
+}
+
+function toggle_pause {
+    dispatch_to_google_music space
+}
+
 case $1 in
-    pause-play)
-        dispatch_to_google_music space
+    toggle-pause)
+        toggle_pause
         ;;
+    stop)
+        if [ ! -z "$(currently_playing)" ]; then
+            toggle_pause
+        fi
+        ;; 
     prev)
         dispatch_to_google_music Left
         ;;
@@ -23,10 +40,7 @@ case $1 in
         dispatch_to_google_music alt+minus
         ;;
     currently-playing)
-        xdotool \
-          search --classname "Google-chrome" \
-          search --name "My Library - Google Play - Google Chrome" \
-          getwindowname | awk -F'-' '!/^(Listen Now|Artists|Radio|Featured|Queue|Thumbs up|Last Added|Free and Purchased|Shared with me)/{gsub(/(^ +| +$)/,"", $2); print $1 "\n" $2}'
+        currently-playing
         ;;
     *)
         echo "No Such command"

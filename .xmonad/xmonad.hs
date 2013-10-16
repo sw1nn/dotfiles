@@ -1,4 +1,3 @@
--- xmonad.hs
 -- XMonad config file - sean.escriva@gmail.com
 --
 import XMonad
@@ -6,45 +5,35 @@ import XMonad
 import XMonad.Hooks.DynamicLog hiding (xmobar, xmobarPP, xmobarColor, sjanssenPP, byorgeyPP)
 import XMonad.Hooks.UrgencyHook (withUrgencyHook, NoUrgencyHook(..), focusUrgent)
 import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks, ToggleStruts(..))
-import XMonad.Hooks.ManageHelpers (isFullscreen, isDialog, doFullFloat, doCenterFloat)
-import XMonad.Hooks.SetWMName
+import XMonad.Hooks.ManageHelpers (isDialog)
 import XMonad.Hooks.EwmhDesktops
 -- Actions
-import XMonad.Actions.CycleWS (nextScreen, prevScreen, shiftNextScreen, shiftPrevScreen, toggleWS, Direction1D(..), WSType(..), findWorkspace)
-import XMonad.Actions.WindowGo (title, raiseMaybe, runOrRaise) --, (=?))
-import XMonad.Actions.UpdatePointer
+-- import XMonad.Actions.CycleWS (nextScreen, prevScreen, shiftNextScreen, shiftPrevScreen, toggleWS, Direction1D(..), WSType(..), findWorkspace)
+-- import XMonad.Actions.UpdatePointer
 -- Utils
 import XMonad.Util.Run (safeSpawn, unsafeSpawn, runInTerm, spawnPipe)
-import XMonad.Util.EZConfig hiding (additionalMouseBindings, removeMouseBindings)
 import XMonad.Util.Scratchpad (scratchpadSpawnActionTerminal, scratchpadManageHook, scratchpadFilterOutWorkspace)
-import XMonad.Util.WorkspaceCompare (getSortByIndex)
 -- Layouts
-import XMonad.Layout.NoBorders (smartBorders)
+import XMonad.Layout.NoBorders (smartBorders, noBorders)
 import XMonad.Layout.ResizableTile (ResizableTall(..))
 import XMonad.Layout.Grid (Grid(..))
-import XMonad.Layout.Magnifier (magnifiercz)
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.IM
 import XMonad.Layout.Reflect (reflectHoriz)
 import XMonad.Layout.Named
 import XMonad.Layout.Tabbed
-import XMonad.Layout.NoBorders
-
+import System.Exit
 import Control.Monad (liftM2)
 
 -- Prompt
 -- import XMonad.Prompt
 
 import System.IO (hPutStrLn)
-import Data.Char (isSpace)
 import Data.Ratio ((%))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 -- import Graphics.X11.ExtraTypes.XF86
-
--- basic colors
-cyan = "#00a0df"
 
 -- solarized
 soBackground         = "#002b36"
@@ -94,111 +83,49 @@ nwsPP h = defaultPP
         , ppUrgent  = dzenColor soBackground soYellow . wrap "[" "]"
         , ppTitle   = dzenColor soWhite "" . trim
         , ppOutput  = hPutStrLn h
-        , ppLayout  = dzenColor soWhite "" . (\x -> case x of
-                                                            "Mirror Tall"                               -> pad "^i(/home/neale/.xmonad/icons/layout-mirror-black.xbm)"
-                                                            "Messaging"                                 -> pad "^i(/home/neale/.xmonad/icons/layout-im.xbm)"
-                                                            "Full"                                      -> pad "^i(/home/neale/.xmonad/icons/layout-full.xbm)"
-                                                            _                                           -> pad $ shorten 10 x
-                                                )}
-standardLayouts = Mirror tiled |||
-                  defaultTall  |||
-                  Full
-                where
-                  tiled         = Tall nmaster delta ratio
-                  defaultTall   = ResizableTall 1 (3/100) (1/2) []
-                  nmaster       = 1
-                  ratio         = toRational (2/(1 + sqrt 5 :: Double)) -- golden ratio
-                  delta         = 0.03
+        , ppLayout  = dzenColor soWhite "" .
+            (\x -> case x of
+                "Mirror Tall"-> pad "^i(/home/neale/.xmonad/icons/layout-mirror-black.xbm)"
+                "Messaging"  -> pad "^i(/home/neale/.xmonad/icons/layout-im.xbm)"
+                "Gimp"       -> pad "^i(/home/neale/.xmonad/icons/layout-gimp.xbm)"
+                "Full"       -> pad "^i(/home/neale/.xmonad/icons/layout-full.xbm)"
+                _            -> pad $ shorten 10 x)}
 
 ------------------------------------------------------------------------
--- Key bindings. Add, modify or remove key bindings here.
+-- Key bindings. Add, m      odify or remove key bindings here.
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-
-    -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
-
-    -- launch dmenu
     , ((modm,               xK_p     ), spawn "yeganesh_run")
-
-    -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
-
-    -- launch scratchpad
     , ((modm,               xK_grave ), scratchpadSpawnActionTerminal $ XMonad.terminal conf)
-
-    -- launch scratchpad
     , ((modm,               xK_a ), focusUrgent)
-
-    -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
-
-     -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
-
-    --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
-
-    -- Resize viewed windows to the correct size
     , ((modm,               xK_n     ), refresh)
-
-    -- Move focus to the next window
     , ((modm,               xK_Tab   ), windows W.focusDown)
-
-    -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
-
-    -- Move focus to the previous window
     , ((modm,               xK_k     ), windows W.focusUp  )
-
-    -- Move focus to the previous window
-    , ((0,                  xK_Pause ), spawn "xflock4"  )
-
-    -- Move focus to the master window
+    , ((0,                  xK_Pause ), spawn "lock-screen"  )
     , ((modm,               xK_m     ), windows W.focusMaster  )
-
-    -- Swap the focused window and the master window
     , ((modm,               xK_Return), windows W.swapMaster)
-
-    -- Swap the focused window with the next window
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
-
-    -- Swap the focused window with the previous window
     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
-
-    -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
-
-    -- Expand the master area
     , ((modm,               xK_l     ), sendMessage Expand)
-
-    -- Push window back into tiling
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
-
-    -- Increment the number of windows in the master area
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
-
-    -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
-
-    -- Toggle the status bar gap
-    -- Use this binding with avoidStruts from Hooks.ManageDocks.
-    -- See also the statusBar function from Hooks.DynamicLog.
-    --
     , ((modm              , xK_b     ), sendMessage ToggleStruts)
-
-    -- Quit xmonad
-    --, ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
-
-    -- Restart xmonad
+    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
-
-    , ((0 , xK_F4), spawn "amixer -q set Master toggle")
-    , ((0 , xK_F5), spawn "amixer -q set Master 1000- unmute")
-    , ((0 , xK_F6), spawn "amixer -q set Master 1000+ unmute")
-    , ((0 , xK_F7), spawn "googleplay-ctl prev")
-    , ((0 , xK_F8), spawn "googleplay-ctl pause-play")
-    , ((0 , xK_F9), spawn "googleplay-ctl next")
+    , ((0                 , xK_F4    ), spawn "amixer -q set Master toggle")
+    , ((0                 , xK_F5    ), spawn "amixer -q set Master 1000- unmute")
+    , ((0                 , xK_F6    ), spawn "amixer -q set Master 1000+ unmute")
+    , ((0                 , xK_F7    ), spawn "googleplay-ctl prev")
+    , ((0                 , xK_F8    ), spawn "googleplay-ctl toggle-pause")
+    , ((0                 , xK_F9    ), spawn "googleplay-ctl next")
     ]
     ++
 
@@ -231,7 +158,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 --     , ((controlMask .|. modMask, button5), prevScreen)
 --     ]
 
-myManageHook = composeAll . concat $
+myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
+               manageDocks <+>
+               (composeAll . concat $
     [ [isDialog --> doFloat]
     , [className =? c --> doFloat | c <- myCFloats]
     , [title =? t --> doFloat | t <- myTFloats]
@@ -246,10 +175,10 @@ myManageHook = composeAll . concat $
     , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "7" | x <- my7Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "8:IM" | x <- my8Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "9:music" | x <- my9Shifts]
-    ]
+    ])
     where
     doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
-    myCFloats = ["MPlayer", "Nitrogen", "Sysinfo", "XCalc", "XFontSel", "Xmessage", "play.google.com__music"]
+    myCFloats = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Xmessage"]
     myTFloats = ["Downloads", "Save As...", "RescueTime Offline Time", "Google+ Hangouts - Google Chrome"]
     myRFloats = []
     myIgnores = ["desktop_window", "kdesktop"]
@@ -261,7 +190,7 @@ myManageHook = composeAll . concat $
     my6Shifts = ["VirtualBox", "Wine"]
     my7Shifts = []
     my8Shifts = ["Pidgin", "Skype"]
-    my9Shifts = []
+    my9Shifts = ["play.google.com__music"]
 
 nwsLogHook h = do
            dynamicLogWithPP $ nwsPP h
@@ -273,10 +202,18 @@ myTheme = defaultTheme { decoHeight = 16
                         , inactiveBorderColor = "#000000"
                         }
 
-myLayoutHook = onWorkspace "1:web" webL $ onWorkspace "2:edit" fullL $ onWorkspace "5:art" gimpL $ onWorkspace "4:vbox" fullL $ onWorkspace "8:IM" imL $ standardLayouts
+myLayoutHook = onWorkspace "1:web" webL $
+               onWorkspace "2:edit" fullL $
+               onWorkspace "5:art" gimpL $
+               onWorkspace "4:vbox" fullL $
+               onWorkspace "8:IM" imL $
+               standardLayouts
    where
-        standardLayouts =   avoidStruts  $ (tiled |||  reflectTiled ||| Mirror tiled ||| Grid ||| Full)
-
+        standardLayouts =   avoidStruts  $ (tiled |||
+                                            reflectTiled |||
+                                            Mirror tiled |||
+                                            Grid |||
+                                            Full)
         --Layouts
         tiled     = smartBorders (ResizableTall 1 (2/100) (1/2) [])
         reflectTiled = (reflectHoriz tiled)
@@ -284,15 +221,27 @@ myLayoutHook = onWorkspace "1:web" webL $ onWorkspace "2:edit" fullL $ onWorkspa
         full      = noBorders Full
 
         --Im Layout
-        imL = avoidStruts $ smartBorders $ withIM ratio pidginRoster $ reflectHoriz $ withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid) where
-                chatLayout      = Grid
-                ratio = (1%9)
-                skypeRatio = (1%8)
-                pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
-                skypeRoster     = (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
+        imL = named "Messaging" $
+              avoidStruts $
+              smartBorders $
+              withIM ratio pidginRoster $
+              reflectHoriz $
+              withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid)
+          where
+            chatLayout      = Grid
+            ratio = (1%7)
+            skypeRatio = (1%6)
+            pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
+            skypeRoster     = (ClassName "Skype") `And` (Not (Title "Options")) `And`
+                              (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
 
         --Gimp Layout
-        gimpL = named "Messaging" $ avoidStruts $ smartBorders $ withIM (0.11) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full
+        gimpL = named "Gimp" $
+                avoidStruts $
+                smartBorders $
+                withIM (0.11) (Role "gimp-toolbox") $
+                reflectHoriz $
+                withIM (0.15) (Role "gimp-dock") Full
 
         --Web Layout
         webL      = avoidStruts $  tabLayout  ||| tiled ||| reflectHoriz tiled |||  full
@@ -308,11 +257,9 @@ nwsConfig = defaultConfig
        , workspaces             = myWorkspaces
        , layoutHook             = myLayoutHook
        , keys                   = myKeys
-       , manageHook             = myManageHook <+> manageDocks
+       , manageHook             = myManageHook
        -- , mouseBindings          = smeMouseBindings
        }
-
-strutsKey XConfig { XMonad.modMask = modMask } = (modMask, xK_b)
 
 -- Main
 main = do

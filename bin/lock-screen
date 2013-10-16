@@ -1,0 +1,8 @@
+#!/bin/sh
+
+xcursorpos | (read x y; [ $y -lt 20 ]) && exit 0
+
+(sleep 4; googleplay-ctl stop) &
+
+sxlock
+
