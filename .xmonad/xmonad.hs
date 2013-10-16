@@ -27,6 +27,8 @@ import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.IM
 import XMonad.Layout.Reflect (reflectHoriz)
 import XMonad.Layout.Named
+import XMonad.Layout.Tabbed
+import XMonad.Layout.NoBorders
 
 import Control.Monad (liftM2)
 
@@ -35,6 +37,7 @@ import Control.Monad (liftM2)
 
 import System.IO (hPutStrLn)
 import Data.Char (isSpace)
+import Data.Ratio ((%))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -71,7 +74,7 @@ barFont  = "terminus"
 barXFont = "inconsolata:size=10"
 xftFont  = "xft: inconsolata-10"
 
-myWorkspaces    = ["1:web","2:edit","3:term","4","5:art","6","7","8:IM","9:music"]
+myWorkspaces    = ["1:web","2:edit","3:term","4:vbox","5:art","6","7","8:IM","9:music"]
 
 
 statusBarCmd = "dzen2" ++
@@ -79,7 +82,7 @@ statusBarCmd = "dzen2" ++
                " -fg '" ++ soBrightBlue ++ "'" ++
                " -sa c" ++
                " -fn '" ++ barXFont ++ "'" ++
-               " -w 1300 -x 0 -y 0 -ta l -expand r -e ''" ++
+               " -w 1920 -x 0 -y 0 -ta l -expand r -e ''" ++
                " -xs 1"
 
 myTerminal    = "urxvtc"
@@ -99,25 +102,13 @@ nwsPP h = defaultPP
                                                 )}
 standardLayouts = Mirror tiled |||
                   defaultTall  |||
-                  Full         |||
-                  messaging
+                  Full
                 where
                   tiled         = Tall nmaster delta ratio
                   defaultTall   = ResizableTall 1 (3/100) (1/2) []
                   nmaster       = 1
                   ratio         = toRational (2/(1 + sqrt 5 :: Double)) -- golden ratio
                   delta         = 0.03
-
--- grids = magnifiercz 1.2 (GridRatio (4/3)) |||
---         GridRatio (4/3)
-
-gimp     = reflectHoriz $
-           named "Gimp" $
-           withIM (11/64) (Role "gimp-toolbox") $
-           ResizableTall 2 (1/118) (11/20) [5/4,5/4,5/4]
-
-messaging = named "Messaging" $
-            withIM (1/8) (Role "buddy_list") Grid
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -258,7 +249,7 @@ myManageHook = composeAll . concat $
     ]
     where
     doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
-    myCFloats = ["MPlayer", "Nitrogen", "Skype", "Sysinfo", "XCalc", "XFontSel", "Xmessage"]
+    myCFloats = ["MPlayer", "Nitrogen", "Sysinfo", "XCalc", "XFontSel", "Xmessage", "play.google.com__music"]
     myTFloats = ["Downloads", "Save As...", "RescueTime Offline Time", "Google+ Hangouts - Google Chrome"]
     myRFloats = []
     myIgnores = ["desktop_window", "kdesktop"]
@@ -269,13 +260,45 @@ myManageHook = composeAll . concat $
     my5Shifts = ["Gimp"]
     my6Shifts = ["VirtualBox", "Wine"]
     my7Shifts = []
-    my8Shifts = ["Pidgin"]
+    my8Shifts = ["Pidgin", "Skype"]
     my9Shifts = []
-
-
 
 nwsLogHook h = do
            dynamicLogWithPP $ nwsPP h
+
+myTheme = defaultTheme { decoHeight = 16
+                        , activeColor = "#a6c292"
+                        , activeBorderColor = "#a6c292"
+                        , activeTextColor = "#000000"
+                        , inactiveBorderColor = "#000000"
+                        }
+
+myLayoutHook = onWorkspace "1:web" webL $ onWorkspace "2:edit" fullL $ onWorkspace "5:art" gimpL $ onWorkspace "4:vbox" fullL $ onWorkspace "8:IM" imL $ standardLayouts
+   where
+        standardLayouts =   avoidStruts  $ (tiled |||  reflectTiled ||| Mirror tiled ||| Grid ||| Full)
+
+        --Layouts
+        tiled     = smartBorders (ResizableTall 1 (2/100) (1/2) [])
+        reflectTiled = (reflectHoriz tiled)
+        tabLayout = (tabbed shrinkText myTheme)
+        full      = noBorders Full
+
+        --Im Layout
+        imL = avoidStruts $ smartBorders $ withIM ratio pidginRoster $ reflectHoriz $ withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid) where
+                chatLayout      = Grid
+                ratio = (1%9)
+                skypeRatio = (1%8)
+                pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
+                skypeRoster     = (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
+
+        --Gimp Layout
+        gimpL = named "Messaging" $ avoidStruts $ smartBorders $ withIM (0.11) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full
+
+        --Web Layout
+        webL      = avoidStruts $  tabLayout  ||| tiled ||| reflectHoriz tiled |||  full
+
+        --VirtualLayout
+        fullL = avoidStruts $ full
 
 nwsConfig = defaultConfig
        { terminal = myTerminal
@@ -283,10 +306,7 @@ nwsConfig = defaultConfig
        , modMask                = mod3Mask -- command key
        , focusedBorderColor     = soGreen
        , workspaces             = myWorkspaces
-       , layoutHook             = avoidStruts $
-                                  smartBorders (
-                                               onWorkspace "5-art" gimp standardLayouts
-                                               )
+       , layoutHook             = myLayoutHook
        , keys                   = myKeys
        , manageHook             = myManageHook <+> manageDocks
        -- , mouseBindings          = smeMouseBindings
