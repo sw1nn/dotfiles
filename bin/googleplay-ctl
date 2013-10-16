@@ -2,8 +2,7 @@
 
 function dispatch_to_google_music {
     xdotool \
-      search --classname "Google-chrome" \
-      search --name "My Library - Google Play - Google Chrome" \
+      search --classname "play.google.com__music" \
       key --clearmodifiers $1
 }
 
