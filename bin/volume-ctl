@@ -1,0 +1,22 @@
+#!/bin/sh
+
+cmd=$1
+shift;
+
+case $cmd in
+    volume-up)
+        amixer -q set Master 1000+ unmute
+        notify 1 "Vol+"
+        ;;
+    volume-down)
+        amixer -q set Master 1000- unmute
+        notify 1 "Vol-"
+        ;;
+    mute)
+        amixer -q set Master toggle
+        (amixer get Master | grep '\[off\]') && notify 1 "Mute"
+        ;;
+    *)
+        echo "No Such command"
+        ;;
+esac
