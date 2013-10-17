@@ -12,6 +12,7 @@ xftalpha 1
 short_units yes
 
 maximum_width 325
+minimum_size 325 1080
 gap_x 5
 gap_y 0
 if_up_strictness address
