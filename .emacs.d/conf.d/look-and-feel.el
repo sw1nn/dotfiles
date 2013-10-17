@@ -120,6 +120,8 @@
 
 (setq dired-use-ls-dired nil)
 
+(setq kill-do-not-save-duplicates t)
+
 (add-hook 'markdown-mode-hook 'visual-line-mode)
 
 (load-theme 'sw1nn t)
