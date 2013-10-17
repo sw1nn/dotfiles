@@ -26,7 +26,6 @@ URxvt*saveLines:            12000
 
 ! Fonts
 URxvt.allow_bold:           false
-/* URxvt.font:                 -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
 URxvt*font: xft:DejaVu Sans Mono for Powerline:pixelsize=14
 URxvt*imFont: xft:DejaVu Sans Mono for Powerline:pixelsize=14
 URxvt*italicFont: xft:DejaVu Sans Mono for Powerline:pixelsize=14
@@ -95,3 +94,7 @@ URxvt*color14: #93a1a1
 !! white dark/light
 URxvt*color7: #eee8d5
 URxvt*color15: #fdf6e3
+
+dzen2.font: xft:DejaVu Sans Mono for Powerline:pixelsize=14
+dzen2.foreground: #fdf6e3 
+dzen2.background: #dc322f
