@@ -59,6 +59,7 @@
  '(magit-diff-none ((t (:inherit nil :background "#586e75" :foreground "#002b36"))))
  '(magit-branch ((t (:foreground "DarkGreen" :background "OliveDrab2"))))
  '(magit-item-highlight ((t (:inherit nil :background "#586e75" :foreground "#002b36")))) '(match ((t (:inverse-video t :foreground "#2075c7" :background "#042028"))))
+ '(magit-key-mode-switch-face ((t (:foreground "#586e75" :weight bold))))
  '(minibuffer-prompt ((t (:foreground "#2075c7"))))
  '(nrepl-error-highlight-face ((t (:underline (:color "Red4" :style wave) :inherit nil))))
  '(nrepl-warning-highlight-face ((t (:underline (:color "Gold4" :style wave) :inherit nil))))
