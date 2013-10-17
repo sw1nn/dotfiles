@@ -13,6 +13,7 @@ import XMonad.Hooks.EwmhDesktops
 -- Utils
 import XMonad.Util.Run (safeSpawn, unsafeSpawn, runInTerm, spawnPipe)
 import XMonad.Util.Scratchpad (scratchpadSpawnActionTerminal, scratchpadManageHook, scratchpadFilterOutWorkspace)
+import XMonad.Util.WorkspaceCompare(getSortByIndex)
 -- Layouts
 import XMonad.Layout.NoBorders (smartBorders, noBorders)
 import XMonad.Layout.ResizableTile (ResizableTall(..))
@@ -72,10 +73,11 @@ statusBarCmd = "dzen2" ++
                " -w 1920 -x 0 -y 0 -ta l -expand r -e ''" ++
                " -xs 1"
 
-myTerminal    = "urxvtc"
+myTerminal   = "urxvtc"
 
 nwsPP h = defaultPP
-        { ppCurrent = dzenColor soBrightRed soBackground . wrap "" ""
+        { ppSort    = fmap (.scratchpadFilterOutWorkspace) getSortByIndex
+        , ppCurrent = dzenColor soBrightRed soBackground . wrap "" ""
         , ppVisible = dzenColor soBrightBlue soBackground . wrap "" ""
         , ppSep     = dzenColor soWhite soBackground " ^r(1x8) "
         , ppUrgent  = dzenColor soBackground soYellow . wrap "[" "]"
@@ -249,7 +251,7 @@ myLayoutHook = onWorkspace "1:web" webL $
         fullL = avoidStruts $ full
 
 nwsConfig = defaultConfig
-       { terminal = myTerminal
+       { terminal               = myTerminal
        , focusFollowsMouse      = False
        , modMask                = mod3Mask -- command key
        , focusedBorderColor     = soGreen
