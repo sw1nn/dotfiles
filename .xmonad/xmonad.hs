@@ -58,6 +58,7 @@ soBrightWhite        = "#fdf6e3"
 colorNormalBorder    = soGreen
 colorFocusedBorder   = soBrightGreen
 
+transBackground      = "[75]" ++ soBackground
 barFont = "aldrich-11"
 
 myWorkspaces    = ["1:web","2:edit","3:term","4:vbox","5:gimp","6","7","8:im","9:music"]
@@ -92,7 +93,7 @@ nwsPP h = defaultPP
 -- Key bindings. Add, m      odify or remove key bindings here.
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+    [ ((modm .|. shiftMask, xK_Return), spawn $ ("urxvtc -bg " ++ transBackground))
     , ((modm,               xK_p     ), spawn "yeganesh_run")
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
     , ((modm,               xK_grave ), scratchpadSpawnActionTerminal $ XMonad.terminal conf)
