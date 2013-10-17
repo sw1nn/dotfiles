@@ -10,10 +10,12 @@ fi
 
 export LANG=en_GB.UTF-8
 
-eval $(gpg-agent --daemon) &
-export GPG_AGENT_INFO
+gpg-agent --daemon \
+          --display "${DISPLAY}" \
+          --keep-display \
+          --write-env-file "${HOME}/.gnupg/agent-info"
 
-compton -cGb 
+compton -cCGb
 
 xrdb -load ${HOME}/.Xresources
 xsetroot -cursor_name left_ptr -solid '#002b36'
@@ -23,16 +25,17 @@ xrandr --output DVI-1 --left-of DVI-0
 xrandr --output DisplayPort-0 --right-of DVI-0
 
 xset s 90
-xss sxlock &
+xss lock-screen &
+thunar --daemon &
 pulseaudio --start &
 urxvtd &
 unclutter &
 conky &
 rescuetime &
 pidgin &
-google-chrome --profile-directory=GoogleMusic --app=http://play.google.com/music &
+google-music &
 urxvtc &
-emacsclient -a '' -c &
+start-emacs &
 (sleep 3 && das-keyboard.sh) &
 # needed for some jvm apps :-/
 export _JAVA_AWT_WM_NONREPARENTING=1

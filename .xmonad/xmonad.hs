@@ -58,19 +58,16 @@ soBrightWhite        = "#fdf6e3"
 colorNormalBorder    = soGreen
 colorFocusedBorder   = soBrightGreen
 
--- fonts
-barFont  = "terminus"
-barXFont = "inconsolata:size=10"
-xftFont  = "xft: inconsolata-10"
+barFont = "aldrich-11"
 
-myWorkspaces    = ["1:web","2:edit","3:term","4:vbox","5:art","6","7","8:IM","9:music"]
+myWorkspaces    = ["1:web","2:edit","3:term","4:vbox","5:gimp","6","7","8:im","9:music"]
 
 
 statusBarCmd = "dzen2" ++
                " -bg '" ++ soBackground ++ "'" ++
                " -fg '" ++ soBrightBlue ++ "'" ++
                " -sa c" ++
-               " -fn '" ++ barXFont ++ "'" ++
+               " -fn '" ++ barFont ++ "'" ++
                " -w 1920 -x 0 -y 0 -ta l -expand r -e ''" ++
                " -xs 1"
 
@@ -115,6 +112,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_h     ), sendMessage Shrink)
     , ((modm,               xK_l     ), sendMessage Expand)
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+    , ((modm .|. controlMask, xK_t     ), spawn "thunar")
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
     , ((modm              , xK_b     ), sendMessage ToggleStruts)
@@ -169,16 +167,16 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "1:web" | x <- my1Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "2:edit" | x <- my2Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "3:term" | x <- my3Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "4" | x <- my4Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "5:art" | x <- my5Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "6:virt" | x <- my6Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "7" | x <- my7Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "8:IM" | x <- my8Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "4:virt" | x <- my4Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "5:gimp" | x <- my5Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "6:" | x <- my6Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "7:" | x <- my7Shifts]
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "8:im" | x <- my8Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "9:music" | x <- my9Shifts]
     ])
     where
     doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
-    myCFloats = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Xmessage"]
+    myCFloats = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Xmessage", "Thunar"]
     myTFloats = ["Downloads", "Save As...", "RescueTime Offline Time", "Google+ Hangouts - Google Chrome"]
     myRFloats = []
     myIgnores = ["desktop_window", "kdesktop"]
@@ -204,9 +202,9 @@ myTheme = defaultTheme { decoHeight = 16
 
 myLayoutHook = onWorkspace "1:web" webL $
                onWorkspace "2:edit" fullL $
-               onWorkspace "5:art" gimpL $
-               onWorkspace "4:vbox" fullL $
-               onWorkspace "8:IM" imL $
+               onWorkspace "5:gimp" gimpL $
+               onWorkspace "4:virt" fullL $
+               onWorkspace "8:im" imL $
                standardLayouts
    where
         standardLayouts =   avoidStruts  $ (tiled |||
