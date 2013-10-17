@@ -9,38 +9,62 @@ function dispatch_to_google_music {
 }
 
 function currently_playing {
+    local sep
+    if [ "$1" = "alt" ]; then
+        sep="~"
+    else
+        sep="\n"
+    fi
     xdotool \
-      search --classname ${GOOGLE_PLAY_CLASS_WM_CLASS} \
-      getwindowname | awk -F'-' '!/^(Listen Now|Artists|Radio|Featured|Queue|Thumbs up|Last Added|Free and Purchased|Shared with me)/{gsub(/(^ +| +$)/,"", $2); print $1 "\n" $2}'
+        search --classname ${GOOGLE_PLAY_CLASS_WM_CLASS} \
+        getwindowname \
+      | egrep -v -e '(Listen Now|Artists|Radio|Featured|Queue|Thumbs up|Last Added|Free and Purchased|Shared with me)'\
+      | sed -e "s/\(.*\) - \(.*\) - My Library - Google Play/\1$sep\2/"
 }
 
 function toggle_pause {
     dispatch_to_google_music space
 }
+cmd=$1
+shift;
 
-case $1 in
+case $cmd in
     toggle-pause)
-        toggle_pause
+        toggle_pause "$@"
+        sleep 0.3 # urggh.
+        playing=$(currently_playing alt)
+        if [ ! -z "$playing" ]; then
+            notify 2 $playing
+        else
+            notify 2 "paused"
+        fi
         ;;
     stop)
         if [ ! -z "$(currently_playing)" ]; then
-            toggle_pause
+            toggle_pause  "$@"
+            notify 2 "stopped"
         fi
-        ;; 
+        ;;
     prev)
-        dispatch_to_google_music Left
+        dispatch_to_google_music Left "$@"
+        notify 1 "previous"
+        notify 3 "$(currently_playing alt)"
         ;;
     next)
-        dispatch_to_google_music Right
+        dispatch_to_google_music Right "$@"
+        notify 1 "next"
+        notify 3 "$(currently_playing alt)"
         ;;
     thumbs-up)
-        dispatch_to_google_music alt+equal
+        dispatch_to_google_music alt+equal "$@"
+        notify 1 "thumbs up"
         ;;
     thumbs-down)
-        dispatch_to_google_music alt+minus
+        dispatch_to_google_music alt+minus  "$@"
+        notify 1 "thumbs down"
         ;;
     currently-playing)
-        currently_playing
+        currently_playing  "$@"
         ;;
     *)
         echo "No Such command"
