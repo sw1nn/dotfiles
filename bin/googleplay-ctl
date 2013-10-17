@@ -40,7 +40,7 @@ case $1 in
         dispatch_to_google_music alt+minus
         ;;
     currently-playing)
-        currently-playing
+        currently_playing
         ;;
     *)
         echo "No Such command"
