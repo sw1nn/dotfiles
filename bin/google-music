@@ -1,0 +1,3 @@
+#!/bin/sh
+
+google-chrome --profile-directory=GoogleMusic --app=http://play.google.com/music

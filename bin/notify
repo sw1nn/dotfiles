@@ -1,0 +1,6 @@
+#!/bin/sh
+
+seconds=$1
+shift;
+
+echo $@ | dzen2 -p $seconds -bg '#dc322f' -w 220 -x 1700 -fg white -expand left -fn 'xft:terminus-6' -ta l -xs 1

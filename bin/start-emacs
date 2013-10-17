@@ -1,0 +1,5 @@
+#!/bin/sh -l
+
+source ${HOME}/.gpg-agent.info
+
+emacsclient -a '' -c
