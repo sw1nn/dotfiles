@@ -1,5 +1,7 @@
 #!/bin/sh -l
 
-source ${HOME}/.gpg-agent.info
+if [ -e "${HOME}/.gnupg/agent-info" ]; then
+    source ${HOME}/.gnupg/agent-info
+fi
 
-emacsclient -a '' -c
+emacsclient -a '' -ct
