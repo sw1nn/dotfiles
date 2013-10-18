@@ -1,4 +1,4 @@
-;; -*- mode: rainbow; -*-
+;; -*- mode: emacs-lisp;rainbow; -*-
 (deftheme sw1nn
   "Created 2013-03-25.")
 
@@ -19,9 +19,10 @@
  '(diff-removed ((t (:foreground "#FF0000"))))
  '(eldoc-highlight-function-argument ((t (:foreground "#859900" :weight bold))))
  '(erc-notice-face ((t (:foreground "#333333"))))
- '(flymake-errline ((t (:underline (:color "#8b0000" :style wave) :inherit nil))))
+ '(error ((t (:underline (:color "#8b0000" :style wave)))))
  '(flymake-warnline ((t (:underline (:color "#8b7500" :style wave) :inherit nil))))
  '(flyspell-duplicate ((t (:underline (:color "#8b7500" :style wave) :inherit nil))))
+ '(flymake-errline ((t (:underline (:color "#8b0000" :style wave) :inherit nil))))
  '(flyspell-incorrect ((t (:underline (:color "#8b0000" :style wave) :inherit nil))))
  '(font-lock-builtin-face ((t (:foreground "#5859b7"))))
  '(font-lock-comment-delimiter-face ((t (:slant italic :foreground "#465a61") :inherit font-lock-comment-face)))
@@ -43,8 +44,8 @@
  '(git-gutter-fr:deleted ((t (:foreground "#8b0000"))))
  '(git-gutter-fr:modified ((t (:foreground "#5859b7"))))
  '(highlight ((t (:background "#0a2832"))))
- '(hl-line-face ((t (:background "#1b3943"))))
- '(hl-sexp-face ((t (:background "#0a2832"))))
+ '(hl-line-face ((t (:background "#073642"))))
+ '(hl-sexp-face ((t (:background "#073642"))))
  '(ido-first-match ((t (:weight bold :foreground "#a57705"))))
  '(ido-only-match ((t (:foreground "#728a05"))))
  '(ido-subdir ((t (:foreground "#c61b6e"))))
@@ -60,6 +61,10 @@
  '(magit-diff-none ((t (:inherit nil :background "#586e75" :foreground "#002b36"))))
  '(magit-branch ((t (:foreground "#006400" :background "#b3ee3a"))))
  '(magit-item-highlight ((t (:inherit nil :background "#586e75" :foreground "#002b36"))))
+ '(magit-key-mode-switch-face ((t (:foreground "#008b00"))))
+ '(magit-log-head-label-default ((t (:background "#222222" :foreground "#002b86" :box 1))))
+ '(magit-log-reflog-label-other ((t (:background "#222222" :foreground "#002b86" :box 1))))
+ '(magit-log-reflog-label-remote ((t (:background "#222222" :foreground "#002b86" :box 1))))
  '(match ((t (:inverse-video t :foreground "#2075c7" :background "#00005f"))))
  '(magit-key-mode-switch-face ((t (:foreground "#586e75" :weight bold))))
  '(minibuffer-prompt ((t (:foreground "#2075c7"))))
@@ -70,6 +75,7 @@
  '(outline-4 ((t (:slant normal :foreground "#52676f"))))
  '(powerline-active1 ((t (:inherit mode-line :background "#b3ee3a" :foreground "#006400"))))
  '(region ((t (:background "#e9e2cb"))))
+ '(secondary-selection ((t (:background "#00688b" :foreground "#002b86"))))
  '(show-paren-match ((t (:inverse-video t :foreground "white" :background "#1e90ff"))))
  '(show-paren-mismatch ((t (:foreground "#042028" :background "#c61b6e"))))
  '(term-color-black ((t (:background "#002b36" :foreground "#073642"))))
@@ -81,6 +87,8 @@
  '(term-color-white ((t (:background "#fdf6e3" :foreground "#eee8d5"))))
  '(term-color-yellow ((t (:background "#657b83" :foreground "#b58900"))))
  '(warning ((t (:underline (:color "#8b0000" :style wave)))))
+ '(widget-field ((t (:background "#222222" :foreground "#002b36"))))
+ '(widget-single-line-field ((t (:background "#222222" :foreground "#002b36"))))
  '(default ((t (:height 160 :family "DejaVu Sans Mono for Powerline")))))
 
 (provide-theme 'sw1nn)
