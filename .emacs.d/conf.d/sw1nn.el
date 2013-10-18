@@ -20,10 +20,10 @@
   (setq sw1nn-clj-test-on-save (not sw1nn-clj-compile-on-save))
   (message "sw1nn-clj-test-on-save %s" (if sw1nn-clj-test-on-save "enabled" "disabled")))
 
-(defun sw1nn-toggle-nrepl-popup-stacktraces-in-repl ()
+(defun sw1nn-toggle-cider-popup-stacktraces-in-repl ()
   (interactive)
-  (setq nrepl-popup-stacktraces-in-repl (not nrepl-popup-stacktraces-in-repl))
-  (message "nrepl-popup-stacktraces-in-repl %s" (if nrepl-popup-stacktraces-in-repl "enabled" "disabled")))
+  (setq cider-popup-stacktraces-in-repl (not cider-popup-stacktraces-in-repl))
+  (message "cider-popup-stacktraces-in-repl %s" (if cider-popup-stacktraces-in-repl "enabled" "disabled")))
 
 ;;Treat hyphens as a word character when transposing words
 ;; based on https://github.com/overtone/emacs-live/blob/a7951de9bad6153537f6ee8af46d18bbc2bf0166/packs/dev/clojure-pack/config/clojure-conf.el#L39
@@ -42,13 +42,13 @@
   (add-hook 'after-save-hook
             (lambda nil
               (if (and sw1nn-clj-compile-on-save
-                       (symbol-value 'nrepl-interaction-mode)
+                       (symbol-value 'cider-interaction-mode)
                        (not (string-match "project.clj"
                                           (file-name-nondirectory (buffer-file-name))))
                        (not (string-match ".lein/profiles.clj"
                                           (substring (buffer-file-name) -18))))
                   (progn (message "Compiling...")
-                         (nrepl-load-current-buffer)))
+                         (cider-load-current-buffer)))
               (if (and sw1nn-clj-test-on-save
                        (assq 'clojure-test minor-mode-alist))
                   (clojure-test-run-tests)))))
@@ -66,20 +66,20 @@
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
 
-(defun sw1nn-nrepl-current-server-buffer ()
-  (let ((nrepl-server-buf (replace-regexp-in-string "connection" "server" (nrepl-current-connection-buffer))))
-    (when nrepl-server-buf
-      (get-buffer nrepl-server-buf))))
+(defun sw1nn-cider-current-server-buffer ()
+  (let ((cider-server-buf (replace-regexp-in-string "connection" "server" (cider-current-connection-buffer))))
+    (when cider-server-buf
+      (get-buffer cider-server-buf))))
 
-(defun sw1nn-nrepl-perspective ()
+(defun sw1nn-cider-perspective ()
   (interactive)
   (delete-other-windows)
   (split-window-below)
   (windmove-down)
   (shrink-window 15)
-  (switch-to-buffer (sw1nn-nrepl-current-server-buffer))
+  (switch-to-buffer (sw1nn-cider-current-server-buffer))
   (windmove-up)
-  (pop-to-buffer (nrepl-find-or-create-repl-buffer)))
+  (pop-to-buffer (cider-find-or-create-repl-buffer)))
 
 (require 'grep)
 

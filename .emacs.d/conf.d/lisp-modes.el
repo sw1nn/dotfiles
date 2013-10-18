@@ -3,11 +3,11 @@
 
 (require 'align-cljlet)
 
-(require 'nrepl)
+(require 'cider)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; font-lock tweaks
-(dolist (mode '(clojure-mode clojurescript-mode nrepl-mode))
+(dolist (mode '(clojure-mode clojurescript-mode cider-mode))
   (eval-after-load mode
     (font-lock-add-keywords
      mode '(("(\\(fn\\)[\[[:space:]]"  ; anon funcs 1
@@ -71,13 +71,13 @@
   (set (make-local-variable 'scroll-margin) 3)
   )
 
-(defun neale-custom-nrepl-mode ()
+(defun neale-custom-cider-mode ()
   (neale-custom-lisp-mode))
 
 (defun neale-custom-inferior-lisp-mode ()
   (neale-custom-lisp-mode))
 
-(add-hook 'nrepl-mode-hook 'neale-custom-nrepl-mode)
+(add-hook 'cider-mode-hook 'neale-custom-cider-mode)
 (add-hook 'lisp-mode-hook 'neale-custom-lisp-mode)
 (add-hook 'emacs-lisp-mode-hook 'neale-custom-lisp-mode)
 (add-hook 'clojure-mode-hook 'neale-custom-clojure-mode)

@@ -24,11 +24,11 @@
         (".*overtone.log" :regexp t :height 30)
         ("*gists*" :height 30)
         ("*sldb.*":regexp t :height 30)
-        ("*nrepl-error*" :height 30 :stick t)
-        ("*nrepl-doc*" :height 30 :stick t)
-        ("*nrepl-src*" :height 30 :stick t)
-        ("*nrepl-result*" :height 30 :stick t)
-        ("*nrepl-macroexpansion*" :height 30 :stick t)
+        ("*cider-error*" :height 30 :stick t)
+        ("*cider-doc*" :height 30 :stick t)
+        ("*cider-src*" :height 30 :stick t)
+        ("*cider-result*" :height 30 :stick t)
+        ("*cider-macroexpansion*" :height 30 :stick t)
         ("*Kill Ring*" :height 30)
         ("*Compile-Log*" :height 30 :stick t)
         ("*git-gutter:diff*" :height 30 :stick t)))
@@ -38,11 +38,11 @@
 ;; ;; undo-tree
 ;; (push '("*undo-tree*" :width 0.3 :position right) popwin:special-display-config)
 
-;; ;; nrepl
-;; (push "*nrepl-apropos*" popwin:special-display-config)
-;; (push "*nrepl-macroexpansion*" popwin:special-display-config)
-;; (push "*nrepl-description*" popwin:special-display-config)
-;; (push "*nrepl*" popwin:special-display-config)
+;; ;; cider
+;; (push "*cider-apropos*" popwin:special-display-config)
+;; (push "*cider-macroexpansion*" popwin:special-display-config)
+;; (push "*cider-description*" popwin:special-display-config)
+;; (push "*cider*" popwin:special-display-config)
 
 ;; (push "*inferior-lisp*" popwin:special-display-config)
 
