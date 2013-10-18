@@ -4,9 +4,6 @@
 [submodule "submodule/vimpager"]
         path = submodule/vimpager
         url = git://github.com/rkitover/vimpager.git
-[submodule "submodule/vim-powerline"]
-        path = submodule/vim-powerline
-        url = git://github.com/Lokaltog/vim-powerline.git
 [submodule "submodule/vim-fugitive"]
         path = submodule/vim-fugitive
         url = git://github.com/tpope/vim-fugitive.git
