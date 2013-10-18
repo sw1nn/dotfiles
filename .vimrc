@@ -1,4 +1,3 @@
-call pathogen#infect()
 syntax on
 filetype plugin indent on
 colorscheme solarized
@@ -6,10 +5,8 @@ colorscheme solarized
 set nocompatible
 set laststatus=2
 set encoding=utf-8
-let g:Powerline_symbols = $POWERLINE_SYMBOLS
 let g:vimclojure#ParenRainbow = 1
-set t_Co=16
-"let g:vimclojure#ParenRainbowColors = { '1': 'guifg=Red', '2': 'guifg=Green', '3': 'guifg=DarkYellow', '4': 'guifg=Violet', '5': 'guifg=LightYellow', '6': 'guifg=SlateBlue', '7': 'guifg=Cyan' }
+set t_Co=256
 
 set background=dark
 set hls
