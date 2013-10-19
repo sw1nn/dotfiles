@@ -1,4 +1,3 @@
-;; -*- mode: emacs-lisp;rainbow; -*-
 (deftheme sw1nn
   "Created 2013-03-25.")
 
