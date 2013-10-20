@@ -62,7 +62,7 @@ colorFocusedBorder   = soBrightGreen
 transBackground      = "[75]" ++ soBackground
 barFont = "aldrich-11"
 
-myWorkspaces    = ["1:web","2:edit","3:term","4:vbox","5:gimp","6","7","8:im","9:music"]
+myWorkspaces    = ["1:web","2:edit","3:term","4:virt","5:gimp","6","7","8:im","9:music"]
 
 
 statusBarCmd = "dzen2" ++
@@ -187,9 +187,9 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     my1Shifts = ["google-chrome"]
     my2Shifts = ["Emacs"]
     my3Shifts = ["URxvt"]
-    my4Shifts = ["Eog", "Evince", "Gthumb", "Nautilus", "Pcmanfm", "Pinta"]
+    my4Shifts = ["VirtualBox", "Wine"]
     my5Shifts = ["Gimp"]
-    my6Shifts = ["VirtualBox", "Wine"]
+    my6Shifts = []
     my7Shifts = []
     my8Shifts = ["Pidgin", "Skype"]
     my9Shifts = ["play.google.com__music"]
