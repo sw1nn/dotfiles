@@ -13,7 +13,12 @@ export LANG=en_GB.UTF-8
 gpg-agent --daemon \
           --display "${DISPLAY}" \
           --keep-display \
+          --enable-ssh-support \
           --write-env-file "${HOME}/.gnupg/agent-info"
+
+source ${HOME}/.gnupg/agent-info
+export GPG_AGENT_INFO
+export SSH_AUTH_SOCK
 
 compton -cCGb
 
@@ -26,6 +31,7 @@ xrandr --output DisplayPort-0 --right-of DVI-0
 
 xset s 90
 xss lock-screen &
+emacs --daemon &
 thunar --daemon &
 pulseaudio --start &
 urxvtd &
@@ -35,8 +41,7 @@ rescuetime &
 pidgin &
 google-music &
 urxvtc &
-start-emacs &
-(sleep 3 && das-keyboard.sh) &
+(sleep 5 && das-keyboard.sh) &
 # needed for some jvm apps :-/
 export _JAVA_AWT_WM_NONREPARENTING=1
-exec xmonad
+exec xmonad 2>&1 >| ${HOME}/.xmonad.log
