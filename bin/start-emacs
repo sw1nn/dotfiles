@@ -6,4 +6,4 @@ if [ -e "${HOME}/.gnupg/agent-info" ]; then
     export SSH_AUTH_SOCK
 fi
 
-emacsclient -a '' -ct
+emacsclient -ct $@
