@@ -16,6 +16,9 @@
 ;;
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
 (package-initialize)
 
 (setq custom-file (concat user-emacs-directory "conf.d/customize.el"))
@@ -26,4 +29,9 @@
 
 (dolist
     (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+\\.el\\'"))
-  (load-file config))
+  (unwind-protect
+    (let (retval)
+      (condition-case ex
+          (load-file config)
+        ('error (message (format "Caught exception: [%s]" ex))))
+        retval)))
