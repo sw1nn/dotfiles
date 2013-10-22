@@ -81,6 +81,13 @@
   (windmove-up)
   (pop-to-buffer (cider-find-or-create-repl-buffer)))
 
+(defun sw1nn-toggle-transparency ()
+  (interactive)
+  (let ((param (cadr (frame-parameter nil 'alpha))))
+    (if (and param (/= param 100))
+        (set-frame-parameter nil 'alpha '(100 100))
+      (set-frame-parameter nil 'alpha '(85 50)))))
+
 (require 'grep)
 
 (defun find-grep-in-repository ()
