@@ -686,7 +686,11 @@ Return the point before the actions part, if any, nil otherwise."
              '(list "--graph"))
             (diff-options
              '(when (local-variable-p 'magit-diff-options)
-                magit-diff-options))))))))
+                magit-diff-options))
+            (committing
+             '(list "--gpg-sign"))
+            (tagging
+             '(list "--sign"))))))))
 
 ;; create the interactive functions for the key mode popups (which are
 ;; applied in the top-level key maps)
