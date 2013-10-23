@@ -22,11 +22,12 @@
 (define-key my-keys-minor-mode-map (kbd "C-c M-SPC") 'ace-jump-mode-pop-mark)
 (define-key my-keys-minor-mode-map (kbd "C-x C-SPC") (lambda nil (interactive) (just-one-space -1) (fixup-whitespace)))
 (define-key my-keys-minor-mode-map (kbd "C-M-g") 'magit-status)
-(define-key my-keys-minor-mode-map (kbd "C-c g g") 'git-gutter:toggle)
-(define-key my-keys-minor-mode-map (kbd "C-c g p") 'git-gutter:previous-diff)
-(define-key my-keys-minor-mode-map (kbd "C-c g n") 'git-gutter:next-diff)
-(define-key my-keys-minor-mode-map (kbd "C-c g d") 'git-gutter:popup-diff)
-(define-key my-keys-minor-mode-map (kbd "C-c g v") 'git-gutter:revert-hunk)
+(define-key my-keys-minor-mode-map (kbd "C-c g p") 'git-gutter+-previous-hunk)
+(define-key my-keys-minor-mode-map (kbd "C-c g n") 'git-gutter+-next-hunk)
+(define-key my-keys-minor-mode-map (kbd "C-c g d") 'git-gutter+-popup-hunk)
+(define-key my-keys-minor-mode-map (kbd "C-c g v") 'git-gutter+-revert-hunks)
+(define-key my-keys-minor-mode-map (kbd "C-c g s") 'git-gutter+-stage-hunks)
+(define-key my-keys-minor-mode-map (kbd "C-c g s") 'git-gutter+-)
 (define-key my-keys-minor-mode-map (kbd "M-x") 'smex)
 (define-key my-keys-minor-mode-map (kbd "C-x O") (lambda nil (interactive) (other-window -1))) ;; back one
 (define-key my-keys-minor-mode-map (kbd "C-x C-o") (lambda nil (interactive) (other-window 2))) ;; forward two

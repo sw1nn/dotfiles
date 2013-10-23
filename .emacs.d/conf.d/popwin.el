@@ -31,7 +31,7 @@
         ("*cider-macroexpansion*" :height 30 :stick t)
         ("*Kill Ring*" :height 30)
         ("*Compile-Log*" :height 30 :stick t)
-        ("*git-gutter:diff*" :height 30 :stick t)))
+        ("*git-gutter+-diff*" :height 15 :stick t)))
 
 ;; (push "*Kill Ring*" popwin:special-display-config)
 
