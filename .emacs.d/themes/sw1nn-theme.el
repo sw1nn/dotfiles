@@ -88,7 +88,7 @@
  '(term-color-white ((t (:background "#fdf6e3" :foreground "#eee8d5"))))
  '(term-color-yellow ((t (:background "#657b83" :foreground "#b58900"))))
  '(warning ((t (:underline (:color "#8b0000" :style wave)))))
- '(widget-field ((t (:background "#222222" :foreground "#002b36"))))
+ '(widget-field ((t (:background "#aaaaaa" :foreground "#002b36"))))
  '(widget-single-line-field ((t (:background "#222222" :foreground "#002b36"))))
  '(default ((t (:height 160 :family "DejaVu Sans Mono for Powerline")))))
 
