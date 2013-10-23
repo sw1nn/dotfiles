@@ -17,7 +17,7 @@
  '(diff-refine-added ((t (:inherit diff-refine-change :background "#009900"))))
  '(diff-refine-change ((t (:background "#cd950c"))))
  '(diff-refine-removed ((t (:inherit diff-refine-change :background "#cd5555"))))
- '(diff-removed ((t (:foreground "#FF0000"))))
+ '(diff-removed ((t (:foreground "#FF0000" :background "#550000"))))
  '(eldoc-highlight-function-argument ((t (:foreground "#859900" :weight bold))))
  '(erc-notice-face ((t (:foreground "#333333"))))
  '(error ((t (:underline (:color "#8b0000" :style wave)))))
