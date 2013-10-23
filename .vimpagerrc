@@ -4,3 +4,4 @@ set background=dark
 set number
 set dir=~/.vim/tmp
 syn on
+au BufRead /home/neale/irclogs/* set filetype=irc
