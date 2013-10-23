@@ -105,7 +105,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
     , ((modm,               xK_n     ), refresh)
     , ((modm,               xK_Tab   ), windows W.focusDown)
-    , ((modm,               xK_i     ), spawn "urxvtc +tr -pixmap \"${HOME}/backgrounds/irssi.jpg;style=root-tiled\" -e irc")
+    , ((modm,               xK_i     ), spawn "urxvtc -name irssi +tr -pixmap \"${HOME}/backgrounds/irssi.jpg;style=root-tiled\" -e irc")
     , ((modm,               xK_j     ), windows W.focusDown)
     , ((modm,               xK_k     ), windows W.focusUp  )
     , ((0,                  xK_Pause ), spawn "lock-screen"  )
