@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$HOST" != "alison" ]; then
+if [ "$(hostname)" != "alison" ]; then
   ssh -t alison irc
   exit 0
 fi
