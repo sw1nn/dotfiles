@@ -1,9 +1,18 @@
 ;;; magit-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "magit" "magit.el" (21089 18683 0 0))
+;;;### (autoloads (magit-run-gitk magit-run-git-gui-blame magit-run-git-gui
+;;;;;;  magit-show magit-show-file-revision magit-init magit-add-change-log-entry-other-window
+;;;;;;  magit-add-change-log-entry magit-wazzup magit-save-index
+;;;;;;  magit-submodule-sync magit-submodule-init magit-submodule-update-init
+;;;;;;  magit-submodule-update magit-commit magit-git-command magit-shell-command
+;;;;;;  magit-interactive-rebase magit-rename-remote magit-remove-remote
+;;;;;;  magit-add-remote magit-rename-branch magit-delete-branch
+;;;;;;  magit-unstage-all magit-stage-all magit-merge-abort magit-merge
+;;;;;;  magit-status magit-show-commit) "magit" "magit.el" (21096
+;;;;;;  3722 486734 575000))
 ;;; Generated autoloads from magit.el
 
 (autoload 'magit-show-commit "magit" "\
@@ -242,8 +251,10 @@ Run `gitk --all' for the current git repository.
 
 ;;;***
 
-;;;### (autoloads nil "magit-bisect" "magit-bisect.el" (21089 18683
-;;;;;;  0 0))
+;;;### (autoloads (magit-bisect-run magit-bisect-visualize magit-bisect-log
+;;;;;;  magit-bisect-skip magit-bisect-bad magit-bisect-good magit-bisect-reset
+;;;;;;  magit-bisect-start) "magit-bisect" "magit-bisect.el" (21096
+;;;;;;  3722 510734 326000))
 ;;; Generated autoloads from magit-bisect.el
 
 (autoload 'magit-bisect-start "magit-bisect" "\
@@ -288,8 +299,8 @@ Bisect automatically by running commands after each step.
 
 ;;;***
 
-;;;### (autoloads nil "magit-blame" "magit-blame.el" (21089 18683
-;;;;;;  0 0))
+;;;### (autoloads (magit-blame-mode) "magit-blame" "magit-blame.el"
+;;;;;;  (21096 3722 406735 408000))
 ;;; Generated autoloads from magit-blame.el
 
 (autoload 'magit-blame-mode "magit-blame" "\
@@ -299,7 +310,9 @@ Display blame information inline.
 
 ;;;***
 
-;;;### (autoloads nil "magit-wip" "magit-wip.el" (21089 18683 0 0))
+;;;### (autoloads (global-magit-wip-save-mode magit-wip-save-mode
+;;;;;;  magit-wip-mode) "magit-wip" "magit-wip.el" (21096 3722 499734
+;;;;;;  440000))
 ;;; Generated autoloads from magit-wip.el
 
 (defvar magit-wip-mode nil "\
@@ -348,14 +361,16 @@ See `magit-wip-save-mode' for more information on Magit-Wip-Save mode.
 
 ;;;***
 
-;;;### (autoloads nil nil ("magit-key-mode.el" "magit-pkg.el") (21089
-;;;;;;  18683 773458 0))
+;;;### (autoloads nil nil ("magit-key-mode.el" "magit-pkg.el") (21096
+;;;;;;  3722 536120 801000))
 
 ;;;***
 
+(provide 'magit-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; magit-autoloads.el ends here

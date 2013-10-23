@@ -444,13 +444,21 @@ they are not (due to semantic considerations)."
                  (integer :tag "After this many seconds")))
 
 (defcustom magit-stage-all-confirm t
-  "Require acknowledgment before staging all changes."
+  "Whether to require confirmation before staging all changes.
+This reduces the risk of accidentally losing the index.  If
+nothing at all is stage yet, then always stage without requiring
+confirmation, because it can be undone without the risk of losing
+a carefully crafted index."
   :package-version '(magit . "1.3.0")
   :group 'magit
   :type 'boolean)
 
 (defcustom magit-unstage-all-confirm t
-  "Require acknowledgment before unstaging all changes."
+  "Whether to require confirmation before unstaging all changes.
+This reduces the risk of accidentally losing of the index.  If
+there are no staged changes at all, then always unstage without
+confirmation, because it can be undone without the risk of losing
+a carefully crafted index."
   :package-version '(magit . "1.3.0")
   :group 'magit
   :type 'boolean)
@@ -1769,7 +1777,10 @@ involving HEAD."
   (magit-git-success "diff" "--quiet" "--" file))
 
 (defun magit-anything-staged-p ()
-  (not (magit-git-success "diff" "--quiet" "--cached")))
+  (not (magit-git-success "diff-index" "--cached" "--quiet" "HEAD" "--")))
+
+(defun magit-anything-unstaged-p ()
+  (not (magit-git-success "diff-files" "--quiet" "--")))
 
 (defun magit-everything-clean-p ()
   (and (not (magit-anything-staged-p))
@@ -1845,7 +1856,7 @@ according to `magit-remote-ref-format'"
   (let ((default-directory (magit-get-top-dir)))
     (magit-completing-read
      (format "Retrieve file from %s: " revision)
-     (magit-git-lines "ls-tree" "-r" "--name-only" revision)
+     (magit-git-lines "ls-tree" "-r" "-t" "--name-only" revision)
      nil 'require-match
      nil 'magit-read-file-hist
      (or default (magit-buffer-file-name t)))))
@@ -2299,8 +2310,7 @@ If SECTION is nil, default to setting `magit-top-section'"
 (defun magit-goto-next-sibling-section ()
   "Go to the next sibling section."
   (interactive)
-  (let* ((initial (point))
-         (section (magit-current-section))
+  (let* ((section (magit-current-section))
          (end (- (magit-section-end section) 1))
          (parent (magit-section-parent section))
          (siblings (and parent (magit-section-children parent)))
@@ -2319,7 +2329,7 @@ If SECTION is nil, default to setting `magit-top-section'"
          (previous-sibling (magit-find-section-before* beginning siblings)))
     (if previous-sibling
         (magit-goto-section previous-sibling)
-      (magit-goto-parent-section))))
+      (magit-goto-previous-section))))
 
 (defun magit-goto-section (section)
   (goto-char (magit-section-beginning section))
@@ -3053,9 +3063,12 @@ buffer of the most recent process, like in the interactive case."
         ((= magit-process-popup-time 0)
          (magit-display-process nil (process-buffer process)))
         ((> magit-process-popup-time 0)
-         (run-with-timer magit-process-popup-time
-                         nil #'magit-display-process
-                         nil (process-buffer process)))))
+         (run-with-timer magit-process-popup-time nil
+                         (lambda (p)
+                           (when (eq (process-status p) 'run)
+                             (magit-display-process
+                              nil (process-buffer p))))
+                         process))))
 
 ;;; Magit Mode
 ;;;; Hooks
@@ -3429,6 +3442,8 @@ Customize `magit-diff-refine-hunk' to change the default mode."
 
 (defun magit-wash-diffs ()
   (magit-wash-diffstats)
+  (and (re-search-forward "^diff" nil t)
+       (goto-char (line-beginning-position)))
   (magit-wash-sequence #'magit-wash-diff))
 
 (defun magit-wash-diff ()
@@ -4709,6 +4724,7 @@ With a prefix argument, add remaining untracked files as well.
 \('git add [-u] .')."
   (interactive "P")
   (when (or (not magit-stage-all-confirm)
+            (not (magit-anything-staged-p))
             (yes-or-no-p "Stage all changes?"))
     (if including-untracked
         (magit-run-git "add" ".")
@@ -4755,6 +4771,9 @@ With a prefix argument, add remaining untracked files as well.
 \('git reset --mixed HEAD')."
   (interactive)
   (when (or (not magit-unstage-all-confirm)
+            (and (not (magit-anything-unstaged-p))
+                 (not (magit-git-lines "ls-files" "--others" "-t"
+                                       "--exclude-standard")))
             (yes-or-no-p "Unstage all changes?"))
     (magit-run-git "reset" "HEAD" "--")))
 
@@ -6020,7 +6039,7 @@ from the parent keymap `magit-mode-map' are also available."
   (interactive (list (magit-read-rev-with-default "Diff working tree with")))
   (magit-diff (or rev "HEAD") t))
 
-(defun magit-diff-with-mark (marked commit)
+(defun magit-diff-with-mark (range)
   (interactive
    (let* ((marked (or magit-marked-commit (error "No commit marked")))
           (current (magit-get-current-branch))
@@ -6032,8 +6051,8 @@ from the parent keymap `magit-mode-map' are also available."
                        (when is-current
                          (cons (concat "refs/heads/" current)
                                magit-uninteresting-refs))))))
-     (list marked commit)))
-  (magit-diff (concat marked ".." commit)))
+     (list (concat marked ".." commit))))
+  (magit-diff range))
 
 (defun magit-refresh-diff-buffer (range working)
   (let ((magit-current-diff-range
@@ -6170,7 +6189,13 @@ With a prefix argument edit the ignore string."
   (interactive "P")
   (magit-section-action (item info "ignore")
     ((untracked file)
-     (magit-ignore-file (concat "/" info) edit local))))
+     (magit-ignore-file (concat "/" info) edit local))
+    ((diff)
+     (let ((file (magit-section-title item)))
+       (when (yes-or-no-p
+              (format "%s is tracked.  Untrack and ignore? " file))
+         (magit-run-git "rm" "--cached" file)
+         (magit-ignore-file (concat "/" file) edit local))))))
 
 (defun magit-ignore-item-locally (edit)
   "Ignore the item at point locally only.
@@ -6967,5 +6992,7 @@ init file:
 ;; rest of magit core
 (require 'magit-key-mode)
 (require 'magit-bisect)
+
+(require 'magit-log-edit nil t)
 
 ;;; magit.el ends here

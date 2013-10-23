@@ -1,5 +1,5 @@
-This is /home/melpa/melpa/working/magit-20131017.9/magit.info, produced
-by makeinfo version 4.13 from
+This is /home/melpa/melpa/working/magit-20131022.34/magit.info,
+produced by makeinfo version 4.13 from
 /home/melpa/melpa/working/magit/magit.texi.
 
 INFO-DIR-SECTION Emacs
@@ -1672,46 +1672,46 @@ permit their use in free software.
 
 
 Tag Table:
-Node: Top800
-Node: Introduction1798
-Node: Acknowledgments3270
-Node: Sections3950
-Node: Status6500
-Node: Untracked files9239
-Node: Staging and Committing10444
-Node: History14560
-Node: Reflogs17742
-Node: Commit Buffer18146
-Node: Diffing19472
-Node: Tagging20459
-Node: Resetting20909
-Node: Stashing22433
-Node: Branches and Remotes23504
-Node: Branches Popup24325
-Node: Remotes Popup25587
-Node: Branches in the Branch Manager25938
-Node: Remotes in the Branch Manager27110
-Node: Wazzup27671
-Node: Merging28464
-Node: Rebasing29514
-Node: Interactive Rebasing30340
-Node: Rewriting31635
-Node: Pushing and Pulling34660
-Node: Submodules36589
-Node: Bisecting37035
-Node: Finding commits not merged upstream38279
-Node: Using Magit Extensions39533
-Node: Activating extensions39830
-Node: Interfacing with Subversion41215
-Node: Interfacing with Topgit41815
-Node: Interfacing with StGit42846
-Node: Developing Extensions43845
-Node: Using Git Directly47626
-Node: Frequently Asked Questions48010
-Node: FAQ - Changes48258
-Node: FAQ 1 - Troubleshooting48669
-Node: FAQ 1-148886
-Node: GNU Free Documentation License49191
+Node: Top801
+Node: Introduction1799
+Node: Acknowledgments3271
+Node: Sections3951
+Node: Status6501
+Node: Untracked files9240
+Node: Staging and Committing10445
+Node: History14561
+Node: Reflogs17743
+Node: Commit Buffer18147
+Node: Diffing19473
+Node: Tagging20460
+Node: Resetting20910
+Node: Stashing22434
+Node: Branches and Remotes23505
+Node: Branches Popup24326
+Node: Remotes Popup25588
+Node: Branches in the Branch Manager25939
+Node: Remotes in the Branch Manager27111
+Node: Wazzup27672
+Node: Merging28465
+Node: Rebasing29515
+Node: Interactive Rebasing30341
+Node: Rewriting31636
+Node: Pushing and Pulling34661
+Node: Submodules36590
+Node: Bisecting37036
+Node: Finding commits not merged upstream38280
+Node: Using Magit Extensions39534
+Node: Activating extensions39831
+Node: Interfacing with Subversion41216
+Node: Interfacing with Topgit41816
+Node: Interfacing with StGit42847
+Node: Developing Extensions43846
+Node: Using Git Directly47627
+Node: Frequently Asked Questions48011
+Node: FAQ - Changes48259
+Node: FAQ 1 - Troubleshooting48670
+Node: FAQ 1-148887
+Node: GNU Free Documentation License49192
 
 End Tag Table
 
