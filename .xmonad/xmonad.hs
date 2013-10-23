@@ -163,11 +163,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
                manageDocks <+>
                (composeAll . concat $
-    [ [isDialog --> doFloat]
-    , [className =? c --> doFloat | c <- myCFloats]
-    , [title =? t --> doFloat | t <- myTFloats]
-    , [resource =? r --> doFloat | r <- myRFloats]
-    , [resource =? i --> doIgnore | i <- myIgnores]
+    [ [isDialog       --> doFloat]
+    , [className =? c --> doFloat  | c <- myCFloats]
+    , [title =? t     --> doFloat  | t <- myTFloats]
+    , [resource =? r  --> doFloat  | r <- myRFloats]
+    , [resource =? i  --> doIgnore | i <- myIgnores]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "1:web" | x <- my1Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "2:edit" | x <- my2Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "3:term" | x <- my3Shifts]
