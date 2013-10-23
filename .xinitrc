@@ -29,8 +29,7 @@ xrandr --output DVI-0 --primary
 xrandr --output DVI-1 --left-of DVI-0
 xrandr --output DisplayPort-0 --right-of DVI-0
 
-xset s 90
-xss lock-screen &
+xscreensaver &
 emacs --daemon &
 thunar --daemon &
 pulseaudio --start &

@@ -1,0 +1,22 @@
+#!/bin/sh
+# Watch xscreensaver and react to status changes.
+#
+# Replaced my previous perl-based recipe with this:
+# http://semicomplete.googlecode.com/svn/tools/xscreensaver-watch.sh
+#
+# Include somewhere in X session startup with:
+#
+#     xscreensaver-watch &
+
+lock() {
+    googleplay-ctl stop
+}
+
+unlock() {
+    echo "foo" 
+}
+
+xscreensaver-command -watch | while read a; do
+    echo "$a" | grep -q '^LOCK' && lock
+    echo "$a" | grep -q '^UNBLANK' && unlock
+done
