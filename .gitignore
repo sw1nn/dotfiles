@@ -13,6 +13,7 @@ cache
 /.emacs.d/.smex-items
 /.emacs.d/ac-comphist.dat
 /.emacs.d/.pastebin-auth
+/.emacs.d/.recentf
 /.emacs.d/image-dired
 /.ssh/id_rsa*
 /.emacs.d/.refheap-auth

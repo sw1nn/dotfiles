@@ -127,6 +127,8 @@
 
 (setq kill-do-not-save-duplicates t)
 
+(setq recentf-save-file (concat user-emacs-directory ".recentf"))
+
 (add-hook 'markdown-mode-hook 'visual-line-mode)
 
 (load-theme 'sw1nn t)
