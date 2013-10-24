@@ -78,24 +78,6 @@
   :type 'string
   :group 'nrepl)
 
-(defcustom nrepl-lein-command
-  "lein"
-  "The command used to execute leiningen 2.x."
-  :type 'string
-  :group 'nrepl-repl-mode)
-
-(defcustom nrepl-server-command
-  (if (or (locate-file nrepl-lein-command exec-path)
-          (locate-file (format "%s.bat" nrepl-lein-command) exec-path))
-      (format "%s repl :headless" nrepl-lein-command)
-    (format "echo \"%s repl :headless\" | eval $SHELL -l" nrepl-lein-command))
-  "The command used to start the nREPL via command `nrepl-jack-in'.
-For a remote nREPL server lein must be in your PATH.  The remote
-proc is launched via sh rather than bash, so it might be necessary
-to specific the full path to it.  Localhost is assumed."
-  :type 'string
-  :group 'nrepl-repl-mode)
-
 (defvar nrepl-repl-requires-sexp "(apply require '[[clojure.repl :refer (source apropos dir pst doc find-doc)] [clojure.java.javadoc :refer (javadoc)] [clojure.pprint :refer (pp pprint)]])"
   "Things to require in the tooling session and the REPL buffer.")
 
@@ -313,7 +295,7 @@ Handles message contained in RESPONSE."
   (nrepl-dbind-response response (out value)
     (cond
      (out
-      (nrepl-emit-interactive-output out)))))
+      (cider-emit-interactive-output out)))))
 
 (defun nrepl-dispatch (response)
   "Dispatch the RESPONSE to associated callback."
@@ -683,7 +665,8 @@ Use SESSION if it is non-nil, otherwise use the current session."
 (defun nrepl-send-string (input callback &optional ns session)
   "Send the request INPUT and register the CALLBACK as the response handler.
 See command `nrepl-eval-request' for details on how NS and SESSION are processed."
-  (let ((ns (if (string-match "[[:space:]]*\(ns\\([[:space:]]*$\\|[[:space:]]+\\)" input)
+  ;; namespace forms are always evaluated in the "user" namespace
+  (let ((ns (if (string-match "^[[:space:]]*\(ns\\([[:space:]]*$\\|[[:space:]]+\\)" input)
                 "user"
               ns)))
     (nrepl-send-request (nrepl-eval-request input ns session) callback)))
@@ -724,31 +707,6 @@ The result is a plist with keys :value, :stderr and :stdout."
 See command `nrepl-eval-request' for details about how NS and SESSION
 are processed."
   (nrepl-send-request-sync (nrepl-eval-request input ns session)))
-
-(defun nrepl-find-ns ()
-  "Return the ns specified in the buffer, or \"user\" if no ns declaration is found."
-  (or (save-restriction
-        (widen)
-        (clojure-find-ns))
-      "user"))
-
-(defun nrepl-current-ns ()
-  "Return the ns in the current context.
-If `nrepl-buffer-ns' has a value then return that, otherwise
-search for and read a `ns' form."
-  (let ((ns nrepl-buffer-ns))
-    (or (and (string= ns "user")
-             (nrepl-find-ns))
-        ns)))
-
-(defun nrepl-set-ns (ns)
-  "Switch the namespace of the REPL buffer to NS."
-  (interactive (list (nrepl-current-ns)))
-  (if ns
-      (with-current-buffer (nrepl-current-repl-buffer)
-        (nrepl-send-string
-         (format "(in-ns '%s)" ns) (cider-handler (current-buffer))))
-    (message "Sorry, I don't know what the current namespace is.")))
 
 ;;; interrupt
 (defun nrepl-interrupt-handler (buffer)
@@ -809,62 +767,6 @@ search for and read a `ns' form."
       (error "Leiningen 2.x is required by nREPL.el"))
      (t (error "Could not start nREPL server: %s" problem)))))
 
-;;;###autoload
-(defun nrepl-enable-on-existing-clojure-buffers ()
-  "Enable interaction mode on existing Clojure buffers.
-See command `nrepl-interaction-mode'."
-  (interactive)
-  (add-hook 'clojure-mode-hook 'clojure-enable-nrepl)
-  (save-window-excursion
-    (dolist (buffer (buffer-list))
-      (with-current-buffer buffer
-        (when (eq major-mode 'clojure-mode)
-          (clojure-enable-nrepl))))))
-
-;;;###autoload
-(defun nrepl-disable-on-existing-clojure-buffers ()
-  "Disable interaction mode on existing Clojure buffers.
-See command `nrepl-interaction-mode'."
-  (interactive)
-  (save-window-excursion
-    (dolist (buffer (buffer-list))
-      (with-current-buffer buffer
-        (when (eq major-mode 'clojure-mode)
-          (setq nrepl-buffer-ns "user")
-          (clojure-disable-nrepl))))))
-
-(defun nrepl-possibly-disable-on-existing-clojure-buffers ()
-  "If not connected, disable nrepl interaction mode on existing Clojure buffers."
-  (when (not (nrepl-current-connection-buffer))
-    (nrepl-disable-on-existing-clojure-buffers)))
-
-;;;###autoload
-(defun nrepl-jack-in (&optional prompt-project)
-  "Start a nREPL server for the current project and connect to it.
-If PROMPT-PROJECT is t, then prompt for the project for which to
-start the server."
-  (interactive "P")
-  (setq nrepl-current-clojure-buffer (current-buffer))
-  (lexical-let* ((project (when prompt-project
-                            (ido-read-directory-name "Project: ")))
-                 (project-dir (nrepl-project-directory-for
-                               (or project (nrepl-current-dir)))))
-    (when (nrepl-check-for-repl-buffer nil project-dir)
-      (let* ((nrepl-project-dir project-dir)
-             (cmd (if project
-                      (format "cd %s && %s" project nrepl-server-command)
-                    nrepl-server-command))
-             (process (start-process-shell-command
-                       "nrepl-server"
-                       (generate-new-buffer-name (nrepl-server-buffer-name))
-                       cmd)))
-        (set-process-filter process 'nrepl-server-filter)
-        (set-process-sentinel process 'nrepl-server-sentinel)
-        (set-process-coding-system process 'utf-8-unix 'utf-8-unix)
-        (with-current-buffer (process-buffer process)
-          (setq nrepl-project-dir project-dir))
-        (message "Starting nREPL server...")))))
-
 (defun nrepl-current-dir ()
   "Return the directory of the current buffer."
   (lexical-let ((file-name (buffer-file-name (current-buffer))))
@@ -906,10 +808,10 @@ If so ask the user for confirmation."
 (defun nrepl-close-ancilliary-buffers ()
   "Close buffers that are shared across connections."
   (interactive)
-  (dolist (buf-name `(,nrepl-error-buffer
-                      ,nrepl-doc-buffer
-                      ,nrepl-src-buffer
-                      ,nrepl-macroexpansion-buffer
+  (dolist (buf-name `(,cider-error-buffer
+                      ,cider-doc-buffer
+                      ,cider-src-buffer
+                      ,cider-macroexpansion-buffer
                       ,nrepl-event-buffer-name))
     (nrepl--close-buffer buf-name)))
 
@@ -917,26 +819,8 @@ If so ask the user for confirmation."
   "Close the nrepl connection for CONNECTION-BUFFER."
   (interactive (list (nrepl-current-connection-buffer)))
   (nrepl--close-connection-buffer connection-buffer)
-  (nrepl-possibly-disable-on-existing-clojure-buffers)
+  (cider-possibly-disable-on-existing-clojure-buffers)
   (nrepl--connections-refresh))
-
-(defun nrepl-quit ()
-  "Quit the nrepl server."
-  (interactive)
-  (when (y-or-n-p "Are you sure you want to quit nrepl? ")
-    (dolist (connection nrepl-connection-list)
-      (when connection
-        (nrepl-close connection)))
-    (message "All active nrepl connections were closed")
-    (nrepl-close-ancilliary-buffers)))
-
-(defun nrepl-restart (&optional prompt-project)
-  "Quit nrepl and restart it.
-If PROMPT-PROJECT is t, then prompt for the project in which to
-restart the server."
-  (interactive)
-  (nrepl-quit)
-  (nrepl-jack-in current-prefix-arg))
 
 ;;; client
 (defun nrepl-op-supported-p (op)
@@ -1027,31 +911,26 @@ When NO-REPL-P is truthy, suppress creation of a REPL buffer."
       (nrepl-describe-session process))
     process))
 
-(defun nrepl-default-port ()
-  "Attempt to read port from target/repl-port.
-Falls back to `nrepl-port' if not found."
+(defun nrepl--port-from-file (file)
+  "Attempts to read port from a file named by FILE."
   (let* ((dir (nrepl-project-directory-for (nrepl-current-dir)))
-         (f (expand-file-name "target/repl-port" dir))
-         (port (when (file-exists-p f)
-                 (with-temp-buffer
-                   (insert-file-contents f)
-                   (buffer-string)))))
-    (or port nrepl-port)))
+         (f (expand-file-name file dir)))
+    (when (file-exists-p f)
+      (with-temp-buffer
+        (insert-file-contents f)
+        (buffer-string)))))
+
+(defun nrepl-default-port ()
+  "Attempt to read port from .nrepl-port or target/repl-port.
+Falls back to `nrepl-port' if not found."
+  (or (nrepl--port-from-file ".nrepl-port")
+      (nrepl--port-from-file "target/repl-port")
+      nrepl-port))
 
 ;;;###autoload
-(add-hook 'nrepl-connected-hook 'nrepl-enable-on-existing-clojure-buffers)
+(add-hook 'nrepl-connected-hook 'cider-enable-on-existing-clojure-buffers)
 (add-hook 'nrepl-disconnected-hook
-          'nrepl-possibly-disable-on-existing-clojure-buffers)
-
-;;;###autoload
-(defun nrepl (host port)
-  "Connect nrepl to HOST and PORT."
-  (interactive (list (read-string "Host: " nrepl-host nil nrepl-host)
-                     (string-to-number (let ((port (nrepl-default-port)))
-                                         (read-string "Port: " port nil port)))))
-  (setq nrepl-current-clojure-buffer (current-buffer))
-  (when (nrepl-check-for-repl-buffer `(,host ,port) nil)
-    (nrepl-connect host port)))
+          'cider-possibly-disable-on-existing-clojure-buffers)
 
 (provide 'nrepl-client)
 ;;; nrepl-client.el ends here

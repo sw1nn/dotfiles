@@ -6,7 +6,7 @@
 ;;         Sam Aaron <samaaron@gmail.com>
 ;; URL: https://github.com/purcell/ac-nrepl
 ;; Keywords: languages, clojure, nrepl
-;; Version: 20131017.1338
+;; Version: 20131023.755
 ;; X-Original-Version: DEV
 ;; Package-Requires: ((cider "0.1") (auto-complete "1.4"))
 
@@ -38,7 +38,7 @@
 
 ;;     (require 'ac-nrepl)
 ;;     (add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
-;;     (add-hook 'cider-interaction-mode-hook 'ac-nrepl-setup)
+;;     (add-hook 'cider-mode-hook 'ac-nrepl-setup)
 ;;     (eval-after-load "auto-complete"
 ;;       '(add-to-list 'ac-modes 'cider-repl-mode))
 
@@ -50,15 +50,16 @@
 ;;     (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
 ;;
 ;;     (add-hook 'cider-repl-mode-hook 'set-auto-complete-as-completion-at-point-function)
-;;     (add-hook 'nrepl-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
+;;     (add-hook 'cider-mode-hook 'set-auto-complete-as-completion-at-point-function)
 ;;
 ;; You might consider using ac-nrepl's popup documentation in place of `nrepl-doc':
 ;;
-;;     (define-key nrepl-interaction-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
+;;     (define-key cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
 
 ;;; Code:
 
 (require 'nrepl-client)
+(require 'cider-interaction)
 (require 'auto-complete)
 
 (defun ac-nrepl-available-p ()
@@ -70,7 +71,7 @@
 (defun ac-nrepl-sync-eval (clj)
   "Synchronously evaluate CLJ.
 Result is a plist, as returned from `nrepl-send-string-sync'."
-  (nrepl-send-string-sync clj (nrepl-current-ns) (nrepl-current-tooling-session)))
+  (nrepl-send-string-sync clj (cider-current-ns) (nrepl-current-tooling-session)))
 
 (defun ac-nrepl-candidates* (clj)
   "Return completion candidates produced by evaluating CLJ."
@@ -121,7 +122,7 @@ Result is a plist, as returned from `nrepl-send-string-sync'."
 (defun ac-nrepl-refresh-class-cache ()
   "Clear `ac-nrepl-all-classes-cache' and then refill it asynchronously."
   (setq ac-nrepl-all-classes-cache nil)
-  (nrepl-eval-async
+  (nrepl-send-string
    (concat "(require 'complete.core)"
            (ac-nrepl-unfiltered-clj "(concat @complete.core/nested-classes
                                        @complete.core/top-level-classes)"))
@@ -130,11 +131,10 @@ Result is a plist, as returned from `nrepl-send-string-sync'."
     (lambda (buffer value)
       (setq ac-nrepl-all-classes-cache (car (read-from-string value))))
     nil nil nil)
-   (nrepl-current-ns)
+   (cider-current-ns)
    (nrepl-current-tooling-session)))
 
 
-;;;###autoload
 (add-hook 'nrepl-connected-hook 'ac-nrepl-refresh-class-cache t)
 
 (defun ac-nrepl-candidates-all-classes ()

@@ -26,7 +26,7 @@
 (require 'ac-nrepl)
 
 (eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'cider-nrepl-mode))
+  '(add-to-list 'ac-modes 'cider-repl-mode))
 
 ;; hook AC into completion-at-point
 (defun set-auto-complete-as-completion-at-point-function ()

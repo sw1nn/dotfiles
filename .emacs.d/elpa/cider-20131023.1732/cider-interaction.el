@@ -50,7 +50,7 @@
 (defcustom cider-use-local-resources t
   "Use local resources under HOME if possible."
   :type 'boolean
-  :group 'nrepl)
+  :group 'cider)
 
 (defcustom cider-popup-stacktraces t
   "Non-nil means pop-up error stacktraces for evaluation errors.
@@ -58,33 +58,33 @@ Nil means show only an error message in the minibuffer.  See also
 `cider-repl-popup-stacktraces', which overrides this setting
 for REPL buffers."
   :type 'boolean
-  :group 'nrepl)
+  :group 'cider)
 
 (defcustom cider-popup-on-error t
   "When `cider-popup-on-error' is set to t, stacktraces will be displayed.
 When set to nil, stactraces will not be displayed, but will be available
 in the `cider-error-buffer', which defaults to *cider-error*."
   :type 'boolean
-  :group 'nrepl)
+  :group 'cider)
 
 (defcustom cider-auto-select-error-buffer nil
   "Controls whether to auto-select the error popup buffer."
   :type 'boolean
-  :group 'nrepl)
+  :group 'cider)
 
 (defface cider-error-highlight-face
   '((((supports :underline (:style wave)))
      (:underline (:style wave :color "red") :inherit unspecified))
     (t (:inherit font-lock-warning-face :underline t)))
   "Face used to highlight compilation errors in Clojure buffers."
-  :group 'nrepl)
+  :group 'cider)
 
 (defface cider-warning-highlight-face
   '((((supports :underline (:style wave)))
      (:underline (:style wave :color "yellow") :inherit unspecified))
     (t (:inherit font-lock-warning-face :underline (:color "yellow"))))
   "Face used to highlight compilation warnings in Clojure buffers."
-  :group 'nrepl)
+  :group 'cider)
 
 ;;; Connection info
 (defun cider--clojure-version ()
@@ -161,7 +161,7 @@ of the current source file."
     (progn
       (let ((buffer (current-buffer)))
         (when arg
-          (nrepl-set-ns (nrepl-current-ns)))
+          (cider-repl-set-ns (cider-current-ns)))
         (pop-to-buffer (cider-find-or-create-repl-buffer))
         (cider-remember-clojure-buffer buffer)
         (goto-char (point-max))))))
@@ -273,7 +273,7 @@ With a PREFIX argument, print the result in the current buffer."
   "Return the name of the symbol at point, otherwise nil."
   (let ((str (thing-at-point 'symbol)))
     (and str
-         (not (equal str (concat (nrepl-find-ns) "> ")))
+         (not (equal str (concat (cider-find-ns) "> ")))
          (not (equal str ""))
          (substring-no-properties str))))
 
@@ -358,7 +358,7 @@ Adjusts for HOME location using `cider-home-prefix-adjustment'.  Uses `find-file
            (search-forward path)
            (let ((opened-buffer (current-buffer)))
              (archive-extract)
-             (when (not buffer-already-open)
+             (unless buffer-already-open
                (kill-buffer opened-buffer)))))
         (t (error "Unknown resource path %s" resource))))
 
@@ -423,7 +423,7 @@ Adjusts for HOME location using `cider-home-prefix-adjustment'.  Uses `find-file
                                                     :file)
                                  :line)
                                 (clojure.core/meta (clojure.core/ns-resolve ns-symbol ns-var)))))"
-                      (nrepl-current-ns) var)))
+                      (cider-current-ns) var)))
     (nrepl-send-string form
                        (cider-jump-to-def-handler (current-buffer))
                        nrepl-buffer-ns
@@ -546,7 +546,7 @@ otherwise dispatch to internal completion function."
 
 (defun cider-load-file-handler (buffer)
   "Make a load file handler for BUFFER."
-  (let (current-ns (nrepl-current-ns))
+  (let (current-ns (cider-current-ns))
     (nrepl-make-response-handler buffer
                                  (lambda (buffer value)
                                    (message "%s" value)
@@ -725,7 +725,7 @@ See `compilation-error-regexp-alist' for help on their format.")
 
 ;;;; Popup buffers
 (define-minor-mode cider-popup-buffer-mode
-  "Mode for nrepl popup buffers"
+  "Mode for CIDER popup buffers"
   nil
   (" cider-tmp")
   '(("q" .  cider-popup-buffer-quit-function)))
@@ -792,20 +792,38 @@ If prefix argument KILL-BUFFER-P is non-nil, kill the buffer instead of burying 
       (ansi-color-apply-on-region (point-min) (point-max)))
     (goto-char (point-min))))
 
+;;; Namespace handling
+(defun cider-find-ns ()
+  "Return the ns specified in the buffer, or \"user\" if no ns declaration is found."
+  (or (save-restriction
+        (widen)
+        (clojure-find-ns))
+      "user"))
+
+(defun cider-current-ns ()
+  "Return the ns in the current context.
+If `nrepl-buffer-ns' has a value then return that, otherwise
+search for and read a `ns' form."
+  (let ((ns nrepl-buffer-ns))
+    (or (and (string= ns "user")
+             (cider-find-ns))
+        ns)))
+
 
+;;; Evaluation
 (defun cider-popup-eval-print (form)
   "Evaluate the given FORM and print value in current buffer."
   (let ((buffer (current-buffer)))
     (nrepl-send-string form
                        (cider-popup-eval-print-handler buffer)
-                       (nrepl-current-ns))))
+                       (cider-current-ns))))
 
 (defun cider-interactive-eval-print (form)
   "Evaluate the given FORM and print value in current buffer."
   (let ((buffer (current-buffer)))
     (nrepl-send-string form
                        (cider-interactive-eval-print-handler buffer)
-                       (nrepl-current-ns))))
+                       (cider-current-ns))))
 
 (defun cider-interactive-eval (form)
   "Evaluate the given FORM and print value in minibuffer."
@@ -813,7 +831,7 @@ If prefix argument KILL-BUFFER-P is non-nil, kill the buffer instead of burying 
   (let ((buffer (current-buffer)))
     (nrepl-send-string form
                        (cider-interactive-eval-handler buffer)
-                       (nrepl-current-ns))))
+                       (cider-current-ns))))
 
 (defun cider-send-op (op attributes handler)
   "Send the specified OP with ATTRIBUTES and response HANDLER."
@@ -858,19 +876,50 @@ Print its value into the current buffer"
         (result-buffer (cider-popup-buffer cider-result-buffer nil)))
     (nrepl-send-string (format "(clojure.pprint/pprint %s)" form)
                        (cider-popup-eval-out-handler result-buffer)
-                       (nrepl-current-ns)
+                       (cider-current-ns)
                        (nrepl-current-tooling-session))))
 
-(defun clojure-enable-nrepl ()
-  "Turn on nrepl interaction mode (see command `cider-interaction-mode').
+(defun clojure-enable-cider ()
+  "Turn on nrepl interaction mode (see command `cider-mode').
 Useful in hooks."
-  (cider-interaction-mode 1)
+  (cider-mode 1)
   (setq next-error-function 'cider-jump-to-compilation-error))
 
-(defun clojure-disable-nrepl ()
-  "Turn off nrepl interaction mode (see command `cider-interaction-mode').
+(defun clojure-disable-cider ()
+  "Turn off nrepl interaction mode (see command `cider-mode').
 Useful in hooks."
-  (cider-interaction-mode -1))
+  (cider-mode -1))
+
+(defun cider--clojure-buffers ()
+  "Return a list of all existing `clojure-mode' buffers."
+  (-filter
+   (lambda (buffer) (eq 'clojure-mode (buffer-local-value 'major-mode buffer)))
+   (buffer-list)))
+
+;;;###autoload
+(defun cider-enable-on-existing-clojure-buffers ()
+  "Enable interaction mode on existing Clojure buffers.
+See command `cider-mode'."
+  (interactive)
+  (add-hook 'clojure-mode-hook 'clojure-enable-cider)
+  (dolist (buffer (cider--clojure-buffers))
+    (with-current-buffer buffer
+      (clojure-enable-cider))))
+
+;;;###autoload
+(defun cider-disable-on-existing-clojure-buffers ()
+  "Disable interaction mode on existing Clojure buffers.
+See command `cider-mode'."
+  (interactive)
+  (dolist (buffer (cider--clojure-buffers))
+    (with-current-buffer buffer
+      (setq nrepl-buffer-ns "user")
+      (clojure-disable-cider))))
+
+(defun cider-possibly-disable-on-existing-clojure-buffers ()
+  "If not connected, disable nrepl interaction mode on existing Clojure buffers."
+  (unless (nrepl-current-connection-buffer)
+    (cider-disable-on-existing-clojure-buffers)))
 
 ;; this is horrible, but with async callbacks we can't rely on dynamic scope
 (defvar cider-ido-ns nil)
@@ -999,7 +1048,7 @@ under point, prompts for a var."
              (convert-standard-filename (expand-file-name filename)))))
     (cider-eval-load-file
      (format "(clojure.core/load-file \"%s\")\n(in-ns '%s)\n"
-             fn (nrepl-find-ns)))))
+             fn (cider-find-ns)))))
 
 (defun cider-dispatch-load-file (filename)
   "Dispatch the load file operation for FILENAME."
@@ -1038,6 +1087,27 @@ Only considers buffers that are not already visible."
                   (null (get-buffer-window buffer 'visible)))
         return buffer
         finally (error "Can't find unshown buffer in %S" mode)))
+
+;;; quiting
+(defun cider-quit ()
+  "Quit CIDER.
+
+Quitting closes all active nREPL connections and kills all CIDER buffers."
+  (interactive)
+  (when (y-or-n-p "Are you sure you want to quit CIDER? ")
+    (dolist (connection nrepl-connection-list)
+      (when connection
+        (nrepl-close connection)))
+    (message "All active nREPL connections were closed")
+    (nrepl-close-ancilliary-buffers)))
+
+(defun cider-restart (&optional prompt-project)
+  "Quit nrepl and restart it.
+If PROMPT-PROJECT is t, then prompt for the project in which to
+restart the server."
+  (interactive)
+  (cider-quit)
+  (cider-jack-in current-prefix-arg))
 
 (provide 'cider-interaction)
 ;;; cider-interaction.el ends here

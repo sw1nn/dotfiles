@@ -60,7 +60,7 @@
 
 (defun neale-custom-clojure-mode ()
   (neale-custom-lisp-mode)
-  (add-clj-compile-on-save)
+  (sw1nn-add-clj-compile-on-save)
   (hs-minor-mode)
   (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
   (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
@@ -77,7 +77,7 @@
 (defun neale-custom-inferior-lisp-mode ()
   (neale-custom-lisp-mode))
 
-(add-hook 'cider-mode-hook 'neale-custom-cider-mode)
+(add-hook 'cider-repl-mode-hook 'neale-custom-cider-mode)
 (add-hook 'lisp-mode-hook 'neale-custom-lisp-mode)
 (add-hook 'emacs-lisp-mode-hook 'neale-custom-lisp-mode)
 (add-hook 'clojure-mode-hook 'neale-custom-clojure-mode)

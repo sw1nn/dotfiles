@@ -3,10 +3,8 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "ac-nrepl" "ac-nrepl.el" (21089 18710 0 0))
+;;;### (autoloads nil "ac-nrepl" "ac-nrepl.el" (21097 8238 0 0))
 ;;; Generated autoloads from ac-nrepl.el
-
-(add-hook 'nrepl-connected-hook 'ac-nrepl-refresh-class-cache t)
 
 (defface ac-nrepl-candidate-face '((t (:inherit ac-candidate-face))) "\
 Face for nrepl candidates." :group (quote auto-complete))

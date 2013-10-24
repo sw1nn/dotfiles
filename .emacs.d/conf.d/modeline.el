@@ -6,7 +6,6 @@
     (cider-mode . "ℕ")
     (clojure-test-mode . "λt")
     (my-keys-minor-mode . "⌨")
-    (cider-interaction-mode . "ℕ")
     (paredit-mode . "☾☽")
     (git-gutter-mode . "⇌")
     (eldoc-mode . "Ⓔ")

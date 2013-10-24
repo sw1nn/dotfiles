@@ -73,13 +73,14 @@ ENDP) DELIM."
     (define-key map (kbd "M-.") 'cider-jump)
     (define-key map (kbd "M-,") 'cider-jump-back)
     (define-key map (kbd "RET") 'cider-return)
-    (define-key map (kbd "TAB") 'cider-tab)
+    (define-key map (kbd "TAB") 'cider-repl-tab)
     (define-key map (kbd "C-<return>") 'cider-closing-return)
     (define-key map (kbd "C-j") 'cider-newline-and-indent)
     (define-key map (kbd "C-c C-d") 'cider-doc)
     (define-key map (kbd "C-c C-s") 'cider-src)
     (define-key map (kbd "C-c C-o") 'cider-clear-output)
     (define-key map (kbd "C-c M-o") 'cider-clear-buffer)
+    (define-key map (kbd "C-c M-n") 'cider-repl-set-ns)
     (define-key map (kbd "C-c C-u") 'cider-kill-input)
     (define-key map (kbd "C-a") 'cider-bol)
     (define-key map (kbd "C-S-a") 'cider-bol-mark)
@@ -142,6 +143,7 @@ ENDP) DELIM."
     ["Display source" cider-src]
     ["Display JavaDoc" cider-javadoc]
     "--"
+    ["Set REPL ns" cider-repl-set-ns]
     ["Toggle pretty printing of results" cider-toggle-pretty-printing]
     ["Clear output" cider-clear-output]
     ["Clear buffer" cider-clear-buffer]

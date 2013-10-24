@@ -38,20 +38,21 @@
   (with-syntax-table sw1nn-clojure-mode-with-hyphens-as-word-sep-syntax-table
     (transpose-words arg)))
 
-(defun add-clj-compile-on-save ()
-  (add-hook 'after-save-hook
-            (lambda nil
-              (if (and sw1nn-clj-compile-on-save
-                       (symbol-value 'cider-interaction-mode)
-                       (not (string-match "project.clj"
-                                          (file-name-nondirectory (buffer-file-name))))
-                       (not (string-match ".lein/profiles.clj"
-                                          (substring (buffer-file-name) -18))))
-                  (progn (message "Compiling...")
-                         (cider-load-current-buffer)))
-              (if (and sw1nn-clj-test-on-save
-                       (assq 'clojure-test minor-mode-alist))
-                  (clojure-test-run-tests)))))
+(defun sw1nn-add-clj-compile-on-save ()
+ (add-hook 'after-save-hook
+          (lambda nil
+             (if (and sw1nn-clj-compile-on-save
+                      (symbol-value 'cider-mode)
+                      (not (string-match "project.clj"
+                                         (file-name-nondirectory (buffer-file-name))))
+                      (not (string-match ".lein/profiles.clj"
+                                         (substring (buffer-file-name) -18))))
+                 (progn (message "Compiling...")
+                        (cider-load-current-buffer)))
+             (if (and sw1nn-clj-test-on-save
+                      (assq 'clojure-test minor-mode-alist))
+                 (clojure-test-run-tests))))
+ )
 
 ;; make files opened in .jar etc read-only by default.
 (add-hook 'archive-extract-hook
@@ -66,10 +67,10 @@
      nil 'fullscreen
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
 
-(defun sw1nn-cider-current-server-buffer ()
-  (let ((cider-server-buf (replace-regexp-in-string "connection" "server" (cider-current-connection-buffer))))
-    (when cider-server-buf
-      (get-buffer cider-server-buf))))
+(defun sw1nn-nrepl-current-server-buffer ()
+  (let ((nrepl-server-buf (replace-regexp-in-string "connection" "server" (nrepl-current-connection-buffer))))
+    (when nrepl-server-buf
+      (get-buffer nrepl-server-buf))))
 
 (defun sw1nn-cider-perspective ()
   (interactive)
@@ -77,7 +78,7 @@
   (split-window-below)
   (windmove-down)
   (shrink-window 15)
-  (switch-to-buffer (sw1nn-cider-current-server-buffer))
+  (switch-to-buffer (sw1nn-nrepl-current-server-buffer))
   (windmove-up)
   (pop-to-buffer (cider-find-or-create-repl-buffer)))
 
@@ -87,15 +88,5 @@
     (if (and param (/= param 100))
         (set-frame-parameter nil 'alpha '(100 100))
       (set-frame-parameter nil 'alpha '(85 50)))))
-
-(require 'grep)
-
-(defun find-grep-in-repository ()
-  "Run `find-grep' in repository"
-  (interactive)
-  (let ((prompt (concat "find " (or (locate-dominating-file default-directory ".git") ".") " -type f ! -wholename \"*/.*\" ! -wholename \"*~\" -exec grep -nH -e {} +")))
-    (grep-apply-setting 'grep-find-command prompt)
-    (call-interactively 'find-grep)))
-
 
 (provide 'sw1nn)

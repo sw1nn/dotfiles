@@ -17,18 +17,14 @@
     (setq ac-sources
           (cons 'ac-source-yasnippet
                 (remove 'ac-source-yasnippet ac-sources)))))
-(add-hook 'cider-interaction-mode-hook 'ac-nrepl-setup)
-(add-hook 'cider-interaction-mode-hook 'ensure-yasnippet-is-first-ac-source)
 (add-hook 'cider-mode-hook 'ac-nrepl-setup)
 (add-hook 'cider-mode-hook 'ensure-yasnippet-is-first-ac-source)
-(add-hook 'cider-interaction-mode-hook
+(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
+(add-hook 'cider-repl-mode-hook 'ensure-yasnippet-is-first-ac-source)
+(add-hook 'cider-mode-hook
           (lambda nil
-            (define-key cider-interaction-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
+            (local-set-key (kbd "C-c C-d") 'ac-nrepl-popup-doc)
 ;            (define-key cider-interaction-mode-map (kbd "C-c C-i") 'nrepl-inspect)
-            (define-key cider-interaction-mode-map (kbd "C-c C-z") 'sw1nn-nrepl-perspective)
+            (local-set-key (kbd "C-c C-z") 'sw1nn-nrepl-perspective)
             (cider-turn-on-eldoc-mode)))
-
-(add-hook 'cider-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-hook 'cider-interaction-mode-hook 'set-auto-complete-as-completion-at-point-function)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

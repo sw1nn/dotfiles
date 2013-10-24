@@ -1,4 +1,4 @@
-;;; cider-interaction-mode.el --- Minor mode for REPL interactions
+;;; cider-mode.el --- Minor mode for REPL interactions
 
 ;; Copyright © 2012-2013 Tim King, Phil Hagelberg
 ;; Copyright © 2013 Bozhidar Batsov, Hugo Duncan, Steve Purcell
@@ -32,7 +32,7 @@
 
 (require 'cider-interaction)
 
-(defvar cider-interaction-mode-map
+(defvar cider-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-.") 'cider-jump)
     (define-key map (kbd "M-,") 'cider-jump-back)
@@ -46,7 +46,7 @@
     (define-key map (kbd "C-c C-n") 'cider-eval-ns-form)
     (define-key map (kbd "C-c C-m") 'cider-macroexpand-1)
     (define-key map (kbd "C-c M-m") 'cider-macroexpand-all)
-    (define-key map (kbd "C-c M-n") 'nrepl-set-ns)
+    (define-key map (kbd "C-c M-n") 'cider-repl-set-ns)
     (define-key map (kbd "C-c C-d") 'cider-doc)
     (define-key map (kbd "C-c C-s") 'cider-src)
     (define-key map (kbd "C-c C-z") 'cider-switch-to-repl-buffer)
@@ -63,18 +63,24 @@
     map))
 
 ;;;###autoload
-(define-minor-mode cider-interaction-mode
+(define-minor-mode cider-mode
   "Minor mode for REPL interaction from a Clojure buffer.
 
-\\{cider-interaction-mode-map}"
+\\{cider-mode-map}"
   nil
   " cider"
-  cider-interaction-mode-map
+  cider-mode-map
   (make-local-variable 'completion-at-point-functions)
   (add-to-list 'completion-at-point-functions
                'cider-complete-at-point))
 
-(easy-menu-define cider-interaction-mode-menu cider-interaction-mode-map
+;;;###autoload
+(defalias 'cider-interaction-mode 'cider-mode)
+
+;;;###autoload
+(defalias 'cider-interaction-mode-hook 'cider-mode-hook)
+
+(easy-menu-define cider-mode-menu cider-mode-map
   "Menu for CIDER interaction mode"
   '("CIDER"
     ["Jump" cider-jump]
@@ -95,10 +101,10 @@
     ["Macroexpand-all last expression" cider-macroexpand-all]
     "--"
     ["Display documentation" cider-doc]
-    ["Display Source" cider-src]
+    ["Display source" cider-src]
     ["Display JavaDoc" cider-javadoc]
     "--"
-    ["Set ns" nrepl-set-ns]
+    ["Set ns" cider-repl-set-ns]
     ["Switch to REPL" cider-switch-to-repl-buffer]
     ["Switch to Relevant REPL" cider-switch-to-relevant-repl-buffer]
     ["Toggle REPL Pretty Print" cider-pretty-toggle]
@@ -107,10 +113,10 @@
     ["Quit" cider-quit]
     ["Restart" cider-restart]
     "--"
-    ["Display current nrepl connection" cider-display-current-connection-info]
-    ["Rotate current nrepl connection" cider-rotate-connection]
+    ["Display current nREPL connection" cider-display-current-connection-info]
+    ["Rotate current nREPL connection" cider-rotate-connection]
     "--"
     ["Version info" cider-version]))
 
-(provide 'cider-interaction-mode)
-;;; cider-interaction-mode.el ends here
+(provide 'cider-mode)
+;;; cider-mode.el ends here
