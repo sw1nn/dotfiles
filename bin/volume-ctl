@@ -3,18 +3,27 @@
 cmd=$1
 shift;
 
+function get_volume() {
+    amixer sget 'Master',0 | awk '/Front Left:/{print $5}'
+}
+
 case $cmd in
     volume-up)
         amixer -q set Master 1000+ unmute
-        notify 1 "Vol+"
+        notify 1 "Vol+ " $(get_volume)
         ;;
     volume-down)
         amixer -q set Master 1000- unmute
-        notify 1 "Vol-"
+        notify 1 "Vol- " $(get_volume)
+
         ;;
     mute)
-        amixer -q set Master toggle
-        (amixer get Master | grep '\[off\]') && notify 1 "Mute"
+        (amixer set Master toggle | grep '\[off\]') 2>&1 > /dev/null
+        if [ $? -eq 0 ]; then
+            notify 1 "Mute"
+        else
+            notify 1 $(get_volume)
+        fi
         ;;
     *)
         echo "No Such command"
