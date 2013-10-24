@@ -14,6 +14,7 @@
                        (alter-var-root orig (constantly @new)))
                      (require 'clojure.repl)
                      (require 'clojure.pprint)
+                     (require 'alembic.still)
                      ]
         ;; :warn-on-reflection true
         :dependencies [
@@ -21,6 +22,7 @@
                        [clojure-complete "0.2.3"]
                        [spyscope "0.1.3"]
                        [slamhound "1.3.3"]
+                       [alembic "0.2.0"]
                       ]
         :repl-options {:nrepl-middleware
                        [
