@@ -54,11 +54,6 @@
                  (clojure-test-run-tests))))
  )
 
-;; make files opened in .jar etc read-only by default.
-(add-hook 'archive-extract-hook
-          (lambda nil
-            (read-only-mode)))
-
 (defun sw1nn-toggle-fullscreen ()
   "Toggle full screen on X11"
   (interactive)

@@ -131,5 +131,10 @@
 
 (add-hook 'markdown-mode-hook 'visual-line-mode)
 
+;; make files opened in .jar etc read-only by default.
+(add-hook 'archive-extract-hook
+          (lambda nil
+            (read-only-mode)))
+
 (load-theme 'sw1nn t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
