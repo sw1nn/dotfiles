@@ -71,7 +71,7 @@ statusBarCmd = "dzen2" ++
                " -sa c" ++
                " -fn '" ++ barFont ++ "'" ++
                " -w 1920 -x 0 -y 0 -ta l -expand r -e ''" ++
-               " -xs 1"
+               " -xs 2"
 
 myTerminal   = "urxvtc"
 
