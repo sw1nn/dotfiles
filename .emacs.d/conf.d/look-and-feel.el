@@ -117,7 +117,7 @@
 (add-to-list 'custom-safe-themes "af4ed275cddf70e5f53cec12ddecdeeb4ced75796e910aee779725ab211aba89") ; sw1nn-whiteboard
 
 ;; this lets us have a .dir-locals.el turning on rainbow-mode for themes.
-(add-to-list 'safe-local-variable-values (quote ((eval rainbow-mode t))))
+(add-to-list 'safe-local-variable-values '(eval rainbow-mode t))
 
 (setq scroll-conservatively 1000 ; > 100 => never recentre point
       scroll-up-aggressively 0.1
