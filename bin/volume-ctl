@@ -7,20 +7,24 @@ function get_volume() {
     amixer sget 'Master',0 | awk '/Front Left:/{print $5}'
 }
 
+function icon {
+   echo "^i(${HOME}/dotfiles/icons/${1}.xbm)"
+}
+
 case $cmd in
     volume-up)
         amixer -q set Master 1000+ unmute
-        notify 1 "Vol+ " $(get_volume)
+        notify 1 $(icon volup-icon64) $(get_volume)
         ;;
     volume-down)
         amixer -q set Master 1000- unmute
-        notify 1 "Vol- " $(get_volume)
-
+        notify 1 $(icon voldown-icon64) $(get_volume)
         ;;
+
     mute)
         (amixer set Master toggle | grep '\[off\]') 2>&1 > /dev/null
         if [ $? -eq 0 ]; then
-            notify 1 "Mute"
+            notify 1 $(icon volmute-icon64)
         else
             notify 1 $(get_volume)
         fi

@@ -22,6 +22,10 @@ function currently_playing {
       | sed -e "s/\(.*\) - \(.*\) - My Library - Google Play/\1$sep\2/"
 }
 
+function icon {
+   echo "^i(${HOME}/dotfiles/icons/${1}.xbm"
+}
+
 function toggle_pause {
     dispatch_to_google_music space
 }
@@ -34,34 +38,34 @@ case $cmd in
         sleep 0.3 # urggh.
         playing=$(currently_playing alt)
         if [ ! -z "$playing" ]; then
-            notify 2 $playing
+            notify 2 $(icon pause-icon64)
         else
-            notify 2 "paused"
+            notify 2 $(icon play-icon64)
         fi
         ;;
     stop)
         if [ ! -z "$(currently_playing)" ]; then
             toggle_pause  "$@"
-            notify 2 "stopped"
+            notify 2 $(icon media-stop-icon64)
         fi
         ;;
     prev)
         dispatch_to_google_music Left "$@"
-        notify 1 "previous"
-        notify 3 "$(currently_playing alt)"
-        ;;
+        notify 1 $(icon media-prev-icon64)
+        notify 3 "^bg(grey50)$(currently_playing alt)"
+ ;;
     next)
         dispatch_to_google_music Right "$@"
-        notify 1 "next"
-        notify 3 "$(currently_playing alt)"
-        ;;
+        notify 1 $(icon media-next-icon64)
+        notify 3 "^bg(grey50)$(currently_playing alt)"
+       ;;
     thumbs-up)
         dispatch_to_google_music alt+equal "$@"
-        notify 1 "thumbs up"
+        notify 1 $(icon thumbs-up-icon64)
         ;;
     thumbs-down)
         dispatch_to_google_music alt+minus  "$@"
-        notify 1 "thumbs down"
+        notify 1 $(icon thumbs-down-icon64)
         ;;
     currently-playing)
         currently_playing  "$@"

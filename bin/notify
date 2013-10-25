@@ -3,5 +3,4 @@
 seconds=$1
 shift;
 
-echo $@ | dzen2 -p $seconds -sa right -expand left -ta l -xs 1
-
+echo $@ | dzen2 -u -p $seconds -sa right -expand left -ta l -xs 1
