@@ -102,6 +102,6 @@ URxvt*color15:                           #fdf6e3
 
 URxvt*colorUL:                           #dc322f
 
-dzen2.font:                              xft:DejaVu Sans Mono for Powerline:pixelsize=14
+dzen2.font:                              xft:DejaVu Sans Mono for Powerline:pixelsize=64
 dzen2.foreground:                        #fdf6e3
-dzen2.background:                        #dc322f
+dzen2.background:                        #8b0000
