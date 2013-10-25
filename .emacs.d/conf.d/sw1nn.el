@@ -77,6 +77,14 @@
   (windmove-up)
   (pop-to-buffer (cider-find-or-create-repl-buffer)))
 
+(defun sw1nn-cider-reset ()
+  (interactive)
+  (save-some-buffers)
+  (set-buffer (cider-find-or-create-repl-buffer))
+  (goto-char (point-max))
+  (insert "(dev/reset)")
+  (cider-return))
+
 (defun sw1nn-toggle-transparency ()
   (interactive)
   (let ((param (cadr (frame-parameter nil 'alpha))))
