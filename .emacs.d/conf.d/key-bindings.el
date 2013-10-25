@@ -64,7 +64,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-c M-i") 'idle-highlight-mode)
 
 (define-key my-keys-minor-mode-map (kbd "<f9>") 'sw1nn-toggle-clj-compile-on-save)
-(define-key my-keys-minor-mode-map (kbd "<f10>") 'sw1nn-toggle-cider-popup-stacktraces-in-repl)
+(define-key my-keys-minor-mode-map (kbd "<f10>") 'sw1nn-toggle-cider-repl-popup-stacktraces)
 (define-key my-keys-minor-mode-map (kbd "<f11>") 'sw1nn-toggle-fullscreen)
 (define-key my-keys-minor-mode-map (kbd "<f12>") 'sw1nn-cider-perspective)
 (define-key my-keys-minor-mode-map (kbd "C-c r") 'sw1nn-cider-reset)

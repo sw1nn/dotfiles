@@ -20,10 +20,10 @@
   (setq sw1nn-clj-test-on-save (not sw1nn-clj-compile-on-save))
   (message "sw1nn-clj-test-on-save %s" (if sw1nn-clj-test-on-save "enabled" "disabled")))
 
-(defun sw1nn-toggle-cider-popup-stacktraces-in-repl ()
+(defun sw1nn-toggle-cider-repl-popup-stacktraces ()
   (interactive)
-  (setq cider-popup-stacktraces-in-repl (not cider-popup-stacktraces-in-repl))
-  (message "cider-popup-stacktraces-in-repl %s" (if cider-popup-stacktraces-in-repl "enabled" "disabled")))
+  (setq cider-repl-popup-stacktraces (not cider-repl-popup-stacktraces))
+  (message "cider-repl-popup-stacktraces %s" (if cider-repl-popup-stacktraces "enabled" "disabled")))
 
 ;;Treat hyphens as a word character when transposing words
 ;; based on https://github.com/overtone/emacs-live/blob/a7951de9bad6153537f6ee8af46d18bbc2bf0166/packs/dev/clojure-pack/config/clojure-conf.el#L39
