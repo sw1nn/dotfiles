@@ -85,10 +85,10 @@ nwsPP h = defaultPP
         , ppOutput  = hPutStrLn h
         , ppLayout  = dzenColor soWhite "" .
             (\x -> case x of
-                "Mirror Tall"-> pad "^i(/home/neale/.xmonad/icons/layout-mirror-black.xbm)"
-                "Messaging"  -> pad "^i(/home/neale/.xmonad/icons/layout-im.xbm)"
-                "Gimp"       -> pad "^i(/home/neale/.xmonad/icons/layout-gimp.xbm)"
-                "Full"       -> pad "^i(/home/neale/.xmonad/icons/layout-full.xbm)"
+                "Mirror Tall"-> pad "^i(/home/neale/dotfiles/icons/layout-mirror-black.xbm)"
+                "Messaging"  -> pad "^i(/home/neale/dotfiles/icons/layout-im.xbm)"
+                "Gimp"       -> pad "^i(/home/neale/dotfiles/icons/layout-gimp.xbm)"
+                "Full"       -> pad "^i(/home/neale/dotfiles/icons/layout-full.xbm)"
                 _            -> pad $ shorten 10 x)}
 
 ------------------------------------------------------------------------
@@ -128,6 +128,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0                 , xK_F7    ), spawn "googleplay-ctl prev")
     , ((0                 , xK_F8    ), spawn "googleplay-ctl toggle-pause")
     , ((0                 , xK_F9    ), spawn "googleplay-ctl next")
+    , ((modm .|. shiftMask, xK_equal ), spawn "browser http://plus.google.com")
     ]
     ++
 
