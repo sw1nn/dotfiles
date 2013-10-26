@@ -36,11 +36,11 @@ case $cmd in
     toggle-pause)
         toggle_pause "$@"
         sleep 0.3 # urggh.
-        playing=$(currently_playing alt)
+        # This doesn't always work - do something clever with silence detection instead?
         if [ ! -z "$playing" ]; then
-            notify 2 $(icon pause-icon64)
-        else
             notify 2 $(icon play-icon64)
+        else
+            notify 2 $(icon pause-icon64)
         fi
         ;;
     stop)
