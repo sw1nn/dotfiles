@@ -3,7 +3,7 @@
 import XMonad
 -- Hooks
 import XMonad.Hooks.DynamicLog hiding (xmobar, xmobarPP, xmobarColor, sjanssenPP, byorgeyPP)
-import XMonad.Hooks.UrgencyHook (withUrgencyHook, NoUrgencyHook(..), focusUrgent)
+import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.ManageHelpers (isDialog)
 import XMonad.Hooks.EwmhDesktops
@@ -73,6 +73,8 @@ statusBarCmd = "dzen2" ++
                " -w 1920 -x 0 -y 0 -ta l -expand r -e ''" ++
                " -xs 2"
 
+nwsUrgencyHook = withUrgencyHook dzenUrgencyHook {args = ["-xs", "1", "-fg", soBrightBlue]}
+
 myTerminal   = "urxvtc"
 
 nwsPP h = defaultPP
@@ -92,14 +94,14 @@ nwsPP h = defaultPP
                 _            -> pad $ shorten 10 x)}
 
 ------------------------------------------------------------------------
--- Key bindings. Add, m      odify or remove key bindings here.
+-- Key bindings. Add, modify or remove key bindings here.
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ ("urxvtc -bg " ++ transBackground))
     , ((modm,               xK_p     ), spawn "yeganesh_run")
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
     , ((modm,               xK_grave ), scratchpadSpawnActionTerminal $ XMonad.terminal conf)
-    , ((modm,               xK_a ), focusUrgent)
+    , ((modm,               xK_a     ), focusUrgent)
     , ((modm .|. shiftMask, xK_c     ), kill)
     , ((modm,               xK_space ), sendMessage NextLayout)
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
@@ -267,4 +269,4 @@ nwsConfig = defaultConfig
 -- Main
 main = do
      h <- spawnPipe statusBarCmd
-     xmonad $ withUrgencyHook NoUrgencyHook $ ewmh nwsConfig { logHook = nwsLogHook h }
+     xmonad $ nwsUrgencyHook $ ewmh nwsConfig { logHook = nwsLogHook h }
