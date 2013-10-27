@@ -212,6 +212,7 @@ myLayoutHook = onWorkspace "1:web" webL $
                onWorkspace "5:gimp" gimpL $
                onWorkspace "4:virt" fullL $
                onWorkspace "8:im" imL $
+               onWorkspace "9:music" fullL $
                standardLayouts
    where
         standardLayouts =   avoidStruts  $ (tiled |||
