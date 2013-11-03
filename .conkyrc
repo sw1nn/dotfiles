@@ -1,7 +1,7 @@
 # --- Window Layout & Options --- #
 own_window yes
 own_window_type panel
-own_window_transparent no
+own_window_transparent yes
 alignment middle_right
 
 double_buffer yes
@@ -23,20 +23,21 @@ stippled_borders 3
 border_width 0
 default_color 657b83
 own_window_colour 002b36
+default_color 93a1a1
 
 # Solarized colors Source http://github.com/altercation/solarized
-# color0 073624
-# color1 dc322f
+color0 073624
+color1 dc322f
 color2 859900
 # color3 b58900
 color4 268bd2
-# color5 d33682
+#color5 d33682
 # color6 2aa198
 # color7 eee8d5
 
 # these are really solarized 8-15
-color0 002b36
-color1 cb4b16
+#color0 002b36
+#color1 cb4b16
 #color2 586e75
 color3 657b83
 #color4 839496
@@ -63,7 +64,7 @@ ${color4}Kernel$color $kernel
 ${font DejaVu Sans Mono for Powerline:weight=bold:size=10}${color5}CPU ${hr 2}$color$font
 ${execi 99999 cat /proc/cpuinfo|awk '{$1=$1; if (sub(/model +name +: +/, "")) {if (!m) print $0; m=1;}}'}
 ${color4}Core 0: $color${execi 10 sensors|awk '/Core 0/{$1=$1; print $3}'}
-${color4}Freq:$color $font$color${freq_g 1}GHz ${color4}${alignr}Freq:$color $font$color${freq_g 5}GHz
+${color4}Freq:   ${color6}${freq_g 1}GHz ${color4}${alignr}Freq:$color $font$color${freq_g 5}GHz
 ${color6}${cpugraph cpu1 25,145 859900 586e75} ${color6}${cpugraph cpu5 25,145 859900 586e75}
 ${color6}${cpubar cpu1 4,145} ${cpubar cpu5 4,145}
 ${color4}Core 1: $color${execi 10 sensors|awk '/Core 1/{$1=$1;print $3}'}
