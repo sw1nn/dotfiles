@@ -11,6 +11,7 @@ import XMonad.Hooks.EwmhDesktops
 -- import XMonad.Actions.CycleWS (nextScreen, prevScreen, shiftNextScreen, shiftPrevScreen, toggleWS, Direction1D(..), WSType(..), findWorkspace)
 -- import XMonad.Actions.UpdatePointer
 -- Utils
+import XMonad.Actions.Search (google, wikipedia, selectSearch, promptSearch)
 import XMonad.Util.Run (safeSpawn, unsafeSpawn, runInTerm, spawnPipe)
 import XMonad.Util.Scratchpad (scratchpadSpawnActionTerminal, scratchpadManageHook, scratchpadFilterOutWorkspace)
 import XMonad.Util.WorkspaceCompare(getSortByIndex)
@@ -23,6 +24,7 @@ import XMonad.Layout.IM
 import XMonad.Layout.Reflect (reflectHoriz)
 import XMonad.Layout.Named
 import XMonad.Layout.Tabbed
+import XMonad.Prompt
 import System.Exit
 import Control.Monad (liftM2)
 
@@ -123,6 +125,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
     , ((modm              , xK_b     ), sendMessage ToggleStruts)
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    , ((modm .|. shiftMask, xK_g     ), promptSearch defaultXPConfig google)
+    , ((modm .|. controlMask, xK_g     ), selectSearch google)
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
     , ((0                 , xK_F4    ), spawn "volume-ctl mute")
     , ((0                 , xK_F5    ), spawn "volume-ctl volume-down")
@@ -257,7 +261,7 @@ myLayoutHook = onWorkspace "1:web" webL $
 
 nwsConfig = defaultConfig
        { terminal               = myTerminal
-       , focusFollowsMouse      = False
+       , focusFollowsMouse      = True
        , modMask                = mod3Mask -- command key
        , focusedBorderColor     = soGreen
        , workspaces             = myWorkspaces
