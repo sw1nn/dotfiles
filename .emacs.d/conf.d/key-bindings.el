@@ -66,11 +66,12 @@
 (define-key my-keys-minor-mode-map (kbd "<f9>") 'sw1nn-toggle-clj-compile-on-save)
 (define-key my-keys-minor-mode-map (kbd "<f10>") 'sw1nn-toggle-cider-repl-popup-stacktraces)
 (define-key my-keys-minor-mode-map (kbd "<f11>") 'sw1nn-toggle-fullscreen)
-(define-key my-keys-minor-mode-map (kbd "<f12>") 'sw1nn-cider-perspective)
+(define-key my-keys-minor-mode-map (kbd "C-c C-z") 'sw1nn-cider-perspective)
 (define-key my-keys-minor-mode-map (kbd "C-c r") 'sw1nn-cider-reset)
 
 (define-key my-keys-minor-mode-map (kbd "C-c a") 'org-agenda)
 (define-key my-keys-minor-mode-map (kbd "C-c f") 'fold-dwim-toggle)
+
 (when (eq system-type 'darwin)
   (load-file (concat user-emacs-directory "conf.d/google-music-key-bodge.el")))
 
