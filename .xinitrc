@@ -20,6 +20,8 @@ source ${HOME}/.gnupg/agent-info
 export GPG_AGENT_INFO
 export SSH_AUTH_SOCK
 
+export CUPS_SERVER=localhost
+
 compton -cCGb
 
 xrdb -load ${HOME}/.Xresources
