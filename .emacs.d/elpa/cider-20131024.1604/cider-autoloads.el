@@ -1,9 +1,10 @@
 ;;; cider-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+
 
-;;;### (autoloads nil "cider" "cider.el" (21097 8309 0 0))
+;;;### (autoloads (cider cider-jack-in) "cider" "cider.el" (21099
+;;;;;;  56476 100353 962000))
 ;;; Generated autoloads from cider.el
 
 (autoload 'cider-jack-in "cider" "\
@@ -22,8 +23,9 @@ Connect to an nREPL server identified by HOST and PORT.
 
 ;;;***
 
-;;;### (autoloads nil "cider-interaction" "cider-interaction.el"
-;;;;;;  (21097 8309 0 0))
+;;;### (autoloads (cider-disable-on-existing-clojure-buffers cider-enable-on-existing-clojure-buffers)
+;;;;;;  "cider-interaction" "cider-interaction.el" (21099 56476 53354
+;;;;;;  412000))
 ;;; Generated autoloads from cider-interaction.el
 
 (autoload 'cider-enable-on-existing-clojure-buffers "cider-interaction" "\
@@ -40,8 +42,8 @@ See command `cider-mode'.
 
 ;;;***
 
-;;;### (autoloads nil "cider-mode" "cider-mode.el" (21097 8309 0
-;;;;;;  0))
+;;;### (autoloads (cider-mode) "cider-mode" "cider-mode.el" (21099
+;;;;;;  56476 45354 488000))
 ;;; Generated autoloads from cider-mode.el
 
 (autoload 'cider-mode "cider-mode" "\
@@ -57,8 +59,8 @@ Minor mode for REPL interaction from a Clojure buffer.
 
 ;;;***
 
-;;;### (autoloads nil "nrepl-client" "nrepl-client.el" (21097 8309
-;;;;;;  0 0))
+;;;### (autoloads nil "nrepl-client" "nrepl-client.el" (21099 56476
+;;;;;;  125353 723000))
 ;;; Generated autoloads from nrepl-client.el
 
 (add-hook 'nrepl-connected-hook 'cider-enable-on-existing-clojure-buffers)
@@ -67,13 +69,15 @@ Minor mode for REPL interaction from a Clojure buffer.
 
 ;;;### (autoloads nil nil ("cider-eldoc.el" "cider-macroexpansion.el"
 ;;;;;;  "cider-pkg.el" "cider-repl-mode.el" "cider-repl.el" "cider-selector.el"
-;;;;;;  "cider-version.el") (21097 8309 754055 0))
+;;;;;;  "cider-util.el" "cider-version.el") (21099 56476 141687 827000))
 
 ;;;***
 
+(provide 'cider-autoloads)
 ;; Local Variables:
 ;; version-control: never
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
+;; coding: utf-8
 ;; End:
 ;;; cider-autoloads.el ends here
