@@ -1,0 +1,49 @@
+#!/usr/bin/python
+
+import dropbox
+import time
+import requests
+import ConfigParser
+from os.path import expanduser
+
+config = ConfigParser.ConfigParser()
+config.read(expanduser("~") + "/.no-tea-fier")
+
+access_token = config.get('Credentials','access_token')
+client = dropbox.client.DropboxClient(access_token)
+
+cursor = None
+while True:
+    result = client.delta(cursor)
+    cursor = result['cursor']
+    if result['reset']:
+        print 'RESET'
+
+    for path, metadata in result['entries']:
+        if metadata is not None:
+            print '%s was created/updated' % path
+        else:
+            print '%s was deleted' % path
+
+    # if has_more is true, call delta again immediately
+    if not result['has_more']:
+
+        changes = False
+        # poll until there are changes
+        while not changes:
+            response = requests.get('https://api-notify.dropbox.com/1/longpoll_delta',
+                params={
+                    'cursor': cursor,  # latest cursor from delta call
+                    'timeout': 120     # default is 30 seconds
+                })
+            data = response.json()
+
+            changes = data['changes']
+            if not changes:
+                print 'Timeout, polling again...'
+
+            backoff = data.get('backoff', None)
+            if backoff is not None:
+                print 'Backoff requested. Sleeping for %d seconds...' % backoff
+                time.sleep(backoff)
+                print 'Resuming polling...'
