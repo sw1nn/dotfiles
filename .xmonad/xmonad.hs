@@ -170,11 +170,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
                manageDocks <+>
                (composeAll . concat $
-    [ [isDialog       --> doFloat]
-    , [className =? c --> doFloat  | c <- myCFloats]
-    , [title =? t     --> doFloat  | t <- myTFloats]
-    , [resource =? r  --> doFloat  | r <- myRFloats]
-    , [resource =? i  --> doIgnore | i <- myIgnores]
+    [ [isDialog        --> doFloat]
+    , [role       =? r --> doFloat  | r <- myRoleFloats]
+    , [className  =? c --> doFloat  | c <- myCFloats]
+    , [title      =? t --> doFloat  | t <- myTFloats]
+    , [resource   =? r --> doFloat  | r <- myRFloats]
+    , [resource   =? i --> doIgnore | i <- myIgnores]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "1:web" | x <- my1Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "2:edit" | x <- my2Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift "3:term" | x <- my3Shifts]
@@ -187,19 +188,21 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     ])
     where
     doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
-    myCFloats = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Xmessage", "Thunar"]
-    myTFloats = ["Downloads", "Save As...", "RescueTime Offline Time", "Google+ Hangouts - Google Chrome"]
-    myRFloats = []
-    myIgnores = ["desktop_window", "kdesktop"]
-    my1Shifts = ["google-chrome"]
-    my2Shifts = ["Emacs"]
-    my3Shifts = ["URxvt"]
-    my4Shifts = ["VirtualBox", "Wine"]
-    my5Shifts = ["Gimp"]
-    my6Shifts = []
-    my7Shifts = []
-    my8Shifts = ["Pidgin", "Skype"]
-    my9Shifts = ["play.google.com__music"]
+    myRoleFloats = ["pop-up"]
+    myCFloats    = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Xmessage", "Thunar"]
+    myTFloats    = ["Downloads", "Save As...", "RescueTime Offline Time", "Google+ Hangouts - Google Chrome"]
+    myRFloats    = []
+    myIgnores    = ["desktop_window", "kdesktop"]
+    my1Shifts    = ["google-chrome"]
+    my2Shifts    = ["Emacs"]
+    my3Shifts    = ["URxvt"]
+    my4Shifts    = ["VirtualBox", "Wine"]
+    my5Shifts    = ["Gimp"]
+    my6Shifts    = []
+    my7Shifts    = []
+    my8Shifts    = ["Pidgin", "Skype"]
+    my9Shifts    = ["play.google.com__music"]
+    role         = stringProperty "WM_WINDOW_ROLE"
 
 nwsLogHook h = do
            dynamicLogWithPP $ nwsPP h
