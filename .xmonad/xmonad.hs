@@ -223,7 +223,7 @@ myLayoutHook = onWorkspace "1:web" webL $
                                             reflectTiled |||
                                             Mirror tiled |||
                                             Grid |||
-                                            Full)
+                                            full)
         --Layouts
         tiled     = smartBorders (ResizableTall 1 (2/100) (1/2) [])
         reflectTiled = (reflectHoriz tiled)
