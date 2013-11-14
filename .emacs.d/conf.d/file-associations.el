@@ -7,6 +7,7 @@
                 ("\\.scss\\'" . sass-mode)
                 ("\\.m\\'" . octave-mode)
                 ("\\.js\\'" . js2-mode)
-                ("\\.json\\'" . json-mode)))
+                ("\\.json\\'" . json-mode)
+                ("\\.gexf\\'" . nxml-mode)))
   (add-to-list 'auto-mode-alist mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
