@@ -101,9 +101,13 @@
 
 (setq-default cursor-type 'bar)
 
+(defun sw1nn-untabify-p ()
+  (or (equal (file-name-extension (buffer-file-name)) "tsv")
+      (string-match "part-\\d+" (file-name-base (buffer-file-name)))))
+
 (add-hook 'before-save-hook
           (lambda nil
-            (unless (equal (file-name-extension (buffer-file-name)) "tsv")
+            (if (sw1nn-untabify-p)
               (untabify (point-min) (point-max))
               (delete-trailing-whitespace))))
 
