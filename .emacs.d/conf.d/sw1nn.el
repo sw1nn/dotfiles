@@ -67,6 +67,12 @@
     (when nrepl-server-buf
       (get-buffer nrepl-server-buf))))
 
+(defun sw1nn-clear-current-server-buffer ()
+  "Clear current server buffer"
+  (interactive)
+  (with-current-buffer (sw1nn-nrepl-current-server-buffer)
+    (kill-region (point-min) (point-max))))
+
 (defun sw1nn-cider-perspective ()
   (interactive)
   (delete-other-windows)
