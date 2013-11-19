@@ -102,7 +102,7 @@
 (setq-default cursor-type 'bar)
 
 (defun sw1nn-untabify-p ()
-  (or (equal (file-name-extension (buffer-file-name)) "tsv")
+  (or (not (equal (file-name-extension (buffer-file-name)) "tsv"))
       (string-match "part-\\d+" (file-name-base (buffer-file-name)))))
 
 (add-hook 'before-save-hook
