@@ -5,12 +5,23 @@ import time
 import requests
 import ConfigParser
 from os.path import expanduser
+import gntp.notifier
 
 config = ConfigParser.ConfigParser()
 config.read(expanduser("~") + "/.no-tea-fier")
 
 access_token = config.get('Credentials','access_token')
 client = dropbox.client.DropboxClient(access_token)
+
+growl = gntp.notifier.GrowlNotifier(
+    applicationName = "irssi",
+    notifications = ["New Messages"],
+    defaultNotifications = ["New Messages"],
+    # hostname = "computer.example.com", # Defaults to localhost
+    # password = "abc123" # Defaults to a blank password
+)
+growl.register()
+
 
 cursor = None
 while True:
@@ -20,8 +31,15 @@ while True:
         print 'RESET'
 
     for path, metadata in result['entries']:
-        if metadata is not None:
-            print '%s was created/updated' % path
+        if (metadata is not None) and
+           (path == '/irssi/fnotify.txt'):
+            growl.notify(
+                title = "You have a new message",
+                description = "A longer message description",
+                icon = "http://example.com/icon.png",
+                sticky = True,
+                priority = 1,
+            )
         else:
             print '%s was deleted' % path
 
