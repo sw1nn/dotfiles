@@ -89,7 +89,7 @@
   (set-buffer (cider-find-or-create-repl-buffer))
   (goto-char (point-max))
   (insert "(dev/reset)")
-  (cider-return))
+  (cider-repl-return))
 
 (defun sw1nn-toggle-transparency ()
   (interactive)
