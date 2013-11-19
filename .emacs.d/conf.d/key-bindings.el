@@ -6,8 +6,9 @@
 (defvar my-keys-minor-mode-map (make-keymap) "my-keys-minor-mode keymap.")
 
 (define-key my-keys-minor-mode-map (kbd "C-\\") (lambda nil (interactive))) ; remove annoying input-method binding.
-(define-key my-keys-minor-mode-map (kbd "C-x C-z") (lambda nil (interactive)))
-(define-key my-keys-minor-mode-map (kbd "C-z") (lambda nil (interactive)))
+(define-key my-keys-minor-mode-map (kbd "C-x C-z") (lambda nil (interactive)))(
+(define-key my-keys-minor-mode-map (kbd "C-x C-c") (lambda nil (interactive)))
+define-key my-keys-minor-mode-map (kbd "C-z") (lambda nil (interactive)))
 (define-key my-keys-minor-mode-map (kbd "s-p") (lambda nil (interactive)))
 (define-key my-keys-minor-mode-map (kbd "M-TAB") 'yas/expand)
 (define-key my-keys-minor-mode-map (kbd "<select>") 'windmove-up)
