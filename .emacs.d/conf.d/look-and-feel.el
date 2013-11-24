@@ -11,6 +11,9 @@
 (require 'saveplace)
 
 (require 'fold-dwim)
+
+(require 'win-switch)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
@@ -93,8 +96,6 @@
 
 (smex-initialize)
 
-(windmove-default-keybindings) ;; Shift+direction
-
 (global-undo-tree-mode t)
 ;; die tabs, DIE!
 (setq indent-tabs-mode nil)
@@ -139,6 +140,13 @@
 (add-hook 'archive-extract-hook
           (lambda nil
             (read-only-mode)))
+
+(setq win-switch-window-threshold 1
+      win-switch-idle-time 0.7
+      win-switch-feedback-background-color "#008800"
+      win-switch-feedback-foreground-color "#00ff00")
+
+(win-switch-setup-keys-ijkl "\C-xo" "\C-x\C-o")
 
 (load-theme 'sw1nn t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
