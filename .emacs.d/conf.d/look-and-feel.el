@@ -148,5 +148,12 @@
 
 (win-switch-setup-keys-ijkl "\C-xo" "\C-x\C-o")
 
+;; Pick up enhanced rectangle support from cua-mode, but not the other key bindings
+(require 'cua-base)
+(require 'cua-gmrk)
+(require 'cua-rect)
+(cua-mode 1)
+(setq cua-enable-cua-keys nil)
+
 (load-theme 'sw1nn t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
