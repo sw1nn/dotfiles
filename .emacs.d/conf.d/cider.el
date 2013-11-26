@@ -5,7 +5,7 @@
 (require 'slamhound)
 
 (setq cider-javadoc-local-paths (list "/usr/local/share/javadoc-w3m/7/docs/api")
-      cider-history-file (concat user-emacs-directory ".cider-history")
+      cider-repl-history-file (concat user-emacs-directory ".cider-history")
       cider-popup-on-error t
       cider-popup-stacktrace t)
 (setq-default cider-port "4001")
