@@ -6,8 +6,8 @@
 
 (setq cider-javadoc-local-paths (list "/usr/local/share/javadoc-w3m/7/docs/api")
       cider-repl-history-file (concat user-emacs-directory ".cider-history")
-      cider-popup-on-error t
-      cider-popup-stacktrace t)
+      cider-popup-stacktraces t
+      cider-repl-popup-stacktrace nil)
 (setq-default cider-port "4001")
 
 (add-to-list 'same-window-buffer-names "*cider*")
