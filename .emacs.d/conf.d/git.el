@@ -11,3 +11,6 @@
 (magit-key-mode-generate 'logging)
 (magit-key-mode-generate 'committing)
 (magit-key-mode-generate 'tagging)
+
+;; work better with feature/whatever branch names from hubflow.
+(setq magit-default-tracking-name-function (lambda (_ branch) branch))
