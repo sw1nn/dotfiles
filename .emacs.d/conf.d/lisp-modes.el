@@ -54,9 +54,7 @@
   (flyspell-prog-mode)
   (yas-minor-mode)
   (show-paren-mode)
-  (eldoc-mode)
-  (hl-line-mode -1)
-  (hl-sexp-mode))
+  (eldoc-mode))
 
 (defun neale-custom-clojure-mode ()
   (neale-custom-lisp-mode)
@@ -67,9 +65,7 @@
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key clojure-mode-map (kbd "M-t") 'sw1nn-transpose-words-with-hyphens)
   (set (make-local-variable 'font-lock-extra-managed-props) '(composition)) ; revert fancy characters.
-  (hl-line-mode 0)
-  (set (make-local-variable 'scroll-margin) 3)
-  )
+  (set (make-local-variable 'scroll-margin) 3))
 
 (defun neale-custom-cider-mode ()
   (neale-custom-lisp-mode))

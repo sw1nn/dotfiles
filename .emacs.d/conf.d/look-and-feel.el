@@ -149,7 +149,7 @@
 (win-switch-setup-keys-ijkl "\C-xo" "\C-x\C-o")
 
 (auto-compression-mode t)
-
+(global-hl-line-mode t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Pick up enhanced rectangle support from cua-mode, but not the other key bindings
 (require 'cua-base)
