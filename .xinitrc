@@ -33,6 +33,10 @@ xrandr --output DisplayPort-0 --right-of DVI-0
 
 feh --bg-tile ${HOME}/backgrounds/default
 
+source ${HOME}/.xflux-location
+
+xflux -l ${LATITUDE} -g ${LONGITUDE}
+
 xscreensaver &
 xscreensaver-watch &
 emacs --daemon &
