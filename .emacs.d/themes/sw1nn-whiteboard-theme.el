@@ -59,7 +59,7 @@
  '(font-lock-variable-name-face ((t (:foreground "SeaGreen4"))))
  '(font-lock-warning-face ((t (:foreground "red"))))
  '(fringe ((t (:background "gainsboro"))))
- '(highlight ((t (:background "SkyBlue1"))))
+ '(highlight ((t (:background "gray95"))))
  '(ido-first-match ((t (:weight normal :foreground "DarkOrange3"))))
  '(ido-only-match ((t (:foreground "SeaGreen4"))))
  '(ido-subdir ((t (:foreground nil :inherit font-lock-keyword-face))))
