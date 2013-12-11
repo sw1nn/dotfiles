@@ -24,7 +24,5 @@
 (add-hook 'cider-mode-hook
           (lambda nil
             (define-key  cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
-;            (define-key cider-interaction-mode-map (kbd "C-c C-i") 'nrepl-inspect)
-            (local-set-key (kbd "C-c C-z") 'sw1nn-nrepl-perspective)
             (cider-turn-on-eldoc-mode)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
