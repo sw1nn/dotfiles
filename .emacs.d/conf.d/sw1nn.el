@@ -92,10 +92,8 @@
 (defun sw1nn-cider-reset ()
   (interactive)
   (save-some-buffers)
-  (set-buffer (cider-find-or-create-repl-buffer))
-  (goto-char (point-max))
-  (insert "(do (load \"dev\")(dev/reset))")
-  (cider-repl-return))
+  (sw1nn-run-cider-command "(do (load \"dev\")(dev/reset))"))
+
 (defun sw1nn-send-expr-to-repl ()
   (interactive)
   (sw1nn-run-cider-command (cider-expression-at-point)))
