@@ -83,6 +83,12 @@
   (windmove-up)
   (pop-to-buffer (cider-find-or-create-repl-buffer)))
 
+(defun sw1nn-run-cider-command (cmd)
+  (with-current-buffer (cider-find-or-create-repl-buffer)
+    (goto-char (point-max))
+    (insert cmd)
+    (cider-repl-return)))
+
 (defun sw1nn-cider-reset ()
   (interactive)
   (save-some-buffers)
@@ -90,6 +96,13 @@
   (goto-char (point-max))
   (insert "(do (load \"dev\")(dev/reset))")
   (cider-repl-return))
+(defun sw1nn-send-expr-to-repl ()
+  (interactive)
+  (sw1nn-run-cider-command (cider-expression-at-point)))
+
+(defun sw1nn-send-previous-expr-to-repl ()
+  (interactive)
+  (sw1nn-run-cider-command (cider-last-expression)))
 
 (defun sw1nn-toggle-transparency ()
   (interactive)
