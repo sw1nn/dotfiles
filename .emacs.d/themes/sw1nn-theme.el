@@ -44,7 +44,7 @@
  '(git-gutter-fr:added ((t (:foreground "#728a05"))))
  '(git-gutter-fr:deleted ((t (:foreground "#8b0000"))))
  '(git-gutter-fr:modified ((t (:foreground "#5859b7"))))
- '(highlight ((t (:background "#0a2832"))))
+ '(highlight ((t (:background "#073642"))))
  '(hl-line-face ((t (:background "#073642"))))
  '(hl-sexp-face ((t (:background "#073642"))))
  '(ido-first-match ((t (:weight bold :foreground "#a57705"))))
