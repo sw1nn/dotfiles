@@ -90,6 +90,16 @@
   (with-current-buffer (sw1nn-nrepl-current-server-buffer)
     (kill-region (point-min) (point-max))))
 
+(defun sw1nn-show-maximum-output-current-server-buffer ()
+  "Show the Maximum output in the current server buffer."
+  (interactive)
+  (with-current-buffer (sw1nn-nrepl-current-server-buffer)
+    (goto-char (point-max))
+    (let ((windows (get-buffer-window-list (current-buffer) nil t)))
+      (while windows
+        (set-window-point (car windows) (point-max))
+        (setq windows (cdr windows))))))
+
 (defun sw1nn-cider-perspective ()
   (interactive)
   (delete-other-windows)

@@ -70,7 +70,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-c c z") 'sw1nn-cider-perspective)
 (define-key my-keys-minor-mode-map (kbd "C-c c r") 'sw1nn-cider-reset)
 (define-key my-keys-minor-mode-map (kbd "C-c c k") 'sw1nn-clear-current-server-buffer)
-
+(define-key my-keys-minor-mode-map (kbd "C-c c >") 'sw1nn-show-maximum-output-current-server-buffer)
 (define-key my-keys-minor-mode-map (kbd "C-c a") 'org-agenda)
 (define-key my-keys-minor-mode-map (kbd "C-c f") 'fold-dwim-toggle)
 

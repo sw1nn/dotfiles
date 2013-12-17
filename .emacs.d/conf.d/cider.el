@@ -24,5 +24,7 @@
 (add-hook 'cider-mode-hook
           (lambda nil
             (define-key  cider-mode-map (kbd "C-c C-d") 'ac-nrepl-popup-doc)
+            (define-key cider-mode-map (kbd "C-c C-c") 'sw1nn-send-expr-to-repl)
+            (define-key cider-mode-map (kbd "C-c C-e") 'sw1nn-send-previous-expr-to-repl)
             (cider-turn-on-eldoc-mode)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
