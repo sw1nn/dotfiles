@@ -25,6 +25,23 @@
   (setq cider-repl-popup-stacktraces (not cider-repl-popup-stacktraces))
   (message "cider-repl-popup-stacktraces %s" (if cider-repl-popup-stacktraces "enabled" "disabled")))
 
+;; from https://github.com/overtone/emacs-live/blob/master/packs/live/clojure-pack/config/paredit-conf.el#L19 
+(defun sw1nn-paredit-forward ()
+  "Feels more natural to move to the beginning of the next item
+   in the sexp, not the end of the current one."
+  (interactive)
+  (if (and (not (paredit-in-string-p))
+           (save-excursion
+             (ignore-errors
+               (forward-sexp)
+               (forward-sexp)
+               t)))
+      (progn
+        (forward-sexp)
+        (forward-sexp)
+        (backward-sexp))
+    (paredit-forward)))
+
 ;;Treat hyphens as a word character when transposing words
 ;; based on https://github.com/overtone/emacs-live/blob/a7951de9bad6153537f6ee8af46d18bbc2bf0166/packs/dev/clojure-pack/config/clojure-conf.el#L39
 (defvar sw1nn-clojure-mode-with-hyphens-as-word-sep-syntax-table
