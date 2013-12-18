@@ -79,3 +79,5 @@
 (add-hook 'clojure-mode-hook 'neale-custom-clojure-mode)
 (add-hook 'inferior-lisp-mode-hook 'neale-custom-inferior-lisp-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(put-clojure-indent 'go-loop 'defun)
