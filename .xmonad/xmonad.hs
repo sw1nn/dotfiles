@@ -135,6 +135,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                    xK_F8     ), spawn "googleplay-ctl toggle-pause")
     , ((0,                    xK_F9     ), spawn "googleplay-ctl next")
     , ((modm .|. shiftMask,   xK_equal  ), spawn "browser http://plus.google.com")
+    , ((0,                    xK_Print  ), spawn "sleep 0.2; scrot -s -e 'mv $f ~/screenshots/'")      
     ]
     ++
     --
