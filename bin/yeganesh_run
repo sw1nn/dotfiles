@@ -1,5 +1,6 @@
 #!/bin/sh
 
+exec >& ${HOME}/yeganesh.log
 font="-misc-aldrich-medium-r-normal--14-0-0-0-p-0-iso8859-15"
 
 cachedir=${XDG_CACHE_HOME:-"$HOME/.cache"}
