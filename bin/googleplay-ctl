@@ -19,7 +19,7 @@ function currently_playing {
         search --classname ${GOOGLE_PLAY_CLASS_WM_CLASS} \
         getwindowname \
       | egrep -v -e '(Settings|Listen Now|Artists|Radio|Featured|Queue|Thumbs up|Last Added|Free and Purchased|Shared with me)'\
-      | sed -e "s/\(.*\) - \(.*\) - My Library - Google Play/\1$sep\2/"
+      | sed -e "s/\(.*\) - \(.*\) - Google Play Music/\1$sep\2/"
 }
 
 function icon {
