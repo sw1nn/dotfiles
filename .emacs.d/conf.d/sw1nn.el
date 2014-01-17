@@ -6,14 +6,23 @@
 (defcustom sw1nn-clj-compile-on-save t "non-nil means clj files should be compiled after save."
   :type 'boolean
   :group 'sw1nn)
+
 (defcustom sw1nn-clj-test-on-save nil "non-nil means clj test files should be executed after save."
   :type 'boolean
   :group 'sw1nn)
 
+(defcustom sw1nn-cljs-compile-on-save t "non-nil means cljs files should be compiled after save."
+  :type 'boolean
+  :group 'sw1nn)
 (defun sw1nn-toggle-clj-compile-on-save ()
   (interactive)
   (setq sw1nn-clj-compile-on-save (not sw1nn-clj-compile-on-save))
   (message "sw1nn-clj-compile-on-save %s" (if sw1nn-clj-compile-on-save "enabled" "disabled")))
+
+(defun sw1nn-toggle-cljs-compile-on-save ()
+  (interactive)
+  (setq sw1nn-cljs-compile-on-save (not sw1nn-cljs-compile-on-save))
+  (message "sw1nn-cljs-compile-on-save %s" (if sw1nn-cljs-compile-on-save "enabled" "disabled")))
 
 (defun sw1nn-toggle-clj-test-on-save ()
   (interactive)
@@ -55,20 +64,30 @@
   (with-syntax-table sw1nn-clojure-mode-with-hyphens-as-word-sep-syntax-table
     (transpose-words arg)))
 
+(defun sw1nn-clj-compilable-file-p (filename)
+  (and
+   sw1nn-clj-compile-on-save
+   (string= "clj" (file-name-extension (buffer-file-name)))
+   (not (string-match "project.clj"
+                      (file-name-nondirectory (buffer-file-name))))
+   (not (string-match ".lein/profiles.clj"
+                      (substring (buffer-file-name) -18)))))
+
+(defun sw1nn-clj-compilable-file-p (filename)
+  (and
+   sw1nn-cljs-compile-on-save
+   (string= "cljs" (file-name-extension (buffer-file-name)))))
+
 (defun sw1nn-add-clj-compile-on-save ()
  (add-hook 'after-save-hook
-          (lambda nil
-             (if (and sw1nn-clj-compile-on-save
-                      (symbol-value 'cider-mode)
-                      (not (string-match "project.clj"
-                                         (file-name-nondirectory (buffer-file-name))))
-                      (not (string-match ".lein/profiles.clj"
-                                         (substring (buffer-file-name) -18))))
-                 (progn (message "Compiling...")
-                        (cider-load-current-buffer)))
-             (if (and sw1nn-clj-test-on-save
-                      (assq 'clojure-test minor-mode-alist))
-                 (clojure-test-run-tests))))
+           (if (and (symbol-value 'cider-mode)
+                    (or (sw1nn-clj-compilable-file-p (buffer-file-name)))
+                    (or (sw1nn-cljs-compilable-file-p (buffer-file-name))))
+              (progn (message "Compiling...")
+                     (cider-load-current-buffer)))
+          (if (and sw1nn-clj-test-on-save
+                   (assq 'clojure-test minor-mode-alist))
+              (clojure-test-run-tests)))
  )
 
 (defun sw1nn-toggle-fullscreen ()
