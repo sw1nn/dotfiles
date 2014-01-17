@@ -19,6 +19,7 @@ import XMonad.Util.WorkspaceCompare(getSortByIndex)
 import XMonad.Layout.NoBorders (smartBorders, noBorders)
 import XMonad.Layout.ResizableTile (ResizableTall(..))
 import XMonad.Layout.Grid (Grid(..))
+import XMonad.Layout.StackTile(StackTile(..))
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.IM
 import XMonad.Layout.Reflect (reflectHoriz)
@@ -200,7 +201,7 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     my5Shifts    = ["Gimp"]
     my6Shifts    = []
     my7Shifts    = []
-    my8Shifts    = ["Pidgin", "Skype"]
+    my8Shifts    = ["Pidgin", "Skype", "Irc"]
     my9Shifts    = ["play.google.com__music"]
     role         = stringProperty "WM_WINDOW_ROLE"
 
@@ -228,25 +229,23 @@ myLayoutHook = onWorkspace "1:web" webL $
                                             Grid |||
                                             full)
         --Layouts
-        tiled     = smartBorders (ResizableTall 1 (2/100) (1/2) [])
+        tiled        = smartBorders (ResizableTall 1 (2/100) (1/2) [])
         reflectTiled = (reflectHoriz tiled)
-        tabLayout = (tabbed shrinkText myTheme)
-        full      = noBorders Full
-
+        tabLayout    = (tabbed shrinkText myTheme)
+        full         = noBorders Full
+        chatLayout   = StackTile 1 (3/100) (1/2)
         --Im Layout
         imL = named "Messaging" $
               avoidStruts $
               smartBorders $
               withIM ratio pidginRoster $
               reflectHoriz $
-              withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid)
+              withIM ircRatio irc chatLayout
           where
-            chatLayout      = Grid
             ratio = (1%7)
-            skypeRatio = (1%6)
+            ircRatio = (1%2)
             pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
-            skypeRoster     = (ClassName "Skype") `And` (Not (Title "Options")) `And`
-                              (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
+            irc  = Title "Irc"
 
         --Gimp Layout
         gimpL = named "Gimp" $

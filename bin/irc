@@ -5,6 +5,10 @@ if [ "$(hostname)" != "alison" ]; then
   exit 0
 fi
 
+if [ "$TERM" = "dumb" ]; then
+    exec st -t Irc -e irc
+fi
+
 T3=$(pidof irssi)
 
 irssi_nickpane() {
