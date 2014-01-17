@@ -9,7 +9,7 @@
 #     xscreensaver-watch &
 
 lock() {
-#    googleplay-ctl stop
+    googleplay-ctl stop
 }
 
 unlock() {
