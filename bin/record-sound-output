@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <output-mp3-filename>"
+    exit 1
+fi
+
+parec --format=s16le --device=alsa_output.pci-0000_00_1b.0.analog-stereo.monitor | lame -r - $1
