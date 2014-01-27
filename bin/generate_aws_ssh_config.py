@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python
 '''
 @author Bommarito Consulting, LLC
 @date 2012-12-23
@@ -20,7 +20,7 @@ def main():
     defaultUser = 'ec2-user'
 
     # Default key path
-    userHome = os.getenv('USERPROFILE') or os.getenv('HOME')
+    userHome = "~"
     defaultKeyPath = os.path.join(userHome, '.ssh')
     
     # Connec to EC2; this assumes your boto config is in ~/.
