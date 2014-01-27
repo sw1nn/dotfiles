@@ -8,6 +8,7 @@
                 ("\\.m\\'" . octave-mode)
                 ("\\.js\\'" . js2-mode)
                 ("\\.json\\'" . json-mode)
-                ("\\.gexf\\'" . nxml-mode)))
+                ("\\.gexf\\'" . nxml-mode)
+                ("\\.html\\'" . nxml-mode)))
   (add-to-list 'auto-mode-alist mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
