@@ -15,3 +15,5 @@
         algorithm = patience
 [include]
         path= ~/.gitconfig_private
+[branch]
+	autosetuprebase = always
