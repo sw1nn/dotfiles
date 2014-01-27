@@ -138,7 +138,8 @@
 (defun sw1nn-cider-reset ()
   (interactive)
   (save-some-buffers)
-  (sw1nn-run-cider-command "(do (load \"dev\")(dev/reset))"))
+  (sw1nn-clear-current-server-buffer)
+  (sw1nn-run-cider-command "(do (user/reset))"))
 
 (defun sw1nn-send-expr-to-repl ()
   (interactive)
