@@ -2,7 +2,7 @@
 ;; ERC Config
 
 ;; Load authentication info from an external source.
-(let ((auth-file "~/.erc-auth"))
+(let ((auth-file "~/.erc-auth.gpg"))
   (when (file-exists-p auth-file)
     (load auth-file)
     (require 'erc-services)
