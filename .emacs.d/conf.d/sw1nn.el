@@ -14,6 +14,7 @@
 (defcustom sw1nn-cljs-compile-on-save t "non-nil means cljs files should be compiled after save."
   :type 'boolean
   :group 'sw1nn)
+
 (defun sw1nn-toggle-clj-compile-on-save ()
   (interactive)
   (setq sw1nn-clj-compile-on-save (not sw1nn-clj-compile-on-save))
@@ -67,28 +68,29 @@
 (defun sw1nn-clj-compilable-file-p (filename)
   (and
    sw1nn-clj-compile-on-save
-   (string= "clj" (file-name-extension (buffer-file-name)))
+   (string= "clj" (file-name-extension filename))
    (not (string-match "project.clj"
-                      (file-name-nondirectory (buffer-file-name))))
+                      (file-name-nondirectory filename)))
    (not (string-match ".lein/profiles.clj"
-                      (substring (buffer-file-name) -18)))))
+                      (substring filename (max (-(length filename)) -18))))))
 
-(defun sw1nn-clj-compilable-file-p (filename)
+(defun sw1nn-cljs-compilable-file-p (filename)
   (and
    sw1nn-cljs-compile-on-save
-   (string= "cljs" (file-name-extension (buffer-file-name)))))
+   (string= "cljs" (file-name-extension filename))))
+
+(defun sw1nn-after-save-hook ()
+  (when (and (symbol-value 'cider-mode)
+             (or (sw1nn-clj-compilable-file-p (buffer-file-name)))
+                       (or (sw1nn-cljs-compilable-file-p (buffer-file-name))))
+              (message "Compiling...")
+              (cider-load-current-buffer)
+              (if (and sw1nn-clj-test-on-save
+                       (assq 'clojure-test minor-mode-alist))
+                  (clojure-test-run-tests))))
 
 (defun sw1nn-add-clj-compile-on-save ()
- (add-hook 'after-save-hook
-           (if (and (symbol-value 'cider-mode)
-                    (or (sw1nn-clj-compilable-file-p (buffer-file-name)))
-                    (or (sw1nn-cljs-compilable-file-p (buffer-file-name))))
-              (progn (message "Compiling...")
-                     (cider-load-current-buffer)))
-          (if (and sw1nn-clj-test-on-save
-                   (assq 'clojure-test minor-mode-alist))
-              (clojure-test-run-tests)))
- )
+  (add-hook 'after-save-hook 'sw1nn-after-save-hook))
 
 (defun sw1nn-toggle-fullscreen ()
   "Toggle full screen on X11"
