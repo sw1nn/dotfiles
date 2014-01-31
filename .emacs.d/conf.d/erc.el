@@ -19,7 +19,7 @@
       erc-nick "sw1nn"
       erc-away-nickname "sw1nn|away"
       erc-nick-uniquifier "`"
-      erc-autojoin-channels-alist '(("freenode.net" "#clojure" "#cascalog" "#pallet" "#theodi"))
+      erc-autojoin-channels-alist '(("freenode.net" "#ldnclj" "#clojure" "#cascalog" "#theodi" "#kixi" "#haskell" "#ocaml"))
       erc-hide-list '("JOIN" "NICK" "PART" "QUIT")
       erc-track-exclude-types '("NICK" "PART" "QUIT" "333" "353")
       erc-modules '(autojoin button completion fill irccontrols
