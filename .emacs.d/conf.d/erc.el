@@ -19,7 +19,7 @@
       erc-nick "sw1nn"
       erc-away-nickname "sw1nn|away"
       erc-nick-uniquifier "`"
-      erc-autojoin-channels-alist '(("freenode.net" "#ldnclj" "#clojure" "#cascalog" "#theodi" "#kixi" "#haskell" "#ocaml"))
+      erc-autojoin-channels-alist sw1nn-erc-autojoin-channels-alist
       erc-hide-list '("JOIN" "NICK" "PART" "QUIT")
       erc-track-exclude-types '("NICK" "PART" "QUIT" "333" "353")
       erc-modules '(autojoin button completion fill irccontrols
@@ -47,6 +47,10 @@
   (interactive)
   ;; (select-frame (make-frame '((name . "IRC Frame")
   ;;                             (minibuffer . t))))
+  (when (y-or-n-p "Freenode Proxy?") 
+    (erc :server "localhost" :port 4901 :password alison-proxy-pass))
+  (when (y-or-n-p "Bitlbee Proxy?") 
+    (erc :server "localhost" :port 4902 :password alison-proxy-pass))
   (when (y-or-n-p "Bitlbee? ")
     (erc :server "localhost" :port 6667 :nick "sw1nn" :password "foobarbaz" :full-name "Neale Swinnerton"))
   (when (y-or-n-p "Freenode? ")
