@@ -101,7 +101,7 @@ nwsPP h = defaultPP
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask,   xK_Return ), spawn $ ("urxvtc -bg " ++ transBackground))
-    , ((modm,                 xK_p      ), spawn "yeganesh_run")
+    , ((modm,                 xK_p      ), spawn "dmenu_run")
     , ((modm .|. shiftMask,   xK_p      ), spawn "gmrun")
     , ((modm,                 xK_grave  ), scratchpadSpawnActionTerminal $ XMonad.terminal conf)
     , ((modm,                 xK_a      ), focusUrgent)
@@ -264,7 +264,7 @@ myLayoutHook = onWorkspace "1:web" webL $
 nwsConfig = defaultConfig
        { terminal               = myTerminal
        , focusFollowsMouse      = True
-       , modMask                = mod3Mask -- command key
+       , modMask                = mod1Mask
        , focusedBorderColor     = soGreen
        , workspaces             = myWorkspaces
        , layoutHook             = myLayoutHook
