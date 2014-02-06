@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (dockerfile-mode) "dockerfile-mode" "dockerfile-mode.el"
-;;;;;;  (21206 10525 504211 440000))
+;;;;;;  (21234 24866 647762 559000))
 ;;; Generated autoloads from dockerfile-mode.el
 
 (autoload 'dockerfile-mode "dockerfile-mode" "\
@@ -15,8 +15,8 @@ A major mode to edit Dockerfiles.
 
 ;;;***
 
-;;;### (autoloads nil nil ("dockerfile-mode-pkg.el") (21206 10525
-;;;;;;  531220 39000))
+;;;### (autoloads nil nil ("dockerfile-mode-pkg.el") (21234 24866
+;;;;;;  713079 739000))
 
 ;;;***
 

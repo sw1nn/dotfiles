@@ -1,5 +1,5 @@
 ;;; dockerfile-mode.el --- Major mode for editing Docker's Dockerfiles
-;; Version: 20131118.620
+;; Version: 20140203.607
 
 ;; Copyright (c) 2013 Spotify AB
 ;;
@@ -38,9 +38,8 @@
 
 (defvar dockerfile-font-lock-keywords
   `(,(cons (rx line-start
-               (group (or "from" "maintainer" "run" "env" "cmd"
-                          "expose" "insert" "copy" "entrypoint"
-                          "volume" "add"))
+               (group (or "from" "maintainer" "run" "cmd" "expose" "env"
+                         "add" "entrypoint" "volume" "user" "workdir"))
                word-boundary)
            font-lock-keyword-face)
     ,@(sh-font-lock-keywords)
