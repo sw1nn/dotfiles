@@ -26,3 +26,4 @@ cache
 /.emacs.d/.cider-history
 /.emacs.d/.user-info
 /.emacs.d/session.*
+/.xmonad/history
