@@ -21,6 +21,8 @@
  '(diff-removed ((t (:foreground "#FF0000" :background "#550000"))))
  '(eldoc-highlight-function-argument ((t (:foreground "#859900" :weight bold))))
  '(erc-notice-face ((t (:foreground "#333333"))))
+ '(erc-input-face ((t (:foreground "white"))))
+ '(erc-my-nick-face ((t (:foreground "chartreuse" :weight bold))))
  '(error ((t (:inherit nil :underline (:color "#8b0000" :style wave)))))
  '(flymake-warnline ((t (:underline (:color "#8b7500" :style wave) :inherit nil))))
  '(flyspell-duplicate ((t (:underline (:color "#8b7500" :style wave) :inherit nil))))
