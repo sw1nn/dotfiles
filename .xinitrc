@@ -36,23 +36,13 @@ xrandr --output VGA-0 --left-of DVI-0
 
 feh --bg-tile ${HOME}/backgrounds/default
 
-source ${HOME}/.xflux-location
-
-xflux -l ${LATITUDE} -g ${LONGITUDE}
-
-xscreensaver &
-xscreensaver-watch &
-emacs --daemon &
-thunar --daemon &
-pulseaudio --start &
 urxvtd &
+emacs --daemon &
+pulseaudio --start &
 unclutter &
-conky &
 rescuetime &
-pidgin &
 google-music &
-urxvtc &
-(sleep 5 && das-keyboard.sh) &
+(sleep 10 && xmodmap ${HOME}/.Xmodmap) &
 # needed for some jvm apps :-/
 export _JAVA_AWT_WM_NONREPARENTING=1
 exec xmonad 2>&1 >| ${HOME}/.xmonad.log
