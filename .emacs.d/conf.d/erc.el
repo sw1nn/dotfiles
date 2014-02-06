@@ -42,6 +42,9 @@
   (when (file-exists-p erc-custom-file)
     (load-file erc-custom-file)))
 
+(defun erc-cmd-BACKLOG ()
+  (erc-send-ctcp-message "-proxy-" "IRSSIPROXY BACKLOG SEND"))
+
 ;;; Finally, connect to the networks.
 (defun irc-maybe ()
   (interactive)
