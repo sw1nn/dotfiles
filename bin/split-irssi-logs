@@ -1,0 +1,24 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+my ($destfile_prefix, $source_file) = @ARGV;
+my $in;
+my $out;
+
+open $in, "<", $source_file or die "Couldn't open $source_file: $!";
+
+while (my $line = <$in>) {
+    chomp $line;
+    if ($line =~ /^--- (?:Day changed|Log opened) (\d+)/)  {
+        open $out, ">>",sprintf("%s-%s.log",$destfile_prefix,$1) or die;
+    }
+
+    # Skip mgmt messages
+    next if $line =~ /[0-9][0-9]:[0-9][0-9]  -!-/;
+
+    print $out "$line\n";
+}
+
+close $in;
