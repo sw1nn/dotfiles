@@ -16,7 +16,7 @@ do
     /home/neale/bin/split-irssi-logs "$OUT" "$f"
 done
 
-logs2html "${DIR}"
+logs2html --style xhtml "${DIR}"
 
 if [ ! -f ${DESTDIR}/robots.txt ]; then
     cat > ${DESTDIR}/robots.txt << EOF
