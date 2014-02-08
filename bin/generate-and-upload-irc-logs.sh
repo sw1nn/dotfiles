@@ -9,8 +9,6 @@ DESTDIR=/var/cache/irclog-upload
 
 OUT="${DIR}/kixi"
 
-echo "${OUT}"
-
 for f in /home/neale/irclogs/Freenode/\#kixi*.log 
 do
     /home/neale/bin/split-irssi-logs "$OUT" "$f"
