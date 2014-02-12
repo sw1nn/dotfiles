@@ -81,8 +81,8 @@
 
 (defun sw1nn-after-save-hook ()
   (when (and (symbol-value 'cider-mode)
-             (or (sw1nn-clj-compilable-file-p (buffer-file-name)))
-                       (or (sw1nn-cljs-compilable-file-p (buffer-file-name))))
+             (or (sw1nn-clj-compilable-file-p (buffer-file-name))
+                 (sw1nn-cljs-compilable-file-p (buffer-file-name))))
               (message "Compiling...")
               (cider-load-current-buffer)
               (if (and sw1nn-clj-test-on-save
