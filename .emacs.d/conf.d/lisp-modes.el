@@ -63,6 +63,7 @@
   (sw1nn-add-clj-compile-on-save)
   (hs-minor-mode)
   (clj-refactor-mode)
+  (color-identifiers-mode)
   (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
   (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
