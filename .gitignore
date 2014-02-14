@@ -27,3 +27,4 @@ cache
 /.emacs.d/.user-info
 /.emacs.d/session.*
 /.xmonad/history
+/.emacs.d/bookmarks
