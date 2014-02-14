@@ -3,6 +3,7 @@
                   [lein-marginalia "0.7.1"]
                   [lein-try "0.2.0"]
                   [lein-ancient "0.5.4"]
+                  [jonase/eastwood "0.1.0"]
                   ]
         :jvm-opts ["-Xmx4G"]
         :injections [
