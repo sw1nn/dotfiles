@@ -49,6 +49,7 @@
  '(highlight ((t (:background "#073642"))))
  '(hl-line-face ((t (:background "#073642"))))
  '(hl-sexp-face ((t (:background "#073642"))))
+ '(ibuffer-marked-face ((t (:inherit font-lock-type-face))))
  '(ido-first-match ((t (:weight bold :foreground "#a57705"))))
  '(ido-only-match ((t (:foreground "#728a05"))))
  '(ido-subdir ((t (:foreground "#c61b6e"))))

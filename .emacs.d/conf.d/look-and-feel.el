@@ -120,7 +120,7 @@
 
 ;; allow sw1nn and sw1nn-whiteboard themes.
 
-(add-to-list 'custom-safe-themes "898d167bfc865005cf58d782310c99c86440c6f220e3e35b85b4cb630ee38113") ; sw1nn
+(add-to-list 'custom-safe-themes "b2048c55ef23de285bf8154ed030a1b1b291ac15917cccd438e05b138b8f4e19") ; sw1nn
 (add-to-list 'custom-safe-themes "af4ed275cddf70e5f53cec12ddecdeeb4ced75796e910aee779725ab211aba89") ; sw1nn-whiteboard
 
 ;; this lets us have a .dir-locals.el turning on rainbow-mode for themes.
