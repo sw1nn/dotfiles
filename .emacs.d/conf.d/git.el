@@ -3,14 +3,8 @@
 
 (global-git-gutter+-mode t)
 
-(setq magit-process-popup-time 5)
-
-(setq magit-command-defaults '((logging nil ("--graph") nil)
-                               (committing nil ("--gpg-sign") nil)
-                               (tagging nil ("--sign") nil)))
-(magit-key-mode-generate 'logging)
-(magit-key-mode-generate 'committing)
-(magit-key-mode-generate 'tagging)
+(setq magit-process-popup-time 5
+      magit-repo-dirs '("~/workspace"))
 
 ;; work better with feature/whatever branch names from hubflow.
 (setq magit-default-tracking-name-function (lambda (_ branch) branch))
