@@ -4,7 +4,8 @@
 (global-git-gutter+-mode t)
 
 (setq magit-process-popup-time 5
-      magit-repo-dirs '("~/workspace"))
+      magit-repo-dirs '("~/workspace")
+      magit-completing-read-function 'magit-ido-completing-read)
 
 ;; work better with feature/whatever branch names from hubflow.
 (setq magit-default-tracking-name-function (lambda (_ branch) branch))
