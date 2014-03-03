@@ -160,5 +160,7 @@
 (cua-mode 1)
 (setq cua-enable-cua-keys nil)
 
+(window-numbering-mode t)
+
 (load-theme 'sw1nn t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
