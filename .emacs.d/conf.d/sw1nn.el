@@ -137,10 +137,11 @@
     (insert cmd)
     (cider-repl-return)))
 
-(defun sw1nn-cider-reset ()
-  (interactive)
+(defun sw1nn-cider-reset (&optional dont-clear-server-buffer-p)
+  (interactive "P")
   (save-some-buffers)
-  (sw1nn-clear-current-server-buffer)
+  (unless dont-clear-server-buffer-p
+    (sw1nn-clear-current-server-buffer))
   (sw1nn-run-cider-command "(do (user/reset))"))
 
 (defun sw1nn-send-expr-to-repl ()
