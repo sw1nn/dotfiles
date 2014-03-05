@@ -6,7 +6,7 @@ Various config files accumulated over the years
 
 * bash - nice(r) prompts, useful utils etc
 * os specific stuff in .bashrc.<os-id>
-* zsh - I'm in the process of moving to zsh (via oh-my-zsh), bash stuff will retire eventually
+* zsh - I'm in the process of moving to zsh (via prezto, see ``submodule/prezto``, bash stuff will retire eventually
 * emacs - allows elpa and local install
 * vim - syntax tweaks
 * X - color tweaks for dark background
