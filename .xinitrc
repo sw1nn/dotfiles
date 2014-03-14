@@ -52,7 +52,8 @@ rescuetime &
 pidgin &
 google-music &
 urxvtc &
-(sleep 5 && das-keyboard.sh) &
+st &
+(sleep 15 && das-keyboard.sh) &
 # needed for some jvm apps :-/
 export _JAVA_AWT_WM_NONREPARENTING=1
 exec xmonad 2>&1 >| ${HOME}/.xmonad.log
