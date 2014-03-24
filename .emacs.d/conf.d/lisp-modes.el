@@ -86,3 +86,5 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (put-clojure-indent 'go-loop 'defun)
+
+(cljr-add-keybindings-with-prefix "C-c c")
