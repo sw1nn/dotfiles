@@ -110,9 +110,10 @@
 
 (add-hook 'before-save-hook
           (lambda nil
-            (if (sw1nn-untabify-p)
-              (untabify (point-min) (point-max))
-              (delete-trailing-whitespace))))
+            (when (sw1nn-untabify-p)
+                (untabify (point-min) (point-max)))
+
+            (delete-trailing-whitespace)))
 
 (hideshowvis-symbols)
 
