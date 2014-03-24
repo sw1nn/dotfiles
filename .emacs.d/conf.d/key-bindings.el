@@ -73,6 +73,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-c c >") 'sw1nn-show-maximum-output-current-server-buffer)
 (define-key my-keys-minor-mode-map (kbd "C-c a") 'org-agenda)
 (define-key my-keys-minor-mode-map (kbd "C-c f") 'fold-dwim-toggle)
+(define-key my-keys-minor-mode-map (kbd "C-c s") 'ag-project)
 
 (when (eq system-type 'darwin)
   (load-file (concat user-emacs-directory "conf.d/google-music-key-bodge.el")))
