@@ -68,7 +68,7 @@
   (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
   (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
-  (define-key clojure-mode-map (kbd "M-t") 'sw1nn-transpose-words-with-hyphens)
+  (define-key clojure-mode-map (kbd "M-t") 'sw1nn-transpose-kebab-words)
   (set (make-local-variable 'font-lock-extra-managed-props) '(composition)) ; revert fancy characters.
   (set (make-local-variable 'scroll-margin) 3))
 

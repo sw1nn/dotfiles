@@ -54,15 +54,15 @@
 
 ;;Treat hyphens as a word character when transposing words
 ;; based on https://github.com/overtone/emacs-live/blob/a7951de9bad6153537f6ee8af46d18bbc2bf0166/packs/dev/clojure-pack/config/clojure-conf.el#L39
-(defvar sw1nn-clojure-mode-with-hyphens-as-word-sep-syntax-table
+(defvar sw1nn-clojure-mode-kebab-word-sep-syntax-table
   (let ((st (make-syntax-table clojure-mode-syntax-table)))
     (modify-syntax-entry ?- "w" st)
     st))
 
-(defun sw1nn-transpose-words-with-hyphens (arg)
+(defun sw1nn-transpose-kebab-words (arg)
   "Treat hyphens as a word character when transposing words"
   (interactive "*p")
-  (with-syntax-table sw1nn-clojure-mode-with-hyphens-as-word-sep-syntax-table
+  (with-syntax-table sw1nn-clojure-mode-kebab-word-sep-syntax-table
     (transpose-words arg)))
 
 (defun sw1nn-clj-compilable-file-p (filename)
