@@ -27,6 +27,22 @@
             ("\\(#\\)\\(?:\\\".*?\\\"\\)"  ; regexes
              (0 (progn (compose-region (match-beginning 1)
                                        (match-end 1) "®")
+                       nil)))
+            ("(\\(->\\)[\[[:space:]]"  ; regexes
+             (0 (progn (compose-region (match-beginning 1)
+                                       (match-end 1) "⟼")
+                       nil)))
+            ("(\\(->>\\)[\[[:space:]]"  ; regexes
+             (0 (progn (compose-region (match-beginning 1)
+                                       (match-end 1) "⟾")
+                       nil)))
+            ("\\(some\\|cond\\|as\\)\\(->\\)[\[[:space:]]"  ; regexes
+             (0 (progn (compose-region (match-beginning 2)
+                                       (match-end 2) "→")
+                       nil)))
+            ("\\(some\\|cond\\|as\\)\\(->>\\)[\[[:space:]]"  ; regexes
+             (0 (progn (compose-region (match-beginning 2)
+                                       (match-end 2) "⇒")
                        nil)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
