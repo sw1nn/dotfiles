@@ -714,6 +714,10 @@ Return the point before the actions part, if any, nil otherwise."
          ,(cl-case group
             (logging
              '(list "--graph"))
+            (committing
+             '(list "--gpg-sign"))
+            (tagging
+             '(list "--sign"))
             (diff-options
              '(when (local-variable-p 'magit-diff-options)
                 magit-diff-options))))))))
