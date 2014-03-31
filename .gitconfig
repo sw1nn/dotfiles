@@ -1,7 +1,7 @@
 [user]
         name = Neale Swinnerton
         email = neale@isismanor.com
-        signingkey = Neale Swinnerton (sw1nn) <neale@isismanor.com>
+	signingkey = 85904410
 [alias]
         lg = log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %C(green)(%cr)%Creset' --abbrev-commit --date=relative
         wdiff = diff --word-diff=color
