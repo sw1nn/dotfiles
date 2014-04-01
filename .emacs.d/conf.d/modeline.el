@@ -6,10 +6,12 @@
     (cider-mode . "𝕔")
     (cider-repl-mode . "ℂ")
     (clojure-test-mode . "λt")
+    (color-identifiers-mode . "I")
     (hs-minor-mode . "𝓈")
     (my-keys-minor-mode . "⌨")
-    (paredit-mode . "☾☽")
+    (paredit-mode . "☾")
     (git-gutter+-mode . "⇌")
+    (magit-auto-revert-mode . "☆")
     (eldoc-mode . "ℯ")
     (yas-minor-mode . "✂")
     (undo-tree-mode . "↶")
@@ -24,5 +26,4 @@
              (when old-mode-str
                (setcar old-mode-str mode-str)))))
 
-(add-hook 'after-change-major-mode-hook 'clean-mode-line)
 (add-hook 'after-change-minor-mode-hook 'clean-mode-line)
