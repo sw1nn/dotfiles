@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#exec >& ${HOME}/irc-upload.log 
+exec >& ${HOME}/irc-upload.log 
 
 DIR=$(mktemp -d)
 trap "rm -rf ${DIR}" EXIT QUIT TERM
