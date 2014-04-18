@@ -78,7 +78,7 @@ statusBarCmd = "dzen2" ++
 
 nwsUrgencyHook = withUrgencyHook dzenUrgencyHook {args = ["-xs", "1", "-fg", soBrightBlue]}
 
-myTerminal   = "urxvtc"
+myTerminal   = "st"
 
 nwsPP h = defaultPP
         { ppSort    = fmap (.scratchpadFilterOutWorkspace) getSortByIndex
@@ -100,7 +100,7 @@ nwsPP h = defaultPP
 -- Key bindings. Add, modify or remove key bindings here.
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm .|. shiftMask,   xK_Return ), spawn $ ("urxvtc -bg " ++ transBackground))
+    [ ((modm .|. shiftMask,   xK_Return ), spawn $ myTerminal)
     , ((modm,                 xK_p      ), spawn "yeganesh_run")
     , ((modm .|. shiftMask,   xK_p      ), spawn "gmrun")
     , ((modm,                 xK_grave  ), scratchpadSpawnActionTerminal $ XMonad.terminal conf)
@@ -110,7 +110,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask,   xK_space  ), setLayout $ XMonad.layoutHook conf)
     , ((modm,                 xK_n      ), refresh)
     , ((modm,                 xK_Tab    ), windows W.focusDown)
-    , ((modm,                 xK_i      ), spawn "urxvtc -name irssi +tr -pixmap \"${HOME}/backgrounds/irssi.jpg;style=root-tiled\" -e irc")
     , ((modm,                 xK_j      ), windows W.focusDown)
     , ((modm,                 xK_k      ), windows W.focusUp)
     , ((0,                    xK_Pause  ), spawn "lock-screen")
@@ -196,7 +195,7 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     myIgnores    = ["desktop_window", "kdesktop"]
     my1Shifts    = ["google-chrome"]
     my2Shifts    = ["Emacs"]
-    my3Shifts    = ["URxvt"]
+    my3Shifts    = ["st-256color"]
     my4Shifts    = ["VirtualBox", "Wine"]
     my5Shifts    = ["Gimp"]
     my6Shifts    = []
