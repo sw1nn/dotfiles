@@ -41,7 +41,6 @@ source ${HOME}/.xflux-location
 xflux -l ${LATITUDE} -g ${LONGITUDE}
 
 xscreensaver &
-xscreensaver-watch &
 emacs --daemon &
 thunar --daemon &
 pulseaudio --start &
