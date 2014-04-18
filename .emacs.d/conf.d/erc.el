@@ -1,17 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ERC Config
 
-;; Load authentication info from an external source.
-(let ((auth-file "~/.erc-auth.gpg"))
-  (when (file-exists-p auth-file)
-    (load auth-file)
-    (require 'erc-services)
-    (setq erc-email-user-id freenode-email-user-id)
-    (add-to-list 'erc-networks-alist '(nixhelp "z.je"))
-    (setq erc-nickserv-passwords
-          `((freenode (("sw1nn" . ,freenode-nickone-pass)))
-            (nixhelp  (("qass" . ,nixhelp-nickone-pass)))))))
-
 (require 'erc-match)
 ;(require 'erc-highlight-nicknames)
 
@@ -48,11 +37,22 @@
 ;;; Finally, connect to the networks.
 (defun irc-maybe ()
   (interactive)
+  ;; Load authentication info from an external source.
+  (let ((auth-file "~/.erc-auth.gpg"))
+    (when (file-exists-p auth-file)
+      (load auth-file)
+      (require 'erc-services)
+      (setq erc-email-user-id freenode-email-user-id)
+      (add-to-list 'erc-networks-alist '(nixhelp "z.je"))
+      (setq erc-nickserv-passwords
+            `((freenode (("sw1nn" . ,freenode-nickone-pass)))
+              (nixhelp  (("qass" . ,nixhelp-nickone-pass)))))))
+
   ;; (select-frame (make-frame '((name . "IRC Frame")
   ;;                             (minibuffer . t))))
-  (when (y-or-n-p "Freenode Proxy?") 
+  (when (y-or-n-p "Freenode Proxy?")
     (erc :server "localhost" :port 4901 :password alison-proxy-pass))
-  (when (y-or-n-p "Bitlbee Proxy?") 
+  (when (y-or-n-p "Bitlbee Proxy?")
     (erc :server "localhost" :port 4902 :password alison-proxy-pass))
   (when (y-or-n-p "Bitlbee? ")
     (erc :server "localhost" :port 6667 :nick "sw1nn" :password "foobarbaz" :full-name "Neale Swinnerton"))
