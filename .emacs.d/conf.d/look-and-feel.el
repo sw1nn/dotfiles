@@ -164,4 +164,6 @@
 (window-numbering-mode t)
 
 (load-theme 'sw1nn t)
+
+(put 'narrow-to-region 'disabled nil)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
