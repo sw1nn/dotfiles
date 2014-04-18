@@ -163,6 +163,8 @@
 
 (window-numbering-mode t)
 
+(setq fci-rule-color "#003200")
+
 (load-theme 'sw1nn t)
 
 (put 'narrow-to-region 'disabled nil)

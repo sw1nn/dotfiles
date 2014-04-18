@@ -57,6 +57,7 @@
   (yas-minor-mode)
   (show-paren-mode)
   (eldoc-mode)
+  (fci-mode)
   (define-key emacs-lisp-mode-map (kbd "C-x C-e") 'pp-eval-last-sexp))
 
 (defun neale-custom-clojure-mode ()
