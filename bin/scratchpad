@@ -8,4 +8,4 @@ do
   esac
 done
 
-st -c "$class"
+st -c "$class" -t "$class"
