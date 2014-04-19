@@ -125,7 +125,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,                 xK_comma  ), sendMessage (IncMasterN 1))
     , ((modm,                 xK_period ), sendMessage (IncMasterN (-1)))
     , ((modm,                 xK_b      ), sendMessage ToggleStruts)
-    , ((modm .|. shiftMask,   xK_q      ), io (exitWith ExitSuccess))
     , ((modm .|. shiftMask,   xK_g      ), promptSearch defaultXPConfig google)
     , ((modm .|. controlMask, xK_g      ), selectSearch google)
     , ((modm,                 xK_q      ), spawn "xmonad --recompile; xmonad --restart")
@@ -194,7 +193,7 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     myTFloats    = ["Downloads", "Save As...", "RescueTime Offline Time", "Google+ Hangouts - Google Chrome", "Google+ Hangouts"]
     myRFloats    = []
     myIgnores    = ["desktop_window", "kdesktop"]
-    my1Shifts    = ["google-chrome"]
+    my1Shifts    = ["google-chrome-stable"]
     my2Shifts    = ["Emacs"]
     my3Shifts    = ["st-256color"]
     my4Shifts    = ["VirtualBox", "Wine"]
@@ -263,7 +262,7 @@ myLayoutHook = onWorkspace "1:web" webL $
 
 nwsConfig = defaultConfig
        { terminal               = myTerminal
-       , focusFollowsMouse      = True
+       , focusFollowsMouse      = False
        , modMask                = mod3Mask -- command key
        , focusedBorderColor     = soGreen
        , workspaces             = myWorkspaces
