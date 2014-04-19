@@ -8,4 +8,4 @@ do
   esac
 done
 
-st -c "$class" -t "$class"
+SCRATCHPAD=true st -c "$class" -t "$class"
