@@ -1,0 +1,11 @@
+#!/bin/sh
+
+while [[ $# > 0 ]]
+do
+  case "$1" in
+     "-name") shift; class="$1" ;;
+     *) shift ;;
+  esac
+done
+
+st -c "$class"

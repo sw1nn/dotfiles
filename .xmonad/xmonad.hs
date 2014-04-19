@@ -78,7 +78,8 @@ statusBarCmd = "dzen2" ++
 
 nwsUrgencyHook = withUrgencyHook dzenUrgencyHook {args = ["-xs", "1", "-fg", soBrightBlue]}
 
-myTerminal   = "st"
+myTerminal           = "st"
+myScratchpadTerminal = "scratchpad"
 
 nwsPP h = defaultPP
         { ppSort    = fmap (.scratchpadFilterOutWorkspace) getSortByIndex
@@ -103,7 +104,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask,   xK_Return ), spawn $ myTerminal)
     , ((modm,                 xK_p      ), spawn "yeganesh_run")
     , ((modm .|. shiftMask,   xK_p      ), spawn "gmrun")
-    , ((modm,                 xK_grave  ), scratchpadSpawnActionTerminal $ XMonad.terminal conf)
+    , ((modm,                 xK_grave  ), scratchpadSpawnActionTerminal $ myScratchpadTerminal)
     , ((modm,                 xK_a      ), focusUrgent)
     , ((modm .|. shiftMask,   xK_c      ), kill)
     , ((modm,                 xK_space  ), sendMessage NextLayout)
