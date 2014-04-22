@@ -178,13 +178,14 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     , [resource   =? i --> doIgnore | i <- myIgnores]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "1:web"   | x <- my1Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "2:edit"  | x <- my2Shifts]
-    , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "3:term"  | x <- my3Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "4:virt"  | x <- my4Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShiftAndGo "5:gimp"  | x <- my5Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "6:"      | x <- my6Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "7:"      | x <- my7Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "8:im"    | x <- my8Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "9:music" | x <- my9Shifts]
+    -- put this at the end in case we have terms with 'custom' class picked up above (e.g. Irc)
+    , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "3:term"  | x <- my3Shifts]
     ])
     where
     doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
