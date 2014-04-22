@@ -44,15 +44,14 @@ xscreensaver &
 emacs --daemon &
 thunar --daemon &
 pulseaudio --start &
-urxvtd &
 unclutter &
 conky &
 rescuetime &
 pidgin &
 google-music &
-urxvtc &
-st &
-(sleep 15 && das-keyboard.sh) &
+KEYMAP="${HOME}/.XKeymap-$(hostname)"
+test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
+
 # needed for some jvm apps :-/
 export _JAVA_AWT_WM_NONREPARENTING=1
 exec xmonad 2>&1 >| ${HOME}/.xmonad.log
