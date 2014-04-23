@@ -1,5 +1,5 @@
 xkb_keymap {
-xkb_keycodes "evdev+aliases(qwerty)" {
+xkb_keycodes "evdev_aliases(qwerty)" {
     minimum = 8;
     maximum = 255;
      <ESC> = 9;
@@ -381,7 +381,6 @@ xkb_types "complete" {
     };
     type "LOCAL_EIGHT_LEVEL" {
         modifiers= Shift+Lock+Control+LevelThree;
-        map[Shift+Lock]= Level1;
         map[Shift]= Level2;
         map[Lock]= Level2;
         map[LevelThree]= Level3;
@@ -527,7 +526,6 @@ xkb_types "complete" {
     };
     type "FOUR_LEVEL_MIXED_KEYPAD" {
         modifiers= Shift+NumLock+LevelThree;
-        map[Shift+NumLock]= Level1;
         map[NumLock]= Level2;
         map[Shift]= Level2;
         map[LevelThree]= Level3;
@@ -1086,7 +1084,7 @@ xkb_compatibility "complete" {
     };
 };
 
-xkb_symbols "pc+us+inet(evdev)+ctrl(nocaps)" {
+xkb_symbols "pc_us_inet(evdev)_ctrl(nocaps)" {
 
     name[group1]="English (US)";
 
@@ -1460,17 +1458,16 @@ xkb_symbols "pc+us+inet(evdev)+ctrl(nocaps)" {
     modifier_map Control { <LCTL> };
     modifier_map Shift { <LFSH> };
     modifier_map Shift { <RTSH> };
-    modifier_map Mod1 { <LALT> };
+    modifier_map Mod3 { <LALT> };
     modifier_map Control { <CAPS> };
     modifier_map Mod2 { <NMLK> };
     modifier_map Mod5 { <LVL3> };
     modifier_map Control { <RCTL> };
     modifier_map Mod1 { <RALT> };
-    modifier_map Mod4 { <LWIN> };
-    modifier_map Mod4 { <RWIN> };
     modifier_map Mod5 { <MDSW> };
+    modifier_map Mod1 { <ALT> };
     modifier_map Mod1 { <META> };
-    modifier_map Mod4 { <SUPR> };
+    modifier_map Mod3 { <SUPR> };
     modifier_map Mod4 { <HYPR> };
 };
 

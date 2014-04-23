@@ -1,0 +1,12 @@
+# conkyrc file for dzen
+###
+
+background no
+out_to_console yes
+out_to_x no
+override_utf8_locale yes
+update_interval 1
+total_run_times 0
+
+TEXT
+${alignr}bat: ^fg(\#e0e0e0)${battery_short}^fg() cpu: ^fg(\#e0e0e0)${cpu}%^fg() ^fg(\#ffe0e0)${downspeedf enp2s0f0}^fg() / ^fg(\#e0ffe0)${upspeedf enp2s0f0}^fg() ^bg(\#e0e0e0)^fg(\#000000) ${time %a %b %d %H:%M} ^fg()^bg()
