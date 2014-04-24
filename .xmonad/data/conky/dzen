@@ -8,5 +8,6 @@ override_utf8_locale yes
 update_interval 1
 total_run_times 0
 
-TEXT
-${alignr}bat: ^fg(\#e0e0e0)${battery_short}^fg() cpu: ^fg(\#e0e0e0)${cpu}%^fg() ^fg(\#ffe0e0)${downspeedf enp2s0f0}^fg() / ^fg(\#e0ffe0)${upspeedf enp2s0f0}^fg() ^bg(\#e0e0e0)^fg(\#000000) ${time %a %b %d %H:%M} ^fg()^bg()
+TEXT 
+${if_existing /sys/class/power_supply/BAT0/status Discharging}^i(/home/sw1nn/workspace/dotfiles/icons/power-bat.xbm)${endif}${if_existing /sys/class/power_supply/BAT0/status Charging}^i(/home/sw1nn/workspace/dotfiles/icons/power-ac.xbm)${endif}^fg(\#e0e0e0)${battery_percent}%^fg() cpu: ^fg(\#e0e0e0)${cpu}%^fg()${if_existing /sys/class/net/enp2s0f0/operstate up}^i(/home/sw1nn/workspace/dotfiles/icons/net-wired.xbm) ^fg(\#ffe0e0)${downspeedf enp2s0f0}^fg() / ^fg(\#e0ffe0)${upspeedf enp2s0f0}^fg()${endif}${if_existing /sys/class/net/wlp3s0/operstate up}^i(/home/sw1nn/workspace/dotfiles/icons/net-wifi.xbm) ^fg(\#ffe0e0)${downspeedf wlp3s0}^fg() / ^fg(\#e0ffe0)${upspeedf wlp3s0}^fg()${endif} ^bg(\#e0e0e0)^fg(\#000000) ${time %a %b %d %H:%M} ^fg()^bg()
+
