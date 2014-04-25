@@ -22,10 +22,8 @@ export SSH_AUTH_SOCK
 
 export CUPS_SERVER=localhost
 
-compton -cCGb
-
 xrdb -load ${HOME}/.Xresources
-xsetroot -cursor_name left_ptr -solid '#002b36'
+xsetroot -xcf /usr/share/icons/Adwaita/cursors/top_left_arrow 16
 
 xrandr --output DVI-0 --primary
 #xrandr --output DVI-1 --left-of DVI-0
@@ -45,7 +43,6 @@ emacs --daemon &
 thunar --daemon &
 pulseaudio --start &
 unclutter &
-conky &
 rescuetime &
 pidgin &
 google-music &

@@ -106,5 +106,5 @@ dzen2.font:                              xft:DejaVu Sans Mono for Powerline:pixe
 dzen2.foreground:                        #fdf6e3
 dzen2.background:                        #8b0000
 
-Xcursor.theme:                           win8
+Xcursor.theme:                           Adwaita
 Xcursor.size:                            16
