@@ -36,7 +36,7 @@
 (require 'eldoc)
 (require 'dash)
 
-(defvar cider-extra-eldoc-commands '("cider-complete" "yas/expand")
+(defvar cider-extra-eldoc-commands '("yas-expand")
   "Extra commands to be added to eldoc's safe commands list.")
 
 (defun cider-eldoc-format-thing (thing)
@@ -76,7 +76,9 @@ POS is the index of the argument to highlight."
 POS is the index of current argument."
   (concat "("
           (mapconcat (lambda (args) (cider-highlight-arglist args pos))
-                     (read arglist) " ") ")"))
+                     arglist
+                     " ")
+          ")"))
 
 (defun cider-eldoc-info-in-current-sexp ()
   "Return a list of the current sexp and the current argument index."
@@ -94,24 +96,10 @@ POS is the index of current argument."
   "Return the arglist for THING using nREPL info op."
   (cider-get-var-attr thing "arglists"))
 
-(defun cider-eldoc--arglist-eval-fn (thing)
-  "Return the arglist for THING using inlined code."
-  (let* ((form (format "(try
-                         (:arglists
-                          (clojure.core/meta
-                           (clojure.core/resolve
-                            (clojure.core/read-string \"%s\"))))
-                         (catch Throwable t nil))" thing))
-         (value (when thing
-                  (cider-get-raw-value (cider-tooling-eval-sync form nrepl-buffer-ns)))))
-    (unless (string= value "nil")
-      value)))
-
 (defun cider-eldoc-arglist (thing)
   "Return the arglist for THING."
-  (if (nrepl-op-supported-p "info")
-      (cider-eldoc--arglist-op-fn thing)
-    (cider-eldoc--arglist-eval-fn thing)))
+  (when (nrepl-op-supported-p "info")
+    (cider-eldoc--arglist-op-fn thing)))
 
 (defun cider-eldoc ()
   "Backend function for eldoc to show argument list in the echo area."

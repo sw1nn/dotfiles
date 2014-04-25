@@ -198,13 +198,15 @@ To be used for tooling calls (i.e. completion, eldoc, etc)")
         ((looking-at "l")
          (goto-char (match-end 0))
          (let (result item)
-           (while (setq item (nrepl-bdecode-buffer))
+           ;; check for the end sentinel, setq returns the value
+           (while (not (eq :end (setq item (nrepl-bdecode-buffer))))
              (setq result (cons item result)))
            (nreverse result)))
         ((looking-at "d")
          (goto-char (match-end 0))
          (let (dict key item)
-           (while (setq item (nrepl-bdecode-buffer))
+           ;; check for the end sentinel, setq returns the value
+           (while (not (eq :end (setq item (nrepl-bdecode-buffer))))
              (if key
                  (setq dict (cons (cons key item) dict)
                        key nil)
@@ -214,7 +216,12 @@ To be used for tooling calls (i.e. completion, eldoc, etc)")
            (cons 'dict (nreverse dict))))
         ((looking-at "e")
          (goto-char (match-end 0))
-         nil)
+         ;; This line used to return nil and checks above checked for
+         ;; falsiness to indicate the end of a list/dict, but that
+         ;; meant that nil/() was unable to pass through without
+         ;; shorting the algorithm. Now we return an :end keyword
+         ;; as a sentinel value and check for equality.
+         :end)
         (t
          (error "Cannot decode object: %d" (point)))))
 
@@ -248,48 +255,40 @@ Bind the value of the provided KEYS and execute BODY."
 (put 'nrepl-dbind-response 'lisp-indent-function 2)
 
 (defun nrepl-make-response-handler
- (buffer value-handler stdout-handler stderr-handler done-handler
-         &optional eval-error-handler)
+  (buffer value-handler stdout-handler stderr-handler done-handler
+          &optional eval-error-handler)
   "Make a response handler for BUFFER.
 Uses the specified VALUE-HANDLER, STDOUT-HANDLER, STDERR-HANDLER,
 DONE-HANDLER, and EVAL-ERROR-HANDLER as appropriate."
-  (let ((buffer buffer)
-        (value-handler value-handler)
-        (stdout-handler stdout-handler)
-        (stderr-handler stderr-handler)
-        (done-handler done-handler)
-        (eval-error-handler eval-error-handler))
-    (lambda (response)
-      (nrepl-dbind-response response (value ns out err status id ex root-ex
-                                            session)
-        (cond (value
-               (with-current-buffer buffer
-                 (if ns
-                     (setq nrepl-buffer-ns ns)))
-               (if value-handler
-                   (funcall value-handler buffer value)))
-              (out
-               (if stdout-handler
-                   (funcall stdout-handler buffer out)))
-              (err
-               (if stderr-handler
-                   (funcall stderr-handler buffer err)))
-              (status
-               (if (member "interrupted" status)
-                   (message "Evaluation interrupted."))
-               (if (member "eval-error" status)
-                   (funcall (or eval-error-handler nrepl-err-handler)
-                            buffer ex root-ex session))
-               (if (member "namespace-not-found" status)
-                   (message "Namespace not found."))
-               (if (member "need-input" status)
-                   (cider-need-input buffer))
-               (if (member "done" status)
-                   (progn
-                     (puthash id (gethash id nrepl-pending-requests) nrepl-completed-requests)
-                     (remhash id nrepl-pending-requests)
-                     (if done-handler
-                         (funcall done-handler buffer))))))))))
+  (lambda (response)
+    (nrepl-dbind-response response (value ns out err status id ex root-ex
+                                          session)
+      (cond (value
+             (with-current-buffer buffer
+               (when ns (setq nrepl-buffer-ns ns)))
+             (when value-handler
+               (funcall value-handler buffer value)))
+            (out
+             (when stdout-handler
+               (funcall stdout-handler buffer out)))
+            (err
+             (when stderr-handler
+               (funcall stderr-handler buffer err)))
+            (status
+             (when (member "interrupted" status)
+               (message "Evaluation interrupted."))
+             (when (member "eval-error" status)
+               (funcall (or eval-error-handler nrepl-err-handler)
+                        buffer ex root-ex session))
+             (when (member "namespace-not-found" status)
+               (message "Namespace not found."))
+             (when (member "need-input" status)
+               (cider-need-input buffer))
+             (when (member "done" status)
+               (puthash id (gethash id nrepl-pending-requests) nrepl-completed-requests)
+               (remhash id nrepl-pending-requests)
+               (when done-handler
+                 (funcall done-handler buffer))))))))
 
 ;;; communication
 (defun nrepl-default-handler (response)
@@ -630,7 +629,7 @@ Refreshes EWOC."
 (defun nrepl-next-request-id ()
   "Return the next request id."
   (with-current-buffer (nrepl-current-connection-buffer)
-    (number-to-string (incf nrepl-request-counter))))
+    (number-to-string (cl-incf nrepl-request-counter))))
 
 (defun nrepl-send-request (request callback)
   "Send REQUEST and register response handler CALLBACK."
