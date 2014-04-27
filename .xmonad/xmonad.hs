@@ -30,7 +30,7 @@ import XMonad.Layout.Tabbed
 import XMonad.Prompt
 import System.Exit
 import Control.Monad (liftM2)
-
+import Graphics.X11.ExtraTypes.XF86
 -- Prompt
 -- import XMonad.Prompt
 
@@ -65,18 +65,26 @@ colorNormalBorder    = soGreen
 colorFocusedBorder   = soBrightGreen
 
 transBackground      = "[75]" ++ soBackground
-barFont = "aldrich-11"
+barFont = "aldrich-10"
 
 myWorkspaces    = ["1:web","2:edit","3:term","4:virt","5:gimp","6","7","8:im","9:music"]
 
 statusBarCmd = "dzen2" ++
+               " -p " ++
                " -bg '" ++ soBackground ++ "'" ++
                " -fg '" ++ soBrightBlue ++ "'" ++
                " -sa c" ++
                " -fn '" ++ barFont ++ "'" ++
-               " -w 1920 -x 0 -y 0 -ta l -expand r -e ''" ++
-               " -xs 2"
+               " -w 1680 -x 0 -y 0 -ta l -expand r -e ''"
 
+sysStatusCmd = "conky -c ~/.xmonad/data/conky/dzen | " ++
+               "dzen2" ++
+               " -p " ++
+               " -bg '" ++ soBackground ++ "'" ++
+               " -fg '" ++ soBrightBlue ++ "'" ++
+               " -sa c" ++
+               " -fn 'xft:Liberation Mono:pixelsize=10:autohint=true' " ++
+               " -y 0 -ta r -expand l -e ''"
 nwsUrgencyHook = withUrgencyHook dzenUrgencyHook {args = ["-xs", "1", "-fg", soBrightBlue]}
 
 myTerminal           = "gnome-terminal"
@@ -92,10 +100,10 @@ nwsPP h = defaultPP
         , ppOutput  = hPutStrLn h
         , ppLayout  = dzenColor soWhite "" .
             (\x -> case x of
-                "Mirror Tall"-> pad "^i(/home/neale/dotfiles/icons/layout-mirror-black.xbm)"
-                "Messaging"  -> pad "^i(/home/neale/dotfiles/icons/layout-im.xbm)"
-                "Gimp"       -> pad "^i(/home/neale/dotfiles/icons/layout-gimp.xbm)"
-                "Full"       -> pad "^i(/home/neale/dotfiles/icons/layout-full.xbm)"
+                "Mirror Tall"-> pad "^i(/home/sw1nn/workspace/dotfiles/icons/layout-mirror-black.xbm)"
+                "Messaging"  -> pad "^i(/home/sw1nn/workspace/dotfiles/icons/layout-im.xbm)"
+                "Gimp"       -> pad "^i(/home/sw1nn/workspace/dotfiles/icons/layout-gimp.xbm)"
+                "Full"       -> pad "^i(/home/sw1nn/workspace/dotfiles/icons/layout-full.xbm)"
                 _            -> pad $ shorten 10 x)}
 
 ------------------------------------------------------------------------
@@ -105,7 +113,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask,   xK_Return ), spawn $ myTerminal)
     , ((modm,                 xK_p      ), spawn "yeganesh_run")
     , ((modm .|. shiftMask,   xK_p      ), spawn "gmrun")
-    , ((modm,                 xK_grave  ), scratchpadSpawnActionTerminal $ myScratchpadTerminal)
+    , ((0,                    xF86XK_LaunchA), scratchpadSpawnActionTerminal $ myScratchpadTerminal)
     , ((modm,                 xK_a      ), focusUrgent)
     , ((modm .|. shiftMask,   xK_c      ), kill)
     , ((modm,                 xK_space  ), sendMessage NextLayout)
@@ -129,12 +137,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask,   xK_g      ), promptSearch defaultXPConfig google)
     , ((modm .|. controlMask, xK_g      ), selectSearch google)
     , ((modm,                 xK_q      ), spawn "xmonad --recompile; xmonad --restart")
-    , ((0,                    xK_F4     ), spawn "volume-ctl mute")
-    , ((0,                    xK_F5     ), spawn "volume-ctl volume-down")
-    , ((0,                    xK_F6     ), spawn "volume-ctl volume-up")
-    , ((0,                    xK_F7     ), spawn "spotify-ctl prev")
-    , ((0,                    xK_F8     ), spawn "spotify-ctl toggle-pause")
-    , ((0,                    xK_F9     ), spawn "spotify-ctl next")
+    , ((0,                    xF86XK_MonBrightnessUp), spawn "xbacklight +10")
+    , ((0,                    xF86XK_MonBrightnessDown), spawn "xbacklight -10")
+    , ((0,                    xF86XK_KbdBrightnessUp), spawn "kbdlight up")
+    , ((0,                    xF86XK_KbdBrightnessDown), spawn "kbdlight down")
+    , ((0 ,                   xF86XK_AudioMute), spawn "volume-ctl mute")
+    , ((0 ,                   xF86XK_AudioLowerVolume), spawn "volume-ctl volume-down")
+    , ((0 ,                   xF86XK_AudioRaiseVolume), spawn "volume-ctl volume-up")
+    , ((modm .|. shiftMask,   xK_l), spawn "lock-screen")
+
+    , ((0,                    xF86XK_AudioPrev), spawn "spotify-ctl prev")
+    , ((0,                    xF86XK_AudioPlay), spawn "spotify-ctl toggle-pause")
+    , ((0,                    xF86XK_AudioNext), spawn "spotify-ctl next")
     , ((modm .|. shiftMask,   xK_equal  ), spawn "browser http://plus.google.com")
     , ((0,                    xK_Print  ), spawn "sleep 0.2; scrot -s -e 'mv $f ~/screenshots/'")
     ]
@@ -273,4 +287,5 @@ nwsConfig = defaultConfig
 -- Main
 main = do
      h <- spawnPipe statusBarCmd
+     spawn $ sysStatusCmd
      xmonad $ nwsUrgencyHook $ ewmh nwsConfig { logHook = nwsLogHook h }
