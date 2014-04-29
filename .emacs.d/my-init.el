@@ -13,7 +13,7 @@
                   ("elpa" . "http://tromey.com/elpa/")))
   (add-to-list 'package-archives source t))
 
-;;
+;;(add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 
 (when (memq window-system '(mac ns))
