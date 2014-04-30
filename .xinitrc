@@ -42,6 +42,7 @@ fi
 
 TERM=xterm-256color emacs --daemon &
 git-annex assistant --autostart &
+
 xscreensaver &
 thunar --daemon &
 pulseaudio --start &
