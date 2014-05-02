@@ -35,7 +35,7 @@
   (setq cider-repl-popup-stacktraces (not cider-repl-popup-stacktraces))
   (message "cider-repl-popup-stacktraces %s" (if cider-repl-popup-stacktraces "enabled" "disabled")))
 
-;; from https://github.com/overtone/emacs-live/blob/master/packs/live/clojure-pack/config/paredit-conf.el#L19 
+;; from https://github.com/overtone/emacs-live/blob/master/packs/live/clojure-pack/config/paredit-conf.el#L19
 (defun sw1nn-paredit-forward ()
   "Feels more natural to move to the beginning of the next item
    in the sexp, not the end of the current one."
@@ -121,15 +121,19 @@
         (set-window-point (car windows) (point-max))
         (setq windows (cdr windows))))))
 
-(defun sw1nn-cider-perspective ()
-  (interactive)
+(defun sw1nn-cider-perspective (alt-layout)
+  (interactive "P")
   (delete-other-windows)
   (split-window-below)
   (windmove-down)
   (shrink-window 15)
-  (switch-to-buffer (sw1nn-nrepl-current-server-buffer))
+  (switch-to-buffer (if alt-layout
+                        (cider-find-or-create-repl-buffer)
+                      (sw1nn-nrepl-current-server-buffer)))
   (windmove-up)
-  (pop-to-buffer (cider-find-or-create-repl-buffer)))
+  (pop-to-buffer (if alt-layout
+                        (sw1nn-nrepl-current-server-buffer)
+                      (cider-find-or-create-repl-buffer))))
 
 (defun sw1nn-run-cider-command (cmd)
   (with-current-buffer (cider-find-or-create-repl-buffer)
