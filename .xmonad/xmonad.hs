@@ -145,7 +145,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0 ,                   xF86XK_AudioLowerVolume), spawn "volume-ctl volume-down")
     , ((0 ,                   xF86XK_AudioRaiseVolume), spawn "volume-ctl volume-up")
     , ((modm .|. shiftMask,   xK_l), spawn "lock-screen")
-
     , ((0,                    xF86XK_AudioPrev), spawn "spotify-ctl prev")
     , ((0,                    xF86XK_AudioPlay), spawn "spotify-ctl toggle-pause")
     , ((0,                    xF86XK_AudioNext), spawn "spotify-ctl next")
