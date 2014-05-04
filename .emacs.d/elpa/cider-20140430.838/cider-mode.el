@@ -53,6 +53,7 @@
     (define-key map (kbd "C-c M-m") 'cider-macroexpand-all)
     (define-key map (kbd "C-c M-n") 'cider-repl-set-ns)
     (define-key map (kbd "C-c M-i") 'cider-inspect)
+    (define-key map (kbd "C-c M-t") 'cider-toggle-trace)
     (define-key map (kbd "C-c C-d") 'cider-doc)
     (define-key map (kbd "C-c C-s") 'cider-src)
     (define-key map (kbd "C-c C-z") 'cider-switch-to-repl-buffer)
@@ -122,9 +123,5 @@
     ["Version info" cider-version]))
 
 (provide 'cider-mode)
-
-;; Local Variables:
-;; indent-tabs-mode: nil
-;; End:
 
 ;;; cider-mode.el ends here

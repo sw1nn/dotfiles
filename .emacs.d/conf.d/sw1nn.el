@@ -123,6 +123,7 @@
 
 (defun sw1nn-cider-perspective (alt-layout)
   (interactive "P")
+  (cider-switch-to-last-clojure-buffer)
   (delete-other-windows)
   (split-window-below)
   (windmove-down)
