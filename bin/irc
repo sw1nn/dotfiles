@@ -1,12 +1,13 @@
 #!/bin/bash
 
+term_prog="urxvt -title Irc -e"
+
 if [ "$(hostname)" != "alison" ]; then
-  ssh -t alison.isismanor.com irc
-  exit 0
+  exec ${term_prog} mosh -p 60475:60485 rickon irc
 fi
 
 if [ "$TERM" = "dumb" ]; then
-    exec st -t Irc -e irc
+    exec ${term_prog} -e irc
 fi
 
 T3=$(pidof irssi)
