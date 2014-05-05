@@ -7,7 +7,7 @@ if [ "$(hostname)" != "alison" ]; then
 fi
 
 if [ "$TERM" = "dumb" ]; then
-    exec ${term_prog} -e irc
+    exec ${term_prog} irc
 fi
 
 T3=$(pidof irssi)
