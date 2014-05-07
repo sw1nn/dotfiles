@@ -190,7 +190,7 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     where
     doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
     myRoleFloats = ["pop-up"]
-    myCFloats    = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Xmessage", "Thunar"]
+    myCFloats    = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Xmessage", "Thunar" "dzen2"]
     myTFloats    = ["Downloads", "Save As...", "RescueTime Offline Time", "Google+ Hangouts - Google Chrome", "Google+ Hangouts"]
     myRFloats    = []
     myIgnores    = ["desktop_window", "kdesktop"]
