@@ -2,4 +2,4 @@
 # name: unalias
 # key: unalias
 # --
-(ns-unalias *ns* '${1:alias})
+(ns-unalias (find-ns '${1:ns}) '${2:alias})
