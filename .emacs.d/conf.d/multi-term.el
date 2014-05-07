@@ -1,7 +1,6 @@
 (require 'multi-term)
 
 (setq multi-term-program "/bin/zsh"
-      multi-term-program-switches "-l"
       shell-prompt-pattern "% "
       default-process-coding-system '(utf-8-unix . utf-8-unix)
       system-uses-terminfo nil)
