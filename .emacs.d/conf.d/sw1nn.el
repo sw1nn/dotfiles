@@ -109,7 +109,7 @@
   "Clear current server buffer"
   (interactive)
   (with-current-buffer (sw1nn-nrepl-current-server-buffer)
-    (kill-region (point-min) (point-max))))
+    (delete-region (point-min) (point-max))))
 
 (defun sw1nn-show-maximum-output-current-server-buffer ()
   "Show the Maximum output in the current server buffer."
