@@ -1,38 +1,24 @@
-#!/bin/bash
+#!/bin/zsh
 
 term_prog="urxvt -title Irc -e"
 
+CONFIG=${HOME}/.irc-connection
+
+if [ -f ${CONFIG} ]; then
+    source ${CONFIG}
+else
+    echo "No config, try echo -e 'IRC_PORTS=1234:2345\nIRC_HOST=blah.com' > ~/.irc-connection"
+    exit 1
+fi
+
 if [ "$(hostname)" != "alison" ]; then
-  exec ${term_prog} mosh -p 60475:60485 rickon irc
+  exec ${term_prog} mosh -p IRC_PORTS IRC_HOST irc
 fi
 
 if [ "$TERM" = "dumb" ]; then
     exec ${term_prog} irc
 fi
 
-T3=$(pidof irssi)
-
-irssi_nickpane() {
-    tmux setw main-pane-width $(( $(tput cols) - 21));
-    tmux splitw -v "cat ~/.irssi/nicklistfifo";
-    tmux selectl main-vertical;
-    tmux selectw -t irssi;
-    tmux selectp -t 0;
-}
-
-irssi_repair() {
-    tmux selectw -t irssi
-    (( $(tmux lsp | wc -l) > 1 )) && tmux killp -a -t 0
-    irssi_nickpane
-}
-
-if [ -z "$T3" ]; then
-    tmux new-session -d -s IRC;
-    tmux new-window -t IRC -n irssi irssi;
-    irssi_nickpane ;
-fi
-
 tmux attach-session -d -t IRC;
-irssi_repair ;
 
 exit 0

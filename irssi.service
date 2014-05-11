@@ -1,0 +1,16 @@
+[Unit]
+Description=irssi Service
+Requires=bitlbee.service
+After=network.target
+After=bitlbee.service
+
+[Service]
+Type=forking
+User=neale
+Environment=TMPDIR=/tmp/neale
+ExecStart=/usr/bin/tmux new-session -d -s IRC irssi 
+ExecStop=/usr/bin/tmux kill-session -t IRC
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
