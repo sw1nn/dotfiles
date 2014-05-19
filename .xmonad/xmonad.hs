@@ -131,6 +131,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,                 xK_l      ), sendMessage Expand)
     , ((modm,                 xK_t      ), withFocused $ windows . W.sink)
     , ((modm .|. controlMask, xK_t      ), spawn "thunar")
+    , ((modm .|. controlMask, xK_v      ), spawn "vpn up")
     , ((modm,                 xK_comma  ), sendMessage (IncMasterN 1))
     , ((modm,                 xK_period ), sendMessage (IncMasterN (-1)))
     , ((modm,                 xK_b      ), sendMessage ToggleStruts)
@@ -149,7 +150,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                    xF86XK_AudioPlay), spawn "spotify-ctl toggle-pause")
     , ((0,                    xF86XK_AudioNext), spawn "spotify-ctl next")
     , ((modm .|. shiftMask,   xK_equal  ), spawn "browser http://plus.google.com")
-    , ((0,                    xK_Print  ), spawn "sleep 0.2; scrot -s -e 'mv $f ~/screenshots/'")
+    , ((modm .|. shiftMask,   xK_s ), spawn "sleep 0.2; scrot -s -e 'mv $f ~/screenshots/'")
+    , ((modm .|. shiftMask .|. controlMask, xK_s ), spawn "sleep 0.2; scrot -e 'mv $f ~/screenshots/'")
     ]
     ++
     --
