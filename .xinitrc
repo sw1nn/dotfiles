@@ -38,6 +38,9 @@ source ${HOME}/.xflux-location
 
 xflux -l ${LATITUDE} -g ${LONGITUDE}
 
+conky &
+irc &
+git-annex assistant --autostart &
 xscreensaver &
 emacs --daemon &
 thunar --daemon &
