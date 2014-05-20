@@ -1,3 +1,2 @@
-(require 'company-mode)
+(require 'company)
 (global-company-mode)
-

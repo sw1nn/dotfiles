@@ -8,7 +8,6 @@
       erc-nick "sw1nn"
       erc-away-nickname "sw1nn|away"
       erc-nick-uniquifier "`"
-      erc-autojoin-channels-alist sw1nn-erc-autojoin-channels-alist
       erc-hide-list '("JOIN" "NICK" "PART" "QUIT")
       erc-track-exclude-types '("NICK" "PART" "QUIT" "333" "353")
       erc-modules '(autojoin button completion fill irccontrols

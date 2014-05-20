@@ -1,12 +1,14 @@
+(load-library "cider-interaction.el")
+(require 'cider-mode)
+
 (require 'clojure-mode)
 (require 'clojure-test-mode)
 
 (require 'align-cljlet)
 
-(require 'cider)
-
 (require 'clj-refactor)
 
+(message "SDFSDFSDFS")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; font-lock tweaks
 (dolist (mode '(clojure-mode clojurescript-mode cider-mode))
@@ -51,6 +53,7 @@
     (indent-according-to-mode)))
 
 (defun neale-custom-lisp-mode ()
+  (message "neale-custom-list-mode")
   (rainbow-delimiters-mode t)
   (paredit-mode t)
   (flyspell-prog-mode)
@@ -61,6 +64,7 @@
   (define-key emacs-lisp-mode-map (kbd "C-x C-e") 'pp-eval-last-sexp))
 
 (defun neale-custom-clojure-mode ()
+  (message "neale-custom-clojure-mode")
   (neale-custom-lisp-mode)
   (sw1nn-add-clj-compile-on-save)
   (hs-minor-mode)

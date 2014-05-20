@@ -1,6 +1,5 @@
 (require 'diminish)
 
-(diminish 'auto-complete-mode  "℀")
 (diminish 'cider-mode  "𝕔")
 ;; (diminish 'cider-repl-mode  "ℂ")
 (diminish 'clj-refactor-mode "♺")
