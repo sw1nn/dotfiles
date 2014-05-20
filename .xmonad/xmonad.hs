@@ -7,6 +7,8 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks, ToggleStruts(..))
 import XMonad.Hooks.ManageHelpers (isDialog)
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.SetWMName
+
 -- Actions
 -- import XMonad.Actions.CycleWS (nextScreen, prevScreen, shiftNextScreen, shiftPrevScreen, toggleWS, Direction1D(..), WSType(..), findWorkspace)
 -- import XMonad.Actions.UpdatePointer
@@ -190,7 +192,7 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     where
     doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
     myRoleFloats = ["pop-up"]
-    myCFloats    = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Xmessage", "Thunar" "dzen2"]
+    myCFloats    = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Xmessage", "Thunar", "dzen2"]
     myTFloats    = ["Downloads", "Save As...", "RescueTime Offline Time", "Google+ Hangouts - Google Chrome", "Google+ Hangouts"]
     myRFloats    = []
     myIgnores    = ["desktop_window", "kdesktop"]
@@ -261,17 +263,21 @@ myLayoutHook = onWorkspace "1:web" webL $
         --VirtualLayout
         fullL = avoidStruts $ full
 
+myStartupHook = setWMName "LG3D"
+
 nwsConfig = defaultConfig
        { terminal               = myTerminal
-       , focusFollowsMouse      = False
+       , focusFollowsMouse      = True
        , modMask                = mod3Mask -- command key
        , focusedBorderColor     = soGreen
        , workspaces             = myWorkspaces
        , layoutHook             = myLayoutHook
        , keys                   = myKeys
        , manageHook             = myManageHook
+       , startupHook            = myStartupHook
        -- , mouseBindings          = smeMouseBindings
        }
+
 
 -- Main
 main = do
