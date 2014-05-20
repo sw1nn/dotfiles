@@ -1,9 +1,9 @@
 {:user {:plugins      [[lein-ritz "0.7.0"]
-                       [lein-midje "3.0.0"]
+                       [lein-midje "3.1.3"]
                        [lein-marginalia "0.7.1"]
-                       [lein-try "0.2.0"]
-                       [lein-ancient "0.5.4"]
-                       [jonase/eastwood "0.1.0"]
+                       [lein-try "0.4.1"]
+                       [lein-ancient "0.5.5"]
+                       [jonase/eastwood "0.1.2"]
                        ]
         :jvm-opts     ["-Xmx4G"]
         :injections   [
@@ -21,13 +21,13 @@
                        ]
         ;; :warn-on-reflection true
         :dependencies [
-                       [clj-stacktrace "0.2.5"]
+                       [clj-stacktrace "0.2.7"]
                        [clojure-complete "0.2.3"]
-                       [pjstadig/humane-test-output "0.3.0"]
-                       [spyscope "0.1.3"]
-                       [slamhound "1.3.3"]
-                       [alembic "0.2.0"]
-                       [cider/cider-nrepl "0.6.0"]
+                       [pjstadig/humane-test-output "0.6.0"]
+                       [spyscope "0.1.4"]
+                       [slamhound "1.5.5"]
+                       [alembic "0.2.1"]
+                       [cider/cider-nrepl "0.6.1-SNAPSHOT"]
                        ]
 
         :repl-options {:nrepl-middleware
