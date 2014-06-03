@@ -2,12 +2,6 @@
 ;; Add .emacs.d/local to load-path
 (add-to-list 'load-path (concat user-emacs-directory "local"))
 
-;; Add every subdirectory of ~/.emacs.d/vendor to the load path
-(dolist
-    (project (directory-files (concat user-emacs-directory "vendor") t "\\w+"))
-  (when (file-directory-p project)
-    (add-to-list 'load-path project)))
-
 (require 'package)
 (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
                   ("elpa" . "http://tromey.com/elpa/")))
