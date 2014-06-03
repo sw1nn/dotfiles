@@ -27,7 +27,7 @@
                        [spyscope "0.1.4"]
                        [slamhound "1.5.5"]
                        [alembic "0.2.1"]
-                       [cider/cider-nrepl "0.6.1-SNAPSHOT"]
+                       [cider/cider-nrepl "0.7.0-SNAPSHOT"]
                        ]
 
         :repl-options {:nrepl-middleware
