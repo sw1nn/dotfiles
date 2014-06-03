@@ -3,9 +3,9 @@
 ;;; Code:
 
 
-;;;### (autoloads (company-cider) "company-cider" "company-cider.el"
-;;;;;;  (21369 50930 569797 760000))
-;;; Generated autoloads from company-cider.el
+;;;### (autoloads (company-cider) "company-cider" "../../../../../.emacs.d/elpa/company-cider-20140201.1017/company-cider.el"
+;;;;;;  "55c713b516c28a406cd610abd30acf8a")
+;;; Generated autoloads from ../../../../../.emacs.d/elpa/company-cider-20140201.1017/company-cider.el
 
 (autoload 'company-cider "company-cider" "\
 
@@ -14,8 +14,9 @@
 
 ;;;***
 
-;;;### (autoloads nil nil ("company-cider-pkg.el") (21369 50930 591996
-;;;;;;  848000))
+;;;### (autoloads nil nil ("../../../../../.emacs.d/elpa/company-cider-20140201.1017/company-cider-pkg.el"
+;;;;;;  "../../../../../.emacs.d/elpa/company-cider-20140201.1017/company-cider.el")
+;;;;;;  (21389 62763 38677 756000))
 
 ;;;***
 
