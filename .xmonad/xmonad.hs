@@ -267,7 +267,7 @@ myStartupHook = setWMName "LG3D"
 
 nwsConfig = defaultConfig
        { terminal               = myTerminal
-       , focusFollowsMouse      = True
+       , focusFollowsMouse      = False
        , modMask                = mod3Mask -- command key
        , focusedBorderColor     = soGreen
        , workspaces             = myWorkspaces
