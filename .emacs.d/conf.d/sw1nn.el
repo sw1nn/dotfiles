@@ -164,4 +164,19 @@
         (set-frame-parameter nil 'alpha '(100 100))
       (set-frame-parameter nil 'alpha '(85 50)))))
 
+(defun sw1nn-cqlsh ()
+  (interactive)
+  (let ((cql-buffer-name "*cqlsh*"))
+    (if (get-buffer cql-buffer-name)
+        (switch-to-buffer cql-buffer-name)
+      (let ((multi-term-program "/bin/cqlsh"))
+        (with-current-buffer (multi-term)
+          (rename-buffer "*cqlsh*"))))))
+
+(defun sw1nn-ag-search (string file-regex directory)
+  (interactive (list (read-from-minibuffer "Search string: " (ag/dwim-at-point))
+                     (read-from-minibuffer "In filenames matching PCRE: " (ag/buffer-extension-regex))
+                     (read-directory-name "Directory: " (ag/project-root default-directory))))
+  (ag/search string directory :file-regex file-regex))
+
 (provide 'sw1nn)
