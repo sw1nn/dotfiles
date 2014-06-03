@@ -11,7 +11,7 @@ if [ "$(hostname)" != "alison" ]; then
     echo "No config, try echo -e 'IRC_PORTS=1234:2345\nIRC_HOST=blah.com' > ~/.irc-connection"
     exit 1
   fi
-  exec ${term_prog} mosh -p IRC_PORTS IRC_HOST irc
+  exec ${term_prog} mosh -p $IRC_PORTS $IRC_HOST irc
 fi
 
 if [ "$TERM" = "dumb" ]; then
