@@ -38,7 +38,7 @@ source ${HOME}/.xflux-location
 
 xflux -l ${LATITUDE} -g ${LONGITUDE}
 
-if [ "$(hostname)" != "alison" ]; then
+if [ "$(hostname)" == "alison" ]; then
   conky &
 fi
 
