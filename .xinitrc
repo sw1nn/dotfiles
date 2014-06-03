@@ -38,7 +38,10 @@ source ${HOME}/.xflux-location
 
 xflux -l ${LATITUDE} -g ${LONGITUDE}
 
-conky &
+if [ "$(hostname)" != "alison" ]; then
+  conky &
+fi
+
 irc &
 git-annex assistant --autostart &
 xscreensaver &
@@ -49,6 +52,9 @@ unclutter &
 rescuetime &
 pidgin &
 google-music &
+
+synclient PalmDetect=1
+
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
 
