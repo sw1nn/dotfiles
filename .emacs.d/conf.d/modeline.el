@@ -9,7 +9,7 @@
 (diminish 'eldoc-mode  "ℯ")
 ;; (diminish 'emacs-lisp-mode  "ℰ")
 (diminish 'flyspell-mode  "✓")
-(diminish 'git-gutter+-mode  "⇌")
+;(diminish 'git-gutter+-mode  "⇌")
 (diminish 'hs-minor-mode "⏦")
 (diminish 'magit-auto-revert-mode  "☆")
 (diminish 'my-keys-minor-mode  "⌨")
