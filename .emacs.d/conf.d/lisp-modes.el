@@ -57,8 +57,9 @@
   (yas-minor-mode)
   (show-paren-mode)
   (eldoc-mode)
-  (fci-mode)
-  (define-key emacs-lisp-mode-map (kbd "C-x C-e") 'pp-eval-last-sexp))
+   (fci-mode)
+  (define-key emacs-lisp-mode-map (kbd "C-x C-e") 'pp-eval-last-sexp)
+  )
 
 (defun neale-custom-clojure-mode ()
   (neale-custom-lisp-mode)
@@ -67,11 +68,12 @@
   (clj-refactor-mode)
   (color-identifiers-mode)
   (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
-  (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
+;  (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key clojure-mode-map (kbd "M-t") 'sw1nn-transpose-kebab-words)
   (set (make-local-variable 'font-lock-extra-managed-props) '(composition)) ; revert fancy characters.
-  (set (make-local-variable 'scroll-margin) 3))
+  (set (make-local-variable 'scroll-margin) 2)
+  )
 
 (defun neale-custom-cider-mode ()
   (neale-custom-lisp-mode))

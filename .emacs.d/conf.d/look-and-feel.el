@@ -1,3 +1,4 @@
+
 (require 'expand-region)
 
 (require 'linum-off)
@@ -169,4 +170,5 @@
 
 (put 'narrow-to-region 'disabled nil)
 
+(windmove-default-keybindings)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
