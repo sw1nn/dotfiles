@@ -96,6 +96,6 @@
  '(warning ((t (:underline (:color "#8b0000" :style wave)))))
  '(widget-field ((t (:background "#aaaaaa" :foreground "#002b36"))))
  '(widget-single-line-field ((t (:background "#222222" :foreground "#002b36"))))
- '(default ((t (:height 160 :family "DejaVu Sans Mono for Powerline")))))
+ '(default ((t (:height 160 :background "black" :foreground "brightyellow" :family "DejaVu Sans Mono for Powerline")))))
 
 (provide-theme 'sw1nn)
