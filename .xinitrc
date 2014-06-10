@@ -45,7 +45,7 @@ fi
 irc &
 git-annex assistant --autostart &
 xscreensaver &
-emacs --daemon &
+TERM=st-256color emacs --daemon &
 thunar --daemon &
 pulseaudio --start &
 unclutter &
