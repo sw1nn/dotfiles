@@ -31,4 +31,5 @@ au BufRead,BufNewFile *.java set number
 au BufNewFile,BufRead *.cljs set filetype=clojure
 au BufRead /home/neale/irclogs/* set filetype=irc
 " au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null" 
-map <F2> <Esc>:1,$!xmllint --format -<CR>
+map <F3> <Esc>:1,$!xmllint --format -<CR>
+set pastetoggle=<F2>
