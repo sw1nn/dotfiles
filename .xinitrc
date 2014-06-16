@@ -53,6 +53,7 @@ trackpad-ctl enable
 
 browser &
 
+syndaemon -d
 
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
