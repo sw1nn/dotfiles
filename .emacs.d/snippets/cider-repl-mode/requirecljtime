@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: requirecljtime
+# key: requirecljtime
+# --
+(require '[clj-time.core :as t])
