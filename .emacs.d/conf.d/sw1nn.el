@@ -179,4 +179,8 @@
                      (read-directory-name "Directory: " (ag/project-root default-directory))))
   (ag/search string directory :file-regex file-regex))
 
+(defun sw1nn-clojure-run-tests ()
+  (interactive)
+  (clojure-test-run-tests))
+
 (provide 'sw1nn)
