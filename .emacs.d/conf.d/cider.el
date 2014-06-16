@@ -10,10 +10,6 @@
       cider-repl-popup-stacktrace nil
       cider-repl-use-clojure-font-lock t)
 
-(setq-default cider-port "4001")
-
-(add-to-list 'same-window-buffer-names "*cider*")
-
 (add-hook 'cider-mode-hook
           (lambda nil
             (define-key cider-mode-map (kbd "C-c C-c") 'sw1nn-send-expr-to-repl)
