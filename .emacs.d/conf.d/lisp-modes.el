@@ -1,7 +1,6 @@
 (require 'cider-mode)
 
 (require 'clojure-mode)
-(require 'clojure-test-mode)
 (require 'color-identifiers-mode)
 (require 'align-cljlet)
 
