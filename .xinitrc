@@ -53,7 +53,8 @@ trackpad-ctl enable
 
 browser &
 
-syndaemon -d
+synclient PalmDetect=1
+syndaemon -i 1 -d
 
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
