@@ -133,9 +133,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0,                    xK_F4     ), spawn "volume-ctl mute")
     , ((0,                    xK_F5     ), spawn "volume-ctl volume-down")
     , ((0,                    xK_F6     ), spawn "volume-ctl volume-up")
-    , ((0,                    xK_F7     ), spawn "googleplay-ctl prev")
-    , ((0,                    xK_F8     ), spawn "googleplay-ctl toggle-pause")
-    , ((0,                    xK_F9     ), spawn "googleplay-ctl next")
+    , ((0,                    xK_F7     ), spawn "spotify-ctl prev")
+    , ((0,                    xK_F8     ), spawn "spotify-ctl toggle-pause")
+    , ((0,                    xK_F9     ), spawn "spotify-ctl next")
     , ((modm .|. shiftMask,   xK_equal  ), spawn "browser http://plus.google.com")
     , ((0,                    xK_Print  ), spawn "sleep 0.2; scrot -s -e 'mv $f ~/screenshots/'")
     ]
@@ -204,7 +204,7 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     my6Shifts    = []
     my7Shifts    = []
     my8Shifts    = ["Pidgin", "Skype", "Irc"]
-    my9Shifts    = ["play.google.com__music"]
+    my9Shifts    = ["play.google.com__music","Spotify"]
     role         = stringProperty "WM_WINDOW_ROLE"
 
 nwsLogHook h = do

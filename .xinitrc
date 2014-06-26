@@ -51,7 +51,7 @@ pulseaudio --start &
 unclutter &
 rescuetime &
 pidgin &
-google-music &
+spotify &
 
 synclient PalmDetect=1
 

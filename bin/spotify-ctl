@@ -1,0 +1,81 @@
+#!/bin/sh
+
+
+function dispatch_to_spotify {
+ dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.$1
+}
+
+function currently_playing {
+    local sep
+    if [ "$1" = "alt" ]; then
+        sep="~"
+    else
+        sep="\n"
+    fi
+    xdotool \
+        search --classname ${GOOGLE_PLAY_CLASS_WM_CLASS} \
+        getwindowname \
+      | egrep -v -e '(Settings|Listen Now|Artists|Radio|Featured|Queue|Thumbs up|Last Added|Free and Purchased|Shared with me)'\
+      | sed -e "s/\(.*\) - \(.*\) - Google Play Music/\1$sep\2/"
+}
+
+function icon {
+   echo "^i(${HOME}/dotfiles/icons/${1}.xbm"
+}
+
+function toggle_pause {
+    dispatch_to_spotify PlayPause
+}
+cmd=$1
+shift;
+
+case $cmd in
+    toggle-pause)
+        toggle_pause "$@"
+        sleep 0.3 # urggh.
+        # This doesn't always work - do something clever with silence detection instead?
+        if [ ! -z "$playing" ]; then
+            notify 2 $(icon play-icon64)
+        else
+            notify 2 $(icon pause-icon64)
+        fi
+        ;;
+    stop)
+        if [ ! -z "$(currently_playing)" ]; then
+            dispatch_to_spotify Stop
+            notify 2 $(icon media-stop-icon64)
+        fi
+        ;;
+    prev)
+        dispatch_to_spotify Previous
+        notify 1 $(icon media-prev-icon64)
+        notify 3 "^bg(grey50)$(currently_playing alt)"
+        ;;
+    rewind)
+        dispatch_to_spotify Previous
+        notify 1 $(icon rwd-icon64)
+        ;;
+    next)
+        dispatch_to_spotify Next
+        notify 1 $(icon media-next-icon64)
+        notify 3 "^bg(grey50)$(currently_playing alt)"
+       ;;
+    forward)
+        dispatch_to_spotify Next
+        notify 1 $(icon fwd-icon64)
+        ;;
+    thumbs-up)
+        dispatch_to_google_music alt+equal "$@"
+        notify 1 $(icon thumbs-up-icon64)
+        ;;
+    thumbs-down)
+        dispatch_to_google_music alt+minus  "$@"
+        notify 1 $(icon thumbs-down-icon64)
+        ;;
+    currently-playing)
+        currently_playing  "$@"
+        ;;
+    *)
+        echo "No Such command"
+        ;;
+esac
