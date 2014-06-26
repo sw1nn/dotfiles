@@ -1,6 +1,5 @@
-{:user {:plugins      [[lein-midje "3.1.3"]
-                       [lein-ancient "0.5.5"]
-                       [jonase/eastwood "0.1.2"]
+{:user {:plugins      [[lein-ancient "0.5.5"]
+                       [jonase/eastwood "0.1.3"]
                        [cider/cider-nrepl "0.7.0-SNAPSHOT"]]
         :jvm-opts     ["-Xmx4G" "-Djava.net.preferIPv4Stack=true"]
         :injections   [(require 'clojure.pprint)
