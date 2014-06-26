@@ -16,10 +16,9 @@
 (define-key my-keys-minor-mode-map (kbd "C-M-z") 'align-cljlet)
 (define-key my-keys-minor-mode-map (kbd "C-c e") 'er/expand-region)
 (define-key my-keys-minor-mode-map (kbd "M-S-.") 'mc/edit-lines)
-
-(define-key my-keys-minor-mode-map (kbd "C-c .") 'mc/mark-next-like-this)
-(define-key my-keys-minor-mode-map (kbd "C-c ,") 'mc/mark-previous-like-this)
-(define-key my-keys-minor-mode-map (kbd "C-c M-.") 'mc/mark-all-like-this-dwim)
+(define-key my-keys-minor-mode-map (kbd "C-c m .") 'mc/mark-next-like-this)
+(define-key my-keys-minor-mode-map (kbd "C-c m ,") 'mc/mark-previous-like-this)
+(define-key my-keys-minor-mode-map (kbd "C-c m M-.") 'mc/mark-all-like-this-dwim)
 (define-key my-keys-minor-mode-map (kbd "C-c SPC") 'ace-jump-mode)
 (define-key my-keys-minor-mode-map (kbd "C-c M-SPC") 'ace-jump-mode-pop-mark)
 (define-key my-keys-minor-mode-map (kbd "C-x .") (lambda nil (interactive) (just-one-space -1) (fixup-whitespace)))
@@ -27,10 +26,8 @@
 (define-key my-keys-minor-mode-map (kbd "M-x") 'smex)
 (define-key my-keys-minor-mode-map (kbd "C-x O") (lambda nil (interactive) (other-window -1))) ;; back one
 (define-key my-keys-minor-mode-map (kbd "C-x C-o") (lambda nil (interactive) (other-window 2))) ;; forward two
-
 ;; If you want to be able to M-x without meta (phones, etc)
 (define-key my-keys-minor-mode-map (kbd "C-c x") 'execute-extended-command)
-
 ;; Use regex searches by default.
 (define-key my-keys-minor-mode-map (kbd "C-s") 'isearch-forward-regexp)
 (define-key my-keys-minor-mode-map (kbd "C-r") 'isearch-backward-regexp)
@@ -38,27 +35,20 @@
 (define-key my-keys-minor-mode-map (kbd "C-M-s") 'isearch-forward)
 (define-key my-keys-minor-mode-map (kbd "C-M-r") 'isearch-backward)
 (define-key my-keys-minor-mode-map (kbd "C-M-%") 'query-replace)
-
 ;; Jump to a definition in the current file. (Protip: this is awesome.)
 (define-key my-keys-minor-mode-map (kbd "C-x C-i") 'imenu)
-
 ;; File finding
 (define-key my-keys-minor-mode-map (kbd "C-x C-f") 'ido-find-file) ; needed to override ibuffer-find-file
 (define-key my-keys-minor-mode-map (kbd "C-x M-f") 'ido-find-file-other-window)
 (define-key my-keys-minor-mode-map (kbd "C-x p") 'magit-find-file-completing-read)
 (define-key my-keys-minor-mode-map (kbd "C-c y") 'bury-buffer)
-
 (define-key my-keys-minor-mode-map (kbd "C-c v") 'revert-buffer)
-
 (define-key my-keys-minor-mode-map (kbd "C-x C-m") 'multi-term)
-
 (define-key my-keys-minor-mode-map (kbd "C-+") 'text-scale-increase)
 (define-key my-keys-minor-mode-map (kbd "C--") 'text-scale-decrease)
-
 (define-key my-keys-minor-mode-map (kbd "M-y") 'browse-kill-ring)
 (define-key my-keys-minor-mode-map (kbd "M-/") 'hippie-expand)
 (define-key my-keys-minor-mode-map (kbd "C-c M-i") 'idle-highlight-mode)
-
 (define-key my-keys-minor-mode-map (kbd "<f9>") 'sw1nn-toggle-clj-compile-on-save)
 (define-key my-keys-minor-mode-map (kbd "<f10>") 'sw1nn-toggle-cider-repl-popup-stacktraces)
 (define-key my-keys-minor-mode-map (kbd "<f11>") 'sw1nn-toggle-fullscreen)
@@ -70,7 +60,6 @@
 (define-key my-keys-minor-mode-map (kbd "C-c f") 'fold-dwim-toggle)
 (define-key my-keys-minor-mode-map (kbd "C-c s") 'sw1nn-ag-search)
 (define-key my-keys-minor-mode-map (kbd "C-c :") 'sw1nn-clojure-run-tests)
-
 (when (eq system-type 'darwin)
   (load-file (concat user-emacs-directory "conf.d/google-music-key-bodge.el")))
 
@@ -80,7 +69,6 @@
     (define-key my-keys-minor-mode-map (kbd "<f8>") 'music-play-pause))
 (if (fboundp 'music-prev-song)
     (define-key my-keys-minor-mode-map (kbd "<f9>") 'music-next-song))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-minor-mode my-keys-minor-mode
