@@ -59,7 +59,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-c a") 'org-agenda)
 (define-key my-keys-minor-mode-map (kbd "C-c f") 'fold-dwim-toggle)
 (define-key my-keys-minor-mode-map (kbd "C-c s") 'sw1nn-ag-search)
-(define-key my-keys-minor-mode-map (kbd "C-c :") 'sw1nn-clojure-run-tests)
+(define-key my-keys-minor-mode-map (kbd "C-c :") 'sw1nn-cider-run-tests)
 (when (eq system-type 'darwin)
   (load-file (concat user-emacs-directory "conf.d/google-music-key-bodge.el")))
 

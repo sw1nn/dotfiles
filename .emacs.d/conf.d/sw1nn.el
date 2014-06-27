@@ -179,8 +179,9 @@
                      (read-directory-name "Directory: " (ag/project-root default-directory))))
   (ag/search string directory :regexp t :file-regex file-regex))
 
-(defun sw1nn-clojure-run-tests ()
+(defun sw1nn-cider-run-tests ()
   (interactive)
-  (clojure-test-run-tests))
+  (save-some-buffers)
+  (cider-test-run-tests))
 
 (provide 'sw1nn)
