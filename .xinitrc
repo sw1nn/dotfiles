@@ -34,7 +34,9 @@ xrandr --output VGA-0 --left-of DVI-0
 
 feh --bg-tile ${HOME}/backgrounds/default
 
-source ${HOME}/.xflux-location
+if [ -f ${HOME}/.xflux-location ]; then
+  source ${HOME}/.xflux-location
+fi
 
 xflux -l ${LATITUDE} -g ${LONGITUDE}
 
