@@ -1,2 +1,2 @@
-(when (string= system-name "alison.isismanor.com")
+(when (string= system-name "alison")
  (set-face-attribute 'default nil :height 120))
