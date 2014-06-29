@@ -1,7 +1,10 @@
 set hls
 set incsearch
-set background=dark
 set number
 set dir=~/.vim/tmp
+set background=dark
 syn on
+set t_Co=256
+colorscheme solarized
+
 au BufRead /home/neale/irclogs/* set filetype=irc
