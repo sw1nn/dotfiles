@@ -101,6 +101,8 @@ URxvt*color7:                            #eee8d5
 URxvt*color15:                           #fdf6e3
 
 URxvt*colorUL:                           #dc322f
+! disable annoying ctrl+shift key binding.
+URxvt*iso14755:                          false
 
 dzen2.font:                              xft:DejaVu Sans Mono for Powerline:pixelsize=64
 dzen2.foreground:                        #fdf6e3
