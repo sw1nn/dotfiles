@@ -123,18 +123,20 @@
 
 (defun sw1nn-cider-perspective (alt-layout)
   (interactive "P")
-  (cider-switch-to-last-clojure-buffer)
   (delete-other-windows)
   (split-window-below)
   (windmove-down)
-  (shrink-window 15)
   (switch-to-buffer (if alt-layout
                         (cider-find-or-create-repl-buffer)
                       (sw1nn-nrepl-current-server-buffer)))
+  (shrink-window 15)
   (windmove-up)
-  (pop-to-buffer (if alt-layout
+  (split-window-right)
+  (windmove-right)
+  (switch-to-buffer (if alt-layout
                         (sw1nn-nrepl-current-server-buffer)
-                      (cider-find-or-create-repl-buffer))))
+                      (cider-find-or-create-repl-buffer)))
+  (windmove-left))
 
 (defun sw1nn-run-cider-command (cmd)
   (with-current-buffer (cider-find-or-create-repl-buffer)
