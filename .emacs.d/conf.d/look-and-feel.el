@@ -153,5 +153,6 @@
 (put 'narrow-to-region 'disabled nil)
 
 (windmove-default-keybindings)
-(powerline-default-theme)
+(powerline-default-theme))
+(global-git-gutter-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
