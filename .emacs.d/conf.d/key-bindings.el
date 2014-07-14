@@ -60,6 +60,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-c f") 'fold-dwim-toggle)
 (define-key my-keys-minor-mode-map (kbd "C-c s") 'sw1nn-ag-search)
 (define-key my-keys-minor-mode-map (kbd "C-c :") 'sw1nn-cider-run-tests)
+;(define-key my-keys-minor-mode-map (kbd "C-c C-k") 'sw1nn-cider-load-current-buffer)
 (define-key my-keys-minor-mode-map (kbd "C-c C-v u") 'vagrant-up)
 (define-key my-keys-minor-mode-map (kbd "C-c C-v h") 'vagrant-halt)
 (define-key my-keys-minor-mode-map (kbd "C-c C-v s") 'vagrant-status)
