@@ -61,8 +61,8 @@ soBrightCyan         = "#93a1a1"
 soWhite              = "#eee8d5"
 soBrightWhite        = "#fdf6e3"
 
-colorNormalBorder    = soGreen
-colorFocusedBorder   = soBrightGreen
+colorNormalBorder    = soBlack
+colorFocusedBorder   = soCyan
 
 transBackground      = "[75]" ++ soBackground
 barFont = "aldrich-10"
@@ -123,6 +123,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,                 xK_j      ), windows W.focusDown)
     , ((modm,                 xK_k      ), windows W.focusUp)
     , ((0,                    xK_Pause  ), spawn "lock-screen")
+    , ((modm .|. shiftMask,   xK_z      ), spawn "lock-screen")
     , ((modm,                 xK_m      ), windows W.focusMaster)
     , ((modm,                 xK_Return ), windows W.swapMaster)
     , ((modm .|. shiftMask,   xK_j      ), windows W.swapDown)
@@ -145,7 +146,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0 ,                   xF86XK_AudioMute), spawn "volume-ctl mute")
     , ((0 ,                   xF86XK_AudioLowerVolume), spawn "volume-ctl volume-down")
     , ((0 ,                   xF86XK_AudioRaiseVolume), spawn "volume-ctl volume-up")
-    , ((modm .|. shiftMask,   xK_l), spawn "lock-screen")
     , ((0,                    xF86XK_AudioPrev), spawn "spotify-ctl prev")
     , ((modm,                 xF86XK_AudioPrev), spawn "spotify-ctl rewind")
     , ((0,                    xF86XK_AudioPlay), spawn "spotify-ctl toggle-pause")
@@ -220,9 +220,9 @@ nwsLogHook h = do
 
 myTheme = defaultTheme { decoHeight = 16
                         , activeColor = "#a6c292"
-                        , activeBorderColor = "#a6c292"
+                        , activeBorderColor = colorFocusedBorder
                         , activeTextColor = "#000000"
-                        , inactiveBorderColor = "#000000"
+                        , inactiveBorderColor = colorNormalBorder
                         }
 
 myLayoutHook = onWorkspace "1:web" webL $
@@ -277,7 +277,8 @@ nwsConfig = defaultConfig
        { terminal               = myTerminal
        , focusFollowsMouse      = False
        , modMask                = mod3Mask -- command key
-       , focusedBorderColor     = soGreen
+       , focusedBorderColor     = colorFocusedBorder
+       , normalBorderColor      = colorNormalBorder
        , workspaces             = myWorkspaces
        , layoutHook             = myLayoutHook
        , keys                   = myKeys
