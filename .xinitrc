@@ -50,6 +50,9 @@ rescuetime &
 
 trackpad-ctl enable
 
+browser &
+
+
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
 
