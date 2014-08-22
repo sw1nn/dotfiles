@@ -47,7 +47,7 @@ use Socket;
 
 my $progname0 = $0;
 my $progname = $0; $progname =~ s@.*/@@g;
-my ($version) = ('$Revision: 1.326 $' =~ m/\s(\d[.\d]+)\s/s);
+my ($version) = ('$Revision: 1.376 $' =~ m/\s(\d[.\d]+)\s/s);
 
 # Without this, [:alnum:] doesn't work on non-ASCII.
 use locale;
@@ -86,6 +86,8 @@ my $noerror = 0;
 
 sub error($) {
   my ($err) = @_;
+
+  utf8::decode ($err);  # Pack multi-byte UTF-8 back into wide chars.
 
   if (defined ($ENV{HTTP_HOST})) {
     $err =~ s/&/&amp;/gs;
@@ -213,6 +215,9 @@ sub get_url_1($;$$$$$$) {
 
   error ("can't do HEAD and write to a file") if ($head_p && $to_file);
 
+  # Why does this happen sometimes with intermediate URLs. Bleh.
+  $url =~ s/^https:/http:/si;
+
   error ("not an HTTP URL, try rtmpdump: $url") if ($url =~ m@^rtmp@i);
   error ("not an HTTP URL: $url") unless ($url =~ m@^(http|feed)://@i);
 
@@ -266,6 +271,11 @@ sub get_url_1($;$$$$$$) {
 
   $extra_headers = '' unless defined ($extra_headers);
   $extra_headers .= "\nReferer: $referer" if ($referer);
+
+  # If we're only reading the first N bytes, don't ask for more.
+  $extra_headers .= "Range: bytes=0-" . ($max_bytes-1) . "\r\n"
+    if ($max_bytes);
+
   if ($extra_headers) {
     $extra_headers =~ s/\r\n/\n/gs;
     $extra_headers =~ s/\r/\n/gs;
@@ -303,6 +313,8 @@ sub get_url_1($;$$$$$$) {
   my $out;
 
   if ($to_file) {
+    utf8::encode($to_file);   # Unpack wide chars into multi-byte UTF-8.
+
     # Must be 2-arg open for ">-" when $outfile is '-'.
     open ($out, ">$to_file") || error ("$to_file: $!");
     binmode ($out);
@@ -445,11 +457,11 @@ sub get_url($;$$$$$$$) {
 }
 
 
-sub check_http_status($$$) {
-  my ($url, $http, $err_p) = @_;
+sub check_http_status($$$$) {
+  my ($id, $url, $http, $err_p) = @_;
   return 1 if ($http =~ m@^HTTP/[0-9.]+ 20\d@si);
-  errorI ("$http: $url") if ($err_p > 1 && $verbose);
-  error  ("$http: $url") if ($err_p);
+  errorI ("$id: $http: $url") if ($err_p > 1 && $verbose);
+  error  ("$id: $http: $url") if ($err_p);
   return 0;
 }
 
@@ -466,7 +478,7 @@ sub video_file_size($) {
 
    my $size = (stat($file))[7];
 
-  $file =~ s/(["`\$])/\\$1/gs;
+  $file =~ s/([\"\`\$])/\\$1/gs;
   my $cmd = "mplayer -identify -frames 0 -vc null -vo null -ao null \"$file\"";
 
   $cmd = "$limit; $cmd";
@@ -506,7 +518,7 @@ sub video_file_size($) {
 }
 
 
-# Downloads the first 200 KB of the URL, then runs mplayer to find out
+# Downloads the first 380 KB of the URL, then runs mplayer to find out
 # the dimensions of the video.
 #
 sub video_url_size($$$) {
@@ -520,13 +532,16 @@ sub video_url_size($$$) {
   my $bytes = 380 * 1024;	   # Need a lot of data to get size from HD
 
   my ($http, $head, $body) = get_url ($url, undef, undef, 0, $file, $bytes, 0);
-  check_http_status ($url, $http, 2);  # internal error if still 403
+  check_http_status ($id, $url, $http, 2);  # internal error if still 403
 
-  my ($ct) = ($head =~ m/^content-type:\s*([^\s;&]+)/mi);
+  my ($ct)   = ($head =~ m@^Content-Type:   \s* ( [^\s;]+ ) @mix);
+  my ($size) = ($head =~ m@^Content-Range:  \s* bytes \s+ [-\d]+ / (\d+) @mix);
+     ($size) = ($head =~ m@^Content-Length: \s* (\d+) @mi)
+       unless $size;
+
   errorI ("$id: expected video, got \"$ct\" in $url")
     if ($ct =~ m/text/i);
 
-  my ($size) = ($head =~ m/^content-length:\s*(\d+)/mi);
   $size = -1 unless defined($size); # WTF?
 
   my ($w, $h) = video_file_size ($file);
@@ -562,127 +577,159 @@ sub video_url_size($$$) {
 # - wN = swap 0th and Nth character.
 #
 my %ciphers = (
-  'vflNzKG7n' => 's3 r s2 r s1 r w67',			  # 30 Jan 2013 untested
-  'vfllMCQWM' => 's2 w46 r w27 s2 w43 s2 r',		  # 15 Feb 2013 untested
-  'vflJv8FA8' => 's1 w51 w52 r',			  # 12 Mar 2013 untested
-  'vflR_cX32' => 's2 w64 s3',				  # 11 Apr 2013 untested
-  'vflveGye9' => 'w21 w3 s1 r w44 w36 r w41 s1',	  # 02 May 2013 untested
-  'vflj7Fxxt' => 'r s3 w3 r w17 r w41 r s2',		  # 14 May 2013 untested
-  'vfltM3odl' => 'w60 s1 w49 r s1 w7 r s2 r',		  # 23 May 2013
-  'vflDG7-a-' => 'w52 r s3 w21 r s3 r',			  # 06 Jun 2013
-  'vfl39KBj1' => 'w52 r s3 w21 r s3 r',			  # 12 Jun 2013
-  'vflmOfVEX' => 'w52 r s3 w21 r s3 r',			  # 21 Jun 2013
-  'vflJwJuHJ' => 'r s3 w19 r s2',			  # 25 Jun 2013
-  'vfl_ymO4Z' => 'r s3 w19 r s2',			  # 26 Jun 2013
-  'vfl26ng3K' => 'r s2 r',				  # 08 Jul 2013
-  'vflcaqGO8' => 'w24 w53 s2 w31 w4',			  # 11 Jul 2013
-  'vflQw-fB4' => 's2 r s3 w9 s3 w43 s3 r w23',		  # 16 Jul 2013
-  'vflSAFCP9' => 'r s2 w17 w61 r s1 w7 s1',		  # 18 Jul 2013
-  'vflART1Nf' => 's3 r w63 s2 r s1',			  # 22 Jul 2013
-  'vflLC8JvQ' => 'w34 w29 w9 r w39 w24',		  # 25 Jul 2013
-  'vflm_D8eE' => 's2 r w39 w55 w49 s3 w56 w2',		  # 30 Jul 2013
-  'vflTWC9KW' => 'r s2 w65 r',				  # 31 Jul 2013
-  'vflRFcHMl' => 's3 w24 r',				  # 04 Aug 2013
-  'vflM2EmfJ' => 'w10 r s1 w45 s2 r s3 w50 r',		  # 06 Aug 2013
-  'vflz8giW0' => 's2 w18 s3',				  # 07 Aug 2013
-  'vfl_wGgYV' => 'w60 s1 r s1 w9 s3 r s3 r',		  # 08 Aug 2013
-  'vfl1HXdPb' => 'w52 r w18 r s1 w44 w51 r s1',		  # 12 Aug 2013
-  'vflkn6DAl' => 'w39 s2 w57 s2 w23 w35 s2',		  # 15 Aug 2013
-  'vfl2LOvBh' => 'w34 w19 r s1 r s3 w24 r',		  # 16 Aug 2013
-  'vfl-bxy_m' => 'w48 s3 w37 s2',			  # 20 Aug 2013
-  'vflZK4ZYR' => 'w19 w68 s1',				  # 21 Aug 2013
-  'vflh9ybst' => 'w48 s3 w37 s2',			  # 21 Aug 2013
-  'vflapUV9V' => 's2 w53 r w59 r s2 w41 s3',		  # 27 Aug 2013
-  'vflg0g8PQ' => 'w36 s3 r s2',				  # 28 Aug 2013
-  'vflHOr_nV' => 'w58 r w50 s1 r s1 r w11 s3',		  # 30 Aug 2013
-  'vfluy6kdb' => 'r w12 w32 r w34 s3 w35 w42 s2',	  # 05 Sep 2013
-  'vflkuzxcs' => 'w22 w43 s3 r s1 w43',			  # 10 Sep 2013
-  'vflGNjMhJ' => 'w43 w2 w54 r w8 s1',			  # 12 Sep 2013
-  'vfldJ8xgI' => 'w11 r w29 s1 r s3',			  # 17 Sep 2013
-  'vfl79wBKW' => 's3 r s1 r s3 r s3 w59 s2',		  # 19 Sep 2013
-  'vflg3FZfr' => 'r s3 w66 w10 w43 s2',			  # 24 Sep 2013
-  'vflUKrNpT' => 'r s2 r w63 r',			  # 25 Sep 2013
-  'vfldWnjUz' => 'r s1 w68',				  # 30 Sep 2013
-  'vflP7iCEe' => 'w7 w37 r s1',				  # 03 Oct 2013
-  'vflzVne63' => 'w59 s2 r',				  # 07 Oct 2013
-  'vflO-N-9M' => 'w9 s1 w67 r s3',			  # 09 Oct 2013
-  'vflZ4JlpT' => 's3 r s1 r w28 s1',			  # 11 Oct 2013
-  'vflDgXSDS' => 's3 r s1 r w28 s1',			  # 15 Oct 2013
-  'vflW444Sr' => 'r w9 r s1 w51 w27 r s1 r',		  # 17 Oct 2013
-  'vflK7RoTQ' => 'w44 r w36 r w45',			  # 21 Oct 2013
-  'vflKOCFq2' => 's1 r w41 r w41 s1 w15',		  # 23 Oct 2013
-  'vflcLL31E' => 's1 r w41 r w41 s1 w15',		  # 28 Oct 2013
-  'vflz9bT3N' => 's1 r w41 r w41 s1 w15',		  # 31 Oct 2013
-  'vfliZsE79' => 'r s3 w49 s3 r w58 s2 r s2',		  # 05 Nov 2013
-  'vfljOFtAt' => 'r s3 r s1 r w69 r',			  # 07 Nov 2013
-  'vflqSl9GX' => 'w32 r s2 w65 w26 w45 w24 w40 s2',	  # 14 Nov 2013
-  'vflFrKymJ' => 'w32 r s2 w65 w26 w45 w24 w40 s2',	  # 15 Nov 2013
-  'vflKz4WoM' => 'w50 w17 r w7 w65',			  # 19 Nov 2013
-  'vflhdWW8S' => 's2 w55 w10 s3 w57 r w25 w41',		  # 21 Nov 2013
-  'vfl66X2C5' => 'r s2 w34 s2 w39',			  # 26 Nov 2013
-  'vflCXG8Sm' => 'r s2 w34 s2 w39',			  # 02 Dec 2013
-  'vfl_3Uag6' => 'w3 w7 r s2 w27 s2 w42 r',		  # 04 Dec 2013
-  'vflQdXVwM' => 's1 r w66 s2 r w12',			  # 10 Dec 2013
-  'vflCtc3aO' => 's2 r w11 r s3 w28',			  # 12 Dec 2013
-  'vflCt6YZX' => 's2 r w11 r s3 w28',			  # 17 Dec 2013
-  'vflG49soT' => 'w32 r s3 r s1 r w19 w24 s3',		  # 18 Dec 2013
-  'vfl4cHApe' => 'w25 s1 r s1 w27 w21 s1 w39',		  # 06 Jan 2014
-  'vflwMrwdI' => 'w3 r w39 r w51 s1 w36 w14',		  # 06 Jan 2014
-  'vfl4AMHqP' => 'r s1 w1 r w43 r s1 r',		  # 09 Jan 2014
-  'vfln8xPyM' => 'w36 w14 s1 r s1 w54',			  # 10 Jan 2014
-  'vflVSLmnY' => 's3 w56 w10 r s2 r w28 w35',		  # 13 Jan 2014
-  'vflkLvpg7' => 'w4 s3 w53 s2',			  # 15 Jan 2014
-  'vflbxes4n' => 'w4 s3 w53 s2',			  # 15 Jan 2014
-  'vflmXMtFI' => 'w57 s3 w62 w41 s3 r w60 r',		  # 23 Jan 2014
-  'vflYDqEW1' => 'w24 s1 r s2 w31 w4 w11 r',		  # 24 Jan 2014
-  'vflapGX6Q' => 's3 w2 w59 s2 w68 r s3 r s1',		  # 28 Jan 2014
-  'vflLCYwkM' => 's3 w2 w59 s2 w68 r s3 r s1',		  # 29 Jan 2014
-  'vflcY_8N0' => 's2 w36 s1 r w18 r w19 r',		  # 30 Jan 2014
-  'vfl9qWoOL' => 'w68 w64 w28 r',			  # 03 Feb 2014
-  'vfle-mVwz' => 's3 w7 r s3 r w14 w59 s3 r',		  # 04 Feb 2014
-  'vfltdb6U3' => 'w61 w5 r s2 w69 s2 r',		  # 05 Feb 2014
-  'vflLjFx3B' => 'w40 w62 r s2 w21 s3 r w7 s3',		  # 10 Feb 2014
-  'vfliqjKfF' => 'w40 w62 r s2 w21 s3 r w7 s3',		  # 13 Feb 2014
-  'ima-vflxBu-5R' => 'w40 w62 r s2 w21 s3 r w7 s3',	  # 13 Feb 2014
-  'ima-vflrGwWV9' => 'w36 w45 r s2 r',			  # 20 Feb 2014
-  'ima-vflCME3y0' => 'w8 s2 r w52',			  # 27 Feb 2014
-  'ima-vfl1LZyZ5' => 'w8 s2 r w52',			  # 27 Feb 2014
-  'ima-vfl4_saJa' => 'r s1 w19 w9 w57 w38 s3 r s2',	  # 01 Mar 2014
-  'ima-en_US-vflP9269H' => 'r w63 w37 s3 r w14 r',	  # 06 Mar 2014
-  'ima-en_US-vflkClbFb' => 's1 w12 w24 s1 w52 w70 s2',	  # 07 Mar 2014
-  'ima-en_US-vflYhChiG' => 'w27 r s3',			  # 10 Mar 2014
-  'ima-en_US-vflWnCYSF' => 'r s1 r s3 w19 r w35 w61 s2',  # 13 Mar 2014
-  'en_US-vflbT9-GA' => 'w51 w15 s1 w22 s1 w41 r w43 r',	  # 17 Mar 2014
-  'en_US-vflAYBrl7' => 's2 r w39 w43',			  # 18 Mar 2014
-  'en_US-vflS1POwl' => 'w48 s2 r s1 w4 w35',		  # 19 Mar 2014
-  'en_US-vflLMtkhg' => 'w30 r w30 w39',			  # 20 Mar 2014
-  'en_US-vflbJnZqE' => 'w26 s1 w15 w3 w62 w54 w22',	  # 24 Mar 2014
-  'en_US-vflgd5txb' => 'w26 s1 w15 w3 w62 w54 w22',	  # 25 Mar 2014
-  'en_US-vflTm330y' => 'w26 s1 w15 w3 w62 w54 w22',	  # 26 Mar 2014
-  'en_US-vflnwMARr' => 's3 r w24 s2',			  # 27 Mar 2014
-  'en_US-vflTq0XZu' => 'r w7 s3 w28 w52 r',		  # 31 Mar 2014
-  'en_US-vfl8s5-Vs' => 'w26 s1 w14 r s3 w8',		  # 01 Apr 2014
-  'en_US-vfl7i9w86' => 'w26 s1 w14 r s3 w8',		  # 02 Apr 2014
-  'en_US-vflA-1YdP' => 'w26 s1 w14 r s3 w8',		  # 03 Apr 2014
-  'en_US-vflZwcnOf' => 'w46 s2 w29 r s2 w51 w20 s1',	  # 07 Apr 2014
-  'en_US-vflFqBlmB' => 'w46 s2 w29 r s2 w51 w20 s1',	  # 08 Apr 2014
-  'en_US-vflG0UvOo' => 'w46 s2 w29 r s2 w51 w20 s1',	  # 09 Apr 2014
-  'en_US-vflS6PgfC' => 'w40 s2 w40 r w56 w26 r s2',	  # 10 Apr 2014
-  'en_US-vfl6Q1v_C' => 'w23 r s2 w55 s2',		  # 15 Apr 2014
-  'en_US-vflMYwWq8' => 'w51 w32 r s1 r s3',		  # 17 Apr 2014
-  'en_US-vflGC4r8Z' => 'w17 w34 w66 s3',		  # 24 Apr 2014
-  'en_US-vflyEvP6v' => 's1 r w26',			  # 29 Apr 2014
-  'en_US-vflm397e5' => 's1 r w26',			  # 01 May 2014
-  'en_US-vfldK8353' => 'r s3 w32',			  # 03 May 2014
-  'en_US-vflPTD6yH' => 'w59 s1 w66 s3 w10 r w55 w70 s1',  # 06 May 2014
-  'en_US-vfl7KJl0G' => 'w59 s1 w66 s3 w10 r w55 w70 s1',  # 07 May 2014
-  'en_US-vflhUwbGZ' => 'w49 r w60 s2 w61 s3',		  # 12 May 2014
-  'en_US-vflzEDYyE' => 'w49 r w60 s2 w61 s3',		  # 13 May 2014
-  'en_US-vflimfEzR' => 'r s2 w68 w28',			  # 15 May 2014
-  'en_US-vfl_nbW1R' => 'r w8 r s3',			  # 20 May 2014
-  'en_US-vfll7obaF' => 'w48 w17 s2',			  # 22 May 2014
-  'en_US-vfluBAJ91' => 'w13 s1 w39',			  # 27 May 2014
-  'en_US-vfldOnicU' => 's2 r w7 w21 r',			  # 28 May 2014
+  'vflNzKG7n' => 's3 r s2 r s1 r w67',				  # 30 Jan 2013
+  'vfllMCQWM' => 's2 w46 r w27 s2 w43 s2 r',			  # 15 Feb 2013
+  'vflJv8FA8' => 's1 w51 w52 r',				  # 12 Mar 2013
+  'vflR_cX32' => 's2 w64 s3',					  # 11 Apr 2013
+  'vflveGye9' => 'w21 w3 s1 r w44 w36 r w41 s1',		  # 02 May 2013
+  'vflj7Fxxt' => 'r s3 w3 r w17 r w41 r s2',			  # 14 May 2013
+  'vfltM3odl' => 'w60 s1 w49 r s1 w7 r s2 r',			  # 23 May 2013
+  'vflDG7-a-' => 'w52 r s3 w21 r s3 r',				  # 06 Jun 2013
+  'vfl39KBj1' => 'w52 r s3 w21 r s3 r',				  # 12 Jun 2013
+  'vflmOfVEX' => 'w52 r s3 w21 r s3 r',				  # 21 Jun 2013
+  'vflJwJuHJ' => 'r s3 w19 r s2',				  # 25 Jun 2013
+  'vfl_ymO4Z' => 'r s3 w19 r s2',				  # 26 Jun 2013
+  'vfl26ng3K' => 'r s2 r',					  # 08 Jul 2013
+  'vflcaqGO8' => 'w24 w53 s2 w31 w4',				  # 11 Jul 2013
+  'vflQw-fB4' => 's2 r s3 w9 s3 w43 s3 r w23',			  # 16 Jul 2013
+  'vflSAFCP9' => 'r s2 w17 w61 r s1 w7 s1',			  # 18 Jul 2013
+  'vflART1Nf' => 's3 r w63 s2 r s1',				  # 22 Jul 2013
+  'vflLC8JvQ' => 'w34 w29 w9 r w39 w24',			  # 25 Jul 2013
+  'vflm_D8eE' => 's2 r w39 w55 w49 s3 w56 w2',			  # 30 Jul 2013
+  'vflTWC9KW' => 'r s2 w65 r',					  # 31 Jul 2013
+  'vflRFcHMl' => 's3 w24 r',					  # 04 Aug 2013
+  'vflM2EmfJ' => 'w10 r s1 w45 s2 r s3 w50 r',			  # 06 Aug 2013
+  'vflz8giW0' => 's2 w18 s3',					  # 07 Aug 2013
+  'vfl_wGgYV' => 'w60 s1 r s1 w9 s3 r s3 r',			  # 08 Aug 2013
+  'vfl1HXdPb' => 'w52 r w18 r s1 w44 w51 r s1',			  # 12 Aug 2013
+  'vflkn6DAl' => 'w39 s2 w57 s2 w23 w35 s2',			  # 15 Aug 2013
+  'vfl2LOvBh' => 'w34 w19 r s1 r s3 w24 r',			  # 16 Aug 2013
+  'vfl-bxy_m' => 'w48 s3 w37 s2',				  # 20 Aug 2013
+  'vflZK4ZYR' => 'w19 w68 s1',					  # 21 Aug 2013
+  'vflh9ybst' => 'w48 s3 w37 s2',				  # 21 Aug 2013
+  'vflapUV9V' => 's2 w53 r w59 r s2 w41 s3',			  # 27 Aug 2013
+  'vflg0g8PQ' => 'w36 s3 r s2',					  # 28 Aug 2013
+  'vflHOr_nV' => 'w58 r w50 s1 r s1 r w11 s3',			  # 30 Aug 2013
+  'vfluy6kdb' => 'r w12 w32 r w34 s3 w35 w42 s2',		  # 05 Sep 2013
+  'vflkuzxcs' => 'w22 w43 s3 r s1 w43',				  # 10 Sep 2013
+  'vflGNjMhJ' => 'w43 w2 w54 r w8 s1',				  # 12 Sep 2013
+  'vfldJ8xgI' => 'w11 r w29 s1 r s3',				  # 17 Sep 2013
+  'vfl79wBKW' => 's3 r s1 r s3 r s3 w59 s2',			  # 19 Sep 2013
+  'vflg3FZfr' => 'r s3 w66 w10 w43 s2',				  # 24 Sep 2013
+  'vflUKrNpT' => 'r s2 r w63 r',				  # 25 Sep 2013
+  'vfldWnjUz' => 'r s1 w68',					  # 30 Sep 2013
+  'vflP7iCEe' => 'w7 w37 r s1',					  # 03 Oct 2013
+  'vflzVne63' => 'w59 s2 r',					  # 07 Oct 2013
+  'vflO-N-9M' => 'w9 s1 w67 r s3',				  # 09 Oct 2013
+  'vflZ4JlpT' => 's3 r s1 r w28 s1',				  # 11 Oct 2013
+  'vflDgXSDS' => 's3 r s1 r w28 s1',				  # 15 Oct 2013
+  'vflW444Sr' => 'r w9 r s1 w51 w27 r s1 r',			  # 17 Oct 2013
+  'vflK7RoTQ' => 'w44 r w36 r w45',				  # 21 Oct 2013
+  'vflKOCFq2' => 's1 r w41 r w41 s1 w15',			  # 23 Oct 2013
+  'vflcLL31E' => 's1 r w41 r w41 s1 w15',			  # 28 Oct 2013
+  'vflz9bT3N' => 's1 r w41 r w41 s1 w15',			  # 31 Oct 2013
+  'vfliZsE79' => 'r s3 w49 s3 r w58 s2 r s2',			  # 05 Nov 2013
+  'vfljOFtAt' => 'r s3 r s1 r w69 r',				  # 07 Nov 2013
+  'vflqSl9GX' => 'w32 r s2 w65 w26 w45 w24 w40 s2',		  # 14 Nov 2013
+  'vflFrKymJ' => 'w32 r s2 w65 w26 w45 w24 w40 s2',		  # 15 Nov 2013
+  'vflKz4WoM' => 'w50 w17 r w7 w65',				  # 19 Nov 2013
+  'vflhdWW8S' => 's2 w55 w10 s3 w57 r w25 w41',			  # 21 Nov 2013
+  'vfl66X2C5' => 'r s2 w34 s2 w39',				  # 26 Nov 2013
+  'vflCXG8Sm' => 'r s2 w34 s2 w39',				  # 02 Dec 2013
+  'vfl_3Uag6' => 'w3 w7 r s2 w27 s2 w42 r',			  # 04 Dec 2013
+  'vflQdXVwM' => 's1 r w66 s2 r w12',				  # 10 Dec 2013
+  'vflCtc3aO' => 's2 r w11 r s3 w28',				  # 12 Dec 2013
+  'vflCt6YZX' => 's2 r w11 r s3 w28',				  # 17 Dec 2013
+  'vflG49soT' => 'w32 r s3 r s1 r w19 w24 s3',			  # 18 Dec 2013
+  'vfl4cHApe' => 'w25 s1 r s1 w27 w21 s1 w39',			  # 06 Jan 2014
+  'vflwMrwdI' => 'w3 r w39 r w51 s1 w36 w14',			  # 06 Jan 2014
+  'vfl4AMHqP' => 'r s1 w1 r w43 r s1 r',			  # 09 Jan 2014
+  'vfln8xPyM' => 'w36 w14 s1 r s1 w54',				  # 10 Jan 2014
+  'vflVSLmnY' => 's3 w56 w10 r s2 r w28 w35',			  # 13 Jan 2014
+  'vflkLvpg7' => 'w4 s3 w53 s2',				  # 15 Jan 2014
+  'vflbxes4n' => 'w4 s3 w53 s2',				  # 15 Jan 2014
+  'vflmXMtFI' => 'w57 s3 w62 w41 s3 r w60 r',			  # 23 Jan 2014
+  'vflYDqEW1' => 'w24 s1 r s2 w31 w4 w11 r',			  # 24 Jan 2014
+  'vflapGX6Q' => 's3 w2 w59 s2 w68 r s3 r s1',			  # 28 Jan 2014
+  'vflLCYwkM' => 's3 w2 w59 s2 w68 r s3 r s1',			  # 29 Jan 2014
+  'vflcY_8N0' => 's2 w36 s1 r w18 r w19 r',			  # 30 Jan 2014
+  'vfl9qWoOL' => 'w68 w64 w28 r',				  # 03 Feb 2014
+  'vfle-mVwz' => 's3 w7 r s3 r w14 w59 s3 r',			  # 04 Feb 2014
+  'vfltdb6U3' => 'w61 w5 r s2 w69 s2 r',			  # 05 Feb 2014
+  'vflLjFx3B' => 'w40 w62 r s2 w21 s3 r w7 s3',			  # 10 Feb 2014
+  'vfliqjKfF' => 'w40 w62 r s2 w21 s3 r w7 s3',			  # 13 Feb 2014
+  'ima-vflxBu-5R' => 'w40 w62 r s2 w21 s3 r w7 s3',		  # 13 Feb 2014
+  'ima-vflrGwWV9' => 'w36 w45 r s2 r',				  # 20 Feb 2014
+  'ima-vflCME3y0' => 'w8 s2 r w52',				  # 27 Feb 2014
+  'ima-vfl1LZyZ5' => 'w8 s2 r w52',				  # 27 Feb 2014
+  'ima-vfl4_saJa' => 'r s1 w19 w9 w57 w38 s3 r s2',		  # 01 Mar 2014
+  'ima-en_US-vflP9269H' => 'r w63 w37 s3 r w14 r',		  # 06 Mar 2014
+  'ima-en_US-vflkClbFb' => 's1 w12 w24 s1 w52 w70 s2',		  # 07 Mar 2014
+  'ima-en_US-vflYhChiG' => 'w27 r s3',				  # 10 Mar 2014
+  'ima-en_US-vflWnCYSF' => 'r s1 r s3 w19 r w35 w61 s2',	  # 13 Mar 2014
+  'en_US-vflbT9-GA' => 'w51 w15 s1 w22 s1 w41 r w43 r',		  # 17 Mar 2014
+  'en_US-vflAYBrl7' => 's2 r w39 w43',				  # 18 Mar 2014
+  'en_US-vflS1POwl' => 'w48 s2 r s1 w4 w35',			  # 19 Mar 2014
+  'en_US-vflLMtkhg' => 'w30 r w30 w39',				  # 20 Mar 2014
+  'en_US-vflbJnZqE' => 'w26 s1 w15 w3 w62 w54 w22',		  # 24 Mar 2014
+  'en_US-vflgd5txb' => 'w26 s1 w15 w3 w62 w54 w22',		  # 25 Mar 2014
+  'en_US-vflTm330y' => 'w26 s1 w15 w3 w62 w54 w22',		  # 26 Mar 2014
+  'en_US-vflnwMARr' => 's3 r w24 s2',				  # 27 Mar 2014
+  'en_US-vflTq0XZu' => 'r w7 s3 w28 w52 r',			  # 31 Mar 2014
+  'en_US-vfl8s5-Vs' => 'w26 s1 w14 r s3 w8',			  # 01 Apr 2014
+  'en_US-vfl7i9w86' => 'w26 s1 w14 r s3 w8',			  # 02 Apr 2014
+  'en_US-vflA-1YdP' => 'w26 s1 w14 r s3 w8',			  # 03 Apr 2014
+  'en_US-vflZwcnOf' => 'w46 s2 w29 r s2 w51 w20 s1',		  # 07 Apr 2014
+  'en_US-vflFqBlmB' => 'w46 s2 w29 r s2 w51 w20 s1',		  # 08 Apr 2014
+  'en_US-vflG0UvOo' => 'w46 s2 w29 r s2 w51 w20 s1',		  # 09 Apr 2014
+  'en_US-vflS6PgfC' => 'w40 s2 w40 r w56 w26 r s2',		  # 10 Apr 2014
+  'en_US-vfl6Q1v_C' => 'w23 r s2 w55 s2',			  # 15 Apr 2014
+  'en_US-vflMYwWq8' => 'w51 w32 r s1 r s3',			  # 17 Apr 2014
+  'en_US-vflGC4r8Z' => 'w17 w34 w66 s3',			  # 24 Apr 2014
+  'en_US-vflyEvP6v' => 's1 r w26',				  # 29 Apr 2014
+  'en_US-vflm397e5' => 's1 r w26',				  # 01 May 2014
+  'en_US-vfldK8353' => 'r s3 w32',				  # 03 May 2014
+  'en_US-vflPTD6yH' => 'w59 s1 w66 s3 w10 r w55 w70 s1',	  # 06 May 2014
+  'en_US-vfl7KJl0G' => 'w59 s1 w66 s3 w10 r w55 w70 s1',	  # 07 May 2014
+  'en_US-vflhUwbGZ' => 'w49 r w60 s2 w61 s3',			  # 12 May 2014
+  'en_US-vflzEDYyE' => 'w49 r w60 s2 w61 s3',			  # 13 May 2014
+  'en_US-vflimfEzR' => 'r s2 w68 w28',				  # 15 May 2014
+  'en_US-vfl_nbW1R' => 'r w8 r s3',				  # 20 May 2014
+  'en_US-vfll7obaF' => 'w48 w17 s2',				  # 22 May 2014
+  'en_US-vfluBAJ91' => 'w13 s1 w39',				  # 27 May 2014
+  'en_US-vfldOnicU' => 's2 r w7 w21 r',				  # 28 May 2014
+  'en_US-vflbbaSdm' => 'w46 r s3 w19 r s2 w15',			  # 03 Jun 2014
+  'en_US-vflIpxel5' => 'r w16 w35',				  # 04 Jun 2014
+  'en_US-vfloyxzv5' => 'r w30 s3 r s3 r',			  # 11 Jun 2014
+  'en_US-vflmY-xcZ' => 'w25 r s1 w49 w52',			  # 12 Jun 2014
+  'en_US-vflMVaJmz' => 'w12 s3 w56 r s2 r',			  # 17 Jun 2014
+  'en_US-vflgt97Vg' => 'r s1 r',				  # 19 Jun 2014
+  'en_US-vfl19qQQ_' => 's2 w55 s2 r w39 s2 w5 r s3',		  # 23 Jun 2014
+  'en_US-vflws3c7_' => 'r s1 w52',				  # 24 Jun 2014
+  'en_US-vflPqsNqq' => 'r s1 w52',				  # 25 Jun 2014
+  'en_US-vflycBCEX' => 'w12 s1 r s3 w17 s1 w9 r',		  # 26 Jun 2014
+  'en_US-vflhZC-Jn' => 'w69 w70 s3',				  # 01 Jul 2014
+  'en_US-vfl9r3Wpv' => 'r s3 w57',				  # 07 Jul 2014
+  'en_US-vfl6UPpbU' => 'w37 r s1',				  # 08 Jul 2014
+  'en_US-vfl_oxbbV' => 'w37 r s1',				  # 09 Jul 2014
+  'en_US-vflXGBaUN' => 'w37 r s1',				  # 10 Jul 2014
+  'en_US-vflM1arS5' => 's1 r w42 r s1 w27 r w54',		  # 11 Jul 2014
+  'en_US-vfl0Cbn9e' => 'w15 w44 r w24 s3 r w2 w50',		  # 14 Jul 2014
+  'en_US-vfl5aDZwb' => 'w15 w44 r w24 s3 r w2 w50',		  # 15 Jul 2014
+  'en_US-vflqZIm5b' => 'w1 w32 s1 r s3 r s3 r',			  # 17 Jul 2014
+  'en_US-vflBb0OQx' => 'w53 r w9 s2 r s1',			  # 22 Jul 2014
+  'en_US-vflCGk6yw/html5player' => 's2 w28 w44 w26 w40 w64 r s1', # 24 Jul 2014
+  'en_US-vflNUsYw0/html5player' => 'r s3 w7',                     # 30 Jul 2014
+  'en_US-vflId8cpZ/html5player' => 'w30 w21 w26 s1 r s1 w30 w11 w20',# 31 Jul 2014
+  'en_US-vflEyBLiy/html5player' => 'w44 r w15 s2 w40 r s1',       # 01 Aug 2014
+  'en_US-vflHkCS5P/html5player' => 's2 r s3 r w41 s1 r s1 r',     # 05 Aug 2014
+  'en_US-vflArxUZc/html5player' => 'r w12 r s3 w14 w61 r',        # 07 Aug 2014
+  'en_US-vflCsMU2l/html5player' => 'r s2 r w64 s1 r s3',          # 11 Aug 2014
+  'en_US-vflY5yrKt/html5player' => 'w8 r s2 w37 s1 w21 s3',       # 12 Aug 2014
+  'en_US-vfl4b4S6W/html5player' => 'w40 s1 r w40 s3 r w47 r',     # 13 Aug 2014
+  'en_US-vflLKRtyE/html5player' => 'w5 r s1 r s2 r',              # 18 Aug 2014
+  'en_US-vflrSlC04/html5player' => 'w28 w58 w19 r s1 r s1 r',     # 19 Aug 2014
+  'en_US-vflC7g_iA/html5player' => 'w28 w58 w19 r s1 r s1 r',     # 20 Aug 2014
 );
 
 
@@ -740,30 +787,36 @@ sub guess_cipher(;$$) {
 
   my $url = "http://www.youtube.com/";
   my ($http, $head, $body);
+  my $id = '-';
 
   if (! $cipher_id) {
     ($http, $head, $body) = get_url ($url);		# Get home page
-    check_http_status ($url, $http, 2);
-    my ($id) = ($body =~ m@/watch\?v=([^\"\'/<>]+)@si);
-    errorI ("unparsable cipher") unless $id;
+    check_http_status ('-', $url, $http, 2);
+    ($id) = ($body =~ m@/watch\?v=([^\"\'/<>]+)@si);
+    errorI ("unparsable cipher in $url") unless $id;
     $url .= "/watch\?v=$id";
 
     ($http, $head, $body) = get_url ($url);		# Get random video
-    check_http_status ($url, $http, 2);
+    check_http_status ($id, $url, $http, 2);
 
     $body =~ s/\\//gs;
     ($cipher_id) = ($body =~ m@/jsbin\\?/html5player-(.+?)\.js@s);
-    errorI ("unparsable cipher url: $url") unless $cipher_id;
+    errorI ("$id: unparsable cipher url: $url") unless $cipher_id;
   }
 
+  $cipher_id =~ s@\\@@gs;
   $url = "http://s.ytimg.com/yts/jsbin/html5player-$cipher_id.js";
+
   ($http, $head, $body) = get_url ($url);
-  check_http_status ($url, $http, 2);
+  check_http_status ($id, $url, $http, 2);
 
   my ($date) = ($head =~ m/^Last-Modified:\s+(.*)$/mi);
   $date =~ s/^[A-Z][a-z][a-z], (\d\d? [A-Z][a-z][a-z] \d{4}).*$/$1/s;
 
   my $v = '[\$a-zA-Z][a-zA-Z\d]*';	# JS variable
+
+  $v = "$v(?:\.$v)?";   # Also allow "a.b" where "a" would be used as a var.
+
 
   # Since the script is minimized and obfuscated, we can't search for
   # specific function names, since those change. Instead we match the
@@ -778,10 +831,11 @@ sub guess_cipher(;$$) {
   errorI ("$cipher_id: unparsable cipher js: $url") unless $fn;
 
   # Find body of function C(D) { ... }
-  ($fn) = ($body =~ m@\b function \s+ $fn \s* \( $v \) \s* { ( .*? ) }@sx);
-  errorI ("$cipher_id: unparsable fn") unless $fn;
+  my ($fn2) = ($body =~ m@\b function \s+ \Q$fn\E \s* \( $v \)
+                          \s* { ( .*? ) } @sx);
+  errorI ("$cipher_id: unparsable fn \"$fn\"") unless $fn2;
 
-  my $fn2 = $fn;
+  $fn = $fn2;
 
   # They inline the swapper if it's used only once.
   # Convert "var b=a[0];a[0]=a[63%a.length];a[63]=b;" to "a=swap(a,63);".
@@ -798,10 +852,32 @@ sub guess_cipher(;$$) {
       push @cipher, "r";
     } elsif ($c =~ m@^ ( $v ) = \1 . $v \( (\d+) \) $@sx) {    # A=A.slice(N);
       push @cipher, "s$2";
-    } elsif ($c =~ m@^ ( $v ) = $v \( \1 , ( \d+ ) \) $@sx) {  # A=swap(A,N);
-      push @cipher, "w$2";
+
+    } elsif ($c =~ m@^ ( $v ) = ( $v ) \( \1 , ( \d+ ) \) $@sx ||  # A=F(A,N);
+             $c =~ m@^ (    )   ( $v ) \( $v , ( \d+ ) \) $@sx) {  # F(A,N);
+      my $f = $2;
+      my $n = $3;
+      $f =~ s/^.*\.//gs;  # C.D => D
+      # Find function D, of the form: C={ ... D:function(a,b) { ... }, ... }
+      my ($fn3) = ($body =~ m@ \b \Q$f\E: \s*
+                               function \s* \( .*? \) \s*
+                                ( { [^{}]+ } )
+                             @sx);
+      # Look at body of D to decide what it is.
+      if ($fn3 =~ m@ var \s ( $v ) = ( $v ) \[ 0 \]; @sx) {  # swap
+        push @cipher, "w$n";
+      } elsif ($fn3 =~ m@ \b $v \. reverse\( @sx) {          # reverse
+        push @cipher, "r";
+      } elsif ($fn3 =~ m@ return \s* $v \. slice @sx ||      # slice
+               $fn3 =~ m@ \b $v \. splice @sx) {             # splice
+        push @cipher, "s$n";
+      } else {
+        $fn =~ s/;/;\n\t    /gs;
+        errorI ("unrecognized cipher body $f($n) = $fn3\n\tin: $fn");
+      }
     } elsif ($c =~ m@^ return \s+ $v \. $v \(""\) $@sx) { # return A.join("");
     } else {
+      $fn =~ s/;/;\n\t    /gs;
       errorI ("$cipher_id: unparsable: $c\n\tin: $fn");
     }
   }
@@ -814,7 +890,7 @@ sub guess_cipher(;$$) {
 
   if ($verbose > 1) {
     my $c2 = "  '$cipher_id' => '$cipher',";
-    $c2 = sprintf ("%-58s# %s", $c2, $date);
+    $c2 = sprintf ("%-66s# %s", $c2, $date);
     auto_update($c2) if ($selftest_p && $selftest_p == 2);
     print STDERR "$progname: current cipher is:\n$c2\n";
   }
@@ -858,11 +934,11 @@ sub auto_update($) {
 #
 sub decipher_selftest() {
   my $tests = {
-   'UNKNOWN 88' . "\t" .
-   ' !"#$%&\'()*+,-x/0123456789:;<=>?@ABCDEFGHIJ.' .		# 88
-   'LMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvw' =>
-   'Pqponmlkjihgfedrba`_u]\\[ZYXWVUTSRQcONML.' .
-   'JIHGFEDCBA@?>=<;:9876543210/x-#+*)(\'&%$",',
+#   'UNKNOWN 88' . "\t" .
+#   ' !"#$%&\'()*+,-x/0123456789:;<=>?@ABCDEFGHIJ.' .		# 88
+#   'LMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvw' =>
+#   'Pqponmlkjihgfedrba`_u]\\[ZYXWVUTSRQcONML.' .
+#   'JIHGFEDCBA@?>=<;:9876543210/x-#+*)(\'&%$",',
 
    'vflmOfVEX' . "\t" .
    ' !"#$%&\'()*+,-x/0123456789:;<=>?@ABCDEFGHIJ.' .		# 87
@@ -882,23 +958,23 @@ sub decipher_selftest() {
    'lrqponmskjihgfedcba`_^] [ZYXWVUTS!QPONMLK.' .
    'IHGFEDCBA@?>=<;:9876543210/x-,+*)(\'&%$#',
 
-   'UNKNOWN 84' . "\t" .
-   ' !"#$%&\'()*+,-x/0123456789:;<=>?@ABCDEFGH.' .		# 84
-   'JKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrs' =>
-   'srqponmlkjihgfedcba`_^]\\[ZYXWVUTSRQPONMLKJ.' .
-   'HGFE"CBA@?>=<;#9876543210/x-,+*)(\'&%$:',
+#   'UNKNOWN 84' . "\t" .
+#   ' !"#$%&\'()*+,-x/0123456789:;<=>?@ABCDEFGH.' .		# 84
+#   'JKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrs' =>
+#   'srqponmlkjihgfedcba`_^]\\[ZYXWVUTSRQPONMLKJ.' .
+#   'HGFE"CBA@?>=<;#9876543210/x-,+*)(\'&%$:',
 
-   'UNKNOWN 83' . "\t" .
-   ' !"#$%&\'()*+,-x/0123456789:;<=>?@ABCDEFGH.' .		# 83
-   'JKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqr' =>
-   'Tqponmlkjihgfedcba`_^]\\[ZYX"VUrSRQPONMLKJ.' .
-   'HGFEWCBA@?>=<;:9876543210/x-,+*)(\'&%$#D',
+#   'UNKNOWN 83' . "\t" .
+#   ' !"#$%&\'()*+,-x/0123456789:;<=>?@ABCDEFGH.' .		# 83
+#   'JKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqr' =>
+#   'Tqponmlkjihgfedcba`_^]\\[ZYX"VUrSRQPONMLKJ.' .
+#   'HGFEWCBA@?>=<;:9876543210/x-,+*)(\'&%$#D',
 
-   'UNKNOWN 82' . "\t" .
-   ' !"#$%&\'()*+,-x/0123456789:;<=>?@ABCDEFG.' .		# 82
-   'IJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopq' =>
-   'Donmlkjihgfedqba`_^]\\[ZYXWVUTSRQPONMLKJIAGFE.' .
-   'C c@?>=<;:9876543210/x-,+*)(\'&%$#"!B',
+#   'UNKNOWN 82' . "\t" .
+#   ' !"#$%&\'()*+,-x/0123456789:;<=>?@ABCDEFG.' .		# 82
+#   'IJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopq' =>
+#   'Donmlkjihgfedqba`_^]\\[ZYXWVUTSRQPONMLKJIAGFE.' .
+#   'C c@?>=<;:9876543210/x-,+*)(\'&%$#"!B',
 
    'vflmOfVEX' . "\t" .
    '5AEEAE0EC39677BC65FD9021CCD115F1F2DBD5A59E4.' .		# Real examples
@@ -932,6 +1008,12 @@ sub decipher_selftest() {
 #  'D225BE11FBCBD59C62F163A57BF8EC1B47897485E85E' =>  # from "get_video_info"
    '7110BC60F69EED0EDF4DED56EBF7369CB77E7F22.' .
    'A1B0DDDE4DF6238DE4E01A049E6AB1C52CFBEDFE',
+
+   'en_US-vfl0Cbn9e' . "\t" .
+   '9977B9CA5435687412E6E3436260447A98CA0268.' .
+   '83C3A50B214CE0D9279695F4B5A31FEFEC4CFAA9AA5' =>
+   '1937B9CA5435687912E6E3436260447A98CA0268.' .
+   '83C4A50B274CE0D9275695F4B5A31FEFEC4CFAA9',
   };
 
   my %verified;
@@ -1047,7 +1129,7 @@ sub scrape_youtube_url($$$$$) {
 
     my ($http, $head);
     ($http, $head, $body) = get_url ($info_url);
-    $err = (check_http_status ($url, $http, 0) ? undef : $http);
+    $err = (check_http_status ($id, $url, $http, 0) ? undef : $http);
 
     ($kind, $urlmap) = ($body =~ m@&(fmt_url_map)=([^&]+)@si);
     ($kind, $urlmap) = ($body =~ m@&(fmt_stream_map)=([^&]+)@si)	# VEVO
@@ -1142,7 +1224,7 @@ sub get_youtube_year($) {
                   "&safeSearch=none" .
                   "&strict=true");
   my ($http, $head, $body) = get_url ($data_url, undef, undef, 0, undef);
-  return undef unless check_http_status ($data_url, $http, 0);
+  return undef unless check_http_status ($id, $data_url, $http, 0);
 
   my ($year, $mon, $dotm, $hh, $mm, $ss) = 
     ($body =~ m@<published>(\d{4})-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)@si);
@@ -1156,7 +1238,7 @@ sub get_vimeo_year($) {
   my ($id) = @_;
   my $data_url = "http://vimeo.com/api/v2/video/$id.xml";
   my ($http, $head, $body) = get_url ($data_url, undef, undef, 0, undef);
-  return undef unless check_http_status ($data_url, $http, 0);
+  return undef unless check_http_status ($id, $data_url, $http, 0);
 
   my ($year, $mon, $dotm, $hh, $mm, $ss) = 
     ($body =~ m@<upload_date>(\d{4})-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)@si);
@@ -1251,7 +1333,7 @@ sub scrape_youtube_url_html($$$$$) {
   $http = 'HTTP/1.0 404'
     if ($oerror && $oerror =~ m/$blocked_re/sio);
   error ("$id: $http$oerror")
-    unless (check_http_status ($url, $http, 0));
+    unless (check_http_status ($id, $url, $http, 0));
   errorI ("$id: no ytplayer.config$oerror")
     unless $args;
 
@@ -1270,6 +1352,7 @@ sub scrape_youtube_url_html($$$$$) {
     if ($kind && $verbose > 1);
 
   my ($cipher) = ($body =~ m@/jsbin\\?/html5player-(.+?)\.js@s);
+  $cipher =~ s@\\@@gs if $cipher;
 
   my ($fmtlist) = ($args =~ m@"fmt_list": "(.*?)"@s);
   $fmtlist =~ s/\\//g if $fmtlist;
@@ -1548,9 +1631,11 @@ sub scrape_youtube_url_2($$$$$$$$$) {
   #
   my ($http, $head, $body);
   ($http, $head, $body, $url) = get_url ($url, undef, undef, 1);
-  check_http_status ($url, $http, 2);  # internal error if still 403
-  my ($ct)   = ($head =~ m/^content-type:\s*([^\s;]+)/mi);
-  my ($size) = ($head =~ m/^content-length:\s*(\d+)/mi);
+  check_http_status ($id, $url, $http, 2);  # internal error if still 403
+  my ($ct)   = ($head =~ m@^Content-Type:   \s* ( [^\s;]+ ) @mix);
+  my ($size) = ($head =~ m@^Content-Range:  \s* bytes \s+ [-\d]+ / (\d+) @mix);
+     ($size) = ($head =~ m@^Content-Length: \s* (\d+) @mix)
+       unless $size;
 
   errorI ("couldn't find video for $url") unless $ct;
 
@@ -1588,7 +1673,7 @@ sub scrape_vimeo_url($$) {
 
   my ($http, $head, $body) = get_url ($info_url, $referer, $hdrs);
 
-  if (!check_http_status ($info_url, $http, 0)) {
+  if (!check_http_status ($id, $info_url, $http, 0)) {
     my ($err) = ($body =~ m@\"display_message\":\"(.*?)\"[,\}]@si);
     $err = 'unknown error' unless $err;
     $err =~ s@<[^<>]*>@@gsi;
@@ -1635,8 +1720,10 @@ sub scrape_vimeo_url($$) {
   my $ct;
   ($http, $head, $body) = get_url ($url, $referer, $hdrs, 0, undef, 1);
 
-  ($ct)   = ($head =~ m/^content-type:\s*([^\s;]+)/mi);
-  ($size) = ($head =~ m/^content-length:\s*(\d+)/mi);
+  ($ct)   = ($head =~ m@^Content-Type:   \s* ( [^\s;]+ ) @mix);
+  ($size) = ($head =~ m@^Content-Range:  \s* bytes \s+ [-\d]+ / (\d+) @mix);
+  ($size) = ($head =~ m@^Content-Length: \s* (\d+) @mix)
+    unless $size;
   my $year = undef; # no published date in HTML
 
   errorI ("couldn't find video for $url") unless $ct;
@@ -1662,13 +1749,18 @@ sub scrape_vimeo_private($$) {
   #  $url = "http://vimeo.com/$id";
   # No longer true? Instead, look at the URL inside "files" which has sig.
 
+  # Sometimes these videos are both private and unembeddable, and then 
+  # we get a 403.
+
   my ($http, $head, $body) = get_url ($url, $referer);
-  if (! check_http_status ($url, $http, 0)) {
+  if (! check_http_status ($id, $url, $http, 0)) {
     exit (1) if ($verbose <= 0); # Skip silently if --quiet.
-    errorI ("$id: $http: scraping private video failed");
+    error ("$id: scraping private video failed");
   }
 
-  my ($title) = ($body =~ m@<title>\s*([^<>]+?)\s*</title>@si);
+  my ($title) = ($body =~ m@"title":"(.*?)",@s);
+     ($title) = ($body =~ m@<title>\s*([^<>]+?)\s*</title>@si) unless $title;
+
   my ($sig)   = ($body  =~ m@"signature":"([a-fA-F\d]+)"@s);
   my ($time)  = ($body  =~ m@"timestamp":"?(\d+)"?@s);
   my ($files) = ($body  =~ m@("hd":{.*?})@s);
@@ -1775,7 +1867,8 @@ sub munge_title($) {
   $title =~ s/ \[\]//gs;
 
   # Don't allow the title to begin with "." or it writes a hidden file.
-  $title =~ s/^([.,\s])/_$1/gs;
+  # And dash causes a stdout dump.
+  $title =~ s/^[-.,\s]+//gs;
 
   return $title;
 }
@@ -1788,6 +1881,7 @@ sub file_exists_with_suffix($) {
   my ($f) = @_;
   foreach my $ext (@video_extensions) {
     my $ff = "$f.$ext";
+    utf8::encode($ff);   # Unpack wide chars into multi-byte UTF-8.
     return ($ff) if -f ($ff);
   }
   return undef;
@@ -1953,8 +2047,11 @@ sub download_video_url($$$$$$$) {
     $url = "http://www.$site.com/watch?v=$id";
     error ("unparsable user next_url: $url") unless $id;
 
-  # Vimeo /NNNNNN URLs (and player.vimeo.com/video/NNNNNN)
-  } elsif ($url =~ m@^https?://(?:[a-z]+\.)?(vimeo)\.com/(?:video/)?(\d+)@s) {
+  # Vimeo /NNNNNN URLs
+  # and player.vimeo.com/video/NNNNNN
+  # and vimeo.com/m/NNNNNN
+  } elsif ($url =~ 
+           m@^https?://(?:[a-z]+\.)?(vimeo)\.com/(?:video/|m/)?(\d+)@s) {
     ($site, $id) = ($1, $2);
 
   # Vimeo /videos/NNNNNN URLs.
@@ -2080,7 +2177,7 @@ sub download_video_url($$$$$$$) {
     my $expect_bytes = ($size ? ($progress_p ? $size : -$size) : undef);
     my ($http, $head, $body) = get_url ($url, undef, undef, 0, $file, undef,
                                         undef, $expect_bytes);
-    check_http_status ($url, $http, 2);  # internal error if still 403
+    check_http_status ($id, $url, $http, 2);  # internal error if still 403
 
     if (! -s $file) {
       unlink ($file);
@@ -2121,7 +2218,7 @@ sub download_playlist($$$$$) {
                     "&strict=true");
 
     my ($http, $head, $body) = get_url ($data_url, undef, undef, 0, undef);
-    check_http_status ($url, $http, 1);
+    check_http_status ($id, $url, $http, 1);
 
     ($title) = ($body =~ m@<title>\s*([^<>]+?)\s*</title>@si)
       unless $title;
