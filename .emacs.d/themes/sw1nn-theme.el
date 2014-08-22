@@ -72,6 +72,7 @@
  '(magit-log-reflog-label-remote ((t (:background "#222222" :foreground "#002b86" :box 1))))
  '(match ((t (:inverse-video t :foreground "#2075c7" :background "#00005f"))))
  '(magit-key-mode-switch-face ((t (:foreground "green" :weight bold))))
+ '(mc/cursor-face ((t (:background "DodgerBlue4" :foreground "LightSteelBlue2"))))
  '(mode-line ((t (:background "#5f005f" :foreground "plum" :box (:line-width -1 :style released-button)))))
  '(mode-line-inactive ((t (:inherit mode-line :background "#2f002f" :foreground "#7f007f" :box (:line-width -1 :color "grey40") :weight light))))
  '(minibuffer-prompt ((t (:foreground "#2075c7"))))
