@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: cascalog
+# key: cascalog
+# --
+(require '[cascalog.playground])
+(cascalog.playground/bootstrap-emacs)
