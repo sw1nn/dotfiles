@@ -5,7 +5,7 @@ import XMonad
 import XMonad.Hooks.DynamicLog hiding (xmobar, xmobarPP, xmobarColor, sjanssenPP, byorgeyPP)
 import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks, ToggleStruts(..))
-import XMonad.Hooks.ManageHelpers (isDialog)
+import XMonad.Hooks.ManageHelpers (isDialog, doCenterFloat)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName
 
@@ -69,7 +69,6 @@ barFont = "aldrich-11"
 
 myWorkspaces    = ["1:web","2:edit","3:term","4:virt","5:gimp","6","7","8:im","9:music"]
 
-
 statusBarCmd = "dzen2" ++
                " -bg '" ++ soBackground ++ "'" ++
                " -fg '" ++ soBrightBlue ++ "'" ++
@@ -80,7 +79,7 @@ statusBarCmd = "dzen2" ++
 
 nwsUrgencyHook = withUrgencyHook dzenUrgencyHook {args = ["-xs", "1", "-fg", soBrightBlue]}
 
-myTerminal           = "st"
+myTerminal           = "gnome-terminal"
 myScratchpadTerminal = "scratchpad"
 
 nwsPP h = defaultPP
@@ -157,22 +156,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         | (key, sc) <- zip [xK_e, xK_r, xK_w] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
--- smeMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
---     -- mod-button1, Set the window to floating mode and move by dragging
---     [ ((modMask, button1), (\w -> focus w >> mouseMoveWindow w))
---     -- mod-button2, Raise the window to the top of the stack
---     , ((modMask, button2), (\w -> focus w >> windows W.swapMaster))
---     -- mod-button3, Set the window to floating mode and resize by dragging
---     , ((modMask, button3), (\w -> focus w >> mouseResizeWindow w))
---     -- cycle through workspaces
---     , ((controlMask .|. modMask, button4), nextScreen)
---     , ((controlMask .|. modMask, button5), prevScreen)
---     ]
+eagle = className =? "Eagle" --> do
+  doShift "6:"
 
 myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
                manageDocks <+>
+               eagle       <+>
                (composeAll . concat $
-    [ [isDialog        --> doFloat]
+    [ [isDialog        --> doCenterFloat]
     , [role       =? r --> doFloat  | r <- myRoleFloats]
     , [className  =? c --> doFloat  | c <- myCFloats]
     , [title      =? t --> doFloat  | t <- myTFloats]
@@ -192,13 +183,13 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     where
     doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
     myRoleFloats = ["pop-up"]
-    myCFloats    = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Xmessage", "Thunar", "dzen2"]
-    myTFloats    = ["Downloads", "Save As...", "RescueTime Offline Time", "Google+ Hangouts - Google Chrome", "Google+ Hangouts"]
+    myCFloats    = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Thunar", "dzen2"]
+    myTFloats    = ["Downloads", "Save As...", "RescueTime Offline Time"]
     myRFloats    = []
     myIgnores    = ["desktop_window", "kdesktop"]
     my1Shifts    = ["Google-chrome-stable"]
     my2Shifts    = ["Emacs"]
-    my3Shifts    = ["st-256color"]
+    my3Shifts    = ["gnome-terminal"]
     my4Shifts    = ["VirtualBox", "Wine"]
     my5Shifts    = ["Gimp"]
     my6Shifts    = []

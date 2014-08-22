@@ -47,12 +47,11 @@ fi
 irc &
 git-annex assistant --autostart &
 xscreensaver &
-TERM=st-256color emacs --daemon &
+TERM=xterm-256color emacs --daemon &
 thunar --daemon &
 pulseaudio --start &
 unclutter &
 rescuetime &
-pidgin &
 spotify &
 
 synclient PalmDetect=1
