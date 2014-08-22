@@ -8,7 +8,7 @@ function get_volume() {
 }
 
 function icon {
-   echo "^i(${HOME}/dotfiles/icons/${1}.xbm)"
+   echo "^i(${HOME}/workspace/dotfiles/icons/${1}.xbm)"
 }
 
 case $cmd in
