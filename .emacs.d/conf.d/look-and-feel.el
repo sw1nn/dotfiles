@@ -5,7 +5,7 @@
 
 (require 'volatile-highlights)
 
-;(require 'powerline)
+(require 'powerline)
 
 (require 'uniquify)
 
@@ -95,11 +95,6 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(setq smex-save-file (concat user-emacs-directory ".smex-items"))
-
-(smex-initialize)
-
-(global-undo-tree-mode t)
 ;; die tabs, DIE!
 (setq indent-tabs-mode nil)
 
@@ -169,4 +164,5 @@
 (put 'narrow-to-region 'disabled nil)
 
 (windmove-default-keybindings)
+(powerline-default-theme))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

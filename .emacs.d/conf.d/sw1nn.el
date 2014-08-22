@@ -1,3 +1,5 @@
+(require 'clojure-mode)
+
 (defgroup sw1nn nil
   "sw1nn customizations"
   :prefix "sw1nn-"

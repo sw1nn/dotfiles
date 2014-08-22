@@ -50,7 +50,6 @@
     (indent-according-to-mode)))
 
 (defun neale-custom-lisp-mode ()
-  (rainbow-delimiters-mode t)
   (paredit-mode t)
   (flyspell-prog-mode)
   (yas-minor-mode)

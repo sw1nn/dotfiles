@@ -63,6 +63,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-c C-v u") 'vagrant-up)
 (define-key my-keys-minor-mode-map (kbd "C-c C-v h") 'vagrant-halt)
 (define-key my-keys-minor-mode-map (kbd "C-c C-v s") 'vagrant-status)
+
 (when (eq system-type 'darwin)
   (load-file (concat user-emacs-directory "conf.d/google-music-key-bodge.el")))
 
