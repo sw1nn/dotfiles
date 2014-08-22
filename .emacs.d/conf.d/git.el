@@ -1,10 +1,8 @@
 (require 'magit)
-(require 'magit-gh-pulls)
-(add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls)
 
-;; (require 'git-gutter-fringe)
+(require 'git-gutter-fringe)
 
-;; (global-git-gutter-mode)
+(global-git-gutter-mode)
 
 (setq magit-process-popup-time 5
       magit-repo-dirs '("~/workspace")
