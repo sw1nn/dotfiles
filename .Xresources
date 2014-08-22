@@ -11,6 +11,9 @@ Xft.hintstyle:                           hintfull
 emacs.background:                        #002b36
 emacs.foreground:                        #657b83
 
+xterm.background:                        #002b36
+xterm.foreground:                        #657b83
+
 !-------------------------------------------------------------------------------
 ! URxvt settings
 ! Colours lifted from Solarized (http://ethanschoonover.com/solarized)
