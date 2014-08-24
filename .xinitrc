@@ -8,19 +8,13 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
     unset f
 fi
 
-export LANG=en_GB.UTF-8
-
 gpg-agent --daemon \
           --display "${DISPLAY}" \
           --keep-display \
           --enable-ssh-support \
           --write-env-file "${HOME}/.gnupg/agent-info"
 
-source ${HOME}/.gnupg/agent-info
-export GPG_AGENT_INFO
-export SSH_AUTH_SOCK
-
-export CUPS_SERVER=localhost
+source ${HOME}/.zshenv
 
 xrdb -load ${HOME}/.Xresources
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/top_left_arrow 16
@@ -44,21 +38,18 @@ if [ "$(hostname)" == "alison" ]; then
   conky &
 fi
 
-irc &
+TERM=xterm-256color emacs --daemon &
 git-annex assistant --autostart &
 xscreensaver &
-TERM=xterm-256color emacs --daemon &
 thunar --daemon &
 pulseaudio --start &
 unclutter &
 rescuetime &
-spotify &
+dropboxd &
 
 synclient PalmDetect=1
 
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
 
-# needed for some jvm apps :-/
-export _JAVA_AWT_WM_NONREPARENTING=1
 exec xmonad 2>&1 >| ${HOME}/.xmonad.log

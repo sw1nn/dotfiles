@@ -183,19 +183,19 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     where
     doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
     myRoleFloats = ["pop-up"]
-    myCFloats    = ["MPlayer", "Nitrogen", "Sysinfo", "Galculator", "XFontSel", "Thunar", "dzen2"]
-    myTFloats    = ["Downloads", "Save As...", "RescueTime Offline Time"]
+    myCFloats    = []
+    myTFloats    = ["RescueTime Offline Time"]
     myRFloats    = []
     myIgnores    = ["desktop_window", "kdesktop"]
     my1Shifts    = ["Google-chrome-stable"]
     my2Shifts    = ["Emacs"]
-    my3Shifts    = ["gnome-terminal"]
-    my4Shifts    = ["VirtualBox", "Wine"]
+    my3Shifts    = ["Gnome-terminal"]
+    my4Shifts    = ["VirtualBox"]
     my5Shifts    = ["Gimp"]
-    my6Shifts    = []
+    my6Shifts    = ["Eagle"]
     my7Shifts    = []
     my8Shifts    = ["Pidgin", "Skype", "Irc"]
-    my9Shifts    = ["play.google.com__music","Spotify"]
+    my9Shifts    = ["play.google.com__music","Spotify","AudibleManager"]
     role         = stringProperty "WM_WINDOW_ROLE"
 
 nwsLogHook h = do
