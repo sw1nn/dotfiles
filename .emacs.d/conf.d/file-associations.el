@@ -6,7 +6,7 @@
                 ("\\.yml\\'" . yaml-mode)
                 ("\\.scss\\'" . sass-mode)
                 ("\\.m\\'" . octave-mode)
-                ("\\.js\\'" . js2-mode)
+                ("\\.js\\'" . js3-mode)
                 ("\\.gexf\\'" . nxml-mode)
                 ("\\.html\\'" . nxml-mode)
                 ("\\.cql\\'" . sql-mode)))
