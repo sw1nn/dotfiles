@@ -5,7 +5,6 @@
 ;; Author: Cornelius Mika <cornelius.mika@gmail.com> and contributors
 ;; URL: http://github.com/nonsequitur/smex/
 ;; Version: 3.0
-;; X-Original-Version: 3.0
 ;; Keywords: convenience, usability
 
 ;; This file is not part of GNU Emacs.
@@ -124,7 +123,7 @@ Set this to nil to disable fuzzy matching."
         (ido-max-prospects 10)
         (minibuffer-completion-table choices))
     (ido-completing-read (smex-prompt-with-prefix-arg) choices nil nil
-                         initial-input extended-command-history (car choices))))
+                         initial-input 'extended-command-history (car choices))))
 
 (defun smex-prompt-with-prefix-arg ()
   (if (not current-prefix-arg)

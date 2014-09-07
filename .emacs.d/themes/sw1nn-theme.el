@@ -3,6 +3,9 @@
 
 (custom-theme-set-faces
  'sw1nn
+ '(clojure-character-face ((t (:foreground "#cb4b16") :inherit font-lock-doc-face)))
+ '(clojure-keyword-face ((t (:foreground "#00CC33") :inherit font-lock-doc-face)))
+ '(clojure-interop-method-face ((t (:foreground "#eeeeee") :inherit font-lock-doc-face)))
  '(compilation-column-number ((t (:foreground "#a57705") :inherit font-lock-doc-face)))
  '(compilation-error ((t (:underline (:color "#8b0000" :style wave)))))
  '(compilation-info ((t (:underline (:color "#008b00" :style wave)))))
@@ -97,6 +100,5 @@
  '(warning ((t (:underline (:color "#8b0000" :style wave)))))
  '(widget-field ((t (:background "#aaaaaa" :foreground "#002b36"))))
  '(widget-single-line-field ((t (:background "#222222" :foreground "#002b36"))))
- '(default ((t (:height 160 :background "black" :foreground "brightyellow" :family "DejaVu Sans Mono for Powerline")))))
-
+ '(default ((t (:height 160 :background "black" :foreground "#CDBA96" :family "DejaVu Sans Mono for Powerline")))))
 (provide-theme 'sw1nn)
