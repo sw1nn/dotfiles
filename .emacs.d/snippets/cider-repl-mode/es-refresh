@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: es-refresh
+# key: es-refresh
+# --
+(let [store (:store modular/system)]
+  (kixi.hecuba.data.entities.search/refresh-search
+   (:hecuba-session store) (:search-session store)))

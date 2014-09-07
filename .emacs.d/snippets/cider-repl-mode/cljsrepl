@@ -1,5 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: cljsrepl
-# key: cljsrepl
-# --
-(cemerick.piggieback/cljs-repl :repl-env (cemerick.austin/exec-env))

@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: cljs-repl
+# key: cljs-repl
+# --
+(cemerick.piggieback/cljs-repl)
