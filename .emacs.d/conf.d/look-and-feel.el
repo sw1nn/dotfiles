@@ -100,10 +100,6 @@
 
 (setq-default cursor-type 'bar)
 
-(defun sw1nn-untabify-p ()
-  (or (not (equal (file-name-extension (buffer-file-name)) "tsv"))
-      (string-match "part-\\d+" (file-name-base (buffer-file-name)))))
-
 (add-hook 'before-save-hook
           (lambda nil
             (when (sw1nn-untabify-p)
@@ -164,5 +160,5 @@
 (put 'narrow-to-region 'disabled nil)
 
 (windmove-default-keybindings)
-(powerline-default-theme))
+(powerline-default-theme)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
