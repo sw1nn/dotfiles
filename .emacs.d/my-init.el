@@ -4,14 +4,13 @@
 
 (require 'package)
 (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
-                  ("elpa" . "http://tromey.com/elpa/")))
+                  ("elpa" . "http://tromey.com/elpa/")
+                  ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
+                  ;; ("melpa" . "http://melpa.milkbox.net/packages/")
+                  ))
   (add-to-list 'package-archives source t))
 
-;;(add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 (package-initialize)
 
