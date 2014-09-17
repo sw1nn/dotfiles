@@ -87,4 +87,10 @@
 
 (put-clojure-indent 'go-loop 'defun)
 
+;; these make om-tools defcomponentk 'better'
+(put-clojure-indent 'display-name 'defun)
+(put-clojure-indent 'render 'defun)
+(put-clojure-indent 'render-state 'defun)
+(put-clojure-indent 'will-mount 'defun)
+
 (cljr-add-keybindings-with-prefix "C-c c")
