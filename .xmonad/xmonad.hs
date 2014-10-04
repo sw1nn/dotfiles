@@ -164,11 +164,11 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
                eagle       <+>
                (composeAll . concat $
     [ [isDialog        --> doCenterFloat]
-    , [role       =? r --> doFloat  | r <- myRoleFloats]
-    , [className  =? c --> doFloat  | c <- myCFloats]
-    , [title      =? t --> doFloat  | t <- myTFloats]
-    , [resource   =? r --> doFloat  | r <- myRFloats]
-    , [resource   =? i --> doIgnore | i <- myIgnores]
+    , [role       =? r --> doFloat       | r <- myRoleFloats]
+    , [className  =? c --> doCenterFloat | c <- myCenterFloats]
+    , [title      =? t --> doFloat       | t <- myTFloats]
+    , [resource   =? r --> doFloat       | r <- myRFloats]
+    , [resource   =? i --> doIgnore      | i <- myIgnores]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "1:web"   | x <- my1Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "2:edit"  | x <- my2Shifts]
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "4:virt"  | x <- my4Shifts]
@@ -181,22 +181,22 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     , [(className =? x <||> title =? x <||> resource =? x) --> doShift      "3:term"  | x <- my3Shifts]
     ])
     where
-    doShiftAndGo = doF . liftM2 (.) W.greedyView W.shift
-    myRoleFloats = ["pop-up"]
-    myCFloats    = []
-    myTFloats    = ["RescueTime Offline Time"]
-    myRFloats    = []
-    myIgnores    = ["desktop_window", "kdesktop"]
-    my1Shifts    = ["Google-chrome-stable"]
-    my2Shifts    = ["Emacs"]
-    my3Shifts    = ["Gnome-terminal"]
-    my4Shifts    = ["VirtualBox"]
-    my5Shifts    = ["Gimp"]
-    my6Shifts    = ["Eagle"]
-    my7Shifts    = []
-    my8Shifts    = ["Pidgin", "Skype", "Irc"]
-    my9Shifts    = ["play.google.com__music","Spotify","AudibleManager"]
-    role         = stringProperty "WM_WINDOW_ROLE"
+    doShiftAndGo        = doF . liftM2 (.) W.greedyView W.shift
+    myRoleFloats        = ["pop-up"]
+    myCenterFloats      = ["XGalaga", "Galculator"]
+    myTFloats           = ["RescueTime Offline Time"]
+    myRFloats           = []
+    myIgnores           = ["desktop_window", "kdesktop"]
+    my1Shifts           = ["Google-chrome-stable"]
+    my2Shifts           = ["Emacs"]
+    my3Shifts           = ["Gnome-terminal"]
+    my4Shifts           = ["VirtualBox"]
+    my5Shifts           = ["Gimp"]
+    my6Shifts           = ["Eagle"]
+    my7Shifts           = []
+    my8Shifts           = ["Pidgin", "Skype", "Irc"]
+    my9Shifts           = ["play.google.com__music","Spotify","AudibleManager"]
+    role                = stringProperty "WM_WINDOW_ROLE"
 
 nwsLogHook h = do
            dynamicLogWithPP $ nwsPP h

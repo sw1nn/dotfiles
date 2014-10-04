@@ -18,6 +18,9 @@ while (my $line = <$in>) {
     # Skip mgmt messages
     next if $line =~ /[0-9][0-9]:[0-9][0-9]  -!-/;
 
+    next if $line =~ /\bREDACT\b/;
+    $line =~ s/(\barup|kingston|nhs|anmedia|an-media.loader|momondo|cheapflights|DMG|ANM|FCA)\b/REDACTED/gi;
+
     print $out "$line\n";
 }
 
