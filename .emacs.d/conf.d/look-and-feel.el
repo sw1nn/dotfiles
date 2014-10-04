@@ -102,8 +102,8 @@
 
 (add-hook 'before-save-hook
           (lambda nil
-            (when (sw1nn-untabify-p)
-                (untabify (point-min) (point-max)))
+            ;;(when (sw1nn-untabify-p)
+            ;;    (untabify (point-min) (point-max)))
 
             (delete-trailing-whitespace)))
 
