@@ -3,7 +3,9 @@
                        [cider/cider-nrepl "0.7.0"]]
         :jvm-opts     ["-Xmx4G" "-Djava.net.preferIPv4Stack=true"]
         :injections   [(require 'clojure.pprint)
-                       (require 'pjstadig.humane-test-output)]
+                       (require 'pjstadig.humane-test-output)
+                       (pjstadig.humane-test-output/activate!)
+                       ]
         ;; :warn-on-reflection true
         :dependencies [[pjstadig/humane-test-output "0.6.0"]]
         }
