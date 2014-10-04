@@ -1,0 +1,14 @@
+#!/bin/sh
+
+filename=$1;
+title=$2;
+
+
+if [ -z "$1" -o -z "$2"  ]; then
+    echo "Usage: $0 file new-title"
+    exit 1;
+fi
+
+temp="${filename}.bak"
+mv "${filename}" "${temp}"
+ffmpeg -i "${temp}" -codec copy -metadata title="${title}" "${filename}"
