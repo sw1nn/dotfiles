@@ -19,6 +19,7 @@ set filetype=on
 set filetype=on 
 set tabstop=4
 set shiftwidth=4
+set cursorline
 
 abbr wq1 wq! 
 abbr wQ! wq! 
