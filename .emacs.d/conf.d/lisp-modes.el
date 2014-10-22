@@ -88,5 +88,7 @@
 (put-clojure-indent 'render 'defun)
 (put-clojure-indent 'render-state 'defun)
 (put-clojure-indent 'will-mount 'defun)
+(put-clojure-indent 'did-mount 'defun)
+(put-clojure-indent 'did-update 'defun)
 
 (cljr-add-keybindings-with-prefix "C-c c")
