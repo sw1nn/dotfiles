@@ -188,4 +188,27 @@
   (save-some-buffers)
   (cider-test-run-tests))
 
+(defun sw1nn-cider-load-current-buffer ()
+  (interactive)
+  (save-some-buffers)
+  (when (get-buffer cider-error-buffer)
+    (kill-buffer cider-error-buffer))
+  (cider-load-current-buffer))
+
+;; from http://stackoverflow.com/questions/2416655/file-path-to-clipboard-in-emacs
+(defun sw1nn-copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
+
+(defun sw1nn-json-format ()
+  (interactive)
+  (save-excursion
+    (shell-command-on-region (mark) (point) "python -m json.tool" (buffer-name) t)))
+
 (provide 'sw1nn)
