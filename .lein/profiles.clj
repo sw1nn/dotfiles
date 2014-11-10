@@ -1,6 +1,7 @@
 {:user {:plugins      [[lein-ancient "0.5.5"]
-                       [jonase/eastwood "0.1.3"]
-                       [cider/cider-nrepl "0.7.0"]]
+                       [jonase/eastwood "0.1.4"]
+                       [cider/cider-nrepl "0.7.0"]
+                       [com.palletops/uberimage "0.3.0"]]
         :jvm-opts     ["-Xmx4G" "-Djava.net.preferIPv4Stack=true"]
         :injections   [(require 'clojure.pprint)
                        (require 'pjstadig.humane-test-output)
