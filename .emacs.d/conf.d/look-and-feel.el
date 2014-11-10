@@ -145,13 +145,6 @@
 
 (auto-compression-mode t)
 (global-hl-line-mode t)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Pick up enhanced rectangle support from cua-mode, but not the other key bindings
-(require 'cua-base)
-(require 'cua-gmrk)
-(require 'cua-rect)
-(cua-mode 1)
-(setq cua-enable-cua-keys nil)
 
 (window-numbering-mode t)
 
