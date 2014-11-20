@@ -15,6 +15,8 @@ gpg-agent --daemon \
           --write-env-file "${HOME}/.gnupg/agent-info"
 
 source ${HOME}/.zshenv
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 
 xrdb -load ${HOME}/.Xresources
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/top_left_arrow 16
