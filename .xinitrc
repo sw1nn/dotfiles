@@ -45,9 +45,8 @@ thunar --daemon &
 pulseaudio --start &
 unclutter &
 rescuetime &
-dropboxd &
 
-synclient PalmDetect=1
+trackpad-ctl enable
 
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
