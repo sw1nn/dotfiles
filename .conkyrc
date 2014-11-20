@@ -106,7 +106,7 @@ $font${color4}Home -  $color${fs_free /home} of ${fs_size /home}  ${fs_free_perc
 ${color6}${fs_bar 6 /home}
 $font${color4}Windows - $color${fs_free /mnt/windows} of ${fs_size /mnt/windows}  ${fs_free_perc /mnt/windows}% free
 ${color6}${fs_bar 6 /mnt/windows}
-${font Deja Vu Sans for Powerline:weight=bold:size=10}${color5}INTERNET ${font Deja Vu Sans for Powerline:weight=bold:size=9}(${addr eth0}) ${hr 2}
+${font Deja Vu Sans for Powerline:weight=bold:size=10}${color5}INTERNET ${font Deja Vu Sans for Powerline:weight=bold:size=9}(${addr eth0})  ${execi 3600 aa_quota_left.py} ${hr 2}
 $font${color4}Down:$color6  ${downspeed eth0}/s${alignr}${color4}Up:$color6 ${upspeed eth0}/s
 ${color6}${downspeedgraph eth0 25,145 859900 586e75} ${alignr}${upspeedgraph eth0 25,145  859900 586e75}
 ${color4}Session:    ${color6}${totaldown eth0} $alignr ${goto 160}${totalup eth0}
