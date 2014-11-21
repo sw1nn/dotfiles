@@ -22,7 +22,10 @@ defaultKeyPath = os.path.join(userHome, '.ssh')
 
 def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_access_key, region):
 
-    # Connec to EC2; this assumes your boto config is in ~/.
+    configFileName = defaultKeyPath + '/' + config_file_name + '_config'
+    print("Generating " + configFileName)
+
+    # Connect to EC2; this assumes your boto config is in ~/.
     ec2Connection = boto.ec2.connect_to_region(
         region_name = region,
         aws_access_key_id  = aws_access_key_id,
@@ -54,10 +57,10 @@ def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_acce
                 instanceData.append((name.replace(' ','_'), instance.ip_address, instance.key_name, defaultUser))
 
         # Generate .ssh/config output
-        configFileName = defaultKeyPath + '/' + config_file_name + '_config'
         with open(configFileName, 'w') as f:
-            print("Generating " + configFileName)
-            f.write("#============ GENERATED DATA START ==================\n")
+            f.write("# -*- conf -*-\n")
+            f.write("# vim: ft=sshconfig\n")
+            f.write("#============ {0} START ==================\n".format(config_file_name))
             for data in instanceData:
                 f.write("Host {0}\n".format(data[0]))
                 f.write("    HostName {0}\n".format(data[1]))
@@ -66,7 +69,8 @@ def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_acce
                 f.write("    ControlPath ~/.ssh/ec2-{0}:%p.%r\n".format(data[0]))
                 f.write("\n")
 
-            f.write("#============ GENERATED DATA END ==================\n")
+            f.write("#============ {0} END ==================\n".format(config_file_name))
+
     except Error as inst:
         print(dir(inst))
         print "Error..." + inst.message
