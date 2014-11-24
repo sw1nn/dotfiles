@@ -86,7 +86,7 @@
              (or (sw1nn-clj-compilable-file-p (buffer-file-name))
                  (sw1nn-cljs-compilable-file-p (buffer-file-name))))
               (message "Compiling...")
-              (cider-load-current-buffer)
+              (cider-load-buffer)
               (if (and sw1nn-clj-test-on-save
                        (assq 'clojure-test minor-mode-alist))
                   (clojure-test-run-tests))))
@@ -103,7 +103,8 @@
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
 
 (defun sw1nn-nrepl-current-server-buffer ()
-  (let ((nrepl-server-buf (replace-regexp-in-string "connection" "server" (nrepl-current-connection-buffer))))
+  (let ((nrepl-server-buf (with-current-buffer (cider-current-repl-buffer)
+			    nrepl-server-buffer)))
     (when nrepl-server-buf
       (get-buffer nrepl-server-buf))))
 
@@ -123,22 +124,15 @@
         (set-window-point (car windows) (point-max))
         (setq windows (cdr windows))))))
 
-(defun sw1nn-cider-perspective (alt-layout)
-  (interactive "P")
+(defun sw1nn-cider-perspective ()
+  (interactive)
   (delete-other-windows)
   (split-window-below)
+  (cider-switch-to-relevant-repl-buffer)
   (windmove-down)
-  (switch-to-buffer (if alt-layout
-                        (cider-find-or-create-repl-buffer)
-                      (sw1nn-nrepl-current-server-buffer)))
   (shrink-window 15)
-  (windmove-up)
-  (split-window-right)
-  (windmove-right)
-  (switch-to-buffer (if alt-layout
-                        (sw1nn-nrepl-current-server-buffer)
-                      (cider-find-or-create-repl-buffer)))
-  (windmove-left))
+  (switch-to-buffer (sw1nn-nrepl-current-server-buffer))
+  (windmove-up))
 
 (defun sw1nn-run-cider-command (cmd)
   (with-current-buffer (cider-find-or-create-repl-buffer)
@@ -187,13 +181,6 @@
   (interactive)
   (save-some-buffers)
   (cider-test-run-tests))
-
-(defun sw1nn-cider-load-current-buffer ()
-  (interactive)
-  (save-some-buffers)
-  (when (get-buffer cider-error-buffer)
-    (kill-buffer cider-error-buffer))
-  (cider-load-current-buffer))
 
 ;; from http://stackoverflow.com/questions/2416655/file-path-to-clipboard-in-emacs
 (defun sw1nn-copy-file-name-to-clipboard ()
