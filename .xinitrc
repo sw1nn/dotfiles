@@ -56,9 +56,6 @@ browser &
 synclient PalmDetect=1
 syndaemon -i 1 -d
 
-browser &
-
-
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
 
