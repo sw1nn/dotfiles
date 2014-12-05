@@ -22,10 +22,7 @@ defaultKeyPath = os.path.join(userHome, '.ssh')
 
 def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_access_key, region):
 
-    configFileName = defaultKeyPath + '/' + config_file_name + '_config'
-    print("Generating " + configFileName)
-
-    # Connect to EC2; this assumes your boto config is in ~/.
+    # Connec to EC2; this assumes your boto config is in ~/.
     ec2Connection = boto.ec2.connect_to_region(
         region_name = region,
         aws_access_key_id  = aws_access_key_id,
@@ -54,13 +51,16 @@ def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_acce
                 else:
                     name = instance.id
 
-                instanceData.append((name.replace(' ','_'), instance.ip_address, instance.key_name, defaultUser))
+                if instance.ip_address:
+                    instanceData.append((name.replace(' ','_'), instance.ip_address, instance.key_name, defaultUser))
 
         # Generate .ssh/config output
+        configFileName = defaultKeyPath + '/' + config_file_name + '_config'
         with open(configFileName, 'w') as f:
-            f.write("# -*- conf -*-\n")
-            f.write("# vim: ft=sshconfig\n")
-            f.write("#============ {0} START ==================\n".format(config_file_name))
+            print("Generating " + configFileName)
+            f.write("#============ GENERATED DATA START ==================\n")
+            f.write("UserKnownHostsFile=/dev/null\n")
+            f.write("StrictHostKeyChecking=no\n\n")
             for data in instanceData:
                 f.write("Host {0}\n".format(data[0]))
                 f.write("    HostName {0}\n".format(data[1]))
@@ -69,8 +69,7 @@ def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_acce
                 f.write("    ControlPath ~/.ssh/ec2-{0}:%p.%r\n".format(data[0]))
                 f.write("\n")
 
-            f.write("#============ {0} END ==================\n".format(config_file_name))
-
+            f.write("#============ GENERATED DATA END ==================\n")
     except Error as inst:
         print(dir(inst))
         print "Error..." + inst.message
@@ -79,15 +78,18 @@ def main():
     Main method.
     '''
 
+    credentials = ConfigParser.ConfigParser()
+    credentials.readfp(open(userHome + '/.aws/credentials'))
+
     config = ConfigParser.ConfigParser()
     config.readfp(open(userHome + '/.aws/config'))
 
     for section in config.sections():
-        aws_access_key_id  = config.get(section, 'aws_access_key_id')
-        aws_secret_access_key = config.get(section, 'aws_secret_access_key')
+        section2 = re.sub('^profile ', '', section)
+        aws_access_key_id  = credentials.get(section2, 'aws_access_key_id')
+        aws_secret_access_key = credentials.get(section2, 'aws_secret_access_key')
         region = config.get(section, 'region')
-        profile_name = re.sub('^profile ', '', section)
-        generate_profile_config(profile_name,
+        generate_profile_config(section2,
                                 aws_access_key_id,
                                 aws_secret_access_key,
                                 region)
