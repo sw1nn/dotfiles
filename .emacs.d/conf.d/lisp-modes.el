@@ -64,6 +64,7 @@
 ;  (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key clojure-mode-map (kbd "M-t") 'sw1nn-transpose-kebab-words)
+  (define-key paredit-mode-map (kbd "M-r") nil) ;; remove very rude paredit binding.
   (set (make-local-variable 'font-lock-extra-managed-props) '(composition)) ; revert fancy characters.
   (set (make-local-variable 'scroll-margin) 2)
   )
