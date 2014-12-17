@@ -37,7 +37,7 @@ def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_acce
     try:
         # Iterate over reservations
         for reservation in reservationList:
-        # Iterate over instances
+            # Iterate over instances
             for instance in reservation.instances:
                 # Check for user tag
                 if 'user' in instance.tags:
@@ -51,7 +51,15 @@ def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_acce
                 else:
                     name = instance.id
 
-                instanceData.append((name.replace(' ','_'), instance.ip_address, instance.key_name, defaultUser))
+                if instance.ip_address:
+                    instanceData.append((name.replace(' ', '_'),
+                                         instance.ip_address,
+                                         instance.key_name, defaultUser))
+                    if 'MC Containers' in instance.tags:
+                        for container in instance.tags['MC Containers'].split():
+                            instanceData.append((container.replace(' ', '_'),
+                                                 instance.ip_address,
+                                                 instance.key_name, defaultUser))
 
         # Generate .ssh/config output
         configFileName = defaultKeyPath + '/' + config_file_name + '_config'
@@ -60,16 +68,22 @@ def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_acce
             f.write("#============ GENERATED DATA START ==================\n")
             for data in instanceData:
                 f.write("Host {0}\n".format(data[0]))
-                f.write("    HostName {0}\n".format(data[1]))
-                f.write("    User {0}\n".format(data[3]))
-                f.write("    IdentityFile {0}\n".format(os.path.join(defaultKeyPath, "{0}.pem".format(data[2]))))
-                f.write("    ControlPath ~/.ssh/ec2-{0}:%p.%r\n".format(data[0]))
+                f.write("    HostName {host_name}\n".format(host_name=data[1]))
+                f.write("    User {user}\n".format(user=data[3]))
+                f.write("    IdentityFile {identity_file}\n".format(
+                    identity_file=os.path. join(defaultKeyPath,
+                                                "{key_name}.pem".format(
+                                                    key_name=data[2]))))
+                f.write("    ControlPath ~/.ssh/ec2-{0}:%p.%r\n".format(
+                    data[0]))
                 f.write("\n")
 
             f.write("#============ GENERATED DATA END ==================\n")
-    except Error as inst:
+    except Exception as inst:
         print(dir(inst))
         print "Error..." + inst.message
+
+
 def main():
     '''
     Main method.
