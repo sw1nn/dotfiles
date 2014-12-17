@@ -17,3 +17,5 @@
         path= ~/.gitconfig_private
 [branch]
 	autosetuprebase = always
+[init]
+	templatedir = ~/.git_template
