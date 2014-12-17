@@ -20,13 +20,16 @@ defaultUser = 'ec2-user'
 userHome = expanduser("~")
 defaultKeyPath = os.path.join(userHome, '.ssh')
 
-def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_access_key, region):
+
+def generate_profile_config(config_file_name,
+                            aws_access_key_id,
+                            aws_secret_access_key, region):
 
     # Connec to EC2; this assumes your boto config is in ~/.
     ec2Connection = boto.ec2.connect_to_region(
-        region_name = region,
-        aws_access_key_id  = aws_access_key_id,
-        aws_secret_access_key = aws_secret_access_key)
+        region_name=region,
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key)
 
     # Get list of reservations.
     reservationList = ec2Connection.get_all_instances()
@@ -56,10 +59,11 @@ def generate_profile_config(config_file_name, aws_access_key_id, aws_secret_acce
                                          instance.ip_address,
                                          instance.key_name, defaultUser))
                     if 'MC Containers' in instance.tags:
-                        for container in instance.tags['MC Containers'].split():
+                        containers = instance.tags['MC Containers'].split()
+                        for container in containers:
                             instanceData.append((container.replace(' ', '_'),
                                                  instance.ip_address,
-                                                 instance.key_name, defaultUser))
+                                                 instance.key_name, user))
 
         # Generate .ssh/config output
         configFileName = defaultKeyPath + '/' + config_file_name + '_config'
@@ -99,7 +103,7 @@ def main():
 
     for section in config.sections():
         section2 = re.sub('^profile ', '', section)
-        aws_access_key_id  = credentials.get(section2, 'aws_access_key_id')
+        aws_access_key_id = credentials.get(section2, 'aws_access_key_id')
         aws_secret_access_key = credentials.get(section2, 'aws_secret_access_key')
         region = config.get(section, 'region')
         generate_profile_config(section2,
