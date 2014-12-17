@@ -6,8 +6,7 @@
 ;; (elpy-enable)
 ;; (elpy-use-ipython)
 
-(push "~/.virtualenvs/pymacs/bin" exec-path)
-(setenv "PATH"
-        (concat
-         "~/.virtualenvs/pymacs/bin" ":"
-         (getenv "PATH")))
+;; pip2 install rope
+;; pip2 install flake8
+
+(elpy-enable)
