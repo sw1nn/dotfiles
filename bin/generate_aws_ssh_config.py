@@ -78,8 +78,7 @@ def generate_profile_config(config_file_name,
             f.write("#============ GENERATED DATA END ==================\n")
     except Exception as inst:
         print(dir(inst))
-        print "Error..." + inst.message
-        
+        print("Error..." + inst.message)
 
 def main():
     '''
@@ -94,8 +93,10 @@ def main():
 
     for section in config.sections():
         section2 = re.sub('^profile ', '', section)
-        aws_access_key_id = credentials.get(section2, 'aws_access_key_id')
-        aws_secret_access_key = credentials.get(section2, 'aws_secret_access_key')
+        aws_access_key_id = credentials.get(section2,
+                                            'aws_access_key_id')
+        aws_secret_access_key = credentials.get(section2,
+                                                'aws_secret_access_key')
         region = config.get(section, 'region')
         generate_profile_config(section2,
                                 aws_access_key_id,
