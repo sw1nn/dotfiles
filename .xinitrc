@@ -14,7 +14,7 @@ gpg-agent --daemon \
           --enable-ssh-support \
           --write-env-file "${HOME}/.gnupg/agent-info"
 
-source ${HOME}/.zshenv
+source ${HOME}/.zprofile
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 
