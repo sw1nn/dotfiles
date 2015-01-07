@@ -15,4 +15,10 @@
             (define-key cider-mode-map (kbd "C-c C-c") 'sw1nn-send-expr-to-repl)
             (define-key cider-mode-map (kbd "C-c C-e") 'sw1nn-send-previous-expr-to-repl)
             (cider-turn-on-eldoc-mode)))
+
+;; line highlighting is pain in the repl.
+(add-hook 'cider-repl-mode-hook
+          (lambda nil
+            (make-local-variable 'global-hl-line-mode)
+            (setq global-hl-line-mode nil)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
