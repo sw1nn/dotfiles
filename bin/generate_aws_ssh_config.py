@@ -70,6 +70,8 @@ def generate_profile_config(config_file_name,
         with open(configFileName, 'w') as f:
             print("Generating " + configFileName)
             f.write("#============ GENERATED DATA START ==================\n")
+            f.write("UserKnownHostsFile=/dev/null\n")
+            f.write("StrictHostKeyChecking=no\n\n")
             for data in instanceData:
                 f.write("Host {0}\n".format(data[0]))
                 f.write("    HostName {host_name}\n".format(host_name=data[1]))
@@ -85,7 +87,7 @@ def generate_profile_config(config_file_name,
             f.write("#============ GENERATED DATA END ==================\n")
     except Exception as inst:
         print(dir(inst))
-        print "Error..." + inst.message
+        print("Error..." + inst.message)
 
 
 def main():
@@ -93,16 +95,20 @@ def main():
     Main method.
     '''
 
+    credentials = ConfigParser.ConfigParser()
+    credentials.readfp(open(userHome + '/.aws/credentials'))
+
     config = ConfigParser.ConfigParser()
     config.readfp(open(userHome + '/.aws/config'))
 
     for section in config.sections():
         section2 = re.sub('^profile ', '', section)
-        aws_access_key_id = credentials.get(section2, 'aws_access_key_id')
-        aws_secret_access_key = credentials.get(section2, 'aws_secret_access_key')
+        aws_access_key_id = credentials.get(section2,
+                                            'aws_access_key_id')
+        aws_secret_access_key = credentials.get(section2,
+                                                'aws_secret_access_key')
         region = config.get(section, 'region')
-        profile_name = re.sub('^profile ', '', section)
-        generate_profile_config(profile_name,
+        generate_profile_config(section2,
                                 aws_access_key_id,
                                 aws_secret_access_key,
                                 region)
