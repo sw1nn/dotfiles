@@ -27,6 +27,7 @@
 *.zip
 *.zipx
 
+
 # Logs and databases #
 
 *.log
@@ -57,6 +58,9 @@ target/*
 .lein-repl-history
 .lein/repl-port
 .repl
+
+.emacs.d/elpa/elpy*/elpy/__pycache__
+
 
 #octave
 octave-core
