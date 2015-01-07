@@ -43,7 +43,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-x p") 'magit-find-file-completing-read)
 (define-key my-keys-minor-mode-map (kbd "C-c y") 'bury-buffer)
 (define-key my-keys-minor-mode-map (kbd "C-c v") 'revert-buffer)
-(define-key my-keys-minor-mode-map (kbd "C-x C-m") 'multi-term)
+(define-key my-keys-minor-mode-map (kbd "C-x C-m") 'sw1nn-ansi-term)
 (define-key my-keys-minor-mode-map (kbd "C-+") 'text-scale-increase)
 (define-key my-keys-minor-mode-map (kbd "C--") 'text-scale-decrease)
 (define-key my-keys-minor-mode-map (kbd "M-y") 'browse-kill-ring)

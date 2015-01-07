@@ -198,4 +198,8 @@
   (save-excursion
     (shell-command-on-region (mark) (point) "python -m json.tool" (buffer-name) t)))
 
+(defun sw1nn-ansi-term ()
+  (interactive)
+  (ansi-term (getenv "SHELL")))
+
 (provide 'sw1nn)
