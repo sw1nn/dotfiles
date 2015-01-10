@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# called from a udev rule that looks something like this:
+
+# 73-beaglebone-black.rules
+# ACTION=="add", DRIVERS=="usb", ATTRS{serial}=="xxxxxxxxxxxxx", RUN+="/usr/local/bin/beaglebone-setup"
+
+
+if [ -n "${ID_NET_NAME}" ]; then
+    ip addr add dev ${ID_NET_NAME} 192.168.7.1/30
+    ip link set dev ${ID_NET_NAME} up
+fi
