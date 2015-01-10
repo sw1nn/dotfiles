@@ -1,0 +1,40 @@
+#! /bin/bash
+
+# By Marc MERLIN <marc_soft@merlins.org> 2014/03/20
+# License: Apache-2.0
+
+test -x /sbin/btrfs || exit 0
+
+export PATH=/usr/local/bin:$PATH
+
+# bash shortcut for `basename $0`
+PROG=${0##*/}
+lock=/var/run/$PROG
+
+# shlock (from inn) does the right thing and grabs a lock for a dead process
+# (it checks the PID in the lock file and if it's not there, it
+# updates the PID with the value given to -p)
+if ! shlock -p $$ -f $lock; then
+    echo "$lock held, quitting" >&2
+    exit
+fi
+
+if which on_ac_power >/dev/null 2>&1; then
+    ON_BATTERY=0
+    on_ac_power >/dev/null 2>&1 || ON_BATTERY=$?
+    if [ "$ON_BATTERY" -eq 1 ]; then
+	exit 0
+    fi
+fi
+
+for btrfs in $(grep btrfs /proc/mounts | awk '{ print $1 }' | sort -u)
+do
+    logger "Starting scrub of $btrfs"
+    tail -n 0 -f /var/log/syslog | grep "BTRFS: " | grep -Ev '(disk space caching is enabled|unlinked .* orphans|turning on discard|device label .* devid .* transid|enabling SSD mode|BTRFS: has skinny extents|BTRFS: device label)' &
+    /sbin/btrfs scrub start -Bd $btrfs
+    pkill -f 'tail -n 0 -f /var/log/syslog'
+    logger "Ended scrub of $btrfs"
+done
+
+rm $lock
+
