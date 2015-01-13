@@ -11,12 +11,14 @@ fi
 gpg-agent --daemon \
           --display "${DISPLAY}" \
           --keep-display \
-          --enable-ssh-support \
           --write-env-file "${HOME}/.gnupg/agent-info"
 
-source ${HOME}/.zprofile
-export _JAVA_AWT_WM_NONREPARENTING=1
+export SSH_AUTH_SOCK=/tmp/neale/ssh-agent.sock
 
+# Source Prezto.
+source ${HOME}/.zprofile
+
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 xrdb -load ${HOME}/.Xresources
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/top_left_arrow 16
