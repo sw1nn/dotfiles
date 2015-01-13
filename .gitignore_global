@@ -46,6 +46,7 @@ Thumbs.db
 .#*
 *~
 .shell_history
+.yas-compiled-snippets.el
 
 # eclipse project
 .classpath
