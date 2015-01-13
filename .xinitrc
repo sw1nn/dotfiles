@@ -8,7 +8,16 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
     unset f
 fi
 
-source ${HOME}/.zshenv
+gpg-agent --daemon \
+          --display "${DISPLAY}" \
+          --keep-display \
+          --write-env-file "${HOME}/.gnupg/agent-info"
+
+export SSH_AUTH_SOCK=/tmp/neale/ssh-agent.sock
+
+# Source Prezto.
+source ${HOME}/.zprofile
+
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 xrdb -load ${HOME}/.Xresources
