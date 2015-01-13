@@ -194,7 +194,7 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     my5Shifts           = ["Gimp"]
     my6Shifts           = ["Eagle"]
     my7Shifts           = []
-    my8Shifts           = ["Pidgin", "Skype", "Irc"]
+    my8Shifts           = ["Pidgin", "Skype", "Irc", "HipChat"]
     my9Shifts           = ["play.google.com__music","Spotify","AudibleManager"]
     role                = stringProperty "WM_WINDOW_ROLE"
 
