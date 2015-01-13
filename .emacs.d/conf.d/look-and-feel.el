@@ -33,6 +33,7 @@
 (add-to-list 'default-frame-alist '(width . 160))
 
 (setq inhibit-splash-screen t)
+(setq make-backup-files nil)
 
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
