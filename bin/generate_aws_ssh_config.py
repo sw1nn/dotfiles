@@ -42,22 +42,13 @@ def generate_profile_config(config_file_name,
         for reservation in reservationList:
             # Iterate over instances
             for instance in reservation.instances:
-                # Check for user tag
-                if 'user' in instance.tags:
-                    user = instance.tags['user']
-                else:
-                    user = defaultUser
-
-                # Check for name tag
-                if 'Name' in instance.tags:
-                    name = instance.tags['Name']
-                else:
-                    name = instance.id
+                user = instance.tags.get('User', defaultUser)
+                name = instance.tags.get('Name', instance.id)
 
                 if instance.ip_address:
                     instanceData.append((name.replace(' ', '_'),
                                          instance.ip_address,
-                                         instance.key_name, defaultUser))
+                                         instance.key_name, user))
                     if 'MC Containers' in instance.tags:
                         containers = instance.tags['MC Containers'].split()
                         for container in containers:
@@ -88,7 +79,7 @@ def generate_profile_config(config_file_name,
     except Exception as inst:
         print(dir(inst))
         print "Error..." + inst.message
-
+        
 
 def main():
     '''
