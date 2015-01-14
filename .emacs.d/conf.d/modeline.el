@@ -14,6 +14,6 @@
 ;(diminish 'undo-tree-mode  "↶")
 (diminish 'volatile-highlights-mode  "ℏ")
 (diminish 'yas-minor-mode  "✂")
-(diminish 'git-gutter-mode "↹")
+(diminish 'git-gutter+-mode "↹")
 
 ;; http://en.wikipedia.org/wiki/Miscellaneous_Symbols
