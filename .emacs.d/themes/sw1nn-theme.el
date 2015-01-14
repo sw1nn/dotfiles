@@ -49,7 +49,7 @@
  '(git-gutter-fr:added ((t (:foreground "#728a05"))))
  '(git-gutter-fr:deleted ((t (:foreground "#8b0000"))))
  '(git-gutter-fr:modified ((t (:foreground "#5859b7"))))
- '(highlight ((t (:background "#073642"))))
+ '(highlight ((t (:background "#000000"))))
  '(header-line ((t (:inherit mode-line :background "grey20" :foreground "grey90" :box (:line-width 2 :color "grey75" :style released-button)))))
  '(hl-line-face ((t (:background "#073642"))))
  '(hl-sexp-face ((t (:background "#073642"))))
