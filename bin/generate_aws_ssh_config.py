@@ -15,24 +15,20 @@ import re
 
 # Default user
 defaultUser = 'ec2-user'
+defaultRegion = 'eu-west-1'
 
 # Default key path
 userHome = expanduser("~")
 defaultKeyPath = os.path.join(userHome, '.ssh')
 
 
-def generate_profile_config(config_file_name,
-                            aws_access_key_id,
-                            aws_secret_access_key, region):
+def generate_profile_config(region_name, profile_name):
 
-    # Connec to EC2; this assumes your boto config is in ~/.
-    ec2Connection = boto.ec2.connect_to_region(
-        region_name=region,
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key)
+    ec2 = boto.ec2.connect_to_region(region_name=region_name,
+                                     profile_name=profile_name)
 
     # Get list of reservations.
-    reservationList = ec2Connection.get_all_instances()
+    reservationList = ec2.get_all_instances()
 
     # Initialize instance data tuple
     instanceData = []
@@ -66,9 +62,9 @@ def generate_profile_config(config_file_name,
                                                  instance.key_name, user))
 
         # Generate .ssh/config output
-        configFileName = defaultKeyPath + '/' + config_file_name + '_config'
-        with open(configFileName, 'w') as f:
-            print("Generating " + configFileName)
+        config_file_name = defaultKeyPath + '/' + profile_name + '_config'
+        with open(config_file_name, 'w') as f:
+            print("Generating " + config_file_name)
             f.write("#============ GENERATED DATA START ==================\n")
             f.write("UserKnownHostsFile=/dev/null\n")
             f.write("StrictHostKeyChecking=no\n\n")
@@ -95,23 +91,13 @@ def main():
     Main method.
     '''
 
-    credentials = ConfigParser.ConfigParser()
-    credentials.readfp(open(userHome + '/.aws/credentials'))
-
     config = ConfigParser.ConfigParser()
     config.readfp(open(userHome + '/.aws/config'))
 
     for section in config.sections():
-        section2 = re.sub('^profile ', '', section)
-        aws_access_key_id = credentials.get(section2,
-                                            'aws_access_key_id')
-        aws_secret_access_key = credentials.get(section2,
-                                                'aws_secret_access_key')
-        region = config.get(section, 'region')
-        generate_profile_config(section2,
-                                aws_access_key_id,
-                                aws_secret_access_key,
-                                region)
+        profile_name = re.sub('^profile ', '', section)
+        region_name = config.get(section, 'region', defaultRegion)
+        generate_profile_config(region_name, profile_name)
 
 if __name__ == "__main__":
     main()
