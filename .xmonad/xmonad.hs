@@ -70,6 +70,7 @@ barFont = "aldrich-11"
 myWorkspaces    = ["1:web","2:edit","3:term","4:virt","5:gimp","6","7","8:im","9:music"]
 
 statusBarCmd = "dzen2" ++
+               " -o 100" ++
                " -bg '" ++ soBackground ++ "'" ++
                " -fg '" ++ soBrightBlue ++ "'" ++
                " -sa c" ++

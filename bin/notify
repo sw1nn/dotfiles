@@ -3,4 +3,4 @@
 seconds=$1
 shift;
 
-echo $@ | dzen2 -title-name title -y 16 -u -p $seconds -sa right -expand left -ta l -xs 1
+echo " " $@ " " | dzen2 -o 50 -title-name title -tw 400 -x 800 -y 525  -u -p $seconds -sa right -ta c -xs 1 

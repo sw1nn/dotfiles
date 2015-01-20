@@ -60,8 +60,8 @@ URxvt.cursorUnderline:                   false
 URxvt.pointerBlank:                      true
 !!Source http://github.com/altercation/solarized
 
-URxvt*background:                        [40]#002b36
-URxvt*foreground:                        #657b83
+URxvt*background:                        [70]#002b36
+URxvt*foreground:                        #879ca5
 !!*fading:                               40
 URxvt*fadeColor:                         #010101
 URxvt*cursorColor:                       #93a1a1
@@ -106,7 +106,8 @@ URxvt*iso14755:                          false
 
 dzen2.font:                              xft:DejaVu Sans Mono for Powerline:pixelsize=64
 dzen2.foreground:                        #fdf6e3
-dzen2.background:                        #8b0000
+dzen2.background:                        #555555
+dzen2.opacity:                           70 
 
 Xcursor.theme:                           Adwaita
 Xcursor.size:                            16
