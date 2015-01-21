@@ -1387,7 +1387,7 @@ xkb_symbols "pc_us_inet(evdev)_ctrl(nocaps)" {
     key <I165> {         [  XF86MyComputer ] };
     key <I166> {         [        XF86Back ] };
     key <I167> {         [     XF86Forward ] };
-    key <I169> {         [       XF86Eject ] };
+    key <I169> {         [       Multi_key ] };
     key <I170> {         [       XF86Eject,       XF86Eject ] };
     key <I171> {         [   XF86AudioNext ] };
     key <I172> {         [   XF86AudioPlay,  XF86AudioPause ] };
