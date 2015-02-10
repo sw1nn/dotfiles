@@ -1,5 +1,6 @@
 #!/bin/sh
 
+ICON_HOME=${HOME}/workspace/dotfiles/icons
 
 function dispatch_to_spotify {
  dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.$1
@@ -20,12 +21,17 @@ function currently_playing {
 }
 
 function icon {
-   echo "^i(${HOME}/dotfiles/icons/${1}.xbm"
+    echo "^i(${ICON_HOME}/${1}.xbm)"
 }
 
 function toggle_pause {
     dispatch_to_spotify PlayPause
 }
+
+function usage() {
+    echo "Usage: $0 (toggle-pause|stop|prev|rewind|next|forward|thumbs-up|thumbs-down|currently-playing)"
+}
+
 cmd=$1
 shift;
 
@@ -76,6 +82,7 @@ case $cmd in
         currently_playing  "$@"
         ;;
     *)
-        echo "No Such command"
+        usage
+        exit 1
         ;;
 esac
