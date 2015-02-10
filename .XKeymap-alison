@@ -1,5 +1,5 @@
 xkb_keymap {
-xkb_keycodes "evdev+aliases(qwerty)" {
+xkb_keycodes "evdev_aliases(qwerty)" {
     minimum = 8;
     maximum = 255;
      <ESC> = 9;
@@ -1086,7 +1086,7 @@ xkb_compatibility "complete" {
     };
 };
 
-xkb_symbols "pc+us+inet(evdev)" {
+xkb_symbols "pc_us_inet(evdev)" {
 
     name[group1]="English (US)";
 
@@ -1357,7 +1357,7 @@ xkb_symbols "pc+us+inet(evdev)" {
     key <HNGL> {         [          Hangul ] };
     key <HJCV> {         [    Hangul_Hanja ] };
     key <LWIN> {         [         Super_L ] };
-    key <RWIN> {         [           Alt_R ] };
+    key <RWIN> {         [       Multi_key ] };
     key <COMP> {         [         Hyper_R ] };
     key <STOP> {         [          Cancel ] };
     key <AGAI> {         [            Redo ] };
