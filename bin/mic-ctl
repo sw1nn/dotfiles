@@ -3,14 +3,22 @@
 cmd=$1
 shift;
 
+mic_device=alsa_input.usb-046d_0809_2C254765-02-U0x46d0x809.analog-mono
+
+
+function icon {
+   echo "^i(${HOME}/workspace/dotfiles/icons/${1}.xbm)"
+}
+
 case $cmd in
     unmute)
-        pactl set-source-mute 0 0
-        notify 1 "Mic Unmuted"
+        pactl set-source-mute ${mic_device} 0
+        pactl set-source-volume ${mic_device} 750
+        notify 1 $(icon mic-unmute64)
         ;;
     mute)
-        pactl set-source-mute 0 1
-        notify 1 "Mic Muted"
+        pactl set-source-mute ${mic_device} 1
+        notify 1 $(icon mic-mute64)
         ;;
     *)
         echo "No Such command"
