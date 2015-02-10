@@ -57,7 +57,7 @@ def generate_profile_config(region_name, profile_name):
                     if 'MC Containers' in instance.tags:
                         containers = instance.tags['MC Containers'].split()
                         for container in containers:
-                            instanceData.append((container.replace(' ', '_'),
+                            instanceData.append((container.replace(' ', '_') + "-" + name,
                                                  instance.ip_address,
                                                  instance.key_name, user))
 
@@ -72,10 +72,11 @@ def generate_profile_config(region_name, profile_name):
                 f.write("Host {0}\n".format(data[0]))
                 f.write("    HostName {host_name}\n".format(host_name=data[1]))
                 f.write("    User {user}\n".format(user=data[3]))
-                f.write("    IdentityFile {identity_file}\n".format(
-                    identity_file=os.path. join(defaultKeyPath,
-                                                "{key_name}.pem".format(
-                                                    key_name=data[2]))))
+                if (data[2] != None):
+                    f.write("    IdentityFile {identity_file}\n".format(
+                        identity_file=os.path. join(defaultKeyPath,
+                                                    "{key_name}.pem".format(
+                                                        key_name=data[2]))))
                 f.write("    ControlPath ~/.ssh/ec2-{0}:%p.%r\n".format(
                     data[0]))
                 f.write("\n")
