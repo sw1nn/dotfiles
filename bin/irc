@@ -1,6 +1,6 @@
 #!/bin/bash
 
-term_prog="urxvt -title Irc -e"
+term_prog="urxvt -bg [85]#002b36 -title Irc -e"
 
 CONFIG=${HOME}/.irc-connection
 
