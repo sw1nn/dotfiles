@@ -42,11 +42,9 @@ if [ "$(hostname)" == "alison" ]; then
   conky &
 fi
 
-TERM=xterm-256color emacs --daemon &
-git-annex assistant --autostart &
+#git-annex assistant --autostart &
 xscreensaver &
 thunar --daemon &
-pulseaudio --start &
 unclutter &
 rescuetime &
 
@@ -54,6 +52,9 @@ trackpad-ctl enable
 
 browser &
 
+rescuetime &
+
+compton -c -o 0.5 &
 
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
