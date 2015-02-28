@@ -1,6 +1,3 @@
-[submodule "submodule/ritz"]
-        path = submodule/ritz
-        url = git://github.com/pallet/ritz.git
 [submodule "submodule/prezto"]
         path = submodule/prezto
         url = git@github.com:sw1nn/prezto.git
