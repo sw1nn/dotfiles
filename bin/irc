@@ -1,6 +1,6 @@
 #!/bin/bash
 
-term_prog="urxvt -title Irc -e"
+term_prog="gnome-terminal --role=Irc -e"
 
 CONFIG=${HOME}/.irc-connection
 
@@ -11,11 +11,11 @@ if [ "$(hostname)" != "alison" ]; then
     echo "No config, try echo -e 'IRC_PORTS=1234:2345\nIRC_HOST=blah.com' > ~/.irc-connection"
     exit 1
   fi
-  exec ${term_prog} mosh -p $IRC_PORTS $IRC_HOST irc
+  exec ${term_prog} "mosh -p $IRC_PORTS $IRC_HOST irc"
 fi
 
 if [ "$TERM" = "dumb" ]; then
-    exec ${term_prog} irc
+    exec ${term_prog} "irc"
 fi
 
 TMUX_TMPDIR=/tmp/tmux-1000 exec tmux attach-session -d -t IRC;
