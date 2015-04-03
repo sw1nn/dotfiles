@@ -9,6 +9,7 @@
                 ("\\.js\\'" . js3-mode)
                 ("\\.gexf\\'" . nxml-mode)
                 ("\\.html\\'" . nxml-mode)
-                ("\\.cql\\'" . sql-mode)))
+                ("\\.cql\\'" . sql-mode)
+		("\\.json\\'" . js3-mode)))
   (add-to-list 'auto-mode-alist mode))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
