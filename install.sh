@@ -19,9 +19,6 @@ do
     link_with_backup "${dotfile}" >> ${LOGFILE}
 done
 
-cecho "magenta" "Sourcing os specific stuff, just in case"
-. ~/.bashrc-os-specfic
-
 cecho "yellow" "Installing ELPA packages..."
 (install_elpa) 2>&1 >> "${LOGFILE}"
 
