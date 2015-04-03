@@ -4,8 +4,8 @@
 
 ;; Author: Syohei YOSHIDA <syohex@gmail.com>
 ;; URL: https://github.com/syohex/emacs-git-gutter
-;; Version: 0.79
-;; X-Original-Version: 0.79
+;; Version: 0.80
+;; X-Original-Version: 0.80
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -77,6 +77,11 @@ gutter information of other windows."
   "hook points of updating gutter"
   :type '(list (hook :tag "HookPoint")
                (repeat :inline t (hook :tag "HookPoint")))
+  :group 'git-gutter)
+
+(defcustom git-gutter:always-show-separator nil
+  "Show separator even if there are no changes."
+  :type 'boolean
   :group 'git-gutter)
 
 (defcustom git-gutter:separator-sign nil
@@ -578,7 +583,7 @@ gutter information of other windows."
                   (setq curline (1+ end-line))))))))
 
 (defun git-gutter:view-diff-infos (diffinfos)
-  (when diffinfos
+  (when (or diffinfos git-gutter:always-show-separator)
     (when (or git-gutter:unchanged-sign git-gutter:separator-sign)
       (git-gutter:view-for-unchanged))
     (git-gutter:view-set-overlays diffinfos))
