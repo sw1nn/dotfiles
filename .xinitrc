@@ -10,8 +10,7 @@ fi
 
 gpg-agent --daemon \
           --display "${DISPLAY}" \
-          --keep-display \
-          --write-env-file "${HOME}/.gnupg/agent-info"
+          --keep-display
 
 export SSH_AUTH_SOCK=/tmp/neale/ssh-agent.sock
 
