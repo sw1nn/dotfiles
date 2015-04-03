@@ -7,17 +7,7 @@ function dispatch_to_spotify {
 }
 
 function currently_playing {
-    local sep
-    if [ "$1" = "alt" ]; then
-        sep="~"
-    else
-        sep="\n"
-    fi
-    xdotool \
-        search --classname ${GOOGLE_PLAY_CLASS_WM_CLASS} \
-        getwindowname \
-      | egrep -v -e '(Settings|Listen Now|Artists|Radio|Featured|Queue|Thumbs up|Last Added|Free and Purchased|Shared with me)'\
-      | sed -e "s/\(.*\) - \(.*\) - Google Play Music/\1$sep\2/"
+    spotify_getinfo.py
 }
 
 function icon {
@@ -55,6 +45,7 @@ case $cmd in
     prev)
         dispatch_to_spotify Previous
         notify 1 $(icon media-prev-icon64)
+        sleep 1
         notify 3 "^bg(grey50)$(currently_playing alt)"
         ;;
     rewind)
