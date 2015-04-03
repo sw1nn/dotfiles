@@ -1,8 +1,8 @@
 (require 'magit)
 
-(require 'git-gutter+)
+(require 'git-gutter)
 
-(global-git-gutter+-mode)
+(global-git-gutter-mode)
 
 (setq magit-process-popup-time -1
       magit-repo-dirs '("~/workspace")
