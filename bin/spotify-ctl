@@ -1,31 +1,27 @@
 #!/bin/sh
 
+ICON_HOME=${HOME}/workspace/dotfiles/icons
 
 function dispatch_to_spotify {
  dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.$1
 }
 
 function currently_playing {
-    local sep
-    if [ "$1" = "alt" ]; then
-        sep="~"
-    else
-        sep="\n"
-    fi
-    xdotool \
-        search --classname ${GOOGLE_PLAY_CLASS_WM_CLASS} \
-        getwindowname \
-      | egrep -v -e '(Settings|Listen Now|Artists|Radio|Featured|Queue|Thumbs up|Last Added|Free and Purchased|Shared with me)'\
-      | sed -e "s/\(.*\) - \(.*\) - Google Play Music/\1$sep\2/"
+    spotify_getinfo.py
 }
 
 function icon {
-   echo "^i(${HOME}/dotfiles/icons/${1}.xbm"
+    echo "^i(${ICON_HOME}/${1}.xbm)"
 }
 
 function toggle_pause {
     dispatch_to_spotify PlayPause
 }
+
+function usage() {
+    echo "Usage: $0 (toggle-pause|stop|prev|rewind|next|forward|thumbs-up|thumbs-down|currently-playing)"
+}
+
 cmd=$1
 shift;
 
@@ -49,6 +45,7 @@ case $cmd in
     prev)
         dispatch_to_spotify Previous
         notify 1 $(icon media-prev-icon64)
+        sleep 1
         notify 3 "^bg(grey50)$(currently_playing alt)"
         ;;
     rewind)
@@ -76,6 +73,7 @@ case $cmd in
         currently_playing  "$@"
         ;;
     *)
-        echo "No Such command"
+        usage
+        exit 1
         ;;
 esac
