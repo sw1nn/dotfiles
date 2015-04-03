@@ -59,4 +59,6 @@ compton -c -o 0.5 &
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
 
+compton -c -o 0.5 &
+
 exec xmonad 2>&1 >| ${HOME}/.xmonad.log
