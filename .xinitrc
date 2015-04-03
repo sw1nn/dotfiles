@@ -65,4 +65,6 @@ if [ -f "/usr/lib/openssh/ssh-askpass-fullscreen" ] ; then
   export SSH_ASKPASS
 fi
 
+compton -c -o 0.5 &
+
 exec xmonad 2>&1 >| ${HOME}/.xmonad.log
