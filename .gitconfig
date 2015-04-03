@@ -10,7 +10,7 @@
 [color]
         ui = true
 [push]
-        default = tracking
+	default = simple
 [diff]
         algorithm = patience
 [include]
