@@ -1,0 +1,5 @@
+#!/bin/bash
+if test $(git rev-parse --abbrev-ref HEAD) = "master" ; then
+  echo -e "Cannot commit to master by default.\nIf you really think you want to you should get a colleague to review and then do\n\n\tgit commit --no-verify\n"
+  exit 1
+fi
