@@ -1,8 +1,10 @@
 (require 'magit)
 
+(require 'git-gutter)
+
 (global-git-gutter-mode)
 
-(setq magit-process-popup-time 5
+(setq magit-process-popup-time -1
       magit-repo-dirs '("~/workspace")
       magit-completing-read-function 'magit-ido-completing-read
       magit-log-margin-spec '(30 nil magit-duration-spec))
