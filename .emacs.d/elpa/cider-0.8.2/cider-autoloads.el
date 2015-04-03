@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
 
-;;;### (autoloads nil "cider" "cider.el" (21615 6292 742521 396000))
+;;;### (autoloads nil "cider" "cider.el" (21757 49916 445801 438000))
 ;;; Generated autoloads from cider.el
 
 (autoload 'cider-version "cider" "\
@@ -28,8 +28,8 @@ Create REPL buffer and start an nREPL client connection.
 
 ;;;***
 
-;;;### (autoloads nil "cider-apropos" "cider-apropos.el" (21615 6292
-;;;;;;  672522 238000))
+;;;### (autoloads nil "cider-apropos" "cider-apropos.el" (21757 49916
+;;;;;;  329137 378000))
 ;;; Generated autoloads from cider-apropos.el
 
 (autoload 'cider-apropos "cider-apropos" "\
@@ -46,8 +46,8 @@ Shortcut for (cider-apropos <query> nil t).
 
 ;;;***
 
-;;;### (autoloads nil "cider-browse-ns" "cider-browse-ns.el" (21615
-;;;;;;  6292 665855 652000))
+;;;### (autoloads nil "cider-browse-ns" "cider-browse-ns.el" (21757
+;;;;;;  49916 335803 895000))
 ;;; Generated autoloads from cider-browse-ns.el
 
 (autoload 'cider-browse-ns "cider-browse-ns" "\
@@ -62,8 +62,8 @@ List all loaded namespaces in BUFFER.
 
 ;;;***
 
-;;;### (autoloads nil "cider-classpath" "cider-classpath.el" (21615
-;;;;;;  6292 755854 569000))
+;;;### (autoloads nil "cider-classpath" "cider-classpath.el" (21757
+;;;;;;  49916 342470 414000))
 ;;; Generated autoloads from cider-classpath.el
 
 (autoload 'cider-classpath "cider-classpath" "\
@@ -78,8 +78,8 @@ Open a classpath entry.
 
 ;;;***
 
-;;;### (autoloads nil "cider-grimoire" "cider-grimoire.el" (21615
-;;;;;;  6292 712521 757000))
+;;;### (autoloads nil "cider-grimoire" "cider-grimoire.el" (21757
+;;;;;;  49916 369136 484000))
 ;;; Generated autoloads from cider-grimoire.el
 
 (autoload 'cider-grimoire-web "cider-grimoire" "\
@@ -94,8 +94,8 @@ Open the grimoire documentation for QUERY in a popup buffer.
 
 ;;;***
 
-;;;### (autoloads nil "cider-inspector" "cider-inspector.el" (21615
-;;;;;;  6292 705855 170000))
+;;;### (autoloads nil "cider-inspector" "cider-inspector.el" (21757
+;;;;;;  49916 375803 2000))
 ;;; Generated autoloads from cider-inspector.el
 
 (autoload 'cider-inspect "cider-inspector" "\
@@ -106,7 +106,7 @@ Eval the string EXPRESSION and inspect the result.
 ;;;***
 
 ;;;### (autoloads nil "cider-macroexpansion" "cider-macroexpansion.el"
-;;;;;;  (21615 6292 729188 223000))
+;;;;;;  (21757 49916 389136 37000))
 ;;; Generated autoloads from cider-macroexpansion.el
 
 (autoload 'cider-macroexpand-1 "cider-macroexpansion" "\
@@ -123,8 +123,8 @@ Invoke 'clojure.walk/macroexpand-all' on the expression preceding point.
 
 ;;;***
 
-;;;### (autoloads nil "cider-mode" "cider-mode.el" (21615 6292 679188
-;;;;;;  824000))
+;;;### (autoloads nil "cider-mode" "cider-mode.el" (21757 49916 395802
+;;;;;;  555000))
 ;;; Generated autoloads from cider-mode.el
 
 (defvar cider-mode-line '(:eval (format " cider[%s]" (cider-current-ns))) "\
@@ -150,8 +150,8 @@ Minor mode for REPL interaction from a Clojure buffer.
 
 ;;;***
 
-;;;### (autoloads nil "cider-scratch" "cider-scratch.el" (21615 6292
-;;;;;;  685855 411000))
+;;;### (autoloads nil "cider-scratch" "cider-scratch.el" (21757 49916
+;;;;;;  415802 108000))
 ;;; Generated autoloads from cider-scratch.el
 
 (autoload 'cider-scratch "cider-scratch" "\
@@ -161,8 +161,8 @@ Create a scratch buffer.
 
 ;;;***
 
-;;;### (autoloads nil "cider-selector" "cider-selector.el" (21615
-;;;;;;  6292 749187 982000))
+;;;### (autoloads nil "cider-selector" "cider-selector.el" (21757
+;;;;;;  49916 419135 367000))
 ;;; Generated autoloads from cider-selector.el
 
 (autoload 'cider-selector "cider-selector" "\
@@ -179,8 +179,8 @@ See `def-cider-selector-method' for defining new methods.
 
 ;;;### (autoloads nil nil ("cider-client.el" "cider-doc.el" "cider-eldoc.el"
 ;;;;;;  "cider-interaction.el" "cider-pkg.el" "cider-repl.el" "cider-stacktrace.el"
-;;;;;;  "cider-test.el" "cider-util.el" "nrepl-client.el") (21615
-;;;;;;  6292 781126 990000))
+;;;;;;  "cider-test.el" "cider-util.el" "nrepl-client.el") (21757
+;;;;;;  49916 460294 905000))
 
 ;;;***
 
