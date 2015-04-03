@@ -45,7 +45,7 @@
  '(font-lock-string-face ((t (:foreground "#259185"))))
  '(font-lock-type-face ((t (:foreground "#a57705"))))
  '(font-lock-variable-name-face ((t (:foreground "#859900"))))
- '(fringe ((t (:background "#0a2832"))))
+ '(fringe ((t (:background "#000000"))))
  '(git-gutter-fr:added ((t (:foreground "#728a05"))))
  '(git-gutter-fr:deleted ((t (:foreground "#8b0000"))))
  '(git-gutter-fr:modified ((t (:foreground "#5859b7"))))
