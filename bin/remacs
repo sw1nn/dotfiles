@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec gnome-terminal --role=REmacs -e "mosh -p 60475:60485 alison -- emacsclient -t"
