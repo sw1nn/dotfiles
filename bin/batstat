@@ -1,0 +1,42 @@
+#!/bin/bash
+
+ICON_HOME=${HOME}/workspace/dotfiles/icons
+OLDFILE=${HOME}/.batstat
+
+LOW_THRESHOLD=25
+
+if [ -f "${OLDFILE}" ]; then
+    OLD=$(cat "${OLDFILE}")
+else
+    OLD=100
+fi
+
+STATUS=$(cat /sys/class/power_supply/BAT0/status)
+NEW=$(cat /sys/class/power_supply/BAT0/capacity)
+
+printf -v NEW_PERCENT "%02d%%" ${NEW}
+
+echo ${NEW} > ${OLDFILE}
+
+if [[ ${NEW} -lt ${LOW_THRESHOLD} ]]; then
+    LOWBAT=1
+    if [[ ${OLD} -ge ${LOW_THRESHOLD} ]]; then
+        notify 5 "Batt ${LOW_THRESHOLD}%" &
+    fi 
+fi  
+
+if [ "$STATUS" == "Discharging" ]; then
+    ICON=power-bat-h.xbm
+elif [ "$STATUS" == "Charging" ]; then
+    ICON=power-charging.xbm
+else
+    ICON=power-full.xbm
+fi
+
+if [[ $LOWBAT -eq 1 ]]; then
+    COLOR="#ee0000"
+else
+    COLOR="#00ee00"
+fi
+
+echo "^fg(${COLOR})^i(${ICON_HOME}/${ICON})${NEW_PERCENT}^fg()"
