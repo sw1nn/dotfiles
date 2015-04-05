@@ -53,8 +53,6 @@ browser &
 
 rescuetime &
 
-compton -c -o 0.5 &
-
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
 
