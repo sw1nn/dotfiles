@@ -17,4 +17,4 @@
 [branch]
 	autosetuprebase = always
 [init]
-	templatedir = ~/.git_template
+	templatedir = /home/neale/workspace/dotfiles/git_template

@@ -1,0 +1,6 @@
+#!/bin/zsh
+source ${0:h}/init.zsh
+
+lol_commits
+
+exit 0
