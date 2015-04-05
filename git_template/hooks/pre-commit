@@ -1,0 +1,7 @@
+#!/bin/zsh
+source ${0:h}/init.zsh
+
+block_master && \
+block_aws_keys
+
+exit 0

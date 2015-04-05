@@ -1,0 +1,11 @@
+export LANG="en_GB.UTF-8"
+export PATH="/home/neale/.rvm/rubies/ruby-2.1.5/bin:/bin:$PATH"
+lolcommits --capture
+
+# Local Variables:
+# mode: Shell-Script
+# sh-indentation: 2
+# indent-tabs-mode: nil
+# sh-basic-offset: 2
+# End:
+# vim: ft=zsh sw=2 ts=2 et
