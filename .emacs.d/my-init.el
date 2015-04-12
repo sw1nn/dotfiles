@@ -6,13 +6,14 @@
 (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
                   ("elpa" . "http://tromey.com/elpa/")
                   ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")
-                  ;; ("melpa" . "http://melpa.milkbox.net/packages/")
+                  ("melpa" . "http://melpa.milkbox.net/packages/")
                   ))
   (add-to-list 'package-archives source t))
 
-;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize t)
+(package-refresh-contents)
 
-(package-initialize)
+(require 'use-package)
 
 (setq custom-file (concat user-emacs-directory "conf.d/customize.el"))
 

@@ -1,21 +1,56 @@
+(use-package expand-region
+  :ensure t)
 
-(require 'expand-region)
+;; (use-package volatile-highlights
+;;   :ensure t
+;;   :init
+;;   (volatile-highlights-mode))
 
-(require 'linum-off)
+(use-package powerline
+  :ensure t)
 
-(require 'volatile-highlights)
+(use-package saveplace
+  :ensure t)
 
-(require 'powerline)
+(use-package fold-dwim
+  :ensure t)
+
+(use-package win-switch
+  :ensure t)
+
+(use-package dockerfile-mode
+  :ensure t)
+
+(use-package ido
+  :ensure t
+  :init
+  (ido-mode t)
+  :config
+  (setq
+   ido-enable-prefix nil
+   ido-enable-flex-matching t
+   ido-auto-merge-work-directories-length nil
+   ido-create-new-buffer 'always
+   ido-use-filename-at-point nil
+   ido-use-virtual-buffers t
+   ido-handle-duplicate-virtual-buffers 2
+   ido-max-prospects 10))
+
+(use-package browse-kill-ring
+  :ensure t)
+
+(use-package hideshowvis
+  :ensure t
+  :diminish t
+  :init
+  (hideshowvis-symbols))
+
+(use-package markdown-mode
+  :ensure t
+  :init
+  (add-hook 'markdown-mode-hook 'visual-line-mode))
 
 (require 'uniquify)
-
-(require 'saveplace)
-
-(require 'fold-dwim)
-
-(require 'win-switch)
-
-(require 'dockerfile-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
@@ -37,16 +72,6 @@
 
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
-(ido-mode t)
-(ido-ubiquitous-mode t)
-(setq ido-enable-prefix nil
-      ido-enable-flex-matching t
-      ido-auto-merge-work-directories-length nil
-      ido-create-new-buffer 'always
-      ido-use-filename-at-point nil
-      ido-use-virtual-buffers t
-      ido-handle-duplicate-virtual-buffers 2
-      ido-max-prospects 10)
 
 (setq-default save-place t
               uniquify-buffer-name-style 'forward
@@ -75,7 +100,6 @@
 (setq same-window-regexps (quote '(("\\*magit: [[:ascii:]]\\*")))
       visible-bell nil)
 
-(volatile-highlights-mode t)
 (winner-mode t)
 (setq winner-boring-buffers '("*Completions*"
                               "*Help*"
@@ -108,8 +132,6 @@
 
             (delete-trailing-whitespace)))
 
-(hideshowvis-symbols)
-
 ;(powerline-default-theme)
 
 ;; allow sw1nn and sw1nn-whiteboard themes.
@@ -130,8 +152,6 @@
 
 (setq recentf-save-file (concat user-emacs-directory ".recentf"))
 
-(add-hook 'markdown-mode-hook 'visual-line-mode)
-
 ;; make files opened in .jar etc read-only by default.
 (add-hook 'archive-extract-hook
           (lambda nil
@@ -147,13 +167,10 @@
 (auto-compression-mode t)
 (global-hl-line-mode t)
 
-(window-numbering-mode t)
-
 (load-theme 'sw1nn t)
 
 (put 'narrow-to-region 'disabled nil)
 
 (windmove-default-keybindings)
-(powerline-default-theme))
-(global-git-gutter-mode)
+(powerline-default-theme)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

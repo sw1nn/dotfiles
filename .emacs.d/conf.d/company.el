@@ -1,2 +1,5 @@
-(require 'company)
-(global-company-mode)
+(use-package company
+             :pin melpa
+  :ensure t
+  :init
+  (global-company-mode))
