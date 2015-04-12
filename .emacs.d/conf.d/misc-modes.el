@@ -14,3 +14,11 @@
 	 ("\\.markdown\\'" . markdown-mode))
   :init
   (add-hook 'markdown-mode-hook 'visual-line-mode))
+
+(use-package yaml-mode
+  :ensure t
+  :mode (("\\.yaml\\'"))
+  :init
+  (add-hook 'yaml-mode-hook
+	    (lambda ()
+	      (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
