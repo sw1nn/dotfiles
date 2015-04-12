@@ -19,16 +19,18 @@
   (when (file-exists-p user-info)
     (load user-info)))
 
-(eval-when-compile
-  (require 'use-package))
-(require 'diminish)
-(require 'bind-key)
+(add-hook 'after-init-hook
+	  (lambda ()
 
-(dolist
-    (config (directory-files (concat user-emacs-directory "conf.d") t "\\w+\\.el\\'"))
-  (unwind-protect
-    (let (retval)
-      (condition-case ex
-          (load-file config)
-        ('error (message (format "Caught exception: [%s]" ex))))
-        retval)))
+	    (eval-when-compile
+	      (require 'use-package))
+	    (require 'diminish)
+	    (require 'bind-key)
+	    (dolist
+		(config (directory-files (concat user-emacs-directory "conf.d") t "\\w+\\.el\\'"))
+	      (unwind-protect
+		  (let (retval)
+		    (condition-case ex
+			(load-file config)
+		      ('error (message (format "Caught exception: [%s]" ex))))
+		    retval)))))
