@@ -34,6 +34,11 @@
    ido-handle-duplicate-virtual-buffers 2
    ido-max-prospects 10))
 
+(use-package ido-ubiquitous
+  :ensure t
+  :init
+  (ido-ubiquitous-mode t))
+
 (use-package browse-kill-ring
   :ensure t)
 
