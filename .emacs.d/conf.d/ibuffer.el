@@ -1,4 +1,4 @@
-(use-package ibuffer-git
+(use-package ibuffer-vc
   :pin melpa
   :ensure t
   :config
