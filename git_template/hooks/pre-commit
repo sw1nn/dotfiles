@@ -1,5 +1,6 @@
 #!/bin/zsh
-source ${0:h}/init.zsh
+
+source ${DOTFILES:-${HOME}/workspace/dotfiles/git_template}/init.zsh
 
 block_master && \
 block_aws_keys
