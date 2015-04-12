@@ -32,7 +32,7 @@ done
 
 
 cecho "yellow" "Installing Emacs packages..."
-/usr/bin/emacs -l ${DOTFILES}/.emacs.d/init.el
+/usr/bin/emacs -l ${DOTFILES}/.emacs.d/init.el -batch -eval '(message "Mission Begins...")'
 
 cecho "cyan" "Installing local bin"
 ln -s ${DOTFILES}/bin ~/bin
