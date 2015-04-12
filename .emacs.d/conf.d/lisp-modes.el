@@ -2,14 +2,16 @@
              :pin melpa-stable
   :ensure t)
 (use-package color-identifiers-mode
-             :pin melpa-stable
+  :pin melpa-stable
+  :diminish color-identifiers-mode
   :ensure t)
 (use-package align-cljlet
-             :pin melpa-stable
+  :pin melpa-stable
   :ensure t)
 
 (use-package clj-refactor
-             :pin melpa-stable
+  :pin melpa-stable
+  :diminish clj-refactor-mode
   :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

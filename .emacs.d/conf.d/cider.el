@@ -1,5 +1,5 @@
 (use-package cider
-             :pin melpa-stable
+  :pin melpa-stable
   :ensure t
   :config
   (setq cider-javadoc-local-paths (list "/usr/local/share/javadoc-w3m/7/docs/api")

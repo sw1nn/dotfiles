@@ -39,16 +39,22 @@
 
 (use-package hideshowvis
   :ensure t
-  :diminish t
+  :diminish hs-minor-mode
   :init
+  (hideshowvis-enable)
   (hideshowvis-symbols))
 
-(use-package markdown-mode
+(use-package ace-jump-mode
+  :commands ace-jump-mode
   :ensure t
   :init
-  (add-hook 'markdown-mode-hook 'visual-line-mode))
+   (bind-key "C-." 'ace-jump-mode))
 
-(require 'uniquify)
+(use-package uniquify)
+
+(use-package visual-line-mode
+  :diminish visual-line-mode)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks

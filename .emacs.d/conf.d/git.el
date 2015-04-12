@@ -2,14 +2,17 @@
   :ensure t)
 
 (use-package magit
-             :pin melpa-stable
+  :pin melpa-stable
   :ensure t
+  :diminish magit-auto-revert-mode
   :config
-  (setq magit-process-popup-time -1
-      magit-repo-dirs '("~/workspace")
-      magit-completing-read-function 'magit-ido-completing-read
-      magit-log-margin-spec '(30 nil magit-duration-spec)
-      magit-default-tracking-name-function (lambda (_ branch) branch))
+  (setq
+   magit-last-seen-setup-instructions "1.4.0"
+   magit-process-popup-time -1
+   magit-repo-dirs '("~/workspace")
+   magit-completing-read-function 'magit-ido-completing-read
+   magit-log-margin-spec '(30 nil magit-duration-spec)
+   magit-default-tracking-name-function (lambda (_ branch) branch))
 
   ;; magit has it's own highlighting which conflicts with global-hl-line-mode.
   (add-hook 'magit-status-mode-hook
