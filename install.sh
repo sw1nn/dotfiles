@@ -33,6 +33,6 @@ cecho "yellow" "Installing Emacs packages..."
 /usr/bin/emacs -l ${DOTFILES}/.emacs.d/init.el
 
 cecho "cyan" "Installing local bin"
-mkdir -p ~/bin
+ln -s ${DOTFILES}/bin ~/bin
 
 cecho "Finished, log is at ${LOGFILE} ..."
