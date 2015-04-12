@@ -13,7 +13,7 @@ exec 2>&1
 cecho "green" "Updating git submodules..."
 update_submodules
 
-ln -s ${DOTFILES}/submodule/prezto #{HOME}/.zprezto
+ln -s ${DOTFILES}/submodule/prezto ${HOME}/.zprezto
 
 setopt EXTENDED_GLOB
 for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
@@ -29,8 +29,8 @@ done
 
 
 
-cecho "yellow" "Installing ELPA packages..."
-(install_elpa)
+cecho "yellow" "Installing Emacs packages..."
+/usr/bin/emacs -l ${DOTFILES}/.emacs.d/init.el
 
 cecho "cyan" "Installing local bin"
 mkdir -p ~/bin
