@@ -38,26 +38,17 @@ def generate_profile_config(region_name, profile_name):
         for reservation in reservationList:
             # Iterate over instances
             for instance in reservation.instances:
-                # Check for user tag
-                if 'user' in instance.tags:
-                    user = instance.tags['user']
-                else:
-                    user = defaultUser
-
-                # Check for name tag
-                if 'Name' in instance.tags:
-                    name = instance.tags['Name']
-                else:
-                    name = instance.id
+                user = instance.tags.get('User', defaultUser)
+                name = instance.tags.get('Name', instance.id)
 
                 if instance.ip_address:
                     instanceData.append((name.replace(' ', '_'),
                                          instance.ip_address,
-                                         instance.key_name, defaultUser))
+                                         instance.key_name, user))
                     if 'MC Containers' in instance.tags:
                         containers = instance.tags['MC Containers'].split()
                         for container in containers:
-                            instanceData.append((container.replace(' ', '_') + "-" + name,
+                            instanceData.append((container.replace(' ', '_'),
                                                  instance.ip_address,
                                                  instance.key_name, user))
 
@@ -72,11 +63,10 @@ def generate_profile_config(region_name, profile_name):
                 f.write("Host {0}\n".format(data[0]))
                 f.write("    HostName {host_name}\n".format(host_name=data[1]))
                 f.write("    User {user}\n".format(user=data[3]))
-                if (data[2] != None):
-                    f.write("    IdentityFile {identity_file}\n".format(
-                        identity_file=os.path. join(defaultKeyPath,
-                                                    "{key_name}.pem".format(
-                                                        key_name=data[2]))))
+                f.write("    IdentityFile {identity_file}\n".format(
+                    identity_file=os.path. join(defaultKeyPath,
+                                                "{key_name}".format(
+                                                    key_name=data[2]))))
                 f.write("    ControlPath ~/.ssh/ec2-{0}:%p.%r\n".format(
                     data[0]))
                 f.write("\n")
@@ -85,7 +75,6 @@ def generate_profile_config(region_name, profile_name):
     except Exception as inst:
         print(dir(inst))
         print("Error..." + inst.message)
-
 
 def main():
     '''
