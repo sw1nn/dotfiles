@@ -4,6 +4,7 @@ projects.zsh
 cache
 *.swp
 *.elc
+/.emacs.d/elpa
 /.emacs.d/var
 /.emacs.d/eshell/history
 /.emacs.d/places

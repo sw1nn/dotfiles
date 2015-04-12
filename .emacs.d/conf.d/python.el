@@ -9,4 +9,8 @@
 ;; pip2 install rope
 ;; pip2 install flake8
 
-(elpy-enable)
+
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable))

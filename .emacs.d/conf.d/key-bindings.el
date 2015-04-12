@@ -23,7 +23,7 @@
 (define-key my-keys-minor-mode-map (kbd "C-<") 'mc/mark-previous-like-this)
 (define-key my-keys-minor-mode-map (kbd "C-x .") (lambda nil (interactive) (just-one-space -1) (fixup-whitespace)))
 (define-key my-keys-minor-mode-map (kbd "C-c g") 'magit-status)
-(define-key my-keys-minor-mode-map (kbd "M-x") 'smex)
+;(define-key my-keys-minor-mode-map (kbd "M-x") 'smex)
 (define-key my-keys-minor-mode-map (kbd "C-x O") (lambda nil (interactive) (other-window -1))) ;; back one
 (define-key my-keys-minor-mode-map (kbd "C-x C-o") (lambda nil (interactive) (other-window 2))) ;; forward two
 ;; If you want to be able to M-x without meta (phones, etc)

@@ -1,10 +1,16 @@
-(require 'cider-mode)
+(use-package clojure-mode
+             :pin melpa-stable
+  :ensure t)
+(use-package color-identifiers-mode
+             :pin melpa-stable
+  :ensure t)
+(use-package align-cljlet
+             :pin melpa-stable
+  :ensure t)
 
-(require 'clojure-mode)
-(require 'color-identifiers-mode)
-(require 'align-cljlet)
-
-(require 'clj-refactor)
+(use-package clj-refactor
+             :pin melpa-stable
+  :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; font-lock tweaks

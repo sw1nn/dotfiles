@@ -1,8 +1,8 @@
-(use-package ibuffer-vc
+(use-package ibuffer-git
   :pin melpa
   :ensure t
   :config
-  (setq ibuffer-formats '((mark modified read-only vc-status-mini " "
+  (setq ibuffer-formats '((mark modified read-only git-status-mini " "
 				(name 40 40 :left :elide)
 				" "
 				(size 9 -1 :right)
@@ -12,7 +12,7 @@
 				(vc-status 16 16 :left :elide)
 				" "
 				filename-and-process))
-	ibuffer-show-empty-filter-groups nil)
+	     ibuffer-show-empty-filter-groups nil)
   :init
   (add-hook 'ibuffer-hook
 	    (lambda nil
