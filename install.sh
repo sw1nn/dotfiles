@@ -10,6 +10,8 @@ exec 2>&1
 
 . "${DOTFILES}/install_functions.sh"
 
+cd "${DOTFILES}"
+
 cecho "green" "Updating git submodules..."
 update_submodules
 
@@ -24,7 +26,7 @@ done
 cecho "blue" "Linking dotfiles..."
 ls -A | grep -e  "^\." | grep -v "^\.git$" |grep -v ".gitmodules" | while read dotfile
 do
-    link_with_backup "${dotfile}" >> ${LOGFILE}
+    link_with_backup "${dotfile}"
 done
 
 
