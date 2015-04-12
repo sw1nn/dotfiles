@@ -1,10 +1,8 @@
 (use-package expand-region
   :ensure t)
 
-;; (use-package volatile-highlights
-;;   :ensure t
-;;   :init
-;;   (volatile-highlights-mode))
+(use-package volatile-highlights
+  :ensure t)
 
 (use-package powerline
   :ensure t)
