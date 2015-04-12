@@ -1,5 +1,6 @@
 (use-package company
-             :pin melpa
+  :pin melpa
   :ensure t
+  :diminish company-mode
   :init
-  (global-company-mode))
+  (global-company-mode t))

@@ -41,16 +41,22 @@
 
 (use-package hideshowvis
   :ensure t
-  :diminish t
+  :diminish hs-minor-mode
   :init
+  (hideshowvis-enable)
   (hideshowvis-symbols))
 
-(use-package markdown-mode
+(use-package ace-jump-mode
+  :commands ace-jump-mode
   :ensure t
   :init
-  (add-hook 'markdown-mode-hook 'visual-line-mode))
+   (bind-key "C-." 'ace-jump-mode))
 
-(require 'uniquify)
+(use-package uniquify)
+
+(use-package visual-line-mode
+  :diminish visual-line-mode)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
@@ -133,8 +139,6 @@
               (check-parens))
             (delete-trailing-whitespace)))
 
-;(powerline-default-theme)
-
 ;; allow sw1nn and sw1nn-whiteboard themes.
 
 (add-to-list 'custom-safe-themes "b2048c55ef23de285bf8154ed030a1b1b291ac15917cccd438e05b138b8f4e19") ; sw1nn
@@ -173,5 +177,5 @@
 (put 'narrow-to-region 'disabled nil)
 
 (windmove-default-keybindings)
-(powerline-default-theme)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(powerline-default-theme)
