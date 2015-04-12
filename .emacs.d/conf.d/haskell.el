@@ -1,4 +1,5 @@
 (use-package haskell-mode
+  :defer t
   :ensure t
   :pin melpa-stable
   :init
