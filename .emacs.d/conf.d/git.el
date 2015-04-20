@@ -1,5 +1,6 @@
 (use-package git-gutter
-  :ensure t)
+  :ensure t
+  :init (global-git-gutter-mode))
 
 (use-package magit
   :pin melpa-stable
