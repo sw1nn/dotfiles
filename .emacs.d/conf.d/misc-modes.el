@@ -17,7 +17,7 @@
 
 (use-package yaml-mode
   :ensure t
-  :mode (("\\.yaml\\'"))
+  :mode ("\\.yaml\\'" . yaml-mode)
   :init
   (add-hook 'yaml-mode-hook
 	    (lambda ()
