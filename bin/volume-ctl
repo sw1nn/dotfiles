@@ -4,7 +4,7 @@ cmd=$1
 shift;
 
 function get_volume() {
-    amixer sget 'Master',0 | awk '/Front Left:/{print $5}'
+    amixer sget 'Master',0 | awk '/Front Left:/{gsub(/[\[\]%]/,"",$5); print $5}'
 }
 
 function icon {
@@ -14,19 +14,19 @@ function icon {
 case $cmd in
     volume-up)
         amixer -q set Master 1000+ unmute
-        notify 1 $(icon volup-icon64) $(get_volume)
+        volnoti-show $(get_volume)
         ;;
     volume-down)
         amixer -q set Master 1000- unmute
-        notify 1 $(icon voldown-icon64) $(get_volume)
+        volnoti-show $(get_volume)
         ;;
 
     mute)
         (amixer set Master toggle | grep '\[off\]') 2>&1 > /dev/null
         if [ $? -eq 0 ]; then
-            notify 1 $(icon volmute-icon64)
+            volnoti-show -m 
         else
-            notify 1 $(get_volume)
+            volnoti-show $(get_volume)
         fi
         ;;
     *)
