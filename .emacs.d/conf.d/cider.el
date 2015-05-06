@@ -1,6 +1,7 @@
 (use-package cider
   :pin melpa-stable
   :ensure t
+  :diminish t
   :config
   (setq cider-javadoc-local-paths (list "/usr/local/share/javadoc-w3m/7/docs/api")
 	cider-repl-history-file (concat user-emacs-directory ".cider-history"))
