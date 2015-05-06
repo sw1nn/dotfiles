@@ -104,7 +104,7 @@
 
 (defun sw1nn-nrepl-current-server-buffer ()
   (let ((nrepl-server-buf (with-current-buffer (cider-current-repl-buffer)
-			    nrepl-server-buffer)))
+                            nrepl-server-buffer)))
     (when nrepl-server-buf
       (get-buffer nrepl-server-buf))))
 
@@ -201,5 +201,9 @@
 (defun sw1nn-ansi-term ()
   (interactive)
   (ansi-term (getenv "SHELL")))
+
+(defun sw1nn-untabify-p ()
+  (not (string= (file-name-extension (buffer-file-name))
+                "tsv")))
 
 (provide 'sw1nn)
