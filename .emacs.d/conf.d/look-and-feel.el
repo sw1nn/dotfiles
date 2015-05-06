@@ -136,12 +136,11 @@
 
 (add-hook 'before-save-hook
           (lambda nil
-            ;;(when (sw1nn-untabify-p)
-            ;;    (untabify (point-min) (point-max)))
-
+            (when (sw1nn-untabify-p)
+                (untabify (point-min) (point-max)))
+            (when (bound-and-true-p paredit-mode)
+              (check-parens))
             (delete-trailing-whitespace)))
-
-;(powerline-default-theme)
 
 ;; allow sw1nn and sw1nn-whiteboard themes.
 
@@ -182,4 +181,3 @@
 
 (windmove-default-keybindings)
 (powerline-default-theme)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
