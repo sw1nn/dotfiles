@@ -44,6 +44,8 @@ fi
 #git-annex assistant --autostart &
 xscreensaver &
 thunar --daemon &
+start-pulseaudio-x11 &
+volnoti
 unclutter &
 rescuetime &
 
@@ -55,7 +57,5 @@ rescuetime &
 
 KEYMAP="${HOME}/.XKeymap-$(hostname)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
-
-compton -c -o 0.5 &
 
 exec xmonad 2>&1 >| ${HOME}/.xmonad.log
