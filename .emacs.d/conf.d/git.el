@@ -1,5 +1,6 @@
 (use-package git-gutter
   :ensure t
+  :diminish git-gutter-mode
   :init (global-git-gutter-mode))
 
 (use-package magit
