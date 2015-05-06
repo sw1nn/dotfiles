@@ -1,4 +1,0 @@
-#!/bin/sh
-
-outfile=${1%%.*}.png
-dot -Tpng $1 -o ${outfile}
