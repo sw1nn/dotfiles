@@ -8,10 +8,10 @@
                   ("melpa" . "http://melpa.milkbox.net/packages/")))
   (add-to-list 'package-archives source t))
 
+(add-to-list 'load-path (concat user-emacs-directory "local"))
+
 (package-initialize t)
 (package-refresh-contents)
-
-(add-to-list 'load-path (concat user-emacs-directory "local"))
 
 (setq custom-file (concat user-emacs-directory "conf.d/customize.el"))
 
@@ -21,9 +21,7 @@
 
 (add-hook 'after-init-hook
 	  (lambda ()
-
-	    (eval-when-compile
-	      (require 'use-package))
+	    (require 'use-package)
 	    (require 'diminish)
 	    (require 'bind-key)
 	    (dolist
