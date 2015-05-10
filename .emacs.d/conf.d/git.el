@@ -10,7 +10,7 @@
       magit-completing-read-function 'magit-ido-completing-read
       magit-log-margin-spec '(30 nil magit-duration-spec)
       magit-default-tracking-name-function (lambda (_ branch) branch))
-
+  :init
   ;; magit has it's own highlighting which conflicts with global-hl-line-mode.
   (add-hook 'magit-status-mode-hook
 	    (lambda nil
