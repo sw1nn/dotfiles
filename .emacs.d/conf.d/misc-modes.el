@@ -26,3 +26,8 @@
 (use-package csv-mode
   :ensure t
   :mode ("\\.tsv\\'" . csv-mode))
+
+
+(use-package arff-file-mode
+  :ensure t
+  :mode ("\\.arff\\'" . arff-file-mode))
