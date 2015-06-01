@@ -104,7 +104,7 @@
 
 (defun sw1nn-nrepl-current-server-buffer ()
   (let ((nrepl-server-buf (with-current-buffer (cider-current-repl-buffer)
-			    nrepl-server-buffer)))
+                            nrepl-server-buffer)))
     (when nrepl-server-buf
       (get-buffer nrepl-server-buf))))
 
@@ -126,16 +126,18 @@
 
 (defun sw1nn-cider-perspective ()
   (interactive)
+  (cider-switch-to-last-clojure-buffer)
   (delete-other-windows)
   (split-window-below)
-  (cider-switch-to-relevant-repl-buffer)
   (windmove-down)
   (shrink-window 15)
   (switch-to-buffer (sw1nn-nrepl-current-server-buffer))
-  (windmove-up))
+  (windmove-up)
+  (cider-switch-to-relevant-repl-buffer))
 
 (defun sw1nn-run-cider-command (cmd)
-  (with-current-buffer (cider-find-or-create-repl-buffer)
+  (with-current-buffer (cider-current-repl-buffer)
+    (cider-repl-set-ns "user")
     (goto-char (point-max))
     (insert cmd)
     (cider-repl-return)))
@@ -201,5 +203,9 @@
 (defun sw1nn-ansi-term ()
   (interactive)
   (ansi-term (getenv "SHELL")))
+
+(defun sw1nn-untabify-p ()
+  (not (string= (file-name-extension (buffer-file-name))
+                "tsv")))
 
 (provide 'sw1nn)
