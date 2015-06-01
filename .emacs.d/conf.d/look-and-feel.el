@@ -170,6 +170,8 @@
       win-switch-feedback-background-color "#008800"
       win-switch-feedback-foreground-color "#00ff00")
 
+(setq browse-url-browser-function 'browse-url-xdg-open)
+
 (win-switch-setup-keys-ijkl "\C-xo" "\C-x\C-o")
 
 (auto-compression-mode t)
