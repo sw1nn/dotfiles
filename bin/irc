@@ -18,6 +18,6 @@ if [ "$TERM" = "dumb" ]; then
     exec ${term_prog} "irc"
 fi
 
-TMUX_TMPDIR=/tmp/tmux-$(id -u) exec tmux attach-session -d -t IRC;
+exec tmux attach-session -d -t IRC;
 
 exit 0
