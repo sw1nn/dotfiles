@@ -1,6 +1,6 @@
 -- XMonad config file - sean.escriva@gmail.com
 --
-import XMonad
+import XMonad hiding (Tall)
 -- Hooks
 import XMonad.Hooks.DynamicLog hiding (xmobar, xmobarPP, xmobarColor, sjanssenPP, byorgeyPP)
 import XMonad.Hooks.UrgencyHook
@@ -27,6 +27,7 @@ import XMonad.Layout.IM
 import XMonad.Layout.Reflect (reflectHoriz)
 import XMonad.Layout.Named
 import XMonad.Layout.Tabbed
+import XMonad.Layout.HintedTile
 import XMonad.Prompt
 import System.Exit
 import Control.Monad (liftM2)
@@ -78,7 +79,7 @@ statusBarCmd = "dzen2" ++
                " -w 1920 -x 0 -y 0 -ta l -expand r -e ''" ++
                " -xs 2"
 
-nwsUrgencyHook = withUrgencyHook dzenUrgencyHook {args = ["-xs", "1", "-fg", soBrightBlue]}
+-- nwsUrgencyHook = withUrgencyHook dzenUrgencyHook {args = ["-xs", "1", "-fg", soBrightBlue]}
 
 myTerminal           = "gnome-terminal"
 myScratchpadTerminal = "scratchpad"
@@ -131,13 +132,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask, xK_g      ), selectSearch google)
     , ((modm,                 xK_q      ), spawn "xmonad --recompile; xmonad --restart")
     , ((0,                    xK_F4     ), spawn "volume-ctl mute")
+    , ((modm,                 xK_F4     ), spawn "google-hangout-ctl toggle-mute")
     , ((0,                    xK_F5     ), spawn "volume-ctl volume-down")
     , ((0,                    xK_F6     ), spawn "volume-ctl volume-up")
     , ((0,                    xK_F7     ), spawn "spotify-ctl prev")
     , ((0,                    xK_F8     ), spawn "spotify-ctl toggle-pause")
     , ((0,                    xK_F9     ), spawn "spotify-ctl next")
     , ((modm .|. shiftMask,   xK_equal  ), spawn "browser http://plus.google.com")
-    , ((0,                    xK_Print  ), spawn "sleep 0.2; scrot -s -e 'mv $f ~/screenshots/'")
+    , ((modm .|. shiftMask,   xK_s ), spawn "sleep 0.2; scrot -s -e 'mv $f ~/screenshots/'")
+    , ((modm .|. shiftMask .|. controlMask, xK_s ), spawn "sleep 0.2; scrot -e 'mv $f ~/screenshots/'")
     ]
     ++
     --
@@ -164,8 +167,7 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
                manageDocks <+>
                eagle       <+>
                (composeAll . concat $
-    [ [isDialog        --> doCenterFloat]
-    , [role       =? r --> doFloat       | r <- myRoleFloats]
+    [ [role       =? r --> doFloat       | r <- myRoleFloats]
     , [className  =? c --> doCenterFloat | c <- myCenterFloats]
     , [title      =? t --> doFloat       | t <- myTFloats]
     , [resource   =? r --> doFloat       | r <- myRFloats]
@@ -178,14 +180,20 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     , [(role      =? x <||> className =? x <||> title =? x <||> resource =? x) --> doShift      "7:"      | x <- my7Shifts]
     , [(role      =? x <||> className =? x <||> title =? x <||> resource =? x) --> doShift      "8:im"    | x <- my8Shifts]
     , [(role      =? x <||> className =? x <||> title =? x <||> resource =? x) --> doShift      "9:music" | x <- my9Shifts]
-    -- put this at the end in case we have terms with 'custom' class picked up above (e.g. Irc)
+    -- put this at the end in case we have terms with 'custom' class
+    -- picked up above (e.g. Irc)
     , [(role      =? x <||> className =? x <||> title =? x <||> resource =? x) --> doShift      "3:term"  | x <- my3Shifts]
+    , [isDialog        --> doCenterFloat]
     ])
     where
     doShiftAndGo        = doF . liftM2 (.) W.greedyView W.shift
     myRoleFloats        = ["pop-up"]
-    myCenterFloats      = ["XGalaga", "Galculator"]
-    myTFloats           = ["RescueTime Offline Time", "Google+ Hangouts is sharing your screen with plus.google.com.","appear.in screen sharing is sharing your screen with appear.in."]
+    myCenterFloats      = ["XGalaga", "Galculator", "Pinentry"]
+    myTFloats           = ["RescueTime Offline Time",
+                           "Google+ Hangouts is sharing your screen with plus.google.com.",
+                           "appear.in screen sharing is sharing your screen with appear.in.",
+                           "LastPass: Free Password Manager",
+                           "Hangouts - neale@mastodonc.com"]
     myRFloats           = []
     myIgnores           = ["desktop_window", "kdesktop"]
     my1Shifts           = ["Google-chrome-stable"]
@@ -250,7 +258,7 @@ myLayoutHook = onWorkspace "1:web" webL $
                 withIM (0.15) (Role "gimp-dock") Full
 
         --Web Layout
-        webL      = avoidStruts $  tabLayout  ||| tiled ||| reflectHoriz tiled |||  full
+        webL      = avoidStruts $  tabLayout  ||| tiled ||| full
 
         --VirtualLayout
         fullL = avoidStruts $ full
@@ -274,4 +282,4 @@ nwsConfig = defaultConfig
 -- Main
 main = do
      h <- spawnPipe statusBarCmd
-     xmonad $ nwsUrgencyHook $ ewmh nwsConfig { logHook = nwsLogHook h }
+     xmonad $ ewmh nwsConfig { logHook = nwsLogHook h }
