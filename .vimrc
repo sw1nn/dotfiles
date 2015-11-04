@@ -24,6 +24,8 @@ set cursorline
 abbr wq1 wq! 
 abbr wQ! wq! 
 abbr wQ1 wq! 
+abbr Wq1 wq! 
+abbr Wq! wq! 
 abbr w1 w!
 abbr qw! wq! 
 abbr qw1 wq!
