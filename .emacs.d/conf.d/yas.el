@@ -1,5 +1,5 @@
 (use-package yasnippet
              :ensure t
-  :pin melpa
-  :init
-  (yas-global-mode 1))
+	     :pin melpa-stable
+	     :init
+	     (yas-global-mode 1))

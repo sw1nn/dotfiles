@@ -1,65 +1,110 @@
+(use-package smex
+  :ensure t
+  :bind ("M-x" . smex))
+
 (use-package expand-region
   :ensure t)
 
 (use-package volatile-highlights
-  :ensure t)
+  :ensure t
+  :config
+  (volatile-highlights-mode t))
 
-(use-package powerline
-  :ensure t)
+(use-package smart-mode-line
+  :ensure t
+  :config
+  (setq sml/theme 'respectful)
+  (setq rm-whitelist (quote (" Paredit")))
+  (sml/setup)
+  (add-to-list 'sml/replacer-regexp-list '("^~/workspace/" ":WS:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^:WS:\\([^/]+\\)" ":WS[\\1]:") t)
+  (add-to-list 'sml/replacer-regexp-list '("^:WS:dotfiles/.emacs.d/" ":ED:") t))
 
 (use-package saveplace
-  :ensure t)
+  :ensure t
+  :config
+  (setq save-place t
+        save-place-file (concat user-emacs-directory "places")))
+
+(defface sw1nn-hs-fold-overlay-face
+  '((t (:background "#fdf6e3" :foreground "#232323")))
+  "Face for fold overlay"
+  :group 'sw1nn-faces)
 
 (use-package fold-dwim
-  :ensure t)
+  :ensure t
+  :config
+  (setq hs-set-up-overlay
+        (defun sw1nn/display-code-line-counts (ov)
+          (when (eq 'code (overlay-get ov 'hs))
+            (overlay-put ov 'display
+                         (propertize
+                          (format " ... <%03d>"
+                                  (count-lines (overlay-start ov)
+                                               (overlay-end ov)))
+                          'face 'sw1nn-hs-fold-overlay-face))))))
 
 (use-package win-switch
-  :ensure t)
+  :ensure t
+  :config
+  (setq win-switch-window-threshold 1
+      win-switch-idle-time 0.7
+      win-switch-feedback-background-color "#008800"
+      win-switch-feedback-foreground-color "#00ff00"))
 
 (use-package dockerfile-mode
   :ensure t)
 
 (use-package ido
   :ensure t
-  :init
-  (ido-mode t)
   :config
-  (setq
-   ido-enable-prefix nil
-   ido-enable-flex-matching t
-   ido-auto-merge-work-directories-length nil
-   ido-create-new-buffer 'always
-   ido-use-filename-at-point nil
-   ido-use-virtual-buffers t
-   ido-handle-duplicate-virtual-buffers 2
-   ido-max-prospects 10))
+  (ido-mode)
+  (ido-everywhere)
+  (setq ido-auto-merge-work-directories-length -1
+        ido-cannot-complete-command 'ignore
+        ido-save-directory-list-file "~/.emacs.d/var/cache/ido.last"
+        ido-use-virtual-buffers t))
 
 (use-package ido-ubiquitous
   :ensure t
-  :init
-  (ido-ubiquitous-mode t))
+  :config (ido-ubiquitous-mode))
+
+(use-package ido-vertical-mode
+  :ensure t
+  :config (ido-vertical-mode))
+
+(use-package flx-ido
+  :pin melpa-stable
+  :ensure t
+  :config
+  (flx-ido-mode)
+  (setq ido-enable-flex-matching t))
 
 (use-package browse-kill-ring
   :ensure t)
 
-(use-package hideshowvis
-  :ensure t
-  :diminish hs-minor-mode
-  :init
-  (hideshowvis-enable)
-  (hideshowvis-symbols))
-
 (use-package ace-jump-mode
-  :commands ace-jump-mode
   :ensure t
-  :init
-   (bind-key "C-." 'ace-jump-mode))
+  :bind ("C-c SPC" . ace-jump-mode))
 
 (use-package uniquify)
 
-(use-package visual-line-mode
-  :diminish visual-line-mode)
+(use-package idle-highlight-mode
+  :ensure t)
 
+(use-package rainbow-mode
+  :ensure t)
+
+(use-package hs-minor-mode
+  :diminish hs-minor-mode)
+
+(use-package color-identifiers-mode
+  :ensure t
+  :diminish color-identifiers-mode)
+
+;;(use-package ws-butler
+;;  :ensure t
+;;  :config (ws-butler-global-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
@@ -81,15 +126,18 @@
 
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
-
-(setq-default save-place t
-              uniquify-buffer-name-style 'forward
+(setq-default uniquify-buffer-name-style 'forward
               x-select-enable-clipboard t
               x-select-enable-primary t
               save-interprogram-paste-before-kill t
               apropos-do-all t
-              mouse-yank-at-point t
-              save-place-file (concat user-emacs-directory "places"))
+              mouse-yank-at-point t)
+
+;; Save all tempfiles in $TMPDIR/emacs$UID/                                                        
+(defconst emacs-tmp-dir (format "%s/%s%s" temporary-file-directory "emacs" (user-uid)))
+(setq backup-directory-alist `((".*" . ,emacs-tmp-dir))
+      auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t))
+      auto-save-list-file-prefix emacs-tmp-dir)
 
 (savehist-mode t)
 
@@ -139,8 +187,7 @@
             (when (sw1nn-untabify-p)
                 (untabify (point-min) (point-max)))
             (when (bound-and-true-p paredit-mode)
-              (check-parens))
-            (delete-trailing-whitespace)))
+              (check-parens))))
 
 ;; allow sw1nn and sw1nn-whiteboard themes.
 
@@ -165,11 +212,6 @@
           (lambda nil
             (read-only-mode)))
 
-(setq win-switch-window-threshold 1
-      win-switch-idle-time 0.7
-      win-switch-feedback-background-color "#008800"
-      win-switch-feedback-foreground-color "#00ff00")
-
 (setq browse-url-browser-function 'browse-url-xdg-open)
 
 (win-switch-setup-keys-ijkl "\C-xo" "\C-x\C-o")
@@ -182,4 +224,4 @@
 (put 'narrow-to-region 'disabled nil)
 
 (windmove-default-keybindings)
-(powerline-default-theme)
+;; (powerline-default-theme)

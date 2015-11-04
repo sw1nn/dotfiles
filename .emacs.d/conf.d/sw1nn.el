@@ -15,7 +15,8 @@
 
 (defcustom sw1nn-cljs-compile-on-save t "non-nil means cljs files should be compiled after save."
   :type 'boolean
-  :group 'sw1nn)
+  :group 'sw1nn
+  :set nil)
 
 (defun sw1nn-toggle-clj-compile-on-save ()
   (interactive)
@@ -31,11 +32,6 @@
   (interactive)
   (setq sw1nn-clj-test-on-save (not sw1nn-clj-compile-on-save))
   (message "sw1nn-clj-test-on-save %s" (if sw1nn-clj-test-on-save "enabled" "disabled")))
-
-(defun sw1nn-toggle-cider-repl-popup-stacktraces ()
-  (interactive)
-  (setq cider-repl-popup-stacktraces (not cider-repl-popup-stacktraces))
-  (message "cider-repl-popup-stacktraces %s" (if cider-repl-popup-stacktraces "enabled" "disabled")))
 
 ;; from https://github.com/overtone/emacs-live/blob/master/packs/live/clojure-pack/config/paredit-conf.el#L19
 (defun sw1nn-paredit-forward ()
@@ -111,7 +107,7 @@
 (defun sw1nn-clear-current-server-buffer ()
   "Clear current server buffer"
   (interactive)
-  (with-current-buffer (sw1nn-nrepl-current-server-buffer)
+:q (with-current-buffer (sw1nn-nrepl-current-server-buffer)
     (delete-region (point-min) (point-max))))
 
 (defun sw1nn-show-maximum-output-current-server-buffer ()
@@ -148,14 +144,6 @@
   (unless dont-clear-server-buffer-p
     (sw1nn-clear-current-server-buffer))
   (sw1nn-run-cider-command "(do (user/reset))"))
-
-(defun sw1nn-send-expr-to-repl ()
-  (interactive)
-  (sw1nn-run-cider-command (cider-expression-at-point)))
-
-(defun sw1nn-send-previous-expr-to-repl ()
-  (interactive)
-  (sw1nn-run-cider-command (cider-last-expression)))
 
 (defun sw1nn-toggle-transparency ()
   (interactive)
@@ -207,5 +195,19 @@
 (defun sw1nn-untabify-p ()
   (not (string= (file-name-extension (buffer-file-name))
                 "tsv")))
+
+(defun sw1nn-kludge-gpg-agent
+    ()
+  (if (display-graphic-p)
+      (progn
+        (setenv "DISPLAY" (terminal-name))
+        (setenv "SSH_CONNECTION")
+        (setenv "GPG_TTY"))
+    (progn
+      (setenv "GPG_TTY" (terminal-name))
+      (setenv "DISPLAY"))))
+
+(add-hook '
+ window-configuration-change-hook 'sw1nn-kludge-gpg-agent)
 
 (provide 'sw1nn)

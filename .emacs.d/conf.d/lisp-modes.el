@@ -1,17 +1,31 @@
 (use-package clojure-mode
              :pin melpa-stable
   :ensure t)
-(use-package color-identifiers-mode
-  :pin melpa-stable
-  :diminish color-identifiers-mode
-  :ensure t)
+;; (use-package color-identifiers-mode
+;;   :pin melpa-stable
+;;   :diminish color-identifiers-mode
+;;   :ensure t)
 (use-package align-cljlet
   :pin melpa-stable
+  :ensure t)
+
+(use-package multiple-cursors
   :ensure t)
 
 (use-package clj-refactor
   :pin melpa-stable
   :diminish clj-refactor-mode
+  :ensure t)
+
+(use-package core-async-mode
+  :diminish core-async-mode)
+
+(use-package highlight
+  :pin melpa-stable
+  :ensure t)
+
+(use-package eval-sexp-fu
+  :pin melpa-stable
   :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -65,17 +79,18 @@
 (defun neale-custom-clojure-mode ()
   (neale-custom-lisp-mode)
   (sw1nn-add-clj-compile-on-save)
-  (hs-minor-mode)
-  (clj-refactor-mode)
-  (color-identifiers-mode)
+  (hs-minor-mode t)
+  (clj-refactor-mode t)
+  (core-async-mode t)
+  (cljr-add-keybindings-with-prefix "C-c c")
+  (color-identifiers-mode t)
   (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
 ;  (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key clojure-mode-map (kbd "M-t") 'sw1nn-transpose-kebab-words)
   (define-key paredit-mode-map (kbd "M-r") nil) ;; remove very rude paredit binding.
   (set (make-local-variable 'font-lock-extra-managed-props) '(composition)) ; revert fancy characters.
-  (set (make-local-variable 'scroll-margin) 2)
-  )
+  (set (make-local-variable 'scroll-margin) 2))
 
 (defun neale-custom-cider-mode ()
   (neale-custom-lisp-mode))
@@ -90,14 +105,13 @@
 (add-hook 'inferior-lisp-mode-hook 'neale-custom-inferior-lisp-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(put-clojure-indent 'go-loop 'defun)
+;; (put-clojure-indent 'go-loop 'defun)
 
-;; these make om-tools defcomponentk 'better'
-(put-clojure-indent 'display-name 'defun)
-(put-clojure-indent 'render 'defun)
-(put-clojure-indent 'render-state 'defun)
-(put-clojure-indent 'will-mount 'defun)
-(put-clojure-indent 'did-mount 'defun)
-(put-clojure-indent 'did-update 'defun)
+;; ;; these make om-tools defcomponentk 'better'
+;; (put-clojure-indent 'display-name 'defun)
+;; (put-clojure-indent 'render 'defun)
+;; (put-clojure-indent 'render-state 'defun)
+;; (put-clojure-indent 'will-mount 'defun)
+;; (put-clojure-indent 'did-mount 'defun)
+;; (put-clojure-indent 'did-update 'defun)
 
-(cljr-add-keybindings-with-prefix "C-c c")

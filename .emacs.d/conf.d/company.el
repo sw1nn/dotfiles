@@ -1,5 +1,5 @@
 (use-package company
-  :pin melpa
+  :pin melpa-stable
   :ensure t
   :diminish company-mode
   :init

@@ -5,13 +5,10 @@
   :mode ("\\.json\\'" . js3-mode)
   :ensure t)
 
-(use-package multiple-cursors
-  :ensure t)
-
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md\\'" . markdown-mode)
-	 ("\\.markdown\\'" . markdown-mode))
+         ("\\.markdown\\'" . markdown-mode))
   :init
   (add-hook 'markdown-mode-hook 'visual-line-mode))
 
@@ -20,14 +17,12 @@
   :mode ("\\.yaml\\'" . yaml-mode)
   :init
   (add-hook 'yaml-mode-hook
-	    (lambda ()
-	      (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
+            (lambda ()
+              (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 
 (use-package csv-mode
   :ensure t
   :mode ("\\.tsv\\'" . csv-mode))
 
-
-(use-package arff-file-mode
-  :ensure t
-  :mode ("\\.arff\\'" . arff-file-mode))
+(use-package refheap
+  :ensure t)

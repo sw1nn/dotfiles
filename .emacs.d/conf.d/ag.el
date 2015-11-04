@@ -1,5 +1,5 @@
 (use-package ag
-  :pin melpa
+  :pin melpa-stable
   :ensure t
   :config
   (setq ag-highlight-search t

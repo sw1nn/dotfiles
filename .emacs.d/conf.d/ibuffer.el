@@ -1,5 +1,5 @@
 (use-package ibuffer-vc
-  :pin melpa
+  :pin melpa-stable
   :ensure t
   :config
   (setq ibuffer-formats '((mark modified read-only vc-status-mini " "
