@@ -28,25 +28,15 @@ shift;
 case $cmd in
     toggle-pause)
         toggle_pause "$@"
-        sleep 0.3 # urggh.
-        # This doesn't always work - do something clever with silence detection instead?
-        if [ ! -z "$playing" ]; then
-            notify 2 $(icon play-icon64)
-        else
-            notify 2 $(icon pause-icon64)
-        fi
         ;;
     stop)
         if [ ! -z "$(currently_playing)" ]; then
             dispatch_to_spotify Stop
-            notify 2 $(icon media-stop-icon64)
         fi
         ;;
     prev)
         dispatch_to_spotify Previous
         notify 1 $(icon media-prev-icon64)
-        sleep 1
-        notify 3 "^bg(grey50)$(currently_playing alt)"
         ;;
     rewind)
         dispatch_to_spotify Previous
@@ -54,8 +44,6 @@ case $cmd in
         ;;
     next)
         dispatch_to_spotify Next
-        notify 1 $(icon media-next-icon64)
-        notify 3 "^bg(grey50)$(currently_playing alt)"
        ;;
     forward)
         dispatch_to_spotify Next
