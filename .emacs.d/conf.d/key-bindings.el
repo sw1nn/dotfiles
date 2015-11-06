@@ -10,6 +10,8 @@
 
 (global-set-key (kbd "C-c f") 'fold-dwim-toggle)
 (global-set-key (kbd "C-c s") 'sw1nn-ag-search)
+(global-set-key (kbd "C-c t") 'sw1nn-ansi-term)
+(global-set-key (kbd "M-y") 'browse-kill-ring)
 
 (define-key ctl-x-map (kbd "C-b") 'ibuffer)
 (define-key ctl-x-map "g" 'magit-status)
