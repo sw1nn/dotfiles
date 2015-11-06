@@ -102,6 +102,20 @@
   :ensure t
   :diminish color-identifiers-mode)
 
+(use-package beacon
+  :ensure t
+  :init (beacon-mode 1)
+  :config
+  (progn
+    (setq beacon-color "#cccec4")
+    ;; Don't blink on specific major modes
+    (add-to-list 'beacon-dont-blink-major-modes 'shell-mode)
+    (add-to-list 'beacon-dont-blink-major-modes 'eshell-mode)
+    ;; Don't blink on next-line/previous-line at the top/bottom of the window
+    (add-to-list 'beacon-dont-blink-commands 'next-line)
+    (add-to-list 'beacon-dont-blink-commands 'previous-line))
+  :diminish beacon-mode)
+
 ;;(use-package ws-butler
 ;;  :ensure t
 ;;  :config (ws-butler-global-mode))
