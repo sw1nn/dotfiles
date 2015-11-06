@@ -212,7 +212,8 @@
 ;; this lets us have a .dir-locals.el turning on rainbow-mode for themes.
 (add-to-list 'safe-local-variable-values '(eval rainbow-mode t))
 
-(setq scroll-conservatively 1000 ; > 100 => never recentre point
+(setq scroll-margin 5
+      scroll-conservatively 1000               ; > 100 => never recentre point
       scroll-up-aggressively 0.1
       scroll-down-aggressively 0.1)
 
