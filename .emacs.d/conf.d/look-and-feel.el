@@ -199,7 +199,8 @@
 (add-hook 'before-save-hook
           (lambda nil
             (when (sw1nn-untabify-p)
-                (untabify (point-min) (point-max)))
+              (untabify (point-min) (point-max))
+              (delete-trailing-whitespace))
             (when (bound-and-true-p paredit-mode)
               (check-parens))))
 
