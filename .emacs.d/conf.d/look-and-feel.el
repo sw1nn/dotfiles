@@ -39,7 +39,7 @@
           (when (eq 'code (overlay-get ov 'hs))
             (overlay-put ov 'display
                          (propertize
-                          (format " ... <%03d>"
+                          (format " ⤵ <%03d>"
                                   (count-lines (overlay-start ov)
                                                (overlay-end ov)))
                           'face 'sw1nn-hs-fold-overlay-face))))))
