@@ -109,6 +109,7 @@
   (progn
     (setq beacon-color "#cccec4")
     ;; Don't blink on specific major modes
+    (add-to-list 'beacon-dont-blink-major-modes 'term-mode)
     (add-to-list 'beacon-dont-blink-major-modes 'shell-mode)
     (add-to-list 'beacon-dont-blink-major-modes 'eshell-mode)
     ;; Don't blink on next-line/previous-line at the top/bottom of the window
