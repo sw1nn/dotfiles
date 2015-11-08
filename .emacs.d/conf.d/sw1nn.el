@@ -122,9 +122,9 @@
 
 (defun sw1nn-cider-perspective ()
   (interactive)
-  (cider-switch-to-last-clojure-buffer)
   (delete-other-windows)
   (split-window-below)
+  (cider-switch-to-relevant-repl-buffer)
   (windmove-down)
   (shrink-window 15)
   (switch-to-buffer (sw1nn-nrepl-current-server-buffer))
