@@ -69,7 +69,7 @@ colorFocusedBorder   = soBrightGreen
 transBackground      = "[75]" ++ soBackground
 barFont = "aldrich-11"
 
-myWorkspaces    = ["1:web","2:edit","3:term","4:virt","5:gimp","6","7","8:im","9:music"]
+myWorkspaces    = ["1:web","2:edit","3:term","4","5:gimp","6:aterm","7","8:im","9:music"]
 
 statusBarCmd = "dzen2" ++
                " -o 100" ++
@@ -224,20 +224,17 @@ myTheme = defaultTheme { decoHeight = 16
 myLayoutHook = onWorkspace "1:web" webL $
                onWorkspace "2:edit" fullL $
                onWorkspace "5:gimp" gimpL $
-               onWorkspace "4:virt" fullL $
                onWorkspace "8:im" imL $
                onWorkspace "9:music" fullL $
                standardLayouts
    where
         standardLayouts =   avoidStruts  $ (tiled |||
-                                            reflectTiled |||
                                             Mirror tiled |||
                                             Grid |||
                                             full)
         --Layouts
         tiled        = smartBorders (ResizableTall 1 (2/100) (1/2) [])
-        reflectTiled = (reflectHoriz tiled)
-        tabLayout    = (tabbed shrinkText myTheme)
+        tabLayout    = smartBorders (tabbed shrinkText myTheme)
         full         = noBorders Full
         chatLayout   = StackTile 1 (3/100) (1/2)
         --Im Layout
@@ -267,8 +264,6 @@ myLayoutHook = onWorkspace "1:web" webL $
         --VirtualLayout
         fullL = avoidStruts $ full
 
-myStartupHook = setWMName "LG3D"
-
 nwsConfig = defaultConfig
        { terminal               = myTerminal
        , focusFollowsMouse      = False
@@ -278,7 +273,6 @@ nwsConfig = defaultConfig
        , layoutHook             = myLayoutHook
        , keys                   = myKeys
        , manageHook             = myManageHook
-       , startupHook            = myStartupHook
        -- , mouseBindings          = smeMouseBindings
        }
 
