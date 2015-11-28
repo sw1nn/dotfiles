@@ -128,6 +128,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask, xK_t      ), spawn "thunar")
     , ((modm,                 xK_comma  ), sendMessage (IncMasterN 1))
     , ((modm,                 xK_period ), sendMessage (IncMasterN (-1)))
+    , ((modm,                 xK_a      ), spawn "volume-ctl toggle-control")
     , ((modm,                 xK_b      ), sendMessage ToggleStruts)
     , ((modm .|. shiftMask,   xK_g      ), promptSearch defaultXPConfig google)
     , ((modm .|. controlMask, xK_g      ), selectSearch google)

@@ -29,6 +29,14 @@ case $cmd in
             volnoti-show $(get_volume)
         fi
         ;;
+    toggle-control)
+        volwindow=$(xdotool search --name "Volume control")
+        if [ -n "${volwindow}" ]; then
+            xdotool search --name "Volume control" windowkill
+        else
+            pavucontrol &
+        fi
+        ;;
     *)
         echo "No Such command"
         ;;
