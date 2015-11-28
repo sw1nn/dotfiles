@@ -116,6 +116,8 @@
     (add-to-list 'beacon-dont-blink-commands 'previous-line))
   :diminish beacon-mode)
 
+(require 'mc-hide-unmatched-lines-mode)
+
 ;;(use-package ws-butler
 ;;  :ensure t
 ;;  :config (ws-butler-global-mode))
