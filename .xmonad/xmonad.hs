@@ -31,6 +31,7 @@ import XMonad.Layout.HintedTile
 import XMonad.Prompt
 import System.Exit
 import Control.Monad (liftM2)
+import Graphics.X11.ExtraTypes.XF86
 
 -- Prompt
 -- import XMonad.Prompt
@@ -135,6 +136,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,                 xK_F4     ), spawn "google-hangout-ctl toggle-mute")
     , ((0,                    xK_F5     ), spawn "volume-ctl volume-down")
     , ((0,                    xK_F6     ), spawn "volume-ctl volume-up")
+    , ((0,                    xF86XK_AudioLowerVolume), spawn "volume-ctl volume-down")
+    , ((0,                    xF86XK_AudioRaiseVolume), spawn "volume-ctl volume-up")
     , ((0,                    xK_F7     ), spawn "spotify-ctl prev")
     , ((0,                    xK_F8     ), spawn "spotify-ctl toggle-pause")
     , ((0,                    xK_F9     ), spawn "spotify-ctl next")
