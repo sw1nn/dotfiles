@@ -1,6 +1,5 @@
 (use-package smex
-  :ensure t
-  :bind ("M-x" . smex))
+  :ensure t)
 
 (use-package expand-region
   :ensure t)
@@ -84,8 +83,7 @@
   :ensure t)
 
 (use-package ace-jump-mode
-  :ensure t
-  :bind ("C-c SPC" . ace-jump-mode))
+  :ensure t)
 
 (use-package uniquify)
 

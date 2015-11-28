@@ -28,23 +28,7 @@
   :pin melpa-stable
   :ensure t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; font-lock tweaks
-(dolist (mode '(clojure-mode clojurescript-mode cider-mode))
-  (eval-after-load mode
-    (font-lock-add-keywords
-     mode '(("(\\(fn\\)[\[[:space:]]"  ; anon funcs 1
-             (0 (progn (compose-region (match-beginning 1)
-                                       (match-end 1) "λ")
-                       nil)))
-            ("\\(#\\)("                ; anon funcs 2
-             (0 (progn (compose-region (match-beginning 1)
-                                       (match-end 1) "ƒ")
-                       nil)))
-            ("\\(#\\){"                 ; sets
-             (0 (progn (compose-region (match-beginning 1)
-                                       (match-end 1) "∈")
-                       nil)))))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -82,21 +66,27 @@
   (hs-minor-mode t)
   (clj-refactor-mode t)
   (core-async-mode t)
-  (cljr-add-keybindings-with-prefix "C-c c")
+  (cljr-add-keybindings-with-prefix "C-c r")
   (color-identifiers-mode t)
   (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
 ;  (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key clojure-mode-map (kbd "M-t") 'sw1nn-transpose-kebab-words)
+  (define-key clojure-mode-map (kbd "C-c c k") 'sw1nn-clear-current-server-buffer)
+  (define-key cider-mode-map (kbd "C-c C-z") 'sw1nn-cider-perspective)
+  (define-key cider-mode-map (kbd "C-c c k") 'sw1nn-clear-current-server-buffer)
   (define-key paredit-mode-map (kbd "M-r") nil) ;; remove very rude paredit binding.
+  (define-key paredit-mode-map (kbd "C-c a") 'align-cljlet)
   (set (make-local-variable 'font-lock-extra-managed-props) '(composition)) ; revert fancy characters.
-  (set (make-local-variable 'scroll-margin) 2))
+  )
 
 (defun neale-custom-cider-mode ()
   (neale-custom-lisp-mode))
 
 (defun neale-custom-inferior-lisp-mode ()
   (neale-custom-lisp-mode))
+
+(setq nrepl-sync-request-timeout nil)
 
 (add-hook 'cider-repl-mode-hook 'neale-custom-cider-mode)
 (add-hook 'lisp-mode-hook 'neale-custom-lisp-mode)
@@ -115,3 +105,13 @@
 ;; (put-clojure-indent 'did-mount 'defun)
 ;; (put-clojure-indent 'did-update 'defun)
 
+(global-prettify-symbols-mode 1)
+(defvar sw1nn/clojure-prettify-alist '())
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; font-lock tweaks
+(dolist (mode '(clojure-mode clojurescript-mode cider-mode))
+  (eval-after-load mode
+    '(setq clojure--prettify-symbols-alist
+	  (append sw1nn/clojure-prettify-alist
+		  clojure--prettify-symbols-alist))))
