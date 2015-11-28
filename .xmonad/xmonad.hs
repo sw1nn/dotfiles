@@ -191,7 +191,7 @@ myManageHook = scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.4) <+>
     where
     doShiftAndGo        = doF . liftM2 (.) W.greedyView W.shift
     myRoleFloats        = ["pop-up"]
-    myCenterFloats      = ["XGalaga", "Galculator", "Pinentry"]
+    myCenterFloats      = ["XGalaga", "Galculator", "Pinentry", "Pavucontrol"]
     myTFloats           = ["RescueTime Offline Time",
                            "Google+ Hangouts is sharing your screen with plus.google.com.",
                            "appear.in screen sharing is sharing your screen with appear.in.",
