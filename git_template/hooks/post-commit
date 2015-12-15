@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-source ${DOTFILES:-${HOME}/workspace/dotfiles/git_template}/init.zsh
+source ${DOTFILES:-${HOME}/workspace/dotfiles}/git_template/init.zsh
 
 lol_commits
 

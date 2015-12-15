@@ -1,7 +1,8 @@
-[ -n "${SSH_TTY}" ] && exit 0
+[ -n "${SSH_CONNECTION}" ] && exit 0
+
 export LANG="en_GB.UTF-8"
 export PATH="/home/neale/.rvm/rubies/ruby-2.1.5/bin:/bin:$PATH"
-lolcommits --capture
+lolcommits --capture -d /dev/video1
 
 # Local Variables:
 # mode: Shell-Script
