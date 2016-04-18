@@ -70,7 +70,8 @@
 
 (use-package ido-vertical-mode
   :ensure t
-  :config (ido-vertical-mode))
+  :config (ido-vertical-mode)
+  (setq ido-vertical-define-keys 'C-n-C-p-up-and-down))
 
 (use-package flx-ido
   :pin melpa-stable
@@ -93,12 +94,12 @@
 (use-package rainbow-mode
   :ensure t)
 
-(use-package hs-minor-mode
+(use-package hideshowvis
+  :ensure t
   :diminish hs-minor-mode)
 
-(use-package color-identifiers-mode
-  :ensure t
-  :diminish color-identifiers-mode)
+(use-package rainbow-identifiers
+  :ensure t)
 
 (use-package beacon
   :ensure t
@@ -118,9 +119,11 @@
 
 (require 'mc-hide-unmatched-lines-mode)
 
-;;(use-package ws-butler
-;;  :ensure t
-;;  :config (ws-butler-global-mode))
+(use-package ws-butler
+  :ensure t
+  :config
+  ;(add-hook 'prog-mode-hook 'ws-butler-mode)
+  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
@@ -139,6 +142,7 @@
 
 (setq inhibit-splash-screen t)
 (setq make-backup-files nil)
+(setq default-directory "~/workspace")
 
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
@@ -149,7 +153,7 @@
               apropos-do-all t
               mouse-yank-at-point t)
 
-;; Save all tempfiles in $TMPDIR/emacs$UID/                                                        
+;; Save all tempfiles in $TMPDIR/emacs$UID/
 (defconst emacs-tmp-dir (format "%s/%s%s" temporary-file-directory "emacs" (user-uid)))
 (setq backup-directory-alist `((".*" . ,emacs-tmp-dir))
       auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t))
