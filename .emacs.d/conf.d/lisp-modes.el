@@ -28,6 +28,9 @@
   :pin melpa-stable
   :ensure t)
 
+(use-package aggressive-indent
+  :pin melpa-stable
+  :ensure t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -56,6 +59,8 @@
   (flyspell-prog-mode)
   (yas-minor-mode)
   (show-paren-mode)
+  (aggressive-indent-mode)
+  (define-key aggressive-indent-mode-map (kbd "C-c C-q") nil) ;; clashes with cider
   (eldoc-mode)
   (define-key emacs-lisp-mode-map (kbd "C-x C-e") 'pp-eval-last-sexp)
   )
