@@ -15,14 +15,15 @@
           ("walk" . "clojure.walk")
           ("zip"  . "clojure.zip")
           ("spark" . "sparkling.core")
-          ("csv" . "clojure.data.csv")))
+          ("csv" . "clojure.data.csv"))
+        cider-repl-display-help-banner nil)
   :init
   (add-hook 'cider-mode-hook
             (lambda nil
               (cider-turn-on-eldoc-mode)))
   (add-hook 'cider-repl-mode-hook
             (lambda nil
-              (make-local-variable 'global-hl-line-mode)              
+              (make-local-variable 'global-hl-line-mode)
               (setq global-hl-line-mode nil))))
 
 (use-package cider-eval-sexp-fu
