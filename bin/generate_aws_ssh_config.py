@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/home/neale/.virtualenvs/aws_ssh_config/bin/python2
 '''
 @author Bommarito Consulting, LLC
 @date 2012-12-23
@@ -72,6 +72,7 @@ def generate_profile_config(region_name, profile_name):
                 f.write("\n")
 
             f.write("#============ GENERATED DATA END ==================\n")
+            f.write("# vim: ft=sshconfig\n")
     except Exception as inst:
         print(dir(inst))
         print("Error..." + inst.message)
