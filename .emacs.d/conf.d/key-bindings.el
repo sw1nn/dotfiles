@@ -23,6 +23,10 @@
 (global-set-key (kbd "C-x C-m") #'mc/mark-all-dwim)
 (global-set-key (kbd "C-x p")   #'magit-find-file-completing-read)
 
+;; remove suspend-frame bindings, too annoying.
+(global-set-key (kbd "C-z") nil)
+(global-set-key (kbd "C-x C-z") nil)
+
 (define-prefix-command 'sw1nn/mc-map)
 (define-key sw1nn/mc-map "i"    #'mc/insert-numbers)
 (define-key sw1nn/mc-map "h"    #'mc-hide-unmatched-lines-mode)
