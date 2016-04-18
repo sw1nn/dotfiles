@@ -3,6 +3,9 @@
 cmd=$1
 shift;
 
+SPEAKERS=alsa_output.pci-0000_00_1b.0.analog-stereo
+HEADPHONES=alsa_output.usb-C-Media_Electronics_Inc._Microsoft_LifeChat_LX-3000-00.analog-stereo
+
 function get_volume() {
     amixer sget 'Master',0 | awk '/Front Left:/{gsub(/[\[\]%]/,"",$5); print $5}'
 }
@@ -12,19 +15,29 @@ function icon {
 }
 
 case $cmd in
+    select-speakers)
+        pactl set-default-sink $SPEAKERS
+        ;;
+
+    select-headphones)
+        pactl set-default-sink $HEADPHONES
+        ;;
     volume-up)
-        amixer -q set Master 1000+ unmute
+        #amixer -q set Master 1000+ unmute
+        pactl set-sink-volume @DEFAULT_SINK@ +5%
         volnoti-show $(get_volume)
         ;;
     volume-down)
-        amixer -q set Master 1000- unmute
+        #amixer -q set Master 1000- unmute
+        pactl set-sink-volume @DEFAULT_SINK@ +5%
         volnoti-show $(get_volume)
         ;;
 
     mute)
-        (amixer set Master toggle | grep '\[off\]') 2>&1 > /dev/null
+        #(amixer set Master toggle | grep '\[off\]') 2>&1 > /dev/null
+        pactl set-sink-mute @DEFAULT_SINK@ toggle
         if [ $? -eq 0 ]; then
-            volnoti-show -m 
+            volnoti-show -m
         else
             volnoti-show $(get_volume)
         fi
