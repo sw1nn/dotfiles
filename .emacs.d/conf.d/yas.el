@@ -2,4 +2,5 @@
              :ensure t
 	     :pin melpa-stable
 	     :init
-	     (yas-global-mode 1))
+	     ;;(yas-global-mode 1)
+         )

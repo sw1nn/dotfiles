@@ -68,7 +68,6 @@
 (defun neale-custom-lisp-mode ()
   (paredit-mode t)
   (flyspell-prog-mode)
-  (yas-minor-mode)
   (show-paren-mode)
   (aggressive-indent-mode)
   (define-key aggressive-indent-mode-map (kbd "C-c C-q") nil) ;; clashes with cider
@@ -80,6 +79,7 @@
   (neale-custom-lisp-mode)
   (sw1nn-add-clj-compile-on-save)
   (hs-minor-mode t)
+  (yas-minor-mode t)
   (clj-refactor-mode t)
   (cljr-add-keybindings-with-prefix "C-c r")
   (rainbow-identifiers-mode t)
