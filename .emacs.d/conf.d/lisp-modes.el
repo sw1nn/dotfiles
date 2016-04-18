@@ -85,12 +85,8 @@
   (cljr-add-keybindings-with-prefix "C-c r")
   (rainbow-identifiers-mode t)
   (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
-;  (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key clojure-mode-map (kbd "M-t") 'sw1nn-transpose-kebab-words)
-  (define-key clojure-mode-map (kbd "C-c c k") 'sw1nn-clear-current-server-buffer)
-  (define-key cider-mode-map (kbd "C-c C-z") 'sw1nn-cider-perspective)
-  (define-key cider-mode-map (kbd "C-c c k") 'sw1nn-clear-current-server-buffer)
   (define-key paredit-mode-map (kbd "M-r") nil) ;; remove very rude paredit binding.
   (define-key paredit-mode-map (kbd "C-c a") 'align-cljlet)
   (set (make-local-variable 'font-lock-extra-managed-props) '(composition)) ; revert fancy characters.
