@@ -193,9 +193,9 @@
   (ansi-term (getenv "SHELL")))
 
 (defun sw1nn-untabify-p ()
-  (not (or (string= (buffer-file-name) "Makefile"))
-       (string= (file-name-extension (buffer-file-name))
-                "tsv")))
+  (not (or (derived-mode-p 'makefile-mode)
+           (string= (file-name-extension (buffer-file-name))
+                    "tsv"))))
 
 (defun sw1nn-kludge-gpg-agent
     ()
