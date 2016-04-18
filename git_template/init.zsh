@@ -6,4 +6,5 @@ autoload -Uz \
     happy_commit \
     lol_commits \
     block_master \
-    block_aws_keys
+    block_aws_keys \
+    cljfmt
