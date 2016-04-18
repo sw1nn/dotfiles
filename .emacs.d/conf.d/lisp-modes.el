@@ -1,11 +1,8 @@
 (use-package clojure-mode
-             :pin melpa-stable
+  :pin melpa-stable
   :ensure t)
-;; (use-package color-identifiers-mode
-;;   :pin melpa-stable
-;;   :diminish color-identifiers-mode
-;;   :ensure t)
-(use-package align-cljlet
+
+(use-package rainbow-identifiers
   :pin melpa-stable
   :ensure t)
 
@@ -32,6 +29,20 @@
   :pin melpa-stable
   :ensure t)
 
+(use-package flycheck-clojure
+  :pin melpa
+  :ensure t
+  :config
+  (eval-after-load 'flycheck '(flycheck-clojure-setup))
+  :init
+  (global-flycheck-mode))
+
+(use-package flycheck-pos-tip
+  :pin melpa-stable
+  :ensure t
+  :config
+  (eval-after-load 'flycheck
+    '(setq flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -39,8 +50,8 @@
 ;; lisp mode tweaks
 
 (defvar electrify-return-match
-    "[\]}\)\"]"
-    "If this regexp matches the text after the cursor, do an \"electric\"
+  "[\]}\)\"]"
+  "If this regexp matches the text after the cursor, do an \"electric\"
   return.")
 
 (defun electrify-return-if-match (arg)
@@ -72,7 +83,7 @@
   (clj-refactor-mode t)
   (core-async-mode t)
   (cljr-add-keybindings-with-prefix "C-c r")
-  (color-identifiers-mode t)
+  (rainbow-identifiers-mode t)
   (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
 ;  (define-key clojure-mode-map (kbd "M-[") 'paredit-wrap-square)
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
@@ -118,5 +129,5 @@
 (dolist (mode '(clojure-mode clojurescript-mode cider-mode))
   (eval-after-load mode
     '(setq clojure--prettify-symbols-alist
-	  (append sw1nn/clojure-prettify-alist
-		  clojure--prettify-symbols-alist))))
+          (append sw1nn/clojure-prettify-alist
+                  clojure--prettify-symbols-alist))))
