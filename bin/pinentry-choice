@@ -1,8 +1,17 @@
 #!/bin/sh
 
-if [ -z "$DISPLAY" ]; then
-    pinentry-curses $@
+echo "EMACS: $EMACS" > ~/.pinentry.log
+echo "SSH_CONNECTION: $SSH_CONNECTION" >> ~/.pinentry.log
+echo "DISPLAY: $DISPLAY" >> ~/.pinentry.log
+env >> ~/.pinentry.log
+
+if [ -z "$SSH_CONNECTION" -a -n "${DISPLAY}" ]; then
+    CMD=pinentry-gtk-2
+elif [ -n "$INSIDE_EMACS" ]; then
+    CMD=pinentry-emacs
 else
-    pinentry-gtk-2 $@ || \
-    pinentry-curses $@
+    export GPG_TTY=${GPG_TTY:-$(tty)}
+    CMD=pinentry-curses
 fi
+
+exec $CMD $@
