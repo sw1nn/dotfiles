@@ -1,65 +1,62 @@
-# --- Window Layout & Options --- #
-own_window yes
-own_window_type panel
-own_window_transparent no
-own_window_hints undecorated,below,skip_taskbar,skip_pager
-own_window_argb_visual yes
-own_window_argb_value 180
-alignment middle_right
+conky.config = {
+   background = true,
+   own_window = true,
+   own_window_type= 'panel',
+   alignment = 'top_right',
+   double_buffer = true,
+   use_spacer = 'right',
+   use_xft = true,
+   font = 'DejaVu Sans Mono for Powerline:size=8',
+   xftalpha = 1,
+   short_units = true,
 
-double_buffer yes
-use_spacer right
-use_xft yes
-xftfont DejaVu Sans Mono for Powerline:size=8
-xftalpha 1
-short_units yes
+   maximum_width = 325,
+   minimum_width = 325, minimum_height = 1080,
+   gap_x = 2,
+   gap_y = 0,
+   if_up_strictness = 'address',
 
-maximum_width 325
-minimum_size 325 1080
-gap_x 5
-gap_y 0
-if_up_strictness address
+   update_interval = 5,
+   stippled_borders = 3,
+   border_width = 0,
+   own_window_colour = '#002b36',
+   default_color = '#93a1a1',
 
-# --- Colours, Sizes, Fonts & Margins --- #
-update_interval 5
-stippled_borders 3
-border_width 0
-own_window_colour 002b36
-default_color 93a1a1
+   -- Solarized colors Source http://github.com/altercation/solarized
+   color0 = '#073624',
+   color1 = '#dc322f',
+   color2 = '#859900',
+   -- color3 b58900
+   color4 = '#268bd2',
+   --color5 d33682
+   -- color6 2aa198
+   -- color7 eee8d5
 
-# Solarized colors Source http://github.com/altercation/solarized
-color0 073624
-color1 dc322f
-color2 859900
-# color3 b58900
-color4 268bd2
-#color5 d33682
-# color6 2aa198
-# color7 eee8d5
+   -- these are really solarized 8-15
+   --color0 002b36
+   --color1 cb4b16
+   --color2 586e75
+   color3 = '#657b83',
+   --color4 839496
+   color5 = '#6c71c4',
+   color6 = '#93a1a1',
+   color7 = '#fdf6e3',
 
-# these are really solarized 8-15
-#color0 002b36
-#color1 cb4b16
-#color2 586e75
-color3 657b83
-#color4 839496
-color5 6c71c4
-color6 93a1a1
-color7 fdf6e3
+   -- --- Text --- #
+   draw_outline = false,
+   draw_borders = false,
+   font = 'Monospace:size=8:weight=bold',
+   uppercase = false,
+   draw_shades = true,
 
-# --- Text --- #
-draw_outline no
-draw_borders no
-font Monospace:size=8:weight=bold
-uppercase no
-draw_shades yes
+};
 
-TEXT
+conky.text = [[
 ${color6}${font DejaVu Sans Mono for Powerline:weight=bold:size=24}${alignc}${time %H:%M}
 ${font DejaVu Sans:weight=bold:size=14}${alignc}${time %a}, ${time %e} ${time %B} ${time %G}
 ${font DejaVu Sans:weight=bold:size=10}${color5}CURRENTLY PLAYING${hr 2}
-${execi 15 spotify_getinfo.py}
-${font DejaVu Sans:weight=bold:size=10}${color5}SYSTEM INFORMATION ($nodename)${hr 2}
+${scroll 16 ${execi 15 spotify_getinfo.py}}
+${font DejaVu Sans:weight=bold:size=10}${color5}SYSTEM $nodename ${hr 2}
 $font${color4}Uptime$color $uptime
 ${color4}Kernel$color $kernel
 ${font DejaVu Sans Mono for Powerline:weight=bold:size=10}${color5}CPU ${hr 2}$color$font
@@ -117,3 +114,4 @@ ${color4}Today:      ${color6}${execi 300 vnstat|awk '/today/{print $2 $3}'}${go
 ${color4}Yesterday:  ${color6}${execi 300 vnstat|awk '/yesterday/{print $2 $3}'}${goto 160}${execi 300 vnstat|awk '/yesterday/{print $5 $6}'}${goto 245}${color}${execi 300 vnstat|awk '/yesterday/{print $8 $9}'}
 ${color4}Week:       ${color6}${execi 300 vnstat -w|awk '/current week/{print $3 $4}'}${goto 160}${execi 300 vnstat -w|awk '/current week/{print $6 $7}'}${goto 245}${color}${execi 300 vnstat -w|awk '/current week/{print $9 $10}'}
 ${color4}Month:      ${color6}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $3 $4}'}${goto 160}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $6 $7}'}${goto 245}${color}${execi 300 vnstat -m|grep "`date +"%b '%y"`"|awk '{print $9 $10}'}${font}
+]];
