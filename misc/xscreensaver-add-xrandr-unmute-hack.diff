@@ -1,0 +1,29 @@
+--- driver/windows.c-orig     2015-10-24 19:42:23.000000000 +0100
++++ driver/windows.c  2016-05-22 21:51:57.824086302 +0100
+@@ -58,6 +58,10 @@
+ # include <X11/extensions/Xinerama.h>
+ #endif /* HAVE_XINERAMA */
+
++#ifdef HAVE_RANDR
++# include <X11/extensions/Xrandr.h>
++#endif /* HAVE_RANDR */
++
+ /* This file doesn't need the Xt headers, so stub these types out... */
+ #undef XtPointer
+ #define XtAppContext void*
+@@ -1802,2 +1806,2 @@
+   for (i = 0; i < si->nscreens; i++)
+     XUnmapWindow (si->dpy, si->screens[i].screensaver_window);
+
++#ifdef HAVE_RANDR
++      /* Not sure why this works, must reset 'something'. */
++      XRRFreeScreenResources (XRRGetScreenResources(si->dpy, RootWindow(si->dpy,0)));
++      fprintf(stderr,"Unmute Hack.\n");
++#endif /* HAVE_RANDR */
++
++
++
+   si->screen_blanked_p = False;
+   si->blank_time = time ((time_t *) 0);
+   si->last_wall_clock_time = 0;
+
