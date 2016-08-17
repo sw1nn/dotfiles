@@ -4,7 +4,7 @@ term_prog="gnome-terminal --role=Irc -e"
 
 CONFIG=${HOME}/.irc-connection
 
-if [ "$(hostname)" != "alison" ]; then
+if [ "$(hostname -s)" != "alison" ]; then
   if [ -f ${CONFIG} ]; then
     source ${CONFIG}
   else
