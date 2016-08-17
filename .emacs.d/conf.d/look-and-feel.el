@@ -118,6 +118,12 @@
 
 (require 'mc-hide-unmatched-lines-mode)
 
+(use-package fancy-narrow
+  :ensure t
+  :init (fancy-narrow-mode t)
+  :config
+  (setq auto-insert-directory ))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
