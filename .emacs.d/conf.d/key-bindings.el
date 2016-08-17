@@ -11,7 +11,7 @@
 (global-set-key (kbd "M-x") #'smex)
 (global-set-key (kbd "M-y") #'browse-kill-ring)
 
-(global-set-key (kbd "C-c f")   #'fold-dwim-toggle)
+(global-set-key (kbd "C-c M-f")   #'fold-dwim-toggle)
 (global-set-key (kbd "C-c g")   #'magit-status)
 (global-set-key (kbd "C-c m")   #'sw1nn/mc-map)
 (global-set-key (kbd "C-c s")   #'sw1nn-ag-search)
