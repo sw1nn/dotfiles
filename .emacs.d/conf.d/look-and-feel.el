@@ -118,12 +118,6 @@
 
 (require 'mc-hide-unmatched-lines-mode)
 
-(use-package ws-butler
-  :ensure t
-  :config
-  ;(add-hook 'prog-mode-hook 'ws-butler-mode)
-  )
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
