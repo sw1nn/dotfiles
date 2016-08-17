@@ -33,5 +33,6 @@ if [ -f ${HOME}/.xflux-location ]; then
 fi
 
 xscreensaver &
+volnoti &
 
 exec i3  >& ~/.xsession.log
