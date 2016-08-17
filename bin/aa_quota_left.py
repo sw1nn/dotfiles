@@ -19,5 +19,5 @@ broadband=[x for x in login['broadband'] if x['circuit'] == aaisp['circuit']][0]
 quota_left = int(broadband['quota_left'])
 quota_amount = int(broadband['quota_monthly'])
 
-print("{0} / {1}".format(size(quota_amount, system=si),
-                         size(quota_left, system=si)))
+print("{0} / {1}".format(size(quota_left, system=si),
+                         size(quota_amount, system=si)))
