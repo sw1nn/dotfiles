@@ -35,3 +35,5 @@ au BufNewFile,BufRead *.cljs set filetype=clojure
 au BufRead /home/neale/irclogs/* set filetype=irc
 " au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null" 
 set pastetoggle=<F2>
+
+set rtp+=/usr/lib/python3.5/site-packages/powerline/bindings/vim/
