@@ -26,11 +26,6 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 xrdb -load ${HOME}/.Xresources
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/top_left_arrow 16
 
-xrandr --output DVI-0
-#xrandr --output DVI-1 --left-of DVI-0
-#xrandr --output DisplayPort-0 --right-of DVI-0
-xrandr --output HDMI-0 --right-of DVI-0
-xrandr --output VGA-0 --left-of DVI-0 --rotate left --primary
 
 if [ -f ${HOME}/.xflux-location ]; then
   source ${HOME}/.xflux-location
