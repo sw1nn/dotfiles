@@ -18,3 +18,5 @@ dzen2.opacity:                           70
 
 Xcursor.theme:                           Adwaita
 Xcursor.size:                            16
+
+Xautolock.locker:                        i3lock -d -i ~/backgrounds/lock.png
