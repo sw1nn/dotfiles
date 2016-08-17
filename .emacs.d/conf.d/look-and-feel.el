@@ -124,6 +124,20 @@
   :config
   (setq auto-insert-directory ))
 
+(use-package guide-key
+  :ensure t
+  :init    (setq guide-key/guide-key-sequence
+                 '("C-x r"     ; rectanges and registers
+                   "C-x 4"     ; window commands
+                   "C-x w"     ; alternative to M-s ...
+                   "C-c @"     ; hs-hide-show mode
+		   "C-c m"     ; multiple cursors
+		   "C-c C-v"   ; cider
+		   "C-c C-t"   ; verilog mode
+                   org-mode "C-c C-x"))
+  :config  (guide-key-mode t)
+  :diminish guide-key-mode)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
