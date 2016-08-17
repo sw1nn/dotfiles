@@ -16,11 +16,12 @@
           ("zip"  . "clojure.zip")
           ("spark" . "sparkling.core")
           ("csv" . "clojure.data.csv"))
-        cider-repl-display-help-banner nil)
+        cider-repl-display-help-banner nil
+	nrepl-prompt-to-kill-server-buffer-on-quit nil)
   :init
   (add-hook 'cider-mode-hook
             (lambda nil
-              (cider-turn-on-eldoc-mode)))
+              (eldoc-mode t)))
   (add-hook 'cider-repl-mode-hook
             (lambda nil
               (make-local-variable 'global-hl-line-mode)

@@ -2,7 +2,7 @@
         :plugins      [[org.clojure/tools.nrepl "0.2.12"]
                        [lein-ancient "0.6.8" :exclusions [org.clojure/clojure] ]
                        [jonase/eastwood "0.2.3" :exclusions [org.clojure/clojure]]
-                       [cider/cider-nrepl "0.11.0"]
+                       [cider/cider-nrepl "0.13.0"]
                        [refactor-nrepl "2.2.0"]
                        ;; [com.palletops/uberimage "0.4.1" :exclusions [org.clojure/clojure]]
                        [lein-cljfmt "0.3.0" :exclusions [org.clojure/clojure]]]
