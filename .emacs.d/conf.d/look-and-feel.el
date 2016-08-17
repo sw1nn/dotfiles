@@ -138,6 +138,13 @@
   :config  (guide-key-mode t)
   :diminish guide-key-mode)
 
+(use-package autoinsert
+  :ensure t
+  :init (auto-insert-mode t)
+  :config
+  (setq auto-insert-directory "~/.emacs.d/insert/")
+  (add-to-list 'auto-insert-alist '(".*/tampermonkey-scripts/*.js$" . "tampermonkey-header.js")))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
