@@ -1,10 +1,13 @@
 #!/usr/bin/python2
 
 import dbus
-bus = dbus.SessionBus()
-if 'com.spotify.qt' in bus.list_names():
-    player = bus.get_object('com.spotify.qt', '/')
-    iface = dbus.Interface(player, 'org.freedesktop.MediaPlayer2')
-    info = iface.GetMetadata()
-# OUT: [dbus.String(u'xesam:album'), dbus.String(u'xesam:title'), dbus.String(u'xesam:trackNumber'), dbus.String(u'xesam:artist'), dbus.String(u'xesam:discNumber'), dbus.String(u'mpris:trackid'), dbus.String(u'mpris:length'), dbus.String(u'mpris:artUrl'), dbus.String(u'xesam:autoRating'), dbus.String(u'xesam:contentCreated'), dbus.String(u'xesam:url')]
-    print str(info.get('xesam:artist',[''])[0]) + " - " + str(info.get('xesam:title',''))
+session_bus = dbus.SessionBus()
+
+spotify_bus = session_bus.get_object("org.mpris.MediaPlayer2.spotify",
+                                     "/org/mpris/MediaPlayer2")
+spotify_properties = dbus.Interface(spotify_bus,
+                                    "org.freedesktop.DBus.Properties")
+metadata = spotify_properties.Get("org.mpris.MediaPlayer2.Player", "Metadata")
+
+
+print str(metadata.get('xesam:artist',[''])[0]) + " - " + str(metadata.get('xesam:title',''))
