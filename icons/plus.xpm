@@ -1,0 +1,24 @@
+/* XPM */
+static char *plus[] = {
+/* columns rows colors chars-per-pixel */
+"8 16 2 1 ",
+"  c white",
+". c black",
+/* pixels */
+"        ",
+"        ",
+"   .    ",
+"   .    ",
+" .....  ",
+"   .    ",
+"   .    ",
+"        ",
+"        ",
+"        ",
+"        ",
+"        ",
+"        ",
+"        ",
+"        ",
+"        "
+};

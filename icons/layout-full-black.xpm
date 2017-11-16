@@ -1,0 +1,20 @@
+/* XPM */
+static char *layout_full_black[] = {
+/* columns rows colors chars-per-pixel */
+"12 12 2 1 ",
+"  c white",
+". c black",
+/* pixels */
+"            ",
+"            ",
+"  ........  ",
+"  ........  ",
+"  .      .  ",
+"  .      .  ",
+"  .      .  ",
+"  .      .  ",
+"  .      .  ",
+"  .      .  ",
+"  ........  ",
+"            "
+};

@@ -1,0 +1,19 @@
+/* XPM */
+static char *net_wired3[] = {
+/* columns rows colors chars-per-pixel */
+"16 11 2 1 ",
+"  c white",
+". c black",
+/* pixels */
+"                ",
+" .            . ",
+" .            . ",
+" .    ....    . ",
+" .    ....    . ",
+" .  ........  . ",
+" .  ........  . ",
+" .  ........  . ",
+" .            . ",
+" .            . ",
+"                "
+};
