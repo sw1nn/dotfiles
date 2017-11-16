@@ -20,3 +20,9 @@ Xcursor.theme:                           Adwaita
 Xcursor.size:                            16
 
 Xautolock.locker:                        i3lock -d -i ~/backgrounds/lock.png
+
+Qterminal*termName:                      xterm-256colors
+
+urxvt.background:                        #002b36
+urxvt.foreground:                        #657b83
+urxvt.font:                              xft:Fira Code:pixelsize=16:antialias=true:autohint=true
