@@ -1,0 +1,1 @@
+(setq csv-separators (quote ("," " " "|")))

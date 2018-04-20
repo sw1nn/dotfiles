@@ -8,20 +8,16 @@
 (global-set-key (kbd "M-3") #'mc/mark-next-like-this)
 (global-set-key (kbd "M-4") #'mc/mark-previous-like-this)
 (global-set-key (kbd "M-9") #'backward-sexp)
-(global-set-key (kbd "M-x") #'smex)
 (global-set-key (kbd "M-y") #'browse-kill-ring)
 
 (global-set-key (kbd "C-c M-f")   #'fold-dwim-toggle)
-(global-set-key (kbd "C-c g")   #'magit-status)
 (global-set-key (kbd "C-c m")   #'sw1nn/mc-map)
-(global-set-key (kbd "C-c s")   #'sw1nn-ag-search)
-(global-set-key (kbd "C-c t")   #'sw1nn-ansi-term)
+(global-set-key (kbd "C-c t")   #'sw1nn/ansi-term)
 (global-set-key (kbd "C-c v")   #'revert-buffer)
 (global-set-key (kbd "C-c SPC") #'ace-jump-mode)
 
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x C-m") #'mc/mark-all-dwim)
-(global-set-key (kbd "C-x p")   #'magit-find-file-completing-read)
 
 ;; remove suspend-frame bindings, too annoying.
 (global-set-key (kbd "C-z") nil)
@@ -37,3 +33,5 @@
 (define-key sw1nn/mc-map "l"    #'mc/edit-lines)
 (define-key sw1nn/mc-map "\C-a" #'mc/edit-beginnings-of-lines)
 (define-key sw1nn/mc-map "\C-e" #'mc/edit-ends-of-lines)
+
+(unbind-key "C-x C-c")

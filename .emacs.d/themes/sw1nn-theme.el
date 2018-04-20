@@ -1,3 +1,29 @@
+;;; sw1nn-theme.el --- sw1nn theme                      -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2017  Neale Swinnerton
+
+;; Author: Neale Swinnerton <neale@sw1nn.com>
+;; Keywords:
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;;
+
+;;; Code:
+
 (deftheme sw1nn
   "Created 2013-03-25.")
 
@@ -27,6 +53,7 @@
  '(erc-notice-face ((t (:foreground "#333333"))))
  '(erc-input-face ((t (:foreground "white"))))
  '(erc-my-nick-face ((t (:foreground "chartreuse" :weight bold))))
+ '(fancy-narrow-blocked-face ((t (:foreground "#464646"))))
  '(flymake-warnline ((t (:underline (:color "#8b7500" :style wave) :inherit nil))))
  '(flyspell-duplicate ((t (:underline (:color "#8b7500" :style wave) :inherit nil))))
  '(flymake-errline ((t (:underline (:color "#8b0000" :style wave) :inherit nil))))
@@ -49,7 +76,7 @@
  '(git-gutter-fr:added ((t (:foreground "#859900"))))
  '(git-gutter-fr:deleted ((t (:foreground "#dc322f"))))
  '(git-gutter-fr:modified ((t (:foreground "#6c71c4"))))
- '(highlight ((t (:background "#002b36"))))
+ '(highlight ((t (:background "#000000"))))
  '(header-line ((t (:inherit mode-line :background "grey20" :foreground "grey90" :box (:line-width 2 :color "grey75" :style released-button)))))
  '(hl-line-face ((t (:background "#073642"))))
  '(hl-sexp-face ((t (:background "#073642"))))
@@ -60,7 +87,7 @@
  '(ido-subdir ((t (:foreground "#cb4b16"))))
  '(isearch ((t (:background "#073642" :foreground "#b58900" :inverse-video t))))
  '(isearch-fail ((t (:background "#bb0000" :foreground "#b58900" :inverse-video t)))
-   )
+                )
  '(lazy-highlight ((t (:inverse-video t :foreground "#259185" :background "#042028"))))
  '(magit-diff-added ((t (:foreground "#004400"))))
  '(magit-diff-added-highlight ((t (:inherit diff-added))))
@@ -74,7 +101,7 @@
  '(match ((t (:inverse-video t :foreground "#2075c7" :background "#00005f"))))
  '(mode-line ((t (:background "#5f005f" :foreground "plum" :box (:line-width -1 :style released-button)))))
  '(mode-line-inactive ((t (:inherit mode-line :background "#839496" :foreground "#000000" :box (:line-width -1 :color "grey40") :weight light))))
-'(mc/cursor-face ((t (:background "#268bd2" :foreground "LightSteelBlue2"))))
+ '(mc/cursor-face ((t (:background "#268bd2" :foreground "LightSteelBlue2"))))
  '(minibuffer-prompt ((t (:foreground "#268bd2"))))
  '(nrepl-eval-sexp-fu-flash-face ((t (:inverse-video t :inherit default))))
  '(region ((t (:background "#586e75"))))
@@ -92,5 +119,23 @@
  '(warning ((t (:underline (:color "#8b0000" :style wave)))))
  '(widget-field ((t (:background "#aaaaaa" :foreground "#002b36"))))
  '(widget-single-line-field ((t (:background "#222222" :foreground "#002b36"))))
- '(default ((t (:family "DejaVu Sans Mono for Powerline")))))
-(provide-theme 'sw1nn)
+ ;; '(org-agenda-structure ((t (:inherit default ,@ha/variable-font-tuple :height 2.0 :underline nil))))
+ ;; '(org-verbatim ((t (:inherit 'fixed-pitched :foreground "#aef"))))
+ ;; '(org-table ((t (:inherit 'fixed-pitched ,@ha/fixed-font-tuple))))
+ ;; '(org-block ((t (:inherit 'fixed-pitched ,@ha/fixed-font-tuple))))
+ ;; '(org-block-background ((t (:inherit 'fixed-pitched ,@ha/fixed-font-tuple))))
+ ;; '(org-block-begin-line ((t (:inherit 'fixed-pitched ,@ha/fixed-font-tuple))))
+ ;; '(org-block-end-line ((t (:inherit 'fixed-pitched ,@ha/fixed-font-tuple))))
+ '(org-level-8 ((t (:weight bold :family "Georgia"))))
+ '(org-level-7 ((t (:weight bold :family "Georgia"))))
+ '(org-level-6 ((t (:weight bold :family "Georgia"))))
+ '(org-level-5 ((t (:weight bold :family "Georgia"))))
+ '(org-level-4 ((t (:weight bold :family "Georgia" :height 1.1))))
+ '(org-level-3 ((t (:weight bold :family "Georgia" :height 1.25))))
+ '(org-level-2 ((t (:weight bold :family "Georgia" :height 1.5))))
+ '(org-level-1 ((t (:weight bold :family "Georgia" :height 1.75))))
+ '(org-document-title ((t (:weight bold :family "Georgia" :height 1.5 :underline nil))))
+ '(default ((t (:family "Fira Code")))))
+
+(provide 'sw1nn-theme)
+;;; sw1nn-theme.el ends here

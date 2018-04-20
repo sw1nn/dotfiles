@@ -20,9 +20,14 @@
             (lambda ()
               (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 
-(use-package csv-mode
+(use-package csv
   :ensure t
   :mode ("\\.tsv\\'" . csv-mode))
 
-(use-package refheap
+(use-package pkgbuild-mode
+  :ensure t)
+
+;; (use-package toml-mode
+;;   :ensure t)
+(use-package dockerfile-mode
   :ensure t)
