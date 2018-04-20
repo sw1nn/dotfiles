@@ -31,10 +31,12 @@ case $cmd in
     volume-up)
 	set_volume +5%
         volnoti-show $(get_volume)
+        pkill -USR1 py3status || true
         ;;
     volume-down)
 	set_volume -5%
         volnoti-show $(get_volume)
+        pkill -USR1 py3status || true
         ;;
 
     mute)
