@@ -1,7 +1,0 @@
-#!/bin/sh
-
-pkill -HUP gpg-agent
-
-pgrep xscreensaver || (xscreensaver; sleep 1)
-
-xscreensaver-command -lock
