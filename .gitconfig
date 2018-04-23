@@ -2,7 +2,7 @@
         name = Neale Swinnerton
 	email = neale@sw1nn.com
 	mail = neale@sw1nn.com
-	signingkey = 04037DBD
+#	signingkey = 04037DBD
 [alias]
         lg = log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %C(green)(%cr)%Creset' --abbrev-commit --date=relative
         wdiff = diff --word-diff=color
@@ -20,3 +20,5 @@
 	autosetuprebase = always
 [init]
 	templatedir = /home/neale/workspace/dotfiles/git_template
+[url "https://github.com/"]
+    insteadOf = gh:

@@ -68,3 +68,6 @@ octave-core
 
 # certificates etc.
 *.pem
+
+# Rust backups
+*.bk
