@@ -20,6 +20,10 @@ set filetype=on
 set tabstop=4
 set shiftwidth=4
 set cursorline
+set pastetoggle=<F11>
+
+set fileencoding=utf8
+
 
 abbr wq1 wq! 
 abbr wQ! wq! 
@@ -32,8 +36,7 @@ abbr qw1 wq!
 
 au BufRead,BufNewFile *.java set number
 au BufNewFile,BufRead *.cljs set filetype=clojure
-au BufRead /home/neale/irclogs/* set filetype=irc
+au BufRead /home/neale/.weechat/logs/* set filetype=irc
 " au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null" 
-set pastetoggle=<F2>
 
-set rtp+=/usr/lib/python3.5/site-packages/powerline/bindings/vim/
+set rtp+=/usr/lib/python3.6/site-packages/powerline/bindings/vim/
