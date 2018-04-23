@@ -23,7 +23,8 @@
    magit-default-tracking-name-function (lambda (_ branch) branch)
    magit-push-arguments '("--set-upstream"))
   :init
-  (add-hook 'magit-status-mode-hook 'magit-filenotify-mode))
+  (add-hook 'magit-status-mode-hook 'magit-filenotify-mode)
+  (add-hook 'magit-status-refresh-hook 'git-gutter:update-all-windows))
 
 (use-package gist
   :ensure t)
