@@ -1,23 +1,35 @@
 #!/home/neale/.virtualenvs/aaisp/bin/python
 
 from json import loads
-from requests import get
+from requests import post
 from hurry.filesize import size, si
 from os.path import expanduser
 import configparser
+import sys
+
 home = expanduser('~')
 
 config = configparser.ConfigParser()
-config.read (home + '/.config/aaisp/config')
+config.read(home + '/.config/aaisp/config')
 aaisp = config['aaisp']
 
-aa_info = loads(get('https://chaos.aa.net.uk/info?JSON').text)
+aa_info = loads(post('https://chaos2.aa.net.uk/broadband/quota',
+                     data={'control_login': aaisp['login'],
+                           'control_password': aaisp['password'],
+                           'service': aaisp['service']}).text)
 
-login=[x for x in aa_info['login'] if x['ID'] == aaisp['login']][0]
-broadband=[x for x in login['broadband'] if x['circuit'] == aaisp['circuit']][0]
+quota = aa_info['quota'][0]
+quota_remaining = int(quota['quota_remaining'])
+quota_monthly = int(quota['quota_monthly'])
+quota_timestamp = quota['quota_timestamp']
 
-quota_left = int(broadband['quota_left'])
-quota_amount = int(broadband['quota_monthly'])
+output = "{0} / {1} at {2}".format(size(quota_remaining, system=si),
+                                   size(quota_monthly, system=si),
+                                   quota_timestamp)
 
-print("{0} / {1}".format(size(quota_left, system=si),
-                         size(quota_amount, system=si)))
+if len(sys.argv) > 1:
+    with open(sys.argv[1], "w") as f:
+        f.write(output)
+        f.write('\n')
+else:
+    print(output)
