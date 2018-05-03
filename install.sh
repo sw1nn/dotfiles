@@ -2,7 +2,7 @@
 
 set -e
 
-export DOTFILES="${0:h}"
+export DOTFILES=$(readlink -f "${0:h}")
 export LOGFILE="${DOTFILES}/install-$(date +'%Y%m%d%H%M%S').log"
 
 exec > >(tee ${LOGFILE})
@@ -19,22 +19,20 @@ ln -s ${DOTFILES}/submodule/prezto ${HOME}/.zprezto
 
 setopt EXTENDED_GLOB
 for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+    echo ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 
 
 cecho "blue" "Linking dotfiles..."
-ls -A | grep -e  "^\." | grep -v "^\.git$" |grep -v ".gitmodules" | while read dotfile
+ls -A ${DOTFILES}/*(.) | grep -e  "^\." | grep -v "^\.git$" |grep -v ".gitmodules" | while read dotfile
 do
     link_with_backup "${dotfile}"
 done
 
 
 
-cecho "yellow" "Installing Emacs packages..."
-/usr/bin/emacs -l ${DOTFILES}/.emacs.d/init.el -batch -eval '(message "Mission Begins...")'
-
 cecho "cyan" "Installing local bin"
-ln -s ${DOTFILES}/bin ~/bin
+mkdir -p ~/.local
+ln -s ${DOTFILES}/bin ~/.local/bin
 
 cecho "Finished, log is at ${LOGFILE} ..."

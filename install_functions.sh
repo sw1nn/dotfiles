@@ -45,7 +45,7 @@ function link_with_backup {
     if [ -e "${TARGET}" ]; then
         backup "${TARGET}"
     fi    
-    _echorun ln -s "${SOURCE}" "${TARGET}"
+    echo ln -s "${SOURCE}" "${TARGET}"
 }
 
 function install_elpa {
