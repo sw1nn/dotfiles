@@ -1,38 +1,38 @@
-#!/usr/bin/env zsh
+#!/bin/sh
 
-set -e
+set -eu
 
-export DOTFILES=$(readlink -f "${0:h}")
-export LOGFILE="${DOTFILES}/install-$(date +'%Y%m%d%H%M%S').log"
+[ "${1:-}" = "-v" ] && set -x
 
-exec > >(tee ${LOGFILE})
-exec 2>&1
+echo $PWD
 
-. "${DOTFILES}/install_functions.sh"
+build_dir=$(mktemp -d)
+trap "rm -rf ${build_dir}" EXIT QUIT TERM
+PREFIX=${HOME}/.local
+export PREFIX
 
-cd "${DOTFILES}"
+if [ "$(hostname -s)" = "eridani" ]; then
 
-cecho "green" "Updating git submodules..."
-update_submodules
+        echo "Installing Packages..."
+        sudo apt-get update -y
+        sudo apt-get install -y zsh libncurses5-dev automake autoconf make aspell-en libgnutls28-dev gcc libpng-dev libjpeg-dev libtiff5-dev
+        (
+          cd ${build_dir}
+          (
+            echo "Building Emacs..."
+            curl -L http://ftp.gnu.org/gnu/emacs/emacs-26.1.tar.xz | tar xJf -
 
-ln -s ${DOTFILES}/submodule/prezto ${HOME}/.zprezto
+            cd emacs-26.1
+            ./autogen.sh && ./configure --prefix=${PREFIX} && make install
+          )
 
-setopt EXTENDED_GLOB
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-    echo ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-done
+          (
+            echo "Building fasd..."
+            curl -L https://github.com/clvv/fasd/tarball/1.0.1 | tar xzf -
+            cd clvv-fasd-4822024
+            PREFIX=${PREFIX} make install
+          )
+        )
+fi
 
-
-cecho "blue" "Linking dotfiles..."
-ls -A ${DOTFILES}/*(.) | grep -e  "^\." | grep -v "^\.git$" |grep -v ".gitmodules" | while read dotfile
-do
-    link_with_backup "${dotfile}"
-done
-
-
-
-cecho "cyan" "Installing local bin"
-mkdir -p ~/.local
-ln -s ${DOTFILES}/bin ~/.local/bin
-
-cecho "Finished, log is at ${LOGFILE} ..."
+./install.zsh

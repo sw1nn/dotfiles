@@ -45,7 +45,7 @@ function link_with_backup {
     if [ -e "${TARGET}" ]; then
         backup "${TARGET}"
     fi    
-    echo ln -s "${SOURCE}" "${TARGET}"
+    ln -sf "${SOURCE}" "${TARGET}"
 }
 
 function install_elpa {
@@ -54,6 +54,5 @@ function install_elpa {
 }
 
 function update_submodules {
-    git submodule init
-    git submodule update
+    git submodule update --init --recursive
 }
