@@ -1,6 +1,6 @@
 #!/bin/bash
 
-term_prog="gnome-terminal --role=Irc -e"
+term_prog="gnome-terminal --role=Irc --profile=irc --"
 
 CONFIG=${HOME}/.irc-connection
 
@@ -18,6 +18,6 @@ if [ "$TERM" = "dumb" ]; then
     exec ${term_prog} "irc"
 fi
 
-exec tmux attach-session -d -t IRC;
+exec tmux -L comms attach-session -d -t IRC;
 
 exit 0
