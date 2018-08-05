@@ -12,19 +12,17 @@ fi
 KEYMAP="${HOME}/.XKeymap-$(hostname -s)"
 test -f ${KEYMAP} && xkbcomp ${KEYMAP} ${DISPLAY}
 
-gpg-agent --daemon \
-          --display "${DISPLAY}" \
-          --keep-display
-
-export SSH_AUTH_SOCK=/tmp/neale/ssh-agent.sock
 
 # Source Prezto.
 source ${HOME}/.zprofile
 
-export _JAVA_AWT_WM_NONREPARENTING=1
+#export _JAVA_AWT_WM_NONREPARENTING=1
 
 xrdb -load ${HOME}/.Xresources
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/top_left_arrow 16
+
+#/usr/bin/gpg-agent --enable-ssh-support --daemon 
+#TERM=xterm-256color /usr/bin/zsh -i -c "/usr/bin/emacs -nw --daemon" &
 
 
 if [ -f ${HOME}/.xflux-location ]; then
@@ -32,7 +30,6 @@ if [ -f ${HOME}/.xflux-location ]; then
   xflux -l ${LATITUDE} -g ${LONGITUDE}
 fi
 
-xscreensaver &
-volnoti &
+systemctl --user show-environment >>| ~/.lxsession.log
 
-exec i3  >& ~/.xsession.log
+exec lxsession 2>&1 >>| ~/.lxsession.log
