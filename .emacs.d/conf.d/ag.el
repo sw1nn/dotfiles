@@ -1,8 +1,8 @@
 (use-package ag
   :pin melpa-stable
   :ensure t
-  :bind ("C-c s" .  sw1nn/ag-search)
-
+  :bind ("C-c s" .  #'sw1nn/ag-search)
+  :functions ag/buffer-extension-regex
   :config
   (setq ag-highlight-search t
         ag-reuse-buffers t)
