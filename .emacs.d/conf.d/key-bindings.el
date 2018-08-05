@@ -50,3 +50,5 @@
 (define-key sw1nn/mc-map "\C-e" #'mc/edit-ends-of-lines)
 
 (unbind-key "C-x C-c")
+(unbind-key "<insert>")
+(define-key global-map [(control insert)] 'overwrite-mode)
