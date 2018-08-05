@@ -20,7 +20,9 @@
         org-refile-allow-creating-parent-nodes (quote confirm)
         org-log-done (quote time)
         org-log-into-drawer t
-        org-log-reschedule (quote note))
+        org-log-reschedule (quote note)
+        org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar"
+        )
 
   (add-to-list 'auto-mode-alist '("\\.txt\\'" . org-mode))
   (add-to-list 'auto-mode-alist '(".*/[0-9]*$" . org-mode)) ;; Journal entries
@@ -47,6 +49,7 @@
                ("^\\*+ \\(DONE\\) "
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "✔")
                           nil)))))
+
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((sh         . t)
@@ -56,7 +59,8 @@
      (python     . t)
      (ruby       . t)
      (dot        . t)
-     (css        . t)))
+     (css        . t)
+     (ditaa      . t)))
   (org-clock-persistence-insinuate)
   (define-key org-mode-map (kbd "M-C-n") 'org-end-of-item-list)
   (define-key org-mode-map (kbd "M-C-p") 'org-beginning-of-item-list)
