@@ -3,14 +3,16 @@
 cmd=$1
 shift;
 
+instance="${1:-vpn0}.sw1nn.com"
+
 case $cmd in
-    up)
-        systemctl start openvpn@home-access.service
-        notify 1 "VPN Start"
+    start)
+        sudo /usr/bin/systemctl start openvpn-client@${instance}
+        notify-send "openvpn" "${instance} starting"
         ;;
-    down)
-        systemctl stop openvpn@home-access.service
-        notify 1 "VPN Stop"
+    stop)
+        sudo /usr/bin/systemctl stop openvpn-client@${instance}
+        notify-send "openvpn" "${instance} stopping"
         ;;
     *)
         echo "No Such command"
