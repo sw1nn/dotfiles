@@ -190,7 +190,10 @@
 
 (defun sw1nn/ansi-term ()
   (interactive)
-  (ansi-term (getenv "SHELL")))
+  (if (magit-toplevel)
+      (magit-with-toplevel
+        (ansi-term "/bin/zsh"))
+    (ansi-term "/bin/zsh")))
 
 (defun sw1nn/untabify-p ()
   (not (or (derived-mode-p 'makefile-mode)
