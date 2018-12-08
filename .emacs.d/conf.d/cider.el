@@ -12,7 +12,7 @@
           ("log" . "clojure.tools.logging")
           ("set"  . "clojure.set")
           ("str"  . "clojure.string")
-          ("t" . "clj-time.core")
+          ("t" . "java-time.core")
           ("tf" . "clj-time.format")
           ("walk" . "clojure.walk")
           ("zip"  . "clojure.zip")
