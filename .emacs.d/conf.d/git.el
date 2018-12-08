@@ -1,7 +1,12 @@
 (use-package git-gutter
   :ensure t
   :diminish git-gutter-mode
-  :init (global-git-gutter-mode))
+  :init (global-git-gutter-mode)
+  :bind (("C-c C-g d" . git-gutter:popup-hunk)
+         ("C-c C-g n" . git-gutter:next-hunk)
+         ("C-c C-g p" . git-gutter:previous-hunk)
+         ("C-c C-g s" . git-gutter:stage-hunk)
+         ("C-c C-g v" . git-gutter:revert-hunk)))
 
 (setq magit-last-seen-setup-instructions "1.4.0")
 
