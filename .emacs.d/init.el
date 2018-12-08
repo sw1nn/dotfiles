@@ -7,6 +7,12 @@
 
 (require 'package)
 
+(unless (package-installed-p 'diminish)
+  (package-install 'diminish))
+
+(unless (package-installed-p 'bind-key)
+  (package-install 'bind-key))
+
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
