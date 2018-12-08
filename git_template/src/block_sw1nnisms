@@ -1,0 +1,28 @@
+if git --get sw1nn.allow-swinnisms
+then
+        exit 0
+fi
+
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+        against=HEAD
+else
+        # Initial commit: diff against an empty tree object
+        against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+
+MATCH=$(git diff --cached --name-only -z $against | xargs -0 cat | grep -x -P '^+.*(rds00|dev00|dev\.sw1nn\.com)' | wc -l)
+if [ $MATCH -ne 0 ]
+then
+       echo "Rejecting sw1nn specifics in the commit."
+       git diff --cached --name-only -z $against | xargs --null grep -q --color -C 3 -P '^+.*(rds00|dev00|dev\.sw1nn\.com)'
+       exit 1
+fi
+
+# Local Variables:
+# mode: Shell-Script
+# sh-indentation: 2
+# indent-tabs-mode: nil
+# sh-basic-offset: 2
+# End:
+# vim: ft=zsh sw=2 ts=2 et
