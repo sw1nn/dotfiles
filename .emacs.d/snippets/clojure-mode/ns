@@ -4,7 +4,7 @@
 # contributor: Yesudeep Mangalapilly <yesudeep@google.com>
 # key: ns
 # --
-(ns `(let* ((nsname '())
+`(unless (= (char-before (point)) ?\() "(")`ns `(let* ((nsname '())
         (dirs (split-string (replace-regexp-in-string
                               "src/\\(main\\|test\\)/\\(clj\\|clojure\\|cljs\\)" "src" (buffer-file-name)) "/"))
 

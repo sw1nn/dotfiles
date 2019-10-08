@@ -2,6 +2,6 @@
 # -*- coding: utf-8 -*-
 #name: defmethod
 # --
-(defmethod ${1:name} ${2:match}
-  [${3:args}]
-  $0)
+`(unless (= (char-before (point)) ?\() "(")`defmethod ${1:name} ${2:match}$>
+[${3:args}]
+$0)

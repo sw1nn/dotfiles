@@ -3,5 +3,5 @@
 # name: do seq n times
 # key: don
 # --
-(doseq [i (range (count ${1:times}))]
+`(unless (= (char-before (point)) ?\() "(")`doseq [i (range (count ${1:times}))]
   ${2:body-expr})

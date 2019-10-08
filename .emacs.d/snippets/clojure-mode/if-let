@@ -3,6 +3,6 @@
 # name: if-let
 # key: if-let
 # --
-(if-let [$1 $2]
+`(unless (= (char-before (point)) ?\() "(")`if-let [$1 $2]
   $3)
 $0

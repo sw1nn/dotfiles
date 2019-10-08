@@ -5,4 +5,4 @@
 # key: reduce.
 # group: examples
 # --
-(reduce (fn [res el] (+ res el)) 0 [1 2 3 4 5])$0
+`(unless (= (char-before (point)) ?\() "(")`reduce (fn [res el] (+ res el)) 0 [1 2 3 4 5])$0

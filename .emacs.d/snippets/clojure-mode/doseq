@@ -3,6 +3,6 @@
 # name: doseq
 # key: doseq
 # --
-(doseq [$1 $2]
+`(unless (= (char-before (point)) ?\() "(")`doseq [$1 $2]
   $3)
 $0

@@ -3,5 +3,5 @@
 # name: print
 # key: print
 # --
-(println $1)
+`(unless (= (char-before (point)) ?\() "(")`println $1)
 $0

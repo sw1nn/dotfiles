@@ -3,4 +3,4 @@
 # name: reduce
 # key: reduce
 # --
-(reduce ${1:(fn [p n] $0)} $2)
+`(unless (= (char-before (point)) ?\() "(")`reduce ${1:(fn [p n] $0)} $2)

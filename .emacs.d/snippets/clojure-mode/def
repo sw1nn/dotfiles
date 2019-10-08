@@ -3,4 +3,4 @@
 # name: def
 # key: def
 # --
-(def $0)
+`(unless (= (char-before (point)) ?\() "(")`def $0)

@@ -3,6 +3,6 @@
 # name: when-let
 # key: when-let
 # --
-(when-let [$1 $2]
+`(unless (= (char-before (point)) ?\() "(")`when-let [$1 $2]
   $3)
 $0

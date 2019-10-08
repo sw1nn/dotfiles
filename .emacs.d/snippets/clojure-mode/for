@@ -3,5 +3,5 @@
 # name: for
 # key: for
 # --
-(for [${1:seq-exprs}]
+`(unless (= (char-before (point)) ?\() "(")`for [${1:seq-exprs}]
   ${2:body-expr})

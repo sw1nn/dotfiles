@@ -2,6 +2,6 @@
 # -*- coding: utf-8 -*-
 #name: if
 # --
-(if ${1:test-expr}
+`(unless (= (char-before (point)) ?\() "(")`if ${1:test-expr}
   ${2:then-expr}
   ${3:else-expr})

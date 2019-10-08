@@ -2,4 +2,4 @@
 # -*- coding: utf-8 -*-
 #name: use
 # --
-(:use [${1:namespace} :only [$0]])
+`(unless (= (char-before (point)) ?\() "(")`:use [${1:namespace} :only [$0]])
