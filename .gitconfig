@@ -6,6 +6,8 @@
 [alias]
         lg = log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %s %C(green)(%cr)%Creset' --abbrev-commit --date=relative
         wdiff = diff --word-diff=color
+        addw = !sh -c 'git diff -U0 -w --no-color "$@" | git apply --cached --ignore-whitespace --unidiff-zero' -
+
 [core]
     excludesfile = ~/.gitignore_global
 [color]
@@ -19,6 +21,6 @@
 [branch]
 	autosetuprebase = always
 [init]
-	templatedir = /home/neale/workspace/dotfiles/git_template
+        templatedir = ~/workspace/dotfiles/git_template
 [url "https://github.com/"]
     insteadOf = gh:
