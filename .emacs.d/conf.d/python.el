@@ -23,4 +23,4 @@
   (setq elpy-rpc-backend "jedi")
   (add-hook 'python-mode-hook #'smartparens-mode)
   :init
-  (elpy-enable))
+  (advice-add 'python-mode :before 'elpy-enable))
