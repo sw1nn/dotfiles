@@ -249,7 +249,8 @@
                 (not (ding))
                 (y-or-n-p "Buffer is modified, save it? ")
                 (save-buffer))
-           (sw1nn/refresh-rusty-tags)
+           (when (string= major-mode "rust-mode")
+             (sw1nn/refresh-rusty-tags))
            (apply oldfn args))))
 
 (defun sw1nn/magit-find-file-completing-read-other-window ()
