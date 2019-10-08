@@ -1,6 +1,5 @@
 syntax on
 filetype plugin indent on
-colorscheme solarized
 
 set nocompatible
 set laststatus=2
@@ -23,6 +22,7 @@ set cursorline
 set pastetoggle=<F11>
 
 set fileencoding=utf8
+set mouse-=a
 
 
 abbr wq1 wq! 
