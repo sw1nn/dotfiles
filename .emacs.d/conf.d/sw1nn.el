@@ -195,12 +195,6 @@
         (ansi-term "/bin/zsh"))
     (ansi-term "/bin/zsh")))
 
-(defun sw1nn/untabify-p ()
-  (not (or (derived-mode-p 'makefile-mode)
-           (derived-mode-p 'ein:notebook-multilang-mode)
-           (string= (file-name-extension (buffer-file-name))
-                    "tsv"))))
-
 (defun sw1nn/kludge-gpg-agent
     ()
   (if (display-graphic-p)

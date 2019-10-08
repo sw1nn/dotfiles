@@ -264,15 +264,6 @@
 
 (setq-default cursor-type t)
 
-
-(add-hook 'before-save-hook
-          (lambda nil
-            (when (sw1nn/untabify-p)
-              (untabify (point-min) (point-max))
-              (delete-trailing-whitespace))
-            (when (bound-and-true-p paredit-mode)
-              (check-parens))))
-
 ;; this lets us have a .dir-locals.el turning on rainbow-mode for themes.
 (add-to-list 'safe-local-variable-values '(eval rainbow-mode t))
 
