@@ -307,9 +307,7 @@
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 (setenv "DISPLAY" ":0")
-(setenv "XAUTHORITY" "/home/neale/.Xauthority")
-(setenv "SSH_AUTH_SOCK" "/run/user/1034/gnupg/S.gpg-agent.ssh")
-(setenv "BROWSER" "google-chrome-stable")
+(setenv "XAUTHORITY" (concat (getenv "HOME") "/.Xauthority"))
 
 ;; make the fringe stand out from the background
 (setq solarized-distinct-fringe-background t)
