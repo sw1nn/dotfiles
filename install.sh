@@ -1,5 +1,8 @@
 #!/bin/sh
 
+
+EMACS_VERSION=26.2
+
 set -eu
 
 [ "${1:-}" = "-v" ] && set -x
@@ -15,15 +18,18 @@ if [ "$(hostname -s)" = "eridani" ]; then
 
         echo "Installing Packages..."
         sudo apt-get update -y
-        sudo apt-get install -y zsh libncurses5-dev automake autoconf make aspell-en libgnutls28-dev gcc libpng-dev libjpeg-dev libtiff5-dev
+        sudo apt-get install -y zsh libncurses5-dev automake autoconf make aspell-en libgnutls28-dev gcc libpng-dev libjpeg-dev libtiff5-dev dnsutils
         (
           cd ${build_dir}
           (
             echo "Building Emacs..."
-            curl -L http://ftp.gnu.org/gnu/emacs/emacs-26.1.tar.xz | tar xJf -
+            curl -L http://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz | tar xJf -
 
-            cd emacs-26.1
-            ./autogen.sh && ./configure --prefix=${PREFIX} && make install
+            cd emacs-${EMACS_VERSION}
+            ./autogen.sh && ./configure --prefix=${PREFIX} --without-x && make install
+            systemctl --user link ~/.local/lib/systemd/user/emacs.service
+            systemctl daemon-reload
+            systemctl --user enable --now emacs
           )
 
           (
