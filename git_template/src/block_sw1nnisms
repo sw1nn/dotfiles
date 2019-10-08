@@ -1,4 +1,4 @@
-if git --get sw1nn.allow-swinnisms
+if test $(git config --bool sw1nn.allow-sw1nnisms) = "true"; then
 then
         exit 0
 fi

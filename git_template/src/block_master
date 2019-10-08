@@ -1,4 +1,6 @@
-[ ! -z "${GIT_ALLOW_MASTER}" ] && exit 0
+if test $(git config --bool sw1nn.allow-master) = "true"; then
+  exit 0
+fi
 
 if test $(git rev-parse --abbrev-ref HEAD) = "master" ; then
   # NOTE: prompt matches default magit-process-yes-or-no-prompt-regexp
@@ -6,7 +8,7 @@ if test $(git rev-parse --abbrev-ref HEAD) = "master" ; then
   read -k 1 yn
   case $yn in
     [Yy]) exit 0;;
-    *) printf "\r\nAborted. Set GIT_ALLOW_MASTER=1 to skip this check.\n"; exit 1;;
+    *) printf "\r\nAborted. git config --add sw1nn.allow-master true to skip this check.\n"; exit 1;;
   esac
 fi
 

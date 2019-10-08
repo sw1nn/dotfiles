@@ -1,4 +1,7 @@
-[ ! -z "${GIT_ALLOW_AWS_KEYS}" ] && exit 0
+if test $(git config --bool sw1nn.allow-aws-keys) = "true"; then
+  # TODO allow only specific AWS keys?
+  exit 0
+fi
 
 if git rev-parse --verify HEAD >/dev/null 2>&1
 then
