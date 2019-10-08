@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# -*- coding: utf-8 -*-
+# key: translate
+# --
+translate([${1:x},${2:y},${3:z}) 

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# -*- coding: utf-8 -*-
+#name: rotate
+# --
+rotate([${1:x},${2:y},${3:z}]) $0
