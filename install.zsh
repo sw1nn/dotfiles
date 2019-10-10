@@ -24,20 +24,20 @@ done
 
 
 cecho "blue" "Linking dotfiles..."
-ls -A ${DOTFILES}/*(.) | grep -e  "^\." | grep -v "^\.git$" |grep -v ".gitmodules" | while read dotfile
+ls -A ${DOTFILES}/.*(.) | grep -v ".gitmodules" | while read dotfile
 do
     link_with_backup "${dotfile}"
 done
 
 cecho "blue" "Linking dotfile directories..."
-for dotdir in ${DOTFILES}/.*(/) 
+for dotdir in ${DOTFILES}/.*(/)
 do
     ln -sf "${dotdir}" ${HOME}
 done
 
 cecho "cyan" "Installing local bin"
 mkdir -p ~/.local/bin
-for binfile in  ${DOTFILES}/bin/*(x) 
+for binfile in  ${DOTFILES}/bin/*(x)
 do
     ln -sf ${binfile} ~/.local/bin/
 done

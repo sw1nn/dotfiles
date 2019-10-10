@@ -18,26 +18,45 @@ if [ "$(hostname -s)" = "eridani" ]; then
 
         echo "Installing Packages..."
         sudo apt-get update -y
-        sudo apt-get install -y zsh libncurses5-dev automake autoconf make aspell-en libgnutls28-dev gcc libpng-dev libjpeg-dev libtiff5-dev dnsutils
+        sudo apt-get install -y \
+             zsh \
+             libncurses5-dev \
+             automake \
+             autoconf \
+             make \
+             aspell-en \
+             libgnutls28-dev \
+             gcc \
+             libpng-dev \
+             libjpeg-dev \
+             libtiff5-dev \
+             dnsutils \
+             fuse \
+             openvpn \
+             imagemagick
+
         (
           cd ${build_dir}
+          [ ! -f ${PREFIX}/bin/emacs ] &&
           (
             echo "Building Emacs..."
             curl -L http://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz | tar xJf -
 
             cd emacs-${EMACS_VERSION}
             ./autogen.sh && ./configure --prefix=${PREFIX} --without-x && make install
-            systemctl --user link ~/.local/lib/systemd/user/emacs.service
-            systemctl daemon-reload
-            systemctl --user enable --now emacs
           )
 
+          [ ! -f ${PREFIX}/bin/fasd ] &&
           (
             echo "Building fasd..."
             curl -L https://github.com/clvv/fasd/tarball/1.0.1 | tar xzf -
             cd clvv-fasd-4822024
             PREFIX=${PREFIX} make install
           )
+
+          systemctl --user link ~/.local/lib/systemd/user/emacs.service
+          systemctl --user daemon-reload
+          systemctl --user enable --now emacs
         )
 fi
 
