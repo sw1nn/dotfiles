@@ -24,3 +24,5 @@
         templatedir = ~/workspace/dotfiles/git_template
 [url "https://github.com/"]
     insteadOf = gh:
+[credential]
+    helper = store --file ~/.git-credentials
