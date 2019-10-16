@@ -310,7 +310,7 @@
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 (setenv "DISPLAY" ":0")
-(setenv "XAUTHORITY" (concat (getenv "HOME") "/.Xauthority"))
+(setenv "XAUTHORITY" (expand-file-name  "~/.Xauthority"))
 
 ;; make the fringe stand out from the background
 (setq solarized-distinct-fringe-background t)
