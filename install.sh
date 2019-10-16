@@ -33,7 +33,11 @@ if [ "$(hostname -s)" = "eridani" ]; then
              dnsutils \
              fuse \
              openvpn \
-             imagemagick
+             imagemagick \
+	     python3-venv \
+	     cython3 \
+	     python3-numpy \
+	     python3-tk
 
         (
           cd ${build_dir}
