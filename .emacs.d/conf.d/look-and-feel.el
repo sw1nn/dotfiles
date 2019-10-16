@@ -147,7 +147,6 @@
   :init    (setq guide-key/guide-key-sequence
                  '("C-x r"     ; rectanges and registers
                    "C-x 4"     ; window commands
-                   "C-x w"     ; alternative to M-s ...
                    "C-c @"     ; hs-hide-show mode
                    "C-c m"     ; multiple cursors
                    "C-c C-v"   ; cider
