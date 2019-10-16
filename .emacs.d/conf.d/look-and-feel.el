@@ -201,6 +201,8 @@
       (mouse-wheel-mode t)
       (blink-cursor-mode -1)))
 
+(setq fill-column 132)
+
 (setq inhibit-splash-screen t)
 (setq make-backup-files nil)
 (setq default-directory "~/workspace")
