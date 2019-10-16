@@ -34,6 +34,10 @@
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 (global-set-key (kbd "C-x C-m") #'mc/mark-all-dwim)
 
+(global-set-key (kbd "C-+") #'text-scale-increase)
+(global-set-key (kbd "C--") #'text-scale-decrease)
+(global-set-key (kbd "C-0") #'text-scale-reset)
+
 ;; remove suspend-frame bindings, too annoying.
 (global-set-key (kbd "C-z") nil)
 (global-set-key (kbd "C-x C-z") nil)
