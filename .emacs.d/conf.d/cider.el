@@ -19,7 +19,9 @@
           ("spark" . "sparkling.core")
           ("csv" . "clojure.data.csv"))
         cider-repl-display-help-banner nil
-        nrepl-prompt-to-kill-server-buffer-on-quit nil)
+        nrepl-prompt-to-kill-server-buffer-on-quit nil
+        cljr-inject-dependencies-at-jack-in nil
+        )
   (add-hook 'cider-mode-hook
             (lambda nil
               (eldoc-mode t)))
