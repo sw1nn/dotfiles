@@ -207,6 +207,8 @@
 (setq-default cursor-type 'bar)
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
+(setq auth-sources `("~/.emacs.d/secrets/authinfo.gpg" "~/.netrc"))
+
 (setq-default uniquify-buffer-name-style 'forward
               x-select-enable-clipboard t
               x-select-enable-primary t
