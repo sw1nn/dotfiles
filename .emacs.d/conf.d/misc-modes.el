@@ -32,7 +32,7 @@
 (use-package dockerfile-mode
   :ensure t)
 
-(setq scad-command "/home/nealeswinnerton/.local/bin/openscad")
+(setq scad-command (expand-file-name "~/.local/bin/openscad"))
 (eval-after-load 'scad-mode
   '(define-key scad-mode-map (kbd "C-c C-c") #'compile))
 (autoload 'scad-mode "scad-mode" "A major mode for editing OpenSCAD code." t)
