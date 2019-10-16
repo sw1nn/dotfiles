@@ -39,4 +39,4 @@ au BufNewFile,BufRead *.cljs set filetype=clojure
 au BufRead /home/neale/.weechat/logs/* set filetype=irc
 " au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null" 
 
-set rtp+=/usr/lib/python3.6/site-packages/powerline/bindings/vim/
+set rtp+=/usr/lib/python3.7/site-packages/powerline/bindings/vim/
