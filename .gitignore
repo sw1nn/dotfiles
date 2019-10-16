@@ -29,3 +29,4 @@ cache
 /.emacs.d/session.*
 /.xmonad/history
 /.emacs.d/bookmarks
+/.emacs.d/secrets
