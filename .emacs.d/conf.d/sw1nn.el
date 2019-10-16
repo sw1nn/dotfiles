@@ -160,13 +160,6 @@
         (with-current-buffer (multi-term)
           (rename-buffer "*cqlsh*"))))))
 
-(require 'ag) ;; TODO make this redundant, possibly update the use-package for ag?
-(defun sw1nn/ag-search (string file-regex directory)
-  (interactive (list (read-from-minibuffer "Search string: " (ag/dwim-at-point))
-                     (read-from-minibuffer "In filenames matching PCRE: " (ag/buffer-extension-regex))
-                     (read-directory-name "Directory: " (ag/project-root default-directory))))
-  (ag/search string directory :regexp t :file-regex file-regex))
-
 (defun sw1nn/cider-run-tests ()
   (interactive)
   (save-some-buffers)
