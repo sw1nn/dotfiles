@@ -2,7 +2,8 @@
   :ensure t
   :config
   (require 'smartparens-config)
-  (sp-use-paredit-bindings)
+  (add-to-list 'sp-smartparens-bindings '("M-?" . sp-convolute-sexp))
+  (sp-use-smartparens-bindings)
   (sp-pair "(" ")" :wrap "M-(")
   (sp-pair "{" "}" :wrap "M-{"))
 
@@ -47,10 +48,7 @@
   (define-key aggressive-indent-mode-map (kbd "C-c C-q") nil) ;; clashes with cider
   (smartparens-strict-mode)
   (eldoc-mode)
-  (define-key emacs-lisp-mode-map (kbd "C-x C-e") 'pp-eval-last-sexp)
-
-
-  )
+  (define-key emacs-lisp-mode-map (kbd "C-x C-e") 'pp-eval-last-sexp))
 
 (defun neale-custom-clojure-mode ()
   (neale-custom-lisp-mode)
