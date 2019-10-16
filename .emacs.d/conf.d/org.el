@@ -52,7 +52,7 @@
 
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((sh         . t)
+   '((shell      . t)
      (js         . t)
      (emacs-lisp . t)
      (clojure    . t)
