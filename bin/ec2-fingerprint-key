@@ -1,0 +1,7 @@
+#!/bin/sh
+
+KEY=${1:-~/.ssh/id_rsa.pub}
+
+echo "WARN: sw1nn bodge script, not the real version"
+
+ssh-keygen -f ${KEY} -e -m PKCS8 | openssl pkey -pubin -outform DER | openssl md5 -c | sed -e "s@(stdin)@${KEY} @"
