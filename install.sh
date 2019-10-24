@@ -37,7 +37,8 @@ if [ "$(hostname -s)" = "eridani" ]; then
 	     python3-venv \
 	     cython3 \
 	     python3-numpy \
-	     python3-tk
+	     python3-tk \
+	     jq
 
         (
           cd ${build_dir}
