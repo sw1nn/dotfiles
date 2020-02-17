@@ -19,17 +19,14 @@
 (setenv "TERM" "xterm-256color")
 
 
-(defadvice ansi-term (after advise-ansi-term-coding-system activate)
-  "Force `ansi-term` to be utf-8 after it launches."
-  (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix))
+;;  Force `ansi-term` to be utf-8 after it launches.
+(advice-add 'ansi-term :after (lambda (&rest args) (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
 
-
-(defadvice term-sentinel (around my-advice-term-sentinel (proc msg))
-  "Kill buffer holding `ansi-term` after process quit."
-  (if (memq (process-status proc) '(signal exit))
-      (let ((buffer (process-buffer proc)))
-        ad-do-it
-        (kill-buffer buffer))
-    ad-do-it))
-
-(ad-activate 'term-sentinel)
+(advice-add 'term-sentinel
+            :around
+            (lambda (orig-fn proc msg)
+              (if (memq (process-status proc) '(signal exit))
+                  (let ((buffer (process-buffer proc)))
+                    (funcall orig-fn proc msg)
+                    (kill-buffer buffer))
+                (funcall orig-fn proc msg))))
