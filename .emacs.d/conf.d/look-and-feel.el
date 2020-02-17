@@ -302,14 +302,6 @@
 
 (global-flycheck-mode)
 
-(defadvice ido-find-file (after find-file-sudo activate)
-  "Find file as root if necessary."
-  (unless (and buffer-file-name
-               (or (tramp-tramp-file-p buffer-file-name)
-                   (not (file-exists-p buffer-file-name))
-                   (file-writable-p buffer-file-name)))
-    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-
 (setenv "DISPLAY" ":0")
 (setenv "XAUTHORITY" (expand-file-name  "~/.Xauthority"))
 
