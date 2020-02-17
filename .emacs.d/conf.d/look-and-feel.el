@@ -217,7 +217,8 @@
               save-interprogram-paste-before-kill t
               apropos-do-all t
               mouse-yank-at-point t
-              xterm-query-timeout nil)
+              xterm-query-timeout nil
+              xterm-extra-capabilities '(modifyOtherKeys reportBackground getSelection setSelection))
 
 ;; Save all tempfiles in $TMPDIR/emacs$UID/
 (defconst emacs-tmp-dir (format "%s/%s%s" temporary-file-directory "emacs" (user-uid)))
