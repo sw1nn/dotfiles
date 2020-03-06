@@ -1,7 +1,3 @@
-(use-package smex
-  :ensure t
-  :bind ("M-x" . smex))
-
 (use-package expand-region
   :ensure t)
 
