@@ -36,5 +36,6 @@
 (use-package magit-find-file
   :ensure t)
 
-(use-package magit-filenotify
-  :ensure t)
+;; TODO - causes hangs sometimes? infinite recursion?
+;; (use-package magit-filenotify
+;;   :ensure t)
