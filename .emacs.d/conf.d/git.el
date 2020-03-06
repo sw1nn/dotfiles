@@ -2,21 +2,18 @@
   :ensure t
   :diminish git-gutter-mode
   :init (global-git-gutter-mode)
-  :bind (("C-c C-g d" . git-gutter:popup-hunk)
-         ("C-c C-g n" . git-gutter:next-hunk)
-         ("C-c C-g p" . git-gutter:previous-hunk)
-         ("C-c C-g s" . git-gutter:stage-hunk)
-         ("C-c C-g v" . git-gutter:revert-hunk)))
+  :bind (("C-c g d" . git-gutter:popup-hunk)
+         ("C-c g n" . git-gutter:next-hunk)
+         ("C-c g p" . git-gutter:previous-hunk)
+         ("C-c g s" . git-gutter:stage-hunk)
+         ("C-c g v" . git-gutter:revert-hunk)))
 
 (setq magit-last-seen-setup-instructions "1.4.0")
 
 (use-package magit
   :pin melpa-stable
   :ensure t
-  :bind (("C-c g" . magit-status)
-         ("C-x p" . magit-find-file-completing-read)
-         ("C-x 4 p" . sw1nn/magit-find-file-completing-read-other-window)
-         ("C-x 5 p" . sw1nn/magit-find-file-completing-read-other-frame))
+  :bind (("C-c g g" . magit-status))
 
   :config
   (setq
