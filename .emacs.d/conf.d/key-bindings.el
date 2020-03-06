@@ -13,8 +13,8 @@
   :config  (guide-key-mode t)
   :diminish guide-key-mode)
 
-(global-set-key (kbd "C-r") #'isearch-backward-regexp)
-(global-set-key (kbd "C-s") #'isearch-forward-regexp)
+(global-set-key (kbd "C-r") #'swiper-isearch-backward)
+(global-set-key (kbd "C-s") #'swiper-isearch)
 
 (global-set-key (kbd "M-%") #'query-replace-regexp)
 (global-set-key (kbd "M-0") #'forward-sexp)
@@ -25,7 +25,7 @@
 (global-set-key (kbd "M-9") #'backward-sexp)
 (global-set-key (kbd "M-y") #'browse-kill-ring)
 
-(global-set-key (kbd "C-c M-f")   #'fold-dwim-toggle)
+(global-set-key (kbd "C-c M-f") #'fold-dwim-toggle)
 (global-set-key (kbd "C-c m")   #'sw1nn/mc-map)
 (global-set-key (kbd "C-c t")   #'sw1nn/ansi-term)
 (global-set-key (kbd "C-c v")   #'revert-buffer)
