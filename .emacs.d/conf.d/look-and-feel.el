@@ -65,33 +65,6 @@
         win-switch-feedback-background-color "#008800"
         win-switch-feedback-foreground-color "#00ff00"))
 
-
-(use-package ido
-  :ensure t
-  :config
-  (ido-mode)
-  (ido-everywhere)
-  (setq ido-auto-merge-work-directories-length -1
-        ido-cannot-complete-command 'ignore
-        ido-save-directory-list-file "~/.emacs.d/var/cache/ido.last"
-        ido-use-virtual-buffers t))
-
-(use-package ido-completing-read+
-  :ensure t
-  :config (ido-ubiquitous-mode))
-
-(use-package ido-vertical-mode
-  :ensure t
-  :config (ido-vertical-mode)
-  (setq ido-vertical-define-keys 'C-n-C-p-up-and-down))
-
-(use-package flx-ido
-  :pin melpa-stable
-  :ensure t
-  :config
-  (flx-ido-mode)
-  (setq ido-enable-flex-matching t))
-
 (use-package browse-kill-ring
   :ensure t)
 
@@ -137,19 +110,6 @@
 (use-package fancy-narrow
   :ensure t
   :init (fancy-narrow-mode t))
-
-(use-package guide-key
-  :ensure t
-  :init    (setq guide-key/guide-key-sequence
-                 '("C-x r"     ; rectanges and registers
-                   "C-x 4"     ; window commands
-                   "C-c @"     ; hs-hide-show mode
-                   "C-c m"     ; multiple cursors
-                   "C-c C-v"   ; cider
-                   "C-c C-t"   ; verilog mode
-                   org-mode "C-c C-x"))
-  :config  (guide-key-mode t)
-  :diminish guide-key-mode)
 
 (use-package autoinsert
   :ensure t
