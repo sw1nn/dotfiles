@@ -6,7 +6,6 @@
   :init
   (setq org-use-speed-commands t
         org-hide-emphasis-markers t
-        org-completion-use-ido t
         org-outline-path-complete-in-steps nil
         org-src-fontify-natively t ;; Pretty code blocks
         org-src-tab-acts-natively t

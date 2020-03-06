@@ -24,7 +24,6 @@
    magit-diff-refine-hunk t
    magit-revert-buffers 'silent
    magit-repo-dirs '("~/workspace")
-   magit-completing-read-function 'magit-ido-completing-read
    magit-default-tracking-name-function (lambda (_ branch) branch)
    magit-push-arguments '("--set-upstream"))
   :init
