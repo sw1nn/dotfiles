@@ -35,8 +35,6 @@
 (require 'diminish)
 (require 'bind-key)
 
-(setq custom-file (concat user-emacs-directory "conf.d/00customize.el"))
-
 (let ((user-info "~/.emacs.d/.user-info"))
   (when (file-exists-p user-info)
     (load user-info)))
