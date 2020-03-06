@@ -38,7 +38,9 @@
   (add-hook 'rust-mode-hook #'cargo-minor-mode)
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'rust-mode-hook #'smartparens-strict-mode)
+  (add-hook 'rust-mode-hook #'flycheck-rust-setup)
   :bind (("C-m" . electrify-return-if-match)))
+
 
 (use-package racer
   :ensure t
