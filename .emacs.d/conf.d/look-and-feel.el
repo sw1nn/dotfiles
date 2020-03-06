@@ -230,6 +230,8 @@
 
 ;; this lets us have a .dir-locals.el turning on rainbow-mode for themes.
 (add-to-list 'safe-local-variable-values '(eval rainbow-mode t))
+(add-to-list 'safe-local-variable-values
+             '(compilation-read-command . nil))
 
 (setq hscroll-margin 2
       hscroll-step 1
