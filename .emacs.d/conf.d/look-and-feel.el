@@ -152,7 +152,8 @@
 
 (if window-system
     (progn
-      (setq frame-title-format '(buffer-file-name "%f" ("%b")))
+      (setq frame-title-format '(buffer-file-name "%f" ("%b"))
+	    use-dialog-box nil)
       (tooltip-mode -1)
       (mouse-wheel-mode t)
       (blink-cursor-mode -1)))
@@ -174,7 +175,9 @@
               apropos-do-all t
               mouse-yank-at-point t
               xterm-query-timeout nil
-              xterm-extra-capabilities '(modifyOtherKeys reportBackground getSelection setSelection))
+              xterm-extra-capabilities '(modifyOtherKeys reportBackground getSelection setSelection)
+              ring-bell-function #'ignore
+              visible-bell nil)
 
 ;; Save all tempfiles in $TMPDIR/emacs$UID/
 (defconst emacs-tmp-dir (format "%s/%s%s" temporary-file-directory "emacs" (user-uid)))
@@ -228,16 +231,38 @@
 ;; this lets us have a .dir-locals.el turning on rainbow-mode for themes.
 (add-to-list 'safe-local-variable-values '(eval rainbow-mode t))
 
-(setq scroll-margin 5
-      scroll-conservatively 1000               ; > 100 => never recentre point
-      scroll-up-aggressively 0.1
-      scroll-down-aggressively 0.1)
+(setq hscroll-margin 2
+      hscroll-step 1
+      ;; Emacs spends too much effort recentering the screen if you scroll the
+      ;; cursor more than N lines past window edges (where N is the settings of
+      ;; `scroll-conservatively'). This is especially slow in larger files
+      ;; during large-scale scrolling commands. If kept over 100, the window is
+      ;; never automatically recentered.
+      scroll-conservatively 101
+      scroll-margin 0
+      scroll-preserve-screen-position t
+      ;; Reduce cursor lag by a tiny bit by not auto-adjusting `window-vscroll'
+      ;; for tall lines.
+      auto-window-vscroll nil
+      ;; mouse
+      mouse-wheel-scroll-amount '(5 ((shift) . 2))
+      mouse-wheel-progressive-speed nil)  ; don't accelerate scrolling
+
+;; Remove hscroll-margin in shells, otherwise it causes jumpiness
+(add-hook 'term-mode-hook (lambda () (setq hscroll-margin 0)))
 
 (setq dired-use-ls-dired nil)
 
 (setq kill-do-not-save-duplicates t)
 
 (setq recentf-save-file (concat user-emacs-directory ".recentf"))
+
+;;; Fringes
+
+;; Reduce the clutter in the fringes; we'd like to reserve that space for more
+;; useful information, like git-gutter and flycheck.
+(setq indicate-buffer-boundaries nil
+      indicate-empty-lines nil)
 
 ;; make files opened in .jar etc read-only by default.
 (add-hook 'archive-extract-hook
