@@ -1,4 +1,11 @@
 (package-initialize)
+
+(unless (package-installed-p 'quelpa)
+  (with-temp-buffer
+    (url-insert-file-contents "https://github.com/quelpa/quelpa/raw/master/quelpa.el")
+    (eval-buffer)
+    (quelpa-self-upgrade)))
+
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
 ;;(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
@@ -21,13 +28,6 @@
   (use-package smex))
 
 (add-to-list 'load-path "~/.emacs.d/local")
-
-;; (if (require 'quelpa nil t)
-;;     (quelpa-self-upgrade)
-;;   (with-temp-buffer
-;;     (url-insert-file-contents "https://raw.github.com/quelpa/quelpa/master/bootstrap.el")
-;;     (eval-buffer)))
-
 
 ;; ensures that we have the features `use-package' requires:
 (eval-when-compile
