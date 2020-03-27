@@ -20,9 +20,6 @@
 	  org-src-tab-acts-natively t
 	  org-todo-keywords '((sequence "TODO(t)" "DOING(g)" "|" "DONE(d)") (sequence "|" "CANCELED(c)"))
 	  org-use-speed-commands t)
-
-  (eval-after-load 'autoinsert
-    '(add-to-list 'auto-insert-alist '(".*/[0-9]*$" . journal-file-insert)))
   (add-hook 'org-mode-hook 'yas-minor-mode-on)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
@@ -40,6 +37,7 @@
 						(if (org-in-src-block-p)
 						    (org-return)
 						  (org-return-indent))))
+
   (font-lock-add-keywords         ; A bit silly but my headers are now
    'org-mode `(("^\\*+ \\(TODO\\) " ; shorter, and that is nice canceled
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚑")
@@ -76,38 +74,34 @@
   :ensure t
   :defer t
   :init
-  (setq org-journal-dir "~/journal/")
-  (setq org-journal-date-format "#+TITLE: Journal Entry- %Y-%b-%d (%A)")
-  (setq org-journal-time-format ""))
+  (setq org-journal-dir "~/journal"
+	org-journal-date-format "#+TITLE: Journal Entry- %Y-%b-%d (%A)"
+	org-journal-time-format "")
+  (eval-after-load 'autoinsert
+    '(add-to-list 'auto-insert-alist (cons (concat (expand-file-name org-journal-dir) "/[0-9]\\{4\\}-\\(?:1[0-2]\\|0[1-9]\\)-\\(?:0[0-9]\\|2[0-9]\\|3[01]\\)\\.org")  'journal-file-insert))))
 
-(defun get-journal-file-today ()
-  "Return filename for today's journal entry."
-  (let ((daily-name (format-time-string "%Y%m%d")))
-    (expand-file-name (concat org-journal-dir daily-name))))
-
-(defun journal-file-today ()
-  "Create and load a journal file based on today's date."
-  (interactive)
-  (find-file (get-journal-file-today)))
-
-(defun get-journal-file-yesterday ()
-  "Return filename for yesterday's journal entry."
-  (let ((daily-name (format-time-string "%Y%m%d" (time-subtract (current-time) (days-to-time 1)))))
-    (expand-file-name (concat org-journal-dir daily-name))))
+(defun get-journal-file (&optional time)
+  (let ((auto-insert-query-old auto-insert-query)) ;; BUG race condition here?
+    (setq auto-insert-query nil)
+    (find-file (expand-file-name (expand-file-name (concat org-journal-dir (format-time-string "/%Y-%m-%d.org" time)))))
+    (setq auto-insert-query auto-insert-query-old)))
 
 (defun journal-file-yesterday ()
-  "Creates and load a file based on yesterday's date."
   (interactive)
-  (find-file (get-journal-file-yesterday)))
+  (get-journal-file (time-subtract (current-time) (days-to-time 1))))
+
+(defun journal-file-today ()
+  (interactive)
+  (get-journal-file))
+
 
 (defun journal-file-insert ()
   "Insert's the journal heading based on the file's name."
   (interactive)
-  (when (string-match "\\(20[0-9][0-9]\\)\\([0-9][0-9]\\)\\([0-9][0-9]\\)" (buffer-name))
-    (let ((year  (string-to-number (match-string 1 (buffer-name))))
-          (month (string-to-number (match-string 2 (buffer-name))))
-          (day   (string-to-number (match-string 3 (buffer-name))))
-          (datim nil))
-      (setq datim (encode-time 0 0 0 day month year))
+  (when (string-match "\\([0-9]\\{4\\}\\)-\\(1[0-2]\\|0[1-9]\\)-\\(0[0-9]\\|2[0-9]\\|3[01]\\)" (buffer-name))
+    (let* ((year  (string-to-number (match-string 1 (buffer-name))))
+	   (month (string-to-number (match-string 2 (buffer-name))))
+	   (day   (string-to-number (match-string 3 (buffer-name))))
+	   (datim (encode-time 0 0 0 day month year)))
       (insert (format-time-string org-journal-date-format datim))
       (insert "\n\n"))))  ; Start with a blank separating line
