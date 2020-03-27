@@ -1,0 +1,30 @@
+marker=${$(git config sw1nn.nocheckin-marker):-"@@NOCHECKIN"}
+
+#ansi colors
+red="[01;31m[K"
+white="[01;37m[K"
+nocolor="[m[K"
+
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+  against=HEAD
+else
+  # Initial commit: diff against an empty tree object
+  against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+fi
+
+MATCH=$(git diff --cached --name-only -z $against | xargs -0 cat | grep  "${marker}" | wc -l)
+if [ $MATCH -ne 0 ]
+then
+  echo -e "${red}Rejecting ${white}${marker}${red} in the commit.${nocolor}"
+  grep --color=always -C 2 -Hn -P "${marker}" $(git diff --cached --name-only -z $against | xargs -0)
+  exit 1
+fi
+
+# Local Variables:
+# mode: Shell-Script
+# sh-indentation: 2
+# indent-tabs-mode: nil
+# sh-basic-offset: 2
+# End:
+# vim: ft=zsh sw=2 ts=2 et

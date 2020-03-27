@@ -8,4 +8,5 @@ autoload -Uz \
     block_master \
     block_sw1nnisms \
     block_aws_keys \
+    block_nocheckin \
     cljfmt

@@ -17,6 +17,7 @@
   (setq magit-default-tracking-name-function (lambda (_ branch) branch)
 	magit-diff-refine-hunk t
 	magit-last-seen-setup-instructions "1.4.0"
+	magit-process-finish-apply-ansi-colors t
 	magit-process-popup-time -1
 	magit-push-arguments '("--set-upstream")
 	magit-repo-dirs '("~/workspace")
