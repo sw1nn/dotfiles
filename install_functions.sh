@@ -39,7 +39,7 @@ function backup {
 }
 
 function link_with_backup {
-    local FILENAME="${1#./}"
+	local FILENAME="$(basename ${1})"
     local SOURCE="${DOTFILES}/${FILENAME}"
     local TARGET="${HOME}/${FILENAME}"
     if [ -e "${TARGET}" ]; then

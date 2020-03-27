@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-EMACS_VERSION=26.2
+EMACS_VERSION=26.3
 
 set -eu
 
@@ -30,6 +30,9 @@ if [ "$(hostname -s)" = "eridani" ]; then
              libpng-dev \
              libjpeg-dev \
              libtiff5-dev \
+	     libxpm-dev \
+	     libgif-dev \
+             libgtk-3-dev \
              dnsutils \
              fuse \
              openvpn \
@@ -38,7 +41,8 @@ if [ "$(hostname -s)" = "eridani" ]; then
 	     cython3 \
 	     python3-numpy \
 	     python3-tk \
-	     jq
+	     jq \
+             fd-find
 
         (
           cd ${build_dir}
@@ -48,7 +52,7 @@ if [ "$(hostname -s)" = "eridani" ]; then
             curl -L http://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz | tar xJf -
 
             cd emacs-${EMACS_VERSION}
-            ./autogen.sh && ./configure --prefix=${PREFIX} --without-x && make install
+            ./autogen.sh && ./configure --prefix=${PREFIX} --with-modules && make install
           )
 
           [ ! -f ${PREFIX}/bin/fasd ] &&
