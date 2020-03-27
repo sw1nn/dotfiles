@@ -230,7 +230,7 @@
   "Refresh rust project tags with rusty-tags."
   (interactive)
   (shell-command "rusty-tags emacs")
-  (when-let ((cargo-root (cargo-process--project-root)))
+  (when-let ((cargo-root (locate-dominating-file (or buffer-file-name default-directory) "Cargo.toml")))
     (message "refreshing tags in %s" cargo-root)
     (let ((tags-revert-without-query t))
       (visit-tags-table (format "%s/rusty-tags.emacs" cargo-root) nil))))
