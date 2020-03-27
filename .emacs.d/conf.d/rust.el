@@ -31,6 +31,13 @@
   :config
   (add-hook 'cargo-process-mode-hook #'visual-line-mode))
 
+(use-package flycheck-rust
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'rust-mode
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
+
 (use-package rust-mode
   :ensure t
   :defer t
@@ -38,8 +45,7 @@
   (add-hook 'rust-mode-hook #'cargo-minor-mode)
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'rust-mode-hook #'smartparens-strict-mode)
-  (add-hook 'rust-mode-hook #'flycheck-rust-setup)
-  :bind (("C-m" . electrify-return-if-match)))
+  (add-hook 'rust-mode-hook (defun sw1nn/idle-highlights-rust-mode-exception () (setq-local idle-highlight-exceptions rust-mode-keywords))))
 
 
 (use-package racer
@@ -48,15 +54,14 @@
   :config
   (add-hook 'racer-mode-hook #'eldoc-mode)
   (add-hook 'racer-mode-hook #'company-mode)
-  (setq racer-rust-src-path "/home/neale/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
-  (setq racer-cmd "~/.cargo/bin/racer")
+  (setq racer-rust-src-path "/home/neale/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"
+	racer-cmd "~/.cargo/bin/racer")
   :bind (:map racer-mode-map
-              ([?\t] . company-indent-or-complete-common)
-              ("C-c C-c d" . racer-describe)))
+	      ([?\t] . company-indent-or-complete-common)
+	      ("C-c C-c d" . racer-describe)))
 
 (advice-add 'xref-find-definitions :around
-            'sw1nn/xref-auto-refresh-on-missing)
-
+	    'sw1nn/xref-auto-refresh-on-missing)
 
 (provide 'rust)
 ;;; rust.el ends here

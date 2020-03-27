@@ -1,12 +1,15 @@
 (use-package gh
+  :defer t
   :ensure t)
 
 (use-package js3-mode
   :mode ("\\.json\\'" . js3-mode)
+  :defer t
   :ensure t)
 
 (use-package markdown-mode
   :ensure t
+  :defer t
   :mode (("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init
@@ -14,6 +17,7 @@
 
 (use-package yaml-mode
   :ensure t
+  :defer t
   :mode ("\\.yaml\\'" . yaml-mode)
   :init
   (add-hook 'yaml-mode-hook
@@ -22,14 +26,17 @@
 
 (use-package csv
   :ensure t
+  :defer t
   :mode ("\\.tsv\\'" . csv-mode))
 
 (use-package pkgbuild-mode
+  :defer t
   :ensure t)
 
 ;; (use-package toml-mode
 ;;   :ensure t)
 (use-package dockerfile-mode
+  :defer t
   :ensure t)
 
 (setq scad-command (expand-file-name "~/.local/bin/openscad"))

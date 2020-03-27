@@ -14,6 +14,7 @@
         projectile-completion-system 'default)
   :config
   (projectile-mode +1)
+  (setq projectile-mode-line-prefix " 👷")
   :bind
   (:map projectile-mode-map
 	("s-p" . 'projectile-command-map)

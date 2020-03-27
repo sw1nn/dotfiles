@@ -1,7 +1,6 @@
 (use-package yasnippet
   :ensure t
+  :defer t
   :pin melpa-stable
-  :init
-  (yas-reload-all)
-  (add-hook 'prog-mode-hook #'yas-minor-mode)
-  )
+  :init (add-hook 'prog-mode-hook #'yas-minor-mode)
+  :diminish yas-minor-mode)

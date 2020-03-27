@@ -1,15 +1,26 @@
+;; Save all tempfiles in $TMPDIR/emacs$UID/
+(defconst emacs-tmp-dir (format "%s/%s%s" temporary-file-directory "emacs" (user-uid)))
+
 (use-package expand-region
-  :ensure t)
+  :ensure t
+  :bind
+  ("M-2" . er/expand-region))
+
+(use-package hideshow
+  :ensure t
+  :defer t
+  :diminish hs-minor-mode)
 
 (use-package volatile-highlights
   :ensure t
+  :defer 5
   :config
-  (volatile-highlights-mode t))
+  (volatile-highlights-mode t)
+  :diminish volatile-highlights-mode)
 
 (defvar electrify-return-match
   "[\]}\)\"]"
-  "If this regexp matches the text after the cursor, do an \"electric\"
-  return.")
+  "If this regexp matches the text after the cursor, do an \"electric\" return.")
 
 (defun electrify-return-if-match (arg)
   "If the text after the cursor matches `electrify-return-match' then
@@ -22,21 +33,12 @@
     (newline arg)
     (indent-according-to-mode)))
 
-(use-package smart-mode-line
-  :ensure t
-  :config
-  (setq sml/theme 'respectful)
-  (setq rm-whitelist (quote (" Paredit")))
-  (sml/setup)
-  (add-to-list 'sml/replacer-regexp-list '("^~/workspace/" ":WS:") t)
-  (add-to-list 'sml/replacer-regexp-list '("^:WS:\\([^/]+\\)" ":WS[\\1]:") t)
-  (add-to-list 'sml/replacer-regexp-list '("^:WS:dotfiles/.emacs.d/" ":ED:") t))
-
 (use-package saveplace
   :ensure t
+  :defer 5
   :config
-  (setq save-place t
-        save-place-file (concat user-emacs-directory "places")))
+  (setq save-place-file (concat user-emacs-directory "places"))
+  :init (add-hook 'prog-mode-hook #'save-place-mode))
 
 (defface sw1nn/hs-fold-overlay-face
   '((t (:background "#fdf6e3" :foreground "#232323")))
@@ -45,7 +47,8 @@
 
 (use-package fold-dwim
   :ensure t
-  :init (add-hook 'prog-mode-hook 'hs-minor-mode)
+  :bind ("C-c M-f" . fold-dwim-toggle)
+  :init (add-hook 'prog-mode-hook #'hs-minor-mode)
   :config
   (setq hs-set-up-overlay
         (defun sw1nn/display-code-line-counts (ov)
@@ -59,57 +62,60 @@
 
 (use-package win-switch
   :ensure t
+  :defer t
   :config
   (setq win-switch-window-threshold 1
         win-switch-idle-time 0.7
         win-switch-feedback-background-color "#008800"
         win-switch-feedback-foreground-color "#00ff00"))
 
+(use-package winner
+  :config
+  (setq winner-boring-buffers '("*Completions*"
+				"*Help*"
+				"*Kill Ring*"
+				"*magit-edit-log*"
+				"*Backtrace*"
+				"*Compile-Log*"
+				"*Packages*"
+				"*Apropos*"
+				"*cider-error*"
+				"*cider-doc*"
+				"*cider-src*"
+				"*cider-result*"
+				"*cider-macroexpansion*"
+				"*magit-commit*"
+				"*magit-diff*"
+				"*magit-edit-log*"))
+  :config (winner-mode))
+
 (use-package browse-kill-ring
+  :defer t
   :ensure t)
 
 (use-package ace-jump-mode
-  :ensure t)
-
-;; (use-package uniquify
-;;   :ensure t)
+  :ensure t
+  :bind ("C-c SPC" . ace-jump-mode))
 
 (use-package idle-highlight-mode
-  :ensure t)
+  :ensure t
+  :defer t
+  :init (add-hook 'prog-mode-hook #'idle-highlight-mode))
 
-;; (use-package rainbow-mode
-;;   :ensure t)
-
-;; (use-package hideshowvis
-;;   :ensure t
-;;   :diminish hs-minor-mode)
+(use-package rainbow-mode
+  :ensure t
+  :init (add-hook 'prog-mode-hook #'rainbow-mode)
+  :diminish rainbow-mode)
 
 (use-package rainbow-identifiers
-  :ensure t)
-
-;; (use-package beacon
-;;   :ensure t
-;;   :init (beacon-mode 1)
-;;   :config
-;;   (setq beacon-color "#cccec4")
-;;   ;; Don't blink on specific major modes
-;;   (append beacon-dont-blink-major-modes
-;;           '(term-mode
-;;             shell-mode
-;;             eshell-mode
-;;             help-mode
-;;             ag-mode))
-
-;;   ;; Don't blink on next-line/previous-line at the top/bottom of the window
-;;   (add-to-list 'beacon-dont-blink-commands 'next-line)
-;;   (add-to-list 'beacon-dont-blink-commands 'previous-line)
-;;   :diminish beacon-mode)
-
-;; (require 'mc-hide-unmatched-lines-mode)
+  :ensure t
+  :defer t
+  :init (add-hook 'prog-mode-hook #'rainbow-identifiers-mode)
+  :diminish rainbow-identifiers-mode)
 
 (use-package fancy-narrow
   :ensure t
-  :init (fancy-narrow-mode t))
+  :init (add-hook 'prog-mode-hook #'fancy-narrow-mode))
 
 (use-package autoinsert
   :ensure t
@@ -123,26 +129,50 @@
   :config
   (setq clean-buffer-list-kill-buffer-names
         '("*Annotate " "*Help*" "*Apropos*" "*Buffer List*" "*Compile-Log*"
-          "*info*" "*vc*" "*vc-diff*" "*diff*"))
-  (setq clean-buffer-list-kill-never-buffer-names
-        '("*scratch*" "*Messages*")))
+          "*info*" "*vc*" "*vc-diff*" "*diff*")
+	clean-buffer-list-kill-never-buffer-names
+	'("*scratch*" "*Messages*")))
 
 (use-package smartparens
-  :ensure t)
+  :ensure t
+  :defer t
+  :diminish smartparens-mode)
 
 (use-package multiple-cursors
-  :ensure t)
+  :ensure t
+  :config (define-prefix-command 'sw1nn/mc-map)
+  :bind-keymap ("C-c m" . sw1nn/mc-map)
+  :bind (("M-3" . mc/mark-next-like-this)
+	 ("M-4" . mc/mark-previous-like-this)
+	 ("C-x C-m" . mc/mark-all-dwim)
+	 (:map sw1nn/mc-map
+	       ("i"    . mc/insert-numbers)
+	       ("h"    . mc-hide-unmatched-lines-mode)
+	       ("a"    . mc/mark-all-like-this)
+	       ("d"    . mc/mark-all-symbols-like-this-in-defun)
+	       ("r"    . mc/reverse-regions)
+	       ("s"    . mc/sort-regions)
+	       ("l"    . mc/edit-lines)
+	       ("\C-a" . mc/edit-beginnings-of-lines)
+	       ("\C-e" . mc/edit-ends-of-lines))))
 
 (use-package aggressive-indent
   :pin melpa-stable
-  :ensure t)
-
-(use-package flycheck-pos-tip
   :ensure t
+  :defer t
+  :config (add-hook 'prog-mode-hook #'aggressive-indent-mode)
+  :diminish aggressive-indent-mode)
+
+;; (use-package flycheck-pos-tip
+;;   :ensure t)
+
+(use-package flycheck
+  :ensure t
+  :defer t
   :config
-  (use-package flycheck
-    :config
-    (setq flycheck-display-errors-function 'flycheck-pos-tip-error-messages)))
+  (setq ;; flycheck-display-errors-function 'flycheck-pos-tip-error-messages
+   flycheck-mode-line-prefix "🐜")
+  (add-hook 'prog-mode-hook #'flycheck-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
@@ -158,68 +188,62 @@
       (mouse-wheel-mode t)
       (blink-cursor-mode -1)))
 
-(setq fill-column 132)
-
-(setq inhibit-splash-screen t)
-(setq make-backup-files nil)
-(setq default-directory "~/workspace")
-(setq-default cursor-type 'bar)
-(setq custom-theme-directory (concat user-emacs-directory "themes"))
-
-(setq auth-sources `("~/.emacs.d/secrets/authinfo.gpg" "~/.netrc"))
-
-(setq-default uniquify-buffer-name-style 'forward
-              x-select-enable-clipboard t
-              x-select-enable-primary t
-              save-interprogram-paste-before-kill t
-              apropos-do-all t
-              mouse-yank-at-point t
-              xterm-query-timeout nil
-              xterm-extra-capabilities '(modifyOtherKeys reportBackground getSelection setSelection)
-              ring-bell-function #'ignore
-              visible-bell nil)
-
-;; Save all tempfiles in $TMPDIR/emacs$UID/
-(defconst emacs-tmp-dir (format "%s/%s%s" temporary-file-directory "emacs" (user-uid)))
-(setq backup-directory-alist `((".*" . ,emacs-tmp-dir))
+(setq auth-sources `("~/.emacs.d/secrets/authinfo.gpg" "~/.netrc")
       auto-save-default nil
       auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t))
-      auto-save-list-file-prefix emacs-tmp-dir)
+      auto-save-list-file-prefix emacs-tmp-dir
+      backup-directory-alist `((".*" . ,emacs-tmp-dir))
+      compilation-always-kill t       ; kill compilation process before starting another
+      compilation-ask-about-save nil  ; save all buffers on `compile'
+      compilation-scroll-output 'first-error
+      default-directory "~/workspace"
+      echo-keystrokes 0.02
+      fill-column 132
+      inhibit-splash-screen t
+      initial-scratch-message
+      ";;    _____           __
+;;   /  ___|         /  |
+;;   \\ `--.__      __`| | _ __  _ __
+;;    `--. \\ \\ /\\ / / | || '_ \\| '_ \\
+;;   /\\__/ /\\ V  V / _| || | | | | | |
+;;   \\____/  \\_/\\_/  \\___/_| |_|_| |_|
+
+
+"
+      make-backup-files nil
+      same-window-regexps (quote '(("\\*magit: [[:ascii:]]\\*")))
+      split-height-threshold nil
+      split-width-threshold 160
+      safe-local-variable-values '((eval when
+					 (fboundp
+					  (quote rainbow-mode))
+					 (rainbow-mode 1))
+				   (compilation-read-command)
+				   (eval rainbow-mode t)))
+
+(setq custom-theme-directory (concat user-emacs-directory "themes"))
+
+(setq-default apropos-do-all t
+	      cursor-type 'bar
+	      mouse-yank-at-point t
+	      ring-bell-function #'ignore
+	      save-interprogram-paste-before-kill t
+	      uniquify-buffer-name-style 'forward
+	      visible-bell nil
+	      x-select-enable-clipboard t
+	      x-select-enable-primary t
+	      xterm-extra-capabilities '(modifyOtherKeys reportBackground getSelection setSelection)
+	      xterm-query-timeout nil)
+
+(add-hook 'compilation-filter-hook
+	  (defun sw1nn/apply-ansi-color-to-compilation-buffer-h ()
+	    "Applies ansi codes to the compilation buffers. Meant for `compilation-filter-hook'."
+	    (with-silent-modifications
+	      (ansi-color-apply-on-region compilation-filter-start (point)))))
+
 (savehist-mode t)
 
 (global-auto-revert-mode t)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; turn on linum mode globally except for certain modes.
-(setq global-linum-mode t
-      linum-disabled-modes-list '(eshell-mode
-                                  wl-summary-mode
-                                  compilation-mode
-                                  org-mode
-                                  text-mode
-                                  dired-mode
-                                  erc-mode)
-      linum-format "%03d")
-
-(setq same-window-regexps (quote '(("\\*magit: [[:ascii:]]\\*")))
-      visible-bell nil)
-
-(winner-mode t)
-(setq winner-boring-buffers '("*Completions*"
-                              "*Help*"
-                              "*Kill Ring*"
-                              "*magit-edit-log*"
-                              "*Backtrace*"
-                              "*Compile-Log*"
-                              "*Packages*"
-                              "*Apropos*"
-                              "*cider-error*"
-                              "*cider-doc*"
-                              "*cider-src*"
-                              "*cider-result*"
-                              "*cider-macroexpansion*"
-                              "*magit-commit*"
-                              "*magit-diff*"
-                              "*magit-edit-log*"))
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -282,44 +306,29 @@
 (global-hl-line-mode t)
 (put 'narrow-to-region 'disabled nil)
 
-(windmove-default-keybindings)
-
-(global-flycheck-mode)
-
 (setenv "DISPLAY" ":0")
 (setenv "XAUTHORITY" (expand-file-name  "~/.Xauthority"))
 
-;; make the fringe stand out from the background
-(setq solarized-distinct-fringe-background t)
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
 
-;; Don't change the font for some headings and titles
-(setq solarized-use-variable-pitch nil)
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
 
-;; make the modeline high contrast
-;; (setq solarized-high-contrast-mode-line t)
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
 
-;; Use less bolding
-(setq solarized-use-less-bold t)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+  (doom-themes-treemacs-config)
 
-;; Use more italics
-(setq solarized-use-more-italic t)
-
-;; Use less colors for indicators such as git:gutter, flycheck and similar
-(setq solarized-emphasize-indicators nil)
-
-;; Don't change size of org-mode headlines (but keep other size-changes)
-(setq solarized-scale-org-headlines nil)
-
-;; Avoid all font-size changes
-(setq solarized-height-minus-1 1)
-(setq solarized-height-plus-1 1)
-(setq solarized-height-plus-2 1)
-(setq solarized-height-plus-3 1)
-(setq solarized-height-plus-4 1)
-
-;;(load-theme 'solarized-dark)
-
-;; (load-theme 'sw1nn)
-
-(use-package grandshell-theme :ensure t)
-(load-theme 'grandshell)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))

@@ -1,5 +1,6 @@
 (use-package smartparens
   :ensure t
+  :defer t
   :config
   (require 'smartparens-config)
   (add-to-list 'sp-smartparens-bindings '("M-?" . sp-convolute-sexp))
@@ -9,17 +10,18 @@
 
 (use-package clojure-mode
   :pin melpa-stable
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package rainbow-delimiters
   :pin melpa-stable
   :ensure t)
-(use-package aggressive-indent :ensure t)
 
 (use-package clj-refactor
   :pin melpa-stable
   :diminish clj-refactor-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;; (use-package core-async-mode
 ;;   :diminish core-async-mode)
@@ -47,6 +49,7 @@
   (aggressive-indent-mode)
   (define-key aggressive-indent-mode-map (kbd "C-c C-q") nil) ;; clashes with cider
   (smartparens-strict-mode)
+  (rainbow-identifiers-mode t)
   (eldoc-mode)
   (define-key emacs-lisp-mode-map (kbd "C-x C-e") 'pp-eval-last-sexp))
 
@@ -56,7 +59,6 @@
   (yas-minor-mode t)
   (clj-refactor-mode t)
   (cljr-add-keybindings-with-prefix "C-c r")
-  (rainbow-identifiers-mode t)
   (define-key clojure-mode-map (kbd "RET") 'electrify-return-if-match)
   (define-key clojure-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key clojure-mode-map (kbd "M-t") 'sw1nn/transpose-kebab-words))
@@ -84,13 +86,13 @@
 ;; (put-clojure-indent 'did-mount 'defun)
 ;; (put-clojure-indent 'did-update 'defun)
 
-(global-prettify-symbols-mode 1)
-(defvar sw1nn/clojure-prettify-alist '())
+;; (global-prettify-symbols-mode 1)
+;; (defvar sw1nn/clojure-prettify-alist '())
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; font-lock tweaks
-(dolist (mode '(clojure-mode clojurescript-mode cider-mode))
-  (eval-after-load mode
-    '(setq clojure--prettify-symbols-alist
-          (append sw1nn/clojure-prettify-alist
-                  clojure--prettify-symbols-alist))))
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; font-lock tweaks
+;; (dolist (mode '(clojure-mode clojurescript-mode cider-mode))
+;;   (eval-after-load mode
+;;     '(setq clojure--prettify-symbols-alist
+;;           (append sw1nn/clojure-prettify-alist
+;;                   clojure--prettify-symbols-alist))))
