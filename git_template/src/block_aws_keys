@@ -1,4 +1,4 @@
-if test $(git config --bool sw1nn.allow-aws-keys) = "true"; then
+if [ "$(git config --bool sw1nn.allow-aws-keys)" = "true" ]; then
   # TODO allow only specific AWS keys?
   exit 0
 fi
