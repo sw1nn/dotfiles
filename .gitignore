@@ -11,6 +11,7 @@ cache
 /.emacs.d/places
 /.emacs.d/tramp
 /.emacs.d/url/cookies
+/.emacs.d/.customize.el
 /.emacs.d/.erc-auth
 /.emacs.d/.smex-items
 /.emacs.d/ac-comphist.dat

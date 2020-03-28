@@ -2,6 +2,9 @@
 
 (setq package-enable-at-startup nil)
 
+;; we don't use customize, but we want to keep this file clean.
+(setq custom-file (expand-file-name ".customize.el" user-emacs-directory ))
+
 (package-initialize)
 
 (unless (package-installed-p 'quelpa)
@@ -57,4 +60,3 @@
 
 (add-hook 'after-init-hook #'load-all-config-files)
 (add-hook 'emacs-startup-hook (lambda () (message "Emacs startup in %.2fs" (- (float-time) sw1nn/emacs-start-time))))
-
