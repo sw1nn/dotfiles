@@ -5,6 +5,7 @@ cache
 *.swp
 *.elc
 /.emacs.d/elpa
+/.emacs.d/quelpa
 /.emacs.d/var
 /.emacs.d/eshell/history
 /.emacs.d/places
@@ -14,6 +15,7 @@ cache
 /.emacs.d/.smex-items
 /.emacs.d/ac-comphist.dat
 /.emacs.d/.pastebin-auth
+/.emacs.d/projectile-bookmarks.eld
 /.emacs.d/.recentf
 /.emacs.d/image-dired
 /.ssh/id_rsa*
