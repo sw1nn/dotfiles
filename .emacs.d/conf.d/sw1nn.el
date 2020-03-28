@@ -183,9 +183,10 @@
 
 (defun sw1nn/ansi-term ()
   (interactive)
-  (if (magit-toplevel)
+  (if (and (boundp magit-toplevel)
+	   (magit-toplevel))
       (magit-with-toplevel
-        (ansi-term "/bin/zsh"))
+       (ansi-term "/bin/zsh"))
     (ansi-term "/bin/zsh")))
 
 (defun sw1nn/kludge-gpg-agent
