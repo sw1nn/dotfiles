@@ -83,7 +83,7 @@
 (defun get-journal-file (&optional time)
   (let ((auto-insert-query-old auto-insert-query)) ;; BUG race condition here?
     (setq auto-insert-query nil)
-    (find-file (expand-file-name (expand-file-name (concat org-journal-dir (format-time-string "/%Y-%m-%d.org" time)))))
+    (find-file (expand-file-name (format-time-string "/%Y-%m-%d.org" time) org-journal-dir))
     (setq auto-insert-query auto-insert-query-old)))
 
 (defun journal-file-yesterday ()
