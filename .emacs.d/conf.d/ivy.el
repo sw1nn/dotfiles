@@ -1,7 +1,8 @@
 (use-package ivy
   :init (ivy-mode 1)
   :bind (([remap isearch-forward] . swiper)
-	 ([remap isearch-backward] . swiper-backward))
+	 ([remap isearch-backward] . swiper-backward)
+	 ("C-c C-r" . ivy-resume))
   :config
   (setq ivy-use-virtual-buffers t
         ivy-count-format "(%d/%d) ")
