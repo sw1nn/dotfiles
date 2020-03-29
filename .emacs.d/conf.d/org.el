@@ -23,7 +23,7 @@
   (add-hook 'org-mode-hook 'yas-minor-mode-on)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
-         ("<f6>" . org-capture)
+         ("<f11>" . org-capture)
          ("C-M-|" . indent-rigidly)
          ("C-c f y" . journal-file-yesterday)
          ("C-c f j" . journal-file-today)
