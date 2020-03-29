@@ -1,8 +1,5 @@
 (use-package sqlup-mode
-  :pin melpa-stable
-  :ensure t
+  :hook((sql-mode . sqlup-mode)
+	(sql-interactive-mode . sqlup-mode))
   :config
-  (setq sql-upcase-mixed-case t)
-  :init
-  (add-hook 'sql-mode-hook 'sqlup-mode)
-  (add-hook 'sql-interactive-mode-hook 'sqlup-mode))
+  (setq sql-upcase-mixed-case t))

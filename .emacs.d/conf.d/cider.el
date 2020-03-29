@@ -1,5 +1,9 @@
 (use-package cider
-  :pin melpa-stable
+  :hook
+  (cider-mode . eldoc-mode)
+  (cider-repl-mode . (lambda nil
+		       (make-local-variable 'global-hl-line-mode)
+		       (setq global-hl-line-mode nil)))
   :commands (cider cider-connect cider-jack-in)
   :mode nil
   :init
@@ -19,12 +23,4 @@
           ("csv" . "clojure.data.csv"))
         cider-repl-display-help-banner nil
         nrepl-prompt-to-kill-server-buffer-on-quit nil
-        cljr-inject-dependencies-at-jack-in nil
-        )
-  (add-hook 'cider-mode-hook
-            (lambda nil
-              (eldoc-mode t)))
-  (add-hook 'cider-repl-mode-hook
-            (lambda nil
-              (make-local-variable 'global-hl-line-mode)
-              (setq global-hl-line-mode nil))))
+        cljr-inject-dependencies-at-jack-in nil))

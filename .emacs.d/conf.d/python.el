@@ -15,8 +15,8 @@
 (use-package pyenv-mode)
 
 (use-package elpy
+  :hook (python-mode . smartparens-mode)
   :config
   (setq elpy-rpc-backend "jedi")
-  (add-hook 'python-mode-hook #'smartparens-mode)
   :init
   (advice-add 'python-mode :before 'elpy-enable))

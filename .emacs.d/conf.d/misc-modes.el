@@ -4,17 +4,13 @@
   :mode ("\\.json\\'" . js3-mode))
 
 (use-package markdown-mode
+  :hook (markdown-mode . visual-line-mode)
   :mode (("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init
-  (add-hook 'markdown-mode-hook 'visual-line-mode))
+         ("\\.markdown\\'" . markdown-mode)))
 
 (use-package yaml-mode
   :mode ("\\.yaml\\'" . yaml-mode)
-  :init
-  (add-hook 'yaml-mode-hook
-            (lambda ()
-              (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
+  :bind (:map yaml-mode-map ("C-m" . newline-and-indent)))
 
 (use-package csv
   :mode ("\\.tsv\\'" . csv-mode))

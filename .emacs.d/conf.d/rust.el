@@ -26,34 +26,26 @@
 
 
 (use-package cargo
-  :ensure t
-  :defer t
-  :config
-  (add-hook 'cargo-process-mode-hook #'visual-line-mode))
+  :hook (cargo-process-mode .  visual-line-mode))
 
 (use-package flycheck-rust
-  :ensure t
-  :defer t
-  :init
-  (with-eval-after-load 'rust-mode
-    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)))
+  :after (rust-mode)
+  :hook (flycheck-mode . flycheck-rust-setup))
 
 (use-package rust-mode
-  :ensure t
-  :defer t
+  :hook
+  ((rust-mode . cargo-minor-mode)
+   (rust-mode . racer-mode)
+   (rust-mode . smartparens-strict-mode)
+   (rust-mode . sw1nn/rust-mode-idle-highlights-ignore-keywords))
   :config
-  (add-hook 'rust-mode-hook #'cargo-minor-mode)
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'rust-mode-hook #'smartparens-strict-mode)
-  (add-hook 'rust-mode-hook (defun sw1nn/idle-highlights-rust-mode-exception () (setq-local idle-highlight-exceptions rust-mode-keywords))))
-
+  (defun sw1nn/rust-mode-idle-highlights-ignore-keywords ()
+    (setq-local idle-highlight-exceptions rust-mode-keywords)))
 
 (use-package racer
-  :ensure t
-  :defer t
+  :hook ((racer-mode . eldoc-mode)
+	 (racer-mode . company-mode))
   :config
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode)
   (setq racer-rust-src-path "/home/neale/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"
 	racer-cmd "~/.cargo/bin/racer")
   :bind (:map racer-mode-map

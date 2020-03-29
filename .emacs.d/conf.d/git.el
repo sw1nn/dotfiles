@@ -10,7 +10,8 @@
 (use-package magit
   :pin melpa-stable
   :bind (("C-c g g" . magit-status))
-
+  :hook (((magit-post-stage magit-post-unstage) . git-gutter:update-all-windows)
+	 (after-save . magit-after-save-refresh-status))
   :config
   (setq magit-default-tracking-name-function (lambda (_ branch) branch)
 	magit-diff-refine-hunk t

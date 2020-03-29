@@ -1,8 +1,8 @@
 ;; https://github.com/howardabrams/dot-files/blob/master/emacs-org.org
 
 (use-package org
-  :ensure t                            ; But it comes with Emacs now!?
-  :defer t
+  :after (yasnippets)
+  :hook (org-mode . yas-minor-mode-on)
   :init
   (setq   org-agenda-files "~/org/agenda/active-agendas"
 	  org-confirm-babel-evaluate nil
@@ -20,7 +20,6 @@
 	  org-src-tab-acts-natively t
 	  org-todo-keywords '((sequence "TODO(t)" "DOING(g)" "|" "DONE(d)") (sequence "|" "CANCELED(c)"))
 	  org-use-speed-commands t)
-  (add-hook 'org-mode-hook 'yas-minor-mode-on)
   :bind (("C-c l" . org-store-link)
          ("C-c a" . org-agenda)
          ("<f11>" . org-capture)
@@ -66,19 +65,18 @@
   (org-clock-persistence-insinuate))
 
 (use-package org-bullets
-  :ensure t
-  :defer t
-  :init (add-hook 'org-mode-hook 'org-bullets-mode))
+  :hook (org-mode . org-bullets-mode))
 
 (use-package org-journal
-  :ensure t
-  :defer t
+  :after autoinsert
   :init
   (setq org-journal-dir "~/journal"
 	org-journal-date-format "#+TITLE: Journal Entry- %Y-%b-%d (%A)"
 	org-journal-time-format "")
-  (eval-after-load 'autoinsert
-    '(add-to-list 'auto-insert-alist (cons (concat (expand-file-name org-journal-dir) "/[0-9]\\{4\\}-\\(?:1[0-2]\\|0[1-9]\\)-\\(?:0[0-9]\\|2[0-9]\\|3[01]\\)\\.org")  'journal-file-insert))))
+  (add-to-list 'auto-insert-alist
+	       (cons (concat (expand-file-name org-journal-dir)
+			     "/[0-9]\\{4\\}-\\(?:1[0-2]\\|0[1-9]\\)-\\(?:0[0-9]\\|2[0-9]\\|3[01]\\)\\.org")
+		     'journal-file-insert)))
 
 (defun get-journal-file (&optional time)
   (let ((auto-insert-query-old auto-insert-query)) ;; BUG race condition here?

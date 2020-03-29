@@ -31,9 +31,8 @@
 
 (use-package saveplace
   :defer 5
-  :config
-  (setq save-place-file (concat user-emacs-directory "places"))
-  :init (add-hook 'prog-mode-hook #'save-place-mode))
+  :config (setq save-place-file (concat user-emacs-directory "places"))
+  :hook (prog-mode . save-place-mode))
 
 (defface sw1nn/hs-fold-overlay-face
   '((t (:background "#fdf6e3" :foreground "#232323")))
@@ -43,7 +42,7 @@
 (use-package fold-dwim
   :ensure t
   :bind ("C-c M-f" . fold-dwim-toggle)
-  :init (add-hook 'prog-mode-hook #'hs-minor-mode)
+  :hook (prog-mode . hs-minor-mode)
   :config
   (setq hs-set-up-overlay
         (defun sw1nn/display-code-line-counts (ov)
@@ -89,18 +88,18 @@
   :bind ("C-c SPC" . ace-jump-mode))
 
 (use-package idle-highlight-mode
-  :init (add-hook 'prog-mode-hook #'idle-highlight-mode))
+  :hook (prog-mode . idle-highlight-mode))
 
 (use-package rainbow-mode
-  :init (add-hook 'prog-mode-hook #'rainbow-mode)
+  :hook (prog-mode . rainbow-mode)
   :diminish rainbow-mode)
 
 (use-package rainbow-identifiers
-  :init (add-hook 'prog-mode-hook #'rainbow-identifiers-mode)
+  :hook (prog-mode . rainbow-identifiers-mode)
   :diminish rainbow-identifiers-mode)
 
 (use-package fancy-narrow
-  :init (add-hook 'prog-mode-hook #'fancy-narrow-mode))
+  :hook (prog-mode . fancy-narrow-mode))
 
 (use-package autoinsert
   :init (auto-insert-mode t)
@@ -138,7 +137,7 @@
 	       ("\C-e" . mc/edit-ends-of-lines))))
 
 (use-package aggressive-indent
-  :config (add-hook 'prog-mode-hook #'aggressive-indent-mode)
+  :hook (prog-mode . aggressive-indent-mode)
   :diminish aggressive-indent-mode)
 
 ;; (use-package flycheck-pos-tip
@@ -148,7 +147,7 @@
   :config
   (setq ;; flycheck-display-errors-function 'flycheck-pos-tip-error-messages
    flycheck-mode-line-prefix "🐜")
-  (add-hook 'prog-mode-hook #'flycheck-mode))
+  :hook   (prog-mode . flycheck-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
@@ -248,9 +247,6 @@
       mouse-wheel-scroll-amount '(5 ((shift) . 2))
       mouse-wheel-progressive-speed nil)  ; don't accelerate scrolling
 
-;; Remove hscroll-margin in shells, otherwise it causes jumpiness
-(add-hook 'term-mode-hook (lambda () (setq hscroll-margin 0)))
-
 (setq dired-use-ls-dired nil)
 
 (setq kill-do-not-save-duplicates t)
@@ -268,9 +264,6 @@
 (add-hook 'archive-extract-hook
           (lambda nil
             (read-only-mode)))
-
-(add-hook 'dired-mode-hook
-          #'auto-revert-mode)
 
 (setq browse-url-browser-function 'browse-url-xdg-open)
 
