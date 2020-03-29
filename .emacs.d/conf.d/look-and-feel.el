@@ -1,5 +1,4 @@
-;; Save all tempfiles in $TMPDIR/emacs$UID/
-(defconst emacs-tmp-dir (format "%s/%s%s" temporary-file-directory "emacs" (user-uid)))
+(defvar sw1nn/todo "~/sync/todo.org")
 
 (use-package expand-region
   :ensure t
@@ -165,11 +164,16 @@
       (mouse-wheel-mode t)
       (blink-cursor-mode -1)))
 
+;; encoding
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-language-environment "UTF-8")
+(prefer-coding-system 'utf-8)
+
 (setq auth-sources `("~/.emacs.d/secrets/authinfo.gpg" "~/.netrc")
       auto-save-default nil
-      auto-save-file-name-transforms `((".*" ,emacs-tmp-dir t))
-      auto-save-list-file-prefix emacs-tmp-dir
-      backup-directory-alist `((".*" . ,emacs-tmp-dir))
+      auto-save-file-name-transforms `((".*" ,temporary-file-directory t))
+      backup-directory-alist `((".*" . ,temporary-file-directory))
       compilation-always-kill t       ; kill compilation process before starting another
       compilation-ask-about-save nil  ; save all buffers on `compile'
       compilation-scroll-output 'first-error
@@ -177,16 +181,7 @@
       echo-keystrokes 0.02
       fill-column 132
       inhibit-splash-screen t
-      initial-scratch-message
-      ";;    _____           __
-;;   /  ___|         /  |
-;;   \\ `--.__      __`| | _ __  _ __
-;;    `--. \\ \\ /\\ / / | || '_ \\| '_ \\
-;;   /\\__/ /\\ V  V / _| || | | | | | |
-;;   \\____/  \\_/\\_/  \\___/_| |_|_| |_|
-
-
-"
+      initial-buffer-choice sw1nn/todo
       make-backup-files nil
       same-window-regexps (quote '(("\\*magit: [[:ascii:]]\\*")))
       split-height-threshold nil
@@ -196,7 +191,8 @@
 					  (quote rainbow-mode))
 					 (rainbow-mode 1))
 				   (compilation-read-command)
-				   (eval rainbow-mode t)))
+				   (eval rainbow-mode t))
+      tab-always-indent 'complete)
 
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
 
@@ -206,6 +202,7 @@
 	      ring-bell-function #'ignore
 	      save-interprogram-paste-before-kill t
 	      uniquify-buffer-name-style 'forward
+	      vc-follow-symlinks t ;; follow symlinks without asking
 	      visible-bell nil
 	      x-select-enable-clipboard t
 	      x-select-enable-primary t
