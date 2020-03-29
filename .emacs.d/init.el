@@ -11,7 +11,14 @@
   (with-temp-buffer
     (url-insert-file-contents "https://github.com/quelpa/quelpa/raw/master/quelpa.el")
     (eval-buffer)
-    (quelpa-self-upgrade)))
+    (quelpa-self-upgrade))
+
+  (quelpa
+   '(quelpa-use-package
+     :fetcher git
+     :url "https://github.com/quelpa/quelpa-use-package.git")))
+
+(require 'quelpa-use-package)
 
 (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
 ;;(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
