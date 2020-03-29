@@ -1,6 +1,4 @@
 (use-package smartparens
-  :ensure t
-  :defer t
   :config
   (require 'smartparens-config)
   (add-to-list 'sp-smartparens-bindings '("M-?" . sp-convolute-sexp))
@@ -8,20 +6,12 @@
   (sp-pair "(" ")" :wrap "M-(")
   (sp-pair "{" "}" :wrap "M-{"))
 
-(use-package clojure-mode
-  :pin melpa-stable
-  :ensure t
-  :defer t)
+(use-package clojure-mode)
 
-(use-package rainbow-delimiters
-  :pin melpa-stable
-  :ensure t)
+(use-package rainbow-delimiters)
 
 (use-package clj-refactor
-  :pin melpa-stable
-  :diminish clj-refactor-mode
-  :ensure t
-  :defer t)
+  :diminish clj-refactor-mode)
 
 ;; (use-package core-async-mode
 ;;   :diminish core-async-mode)

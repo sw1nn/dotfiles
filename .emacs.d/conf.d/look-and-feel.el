@@ -7,12 +7,9 @@
   ("M-2" . er/expand-region))
 
 (use-package hideshow
-  :ensure t
-  :defer t
   :diminish hs-minor-mode)
 
 (use-package volatile-highlights
-  :ensure t
   :defer 5
   :config
   (volatile-highlights-mode t)
@@ -34,7 +31,6 @@
     (indent-according-to-mode)))
 
 (use-package saveplace
-  :ensure t
   :defer 5
   :config
   (setq save-place-file (concat user-emacs-directory "places"))
@@ -61,8 +57,6 @@
                           'face 'sw1nn/hs-fold-overlay-face))))))
 
 (use-package win-switch
-  :ensure t
-  :defer t
   :config
   (setq win-switch-window-threshold 1
         win-switch-idle-time 0.7
@@ -70,6 +64,7 @@
         win-switch-feedback-foreground-color "#00ff00"))
 
 (use-package winner
+  :defer nil
   :config
   (setq winner-boring-buffers '("*Completions*"
 				"*Help*"
@@ -89,36 +84,26 @@
 				"*magit-edit-log*"))
   :config (winner-mode))
 
-(use-package browse-kill-ring
-  :defer t
-  :ensure t)
+(use-package browse-kill-ring)
 
 (use-package ace-jump-mode
-  :ensure t
   :bind ("C-c SPC" . ace-jump-mode))
 
 (use-package idle-highlight-mode
-  :ensure t
-  :defer t
   :init (add-hook 'prog-mode-hook #'idle-highlight-mode))
 
 (use-package rainbow-mode
-  :ensure t
   :init (add-hook 'prog-mode-hook #'rainbow-mode)
   :diminish rainbow-mode)
 
 (use-package rainbow-identifiers
-  :ensure t
-  :defer t
   :init (add-hook 'prog-mode-hook #'rainbow-identifiers-mode)
   :diminish rainbow-identifiers-mode)
 
 (use-package fancy-narrow
-  :ensure t
   :init (add-hook 'prog-mode-hook #'fancy-narrow-mode))
 
 (use-package autoinsert
-  :ensure t
   :init (auto-insert-mode t)
   :config
   (setq auto-insert-directory "~/.emacs.d/insert/")
@@ -134,12 +119,9 @@
 	'("*scratch*" "*Messages*")))
 
 (use-package smartparens
-  :ensure t
-  :defer t
   :diminish smartparens-mode)
 
 (use-package multiple-cursors
-  :ensure t
   :config (define-prefix-command 'sw1nn/mc-map)
   :bind-keymap ("C-c m" . sw1nn/mc-map)
   :bind (("M-3" . mc/mark-next-like-this)
@@ -157,9 +139,6 @@
 	       ("\C-e" . mc/edit-ends-of-lines))))
 
 (use-package aggressive-indent
-  :pin melpa-stable
-  :ensure t
-  :defer t
   :config (add-hook 'prog-mode-hook #'aggressive-indent-mode)
   :diminish aggressive-indent-mode)
 
@@ -167,8 +146,6 @@
 ;;   :ensure t)
 
 (use-package flycheck
-  :ensure t
-  :defer t
   :config
   (setq ;; flycheck-display-errors-function 'flycheck-pos-tip-error-messages
    flycheck-mode-line-prefix "🐜")
@@ -310,11 +287,12 @@
 (setenv "XAUTHORITY" (expand-file-name  "~/.Xauthority"))
 
 (use-package doom-modeline
-  :ensure t
-  :init (doom-modeline-mode 1))
+  :defer nil
+  :init (setq doom-modeline-icon t)
+  :config (doom-modeline-mode 1))
 
 (use-package doom-themes
-  :ensure t
+  :defer nil
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled

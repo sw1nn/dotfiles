@@ -1,5 +1,4 @@
 (use-package git-gutter
-  :ensure t
   :diminish git-gutter-mode
   :init (global-git-gutter-mode)
   :bind (("C-c g d" . git-gutter:popup-hunk)
@@ -10,7 +9,6 @@
 
 (use-package magit
   :pin melpa-stable
-  :ensure t
   :bind (("C-c g g" . magit-status))
 
   :config
@@ -25,9 +23,7 @@
   :init
   (add-hook 'magit-status-refresh-hook 'git-gutter:update-all-windows))
 
-(use-package gist
-  :defer t
-  :ensure t)
+(use-package gist)
 
 ;; TODO - causes hangs sometimes? infinite recursion?
 ;; (use-package magit-filenotify

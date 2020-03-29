@@ -30,6 +30,9 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+(setq use-package-always-defer t
+      use-package-always-ensure t)
+
 (add-to-list 'load-path "~/.emacs.d/local")
 
 ;; ensures that we have the features `use-package' requires:

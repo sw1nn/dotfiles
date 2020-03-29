@@ -1,5 +1,4 @@
 (use-package adoc-mode
-  :ensure t
   :mode ("\\.adoc\\'" . adoc-mode)
   :bind (:map adoc-mode-map
               ("M-q" . sw1nn/fill-paragraph-one-sentence-per-line)

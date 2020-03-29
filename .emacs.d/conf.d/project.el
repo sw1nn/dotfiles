@@ -4,7 +4,7 @@
 
 ;;; Code:
 (use-package projectile
-  :ensure t
+  :defer nil
   :init
   (setq projectile-globally-ignored-files '(".DS_Store" "Icon" "TAGS")
         projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o")

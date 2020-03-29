@@ -1,7 +1,5 @@
 (use-package flyspell
   :pin melpa-stable
-  :ensure t
-  :defer t
   :diminish flyspell-mode
   :init
   (progn
