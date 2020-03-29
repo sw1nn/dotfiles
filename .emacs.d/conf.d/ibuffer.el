@@ -2,6 +2,7 @@
   :pin melpa-stable
   :config
   (setq ibuffer-formats '((mark modified read-only vc-status-mini " "
+				(icon 2 2 :left :elide)
                                 (name 40 40 :left :elide)
                                 " "
                                 (size 9 -1 :right)
@@ -20,3 +21,7 @@
               (ibuffer-vc-set-filter-groups-by-vc-root)
               (unless (eq ibuffer-sorting-mode 'alphabetic)
                 (ibuffer-do-sort-by-alphabetic)))))
+
+(use-package all-the-icons-ibuffer
+  :ensure t
+  :init (all-the-icons-ibuffer-mode 1))
