@@ -8,7 +8,6 @@
 	 ("C-c g v" . git-gutter:revert-hunk)))
 
 (use-package magit
-  :pin melpa-stable
   :bind (("C-c g g" . magit-status))
   :hook (((magit-post-stage magit-post-unstage) . git-gutter:update-all-windows)
 	 (after-save . magit-after-save-refresh-status))
@@ -20,9 +19,7 @@
 	magit-process-popup-time -1
 	magit-push-arguments '("--set-upstream")
 	magit-repo-dirs '("~/workspace")
-	magit-revert-buffers 'silent)
-  :init
-  (add-hook 'magit-status-refresh-hook 'git-gutter:update-all-windows))
+	magit-revert-buffers 'silent))
 
 (use-package gist)
 
