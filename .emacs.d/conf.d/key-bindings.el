@@ -4,7 +4,7 @@
   :config (which-key-mode)
   :diminish which-key-mode)
 
-(global-set-key (kbd "C-c t")   #'sw1nn/ansi-term)
+(global-set-key (kbd "C-c t")   #'eshell)
 (global-set-key (kbd "C-c v")   #'revert-buffer)
 
 (global-set-key (kbd "C-+") #'text-scale-increase)
