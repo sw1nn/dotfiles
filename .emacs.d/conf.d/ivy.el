@@ -6,5 +6,9 @@
   (setq ivy-use-virtual-buffers t
         ivy-count-format "(%d/%d) ")
   :diminish ivy-mode)
+
+(use-package counsel
+  :init (counsel-mode))
+
 (use-package all-the-icons-ivy
   :init (all-the-icons-ivy-setup))

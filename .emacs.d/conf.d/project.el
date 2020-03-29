@@ -20,6 +20,9 @@
 	("s-p" . 'projectile-command-map)
 	("C-c p" . 'projectile-command-map)))
 
+(use-package counsel-projectile
+  :init (counsel-projectile-mode))
+
 (use-package projectile-ripgrep
   :ensure t
   :bind (("C-c s" . #'counsel-rg)))
