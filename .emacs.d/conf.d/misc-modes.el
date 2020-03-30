@@ -21,7 +21,7 @@
 ;;   :ensure t)
 (use-package dockerfile-mode)
 
-(setq scad-command (expand-file-name "~/.local/bin/openscad"))
-
-(autoload 'scad-mode "scad-mode" "A major mode for editing OpenSCAD code." t)
-(add-to-list 'auto-mode-alist '("\\.scad$" . scad-mode))
+(use-package scad-mode
+  :quelpa (scad-mode :fetcher url
+		     :url "https://raw.githubusercontent.com/openscad/openscad/openscad-2019.05/contrib/scad-mode.el")
+  :config (setq scad-command (expand-file-name "~/.local/bin/openscad")))
