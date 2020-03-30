@@ -19,6 +19,7 @@
      :url "https://github.com/quelpa/quelpa-use-package.git")))
 
 (require 'quelpa-use-package)
+(setq quelpa-use-package-inhibit-loading-quelpa t);; disable updates
 
 (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
 ;;(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
