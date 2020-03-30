@@ -2,11 +2,10 @@
           (lambda nil
             ;; line highlighting is pain in the repl.
             (setq term-prompt-regexp "^[^#$%>\n]*[#$%>⪢] *")
-            (make-local-variable 'global-hl-line-mode)
-            (setq global-hl-line-mode nil)
-            (make-local-variable 'mouse-yank-at-point)
-            (make-local-variable 'transient-mark-mode)
-            (setq transient-mark-mode nil)
+            (setq-local hscroll-margin 0) ;; in shells, otherwise it causes jumpiness
+	    (setq-local global-hl-line-mode nil)
+	    (setq-local mouse-yank-at-point t)
+	    (setq-local transient-mark-mode nil)
             (auto-fill-mode -1)
             (setq tab-width 8 )
             (yas-minor-mode -1)
@@ -14,14 +13,14 @@
 
 (add-hook 'shell-mode-hook  'with-editor-export-editor)
 (add-hook 'term-exec-hook   'with-editor-export-editor)
-(add-hook 'eshell-mode-hook 'with-editor-export-editor)
 
 (setenv "TERM" "xterm-256color")
-
 
 ;;  Force `ansi-term` to be utf-8 after it launches.
 (advice-add 'ansi-term :after (lambda (&rest args) (set-buffer-process-coding-system 'utf-8-unix 'utf-8-unix)))
 
+
+;; kill buffer when shell exits
 (advice-add 'term-sentinel
             :around
             (lambda (orig-fn proc msg)
