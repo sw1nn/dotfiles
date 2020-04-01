@@ -11,6 +11,10 @@
 (global-set-key (kbd "C--") #'text-scale-decrease)
 (global-set-key (kbd "C-0") #'text-scale-reset)
 
+;; mimics the chromeOS C-S-u unicode shortcut
+(global-set-key [remap insert-char] #'counsel-unicode-char)
+(global-set-key (kbd "C-S-u") #'counsel-unicode-char)
+
 ;; remove suspend-frame bindings, I never want to do this.
 (global-set-key [remap suspend-frame] 'ignore)
 
