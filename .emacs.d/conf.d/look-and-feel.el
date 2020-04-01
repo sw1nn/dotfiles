@@ -149,6 +149,10 @@
    flycheck-mode-line-prefix "🐜")
   :hook   (prog-mode . flycheck-mode))
 
+
+(use-package helpful
+  :init (setq counsel-describe-function-function #'helpful-callable
+	      counsel-describe-variable-function #'helpful-variable))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
