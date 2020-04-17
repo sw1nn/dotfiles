@@ -266,6 +266,8 @@
           (lambda nil
             (read-only-mode)))
 
+(add-hook 'help-mode 'rainbow-mode)
+
 (setq browse-url-browser-function 'browse-url-xdg-open)
 
 (win-switch-setup-keys-ijkl "\C-xo" "\C-x\C-o")
