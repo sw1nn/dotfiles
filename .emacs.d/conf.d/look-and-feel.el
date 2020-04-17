@@ -205,7 +205,6 @@
 	      ring-bell-function #'ignore
 	      save-interprogram-paste-before-kill t
 	      uniquify-buffer-name-style 'forward
-	      vc-follow-symlinks t ;; follow symlinks without asking
 	      visible-bell nil
 	      x-select-enable-clipboard t
 	      x-select-enable-primary t
