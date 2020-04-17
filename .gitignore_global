@@ -71,3 +71,7 @@ octave-core
 
 # Rust backups
 *.bk
+
+# Rust & Cargo
+/rusty-tags.emacs
+/Cargo.lock
