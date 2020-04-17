@@ -15,10 +15,15 @@ fi
 MATCH=$(git diff --cached --name-only -z $against | xargs -0 cat | grep -c -P '((?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])|(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=]))')
 
 if [ $MATCH -ne 0 ]; then
-    echo "Found patterns for AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY"
-    echo "Please check your code and remove API keys."
-    echo "If you really want to commit this:\n\n\tGIT_ALLOW_AWS_KEYS=1 git commit"
-    exit 1
+  # NOTE: prompt matches default magit-process-yes-or-no-prompt-regexp
+  printf "ERROR:"
+  grep --color=always -nH -C 3 -P '((?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])|(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=]))' $(git diff --cached --name-only -z $against | xargs -0)
+  printf "Cannot commit something looking like an AWS key. Override (y|n)? "
+  read -k 1 yn
+  case $yn in
+    [Yy]) exit 0;;
+    *) printf "\r\nAborted. git config --add sw1nn.allow-aws-keys true to skip this check.\n"; exit 1;;
+  esac
 fi
 
 # Local Variables:
