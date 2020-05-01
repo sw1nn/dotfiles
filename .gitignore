@@ -1,10 +1,11 @@
 locals.zsh
 log/.zsh_history
 projects.zsh
-cache
+/.emacs.d/.cache
 *.swp
 *.elc
 /.emacs.d/elpa
+/.emacs.d/elpy
 /.emacs.d/quelpa
 /.emacs.d/var
 /.emacs.d/eshell
@@ -34,3 +35,4 @@ cache
 /.xmonad/history
 /.emacs.d/bookmarks
 /.emacs.d/secrets
+/.emacs.d/.lsp-session-v1

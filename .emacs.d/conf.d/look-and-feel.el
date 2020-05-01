@@ -140,19 +140,22 @@
   :hook (prog-mode . aggressive-indent-mode)
   :diminish aggressive-indent-mode)
 
-;; (use-package flycheck-pos-tip
-;;   :ensure t)
-
-(use-package flycheck
-  :config
-  (setq ;; flycheck-display-errors-function 'flycheck-pos-tip-error-messages
-   flycheck-mode-line-prefix "🐜")
-  :hook   (prog-mode . flycheck-mode))
-
-
 (use-package helpful
   :init (setq counsel-describe-function-function #'helpful-callable
 	      counsel-describe-variable-function #'helpful-variable))
+
+(use-package ws-butler)
+
+(use-package smartparens
+  :hook (prog-mode . smartparens-strict-mode)
+  :config
+  (require 'smartparens-config)
+  (add-to-list 'sp-smartparens-bindings '("M-?" . sp-convolute-sexp))
+  (sp-use-smartparens-bindings)
+  (sp-pair "(" ")" :wrap "M-(")
+  (sp-pair "{" "}" :wrap "M-{"))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
@@ -186,6 +189,7 @@
       inhibit-splash-screen t
       initial-buffer-choice sw1nn/todo
       make-backup-files nil
+      revert-without-query '(".*\\.pdf\\'")
       same-window-regexps (quote '(("\\*magit: [[:ascii:]]\\*")))
       split-height-threshold nil
       split-width-threshold 160
@@ -273,7 +277,7 @@
 (win-switch-setup-keys-ijkl "\C-xo" "\C-x\C-o")
 
 (auto-compression-mode t)
-(global-hl-line-mode t)
+;;(global-hl-line-mode t)
 (put 'narrow-to-region 'disabled nil)
 
 (setenv "DISPLAY" ":0")
@@ -284,12 +288,13 @@
   :init (setq doom-modeline-icon t)
   :config (doom-modeline-mode 1))
 
+
 (use-package doom-themes
   :defer nil
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+	doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-one t)
 
   ;; Enable flashing mode-line on errors
