@@ -4,8 +4,10 @@
   :config (which-key-mode)
   :diminish which-key-mode)
 
-(global-set-key (kbd "C-c t")   #'eshell)
-(global-set-key (kbd "C-c v")   #'revert-buffer)
+(global-set-key [remap list-buffers] #'ibuffer-list-buffers)
+
+(global-set-key (kbd "C-c t") #'eshell)
+(global-set-key (kbd "C-c v") #'revert-buffer)
 
 (global-set-key (kbd "C-+") #'text-scale-increase)
 (global-set-key (kbd "C--") #'text-scale-decrease)
