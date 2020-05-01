@@ -1,6 +1,4 @@
 (use-package lsp-mode
-  :hook ((rust-mode . lsp)
-	 (clojure-mode . lsp))
   :commands (lsp)
   :bind (:map lsp-mode-map
 	      ("C-c C-d" . lsp-describe-thing-at-point)
@@ -12,6 +10,7 @@
 	;; lsp-flycheck-live-reporting nil
 	;; lsp-keep-workspace-alive nil
 	lsp-prefer-capf t
+	lsp-ui-doc-delay 1
 	;; lsp-signature-auto-activate nil
 
 	;; lsp-enable-file-watchers nil
@@ -25,7 +24,8 @@
 (use-package lsp-ui
   :commands lsp-ui-mode
   :quelpa (lsp-ui :fetcher github
-		  :repo "emacs-lsp/lsp-ui-mode"))
+		  :repo "emacs-lsp/lsp-ui-mode")
+  :init (setq lsp-ui-doc-position 'top))
 
 ;; if you are helm user
 (use-package lsp-ivy
