@@ -30,17 +30,18 @@
 
 (use-package flycheck-rust
   :after (rust-mode)
-  :hook (flycheck-mode . flycheck-rust-setup))
+  :hook ((flycheck-mode . flycheck-rust-setup)))
 
 (use-package rust-mode
   :hook
   ((rust-mode . cargo-minor-mode)
    (rust-mode . racer-mode)
    (rust-mode . smartparens-strict-mode)
-   (rust-mode . sw1nn/rust-mode-idle-highlights-ignore-keywords))
+   (rust-mode . lsp))
   :config
-  (defun sw1nn/rust-mode-idle-highlights-ignore-keywords ()
-    (setq-local idle-highlight-exceptions rust-mode-keywords)))
+  ;; (defun sw1nn/rust-mode-idle-highlights-ignore-keywords ()
+  ;;   (setq-local idle-highlight-exceptions rust-mode-keywords))
+  (setq-local idle-highlight-exceptions rust-mode-keywords))
 
 (use-package racer
   :hook ((racer-mode . eldoc-mode)
@@ -51,9 +52,6 @@
   :bind (:map racer-mode-map
 	      ([?\t] . company-indent-or-complete-common)
 	      ("C-c C-c d" . racer-describe)))
-
-(advice-add 'xref-find-definitions :around
-	    'sw1nn/xref-auto-refresh-on-missing)
 
 (provide 'rust)
 ;;; rust.el ends here
