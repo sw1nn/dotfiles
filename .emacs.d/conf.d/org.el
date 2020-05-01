@@ -1,7 +1,6 @@
 ;; https://github.com/howardabrams/dot-files/blob/master/emacs-org.org
 
 (use-package org
-  :after (yasnippets)
   :hook (org-mode . yas-minor-mode-on)
   :init
   (setq   org-agenda-files "~/org/agenda/active-agendas"
@@ -9,6 +8,7 @@
 	  org-default-notes-file "~/org/notes.org"
 	  org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar"
 	  org-hide-emphasis-markers t
+	  org-latex-compiler "xelatex"
 	  org-log-done (quote time)
 	  org-log-into-drawer t
 	  org-log-reschedule (quote note)
@@ -20,12 +20,12 @@
 	  org-src-tab-acts-natively t
 	  org-todo-keywords '((sequence "TODO(t)" "DOING(g)" "|" "DONE(d)") (sequence "|" "CANCELED(c)"))
 	  org-use-speed-commands t)
-  :bind (("C-c l" . org-store-link)
-         ("C-c a" . org-agenda)
+  :bind (("C-c o l" . org-store-link)
+         ("C-c o a" . org-agenda)
          ("<f11>" . org-capture)
          ("C-M-|" . indent-rigidly)
-         ("C-c f y" . journal-file-yesterday)
-         ("C-c f j" . journal-file-today)
+         ("C-c o y" . journal-file-yesterday)
+         ("C-c o j" . journal-file-today)
 	 :map org-mode-map (("M-C-n" . org-end-of-item-list)
 			    ("M-C-p" . org-beginning-of-item-list)
 			    ("M-C-u" . outline-up-heading)
@@ -36,6 +36,9 @@
 						(if (org-in-src-block-p)
 						    (org-return)
 						  (org-return-indent))))
+  ;; this shadows the default handler for .pdf
+  (add-to-list 'org-file-apps
+	       '("\\.pdf\\'" . "emacsclient %s"))
 
   (font-lock-add-keywords         ; A bit silly but my headers are now
    'org-mode `(("^\\*+ \\(TODO\\) " ; shorter, and that is nice canceled
