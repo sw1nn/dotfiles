@@ -5,14 +5,11 @@
   :bind
   ("M-2" . er/expand-region))
 
-(use-package hideshow
-  :diminish hs-minor-mode)
-
-(use-package volatile-highlights
-  :defer 5
-  :config
-  (volatile-highlights-mode t)
-  :diminish volatile-highlights-mode)
+;; (use-package volatile-highlights
+;;   :defer 5
+;;   :config
+;;   (volatile-highlights-mode t)
+;;   :diminish volatile-highlights-mode)
 
 (defvar electrify-return-match
   "[\]}\)\"]"
@@ -33,26 +30,6 @@
   :defer 5
   :config (setq save-place-file (concat user-emacs-directory "places"))
   :hook (prog-mode . save-place-mode))
-
-(defface sw1nn/hs-fold-overlay-face
-  '((t (:background "#fdf6e3" :foreground "#232323")))
-  "Face for fold overlay"
-  :group 'sw1nn/faces)
-
-(use-package fold-dwim
-  :ensure t
-  :bind ("C-c M-f" . fold-dwim-toggle)
-  :hook (prog-mode . hs-minor-mode)
-  :config
-  (setq hs-set-up-overlay
-        (defun sw1nn/display-code-line-counts (ov)
-          (when (eq 'code (overlay-get ov 'hs))
-            (overlay-put ov 'display
-                         (propertize
-                          (format " ⤵ <%03d>"
-                                  (count-lines (overlay-start ov)
-                                               (overlay-end ov)))
-                          'face 'sw1nn/hs-fold-overlay-face))))))
 
 (use-package win-switch
   :config
@@ -87,16 +64,19 @@
 (use-package ace-jump-mode
   :bind ("C-c SPC" . ace-jump-mode))
 
-(use-package idle-highlight-mode
-  :hook (prog-mode . idle-highlight-mode))
+;; (use-package idle-highlight-mode
+;;   :hook (prog-mode . idle-highlight-mode))
 
 (use-package rainbow-mode
   :hook (prog-mode . rainbow-mode)
   :diminish rainbow-mode)
 
-(use-package rainbow-identifiers
-  :hook (prog-mode . rainbow-identifiers-mode)
-  :diminish rainbow-identifiers-mode)
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+;; (use-package rainbow-identifiers
+;;   :hook (prog-mode . rainbow-identifiers-mode)
+;;   :diminish rainbow-identifiers-mode)
 
 (use-package fancy-narrow
   :hook (prog-mode . fancy-narrow-mode))
