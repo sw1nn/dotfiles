@@ -51,16 +51,6 @@
     :demand
     :init (setup-esh-help-eldoc))
 
-  ;; ;; BASH completion for the shell buffer
-  ;; (use-package bash-completion
-  ;;   :config
-  ;;   (defun eshell-bash-completion ()
-  ;;     (setq-local bash-completion-nospace t)
-  ;;     (while (pcomplete-here
-  ;;             (nth 2 (bash-completion-dynamic-complete-nocomint
-  ;;                     (save-excursion (eshell-bol) (point)) (point))))))
-  ;;   (setq eshell-default-completion-function 'eshell-bash-completion))
-  
   (use-package em-smart
     :ensure nil
     :hook (eshell-mode . eshell-smart-initialize))
@@ -68,4 +58,4 @@
   (use-package eshell-git-prompt
     :demand
     :config
-    (eshell-git-prompt-use-theme 'powerline)))
+    (eshell-git-prompt-use-theme 'robbyrussell)))
