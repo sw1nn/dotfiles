@@ -57,6 +57,8 @@
 				"*magit-commit*"
 				"*magit-diff*"
 				"*magit-edit-log*"))
+  :bind (("<mouse-10>" . winner-redo)
+	 ("<mouse-11>" . winner-undo))
   :config (winner-mode))
 
 (use-package browse-kill-ring)
