@@ -36,10 +36,6 @@
 						(if (org-in-src-block-p)
 						    (org-return)
 						  (org-return-indent))))
-  ;; this shadows the default handler for .pdf
-  (add-to-list 'org-file-apps
-	       '("\\.pdf\\'" . "emacsclient %s"))
-
   (font-lock-add-keywords         ; A bit silly but my headers are now
    'org-mode `(("^\\*+ \\(TODO\\) " ; shorter, and that is nice canceled
                 (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚑")
