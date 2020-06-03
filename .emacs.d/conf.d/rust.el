@@ -25,33 +25,19 @@
 ;;; Code:
 
 
-(use-package cargo
-  :hook (cargo-process-mode .  visual-line-mode))
+(use-package cargo)
 
 (use-package flycheck-rust
   :after (rust-mode)
-  :hook ((flycheck-mode . flycheck-rust-setup)))
+  :hook (flycheck-mode . flycheck-rust-setup))
 
 (use-package rust-mode
-  :hook
-  ((rust-mode . cargo-minor-mode)
-   (rust-mode . racer-mode)
-   (rust-mode . smartparens-strict-mode)
-   (rust-mode . lsp))
-  :config
-  ;; (defun sw1nn/rust-mode-idle-highlights-ignore-keywords ()
-  ;;   (setq-local idle-highlight-exceptions rust-mode-keywords))
-  (setq-local idle-highlight-exceptions rust-mode-keywords))
+  :hook ((rust-mode . smartparens-mode)
+	 (rust-mode . origami-mode)
+	 (rust-mode . lsp))
+  :init (setq lsp-rust-server "rls";; "rustanalyzer"
+	      ))
 
-(use-package racer
-  :hook ((racer-mode . eldoc-mode)
-	 (racer-mode . company-mode))
-  :config
-  (setq racer-rust-src-path "/home/neale/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src"
-	racer-cmd "~/.cargo/bin/racer")
-  :bind (:map racer-mode-map
-	      ([?\t] . company-indent-or-complete-common)
-	      ("C-c C-c d" . racer-describe)))
 
 (provide 'rust)
 ;;; rust.el ends here

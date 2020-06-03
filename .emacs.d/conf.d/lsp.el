@@ -1,11 +1,9 @@
 (use-package lsp-mode
-  :hook ((prog-mode . lsp)
-	 (lsp-mode . lsp-enable-which-key-integration))
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
   :bind (:map lsp-mode-map
 	      ("C-c C-d" . lsp-describe-thing-at-point))
   :init
-  (setq lsp-rust-server "rustanalyzer"
-	lsp-keymap-prefix "C-c l"
+  (setq lsp-keymap-prefix "C-c l"
 	lsp-auto-configure t
 	;; lsp-auto-guess-root t
 	lsp-flycheck-live-reporting nil
