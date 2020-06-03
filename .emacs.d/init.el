@@ -20,9 +20,10 @@
 
 (require 'quelpa-use-package)
 (setq quelpa-use-package-inhibit-loading-quelpa t);; disable updates
+(quelpa-use-package-activate-advice)
 
 (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
-;;(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 
 (unless package-archive-contents
   (package-refresh-contents))
@@ -39,7 +40,8 @@
   (package-install 'use-package))
 
 (setq use-package-always-defer t
-      use-package-always-ensure t)
+      use-package-always-ensure t
+      use-package-always-pin "melpa-stable")
 
 (add-to-list 'load-path "~/.emacs.d/local")
 
