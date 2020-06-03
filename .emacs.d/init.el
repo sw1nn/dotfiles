@@ -2,6 +2,8 @@
 
 (setq package-enable-at-startup nil)
 
+(setq max-lisp-eval-depth 5000)
+
 ;; we don't use customize, but we want to keep this file clean.
 (setq custom-file (expand-file-name ".customize.el" user-emacs-directory ))
 
