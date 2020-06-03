@@ -12,6 +12,9 @@
 (global-set-key (kbd "C-c b j") #'sw1nn/browse-url-emacs-as-json)
 (global-set-key (kbd "C-c b c") #'sw1nn/browse-url-emacs-as-csv)
 
+;; do we ever want list-directory instead of dired? don't think so.
+(global-set-key [remap list-directory] #'dired)
+
 (global-set-key (kbd "C-+") #'text-scale-increase)
 (global-set-key (kbd "C--") #'text-scale-decrease)
 (global-set-key (kbd "C-0") #'text-scale-reset)
