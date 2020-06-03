@@ -14,9 +14,16 @@
 
 (use-package pyenv-mode)
 
-(use-package elpy
-  :hook (python-mode . smartparens-mode)
-  :config
-  (setq elpy-rpc-backend "jedi")
-  :init
-  (advice-add 'python-mode :before 'elpy-enable))
+(use-package python-mode
+  :hook (python-mode lsp))
+
+;; (use-package elpy
+;;   :hook (python-mode . smartparens-mode)
+;;   :init
+;;   :config
+;;   (defun sw1nn/direnv-current-python-virtualenv ()
+;;     (getenv "VIRTUAL_ENV"))
+;;   (setq elpy-rpc-backend "jedi")
+;;   :init
+;;   (setq elpy-rpc-virtualenv-path #'sw1nn/direnv-current-python-virtualenv)
+;;   (advice-add 'python-mode :before 'elpy-enable))
