@@ -8,6 +8,9 @@
 
 (global-set-key (kbd "C-c t") #'eshell)
 (global-set-key (kbd "C-c v") #'revert-buffer)
+(global-set-key (kbd "C-c b b") #'browse-url)
+(global-set-key (kbd "C-c b j") #'sw1nn/browse-url-emacs-as-json)
+(global-set-key (kbd "C-c b c") #'sw1nn/browse-url-emacs-as-csv)
 
 (global-set-key (kbd "C-+") #'text-scale-increase)
 (global-set-key (kbd "C--") #'text-scale-decrease)

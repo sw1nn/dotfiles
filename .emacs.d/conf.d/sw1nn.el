@@ -294,4 +294,30 @@
         (org-agenda-file-to-front))))
   (org-agenda-redo))
 
+(require 'browse-url) ;; TODO - can this be made to happen only if the sw1nn/browse fns are called?
+(defun sw1nn/browse-url-emacs-as-json (url &optional _new-window)
+  "Browse url in emacs, making assumption it's json, and pretty print"
+  ;; TODO - do something clever with Content-Type from the HTTP request?
+  (interactive (browse-url-interactive-arg "URL: "))
+  (with-current-buffer (browse-url-emacs url)
+    (js3-mode)
+    (let ((inhibit-read-only t))
+      (json-pretty-print-buffer)
+      (not-modified))
+    (unless (string-match "\.json$" (buffer-name))
+      (rename-buffer (concat (buffer-name) ".json") :unique))))
+
+(defun sw1nn/browse-url-emacs-as-csv (url &optional _new-window)
+  "Browse url in emacs, making assumption it's csv, and pretty print"
+  ;; TODO - do something clever with Content-Type from the HTTP request?
+  (interactive (browse-url-interactive-arg "URL: "))
+  (with-current-buffer (browse-url-emacs url)
+    (csv-mode)
+    (let ((inhibit-read-only t))
+      (csv-align-mode)
+      (not-modified))
+    (unless (string-match "\.csv$" (buffer-name))
+      (rename-buffer (concat (buffer-name) ".csv")))))
+
+
 (provide 'sw1nn)
