@@ -165,6 +165,7 @@
       compilation-always-kill t       ; kill compilation process before starting another
       compilation-ask-about-save nil  ; save all buffers on `compile'
       compilation-scroll-output 'first-error
+      create-lockfiles nil
       default-directory "~/workspace"
       echo-keystrokes 0.02
       fill-column 132
