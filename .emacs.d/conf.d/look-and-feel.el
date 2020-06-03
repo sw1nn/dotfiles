@@ -123,6 +123,7 @@
   :diminish aggressive-indent-mode)
 
 (use-package helpful
+  :config (add-to-list 'ibuffer-help-buffer-modes 'helpful-mode)
   :init (setq counsel-describe-function-function #'helpful-callable
 	      counsel-describe-variable-function #'helpful-variable))
 
