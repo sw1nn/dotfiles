@@ -1,4 +1,4 @@
-(defvar sw1nn/todo "~/sync/todo.org")
+(defvar sw1nn/todo "~/Sync/todo.org")
 
 (use-package expand-region
   :ensure t
