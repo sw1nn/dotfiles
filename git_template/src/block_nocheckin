@@ -1,4 +1,4 @@
-marker=${$(git config sw1nn.nocheckin-marker):-"@@NOCHECKIN"}
+marker=$(git config --default "@@NOCHECKIN" sw1nn.nocheckin-marker)
 
 #ansi colors
 red="[01;31m[K"

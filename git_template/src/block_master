@@ -1,4 +1,5 @@
-if test $(git config --bool sw1nn.allow-master) = "true"; then
+flag=sw1nn.allow-master
+if test $(git config --type bool --default false ${flag}) = "true"; then
   exit 0
 fi
 
@@ -8,7 +9,7 @@ if test $(git rev-parse --abbrev-ref HEAD) = "master" ; then
   read -k 1 yn
   case $yn in
     [Yy]) exit 0;;
-    *) printf "\r\nAborted. git config --add sw1nn.allow-master true to skip this check.\n"; exit 1;;
+    *) printf "\r\nAborted. To skip this check add git config with:\n\n\tgit config --add ${flag} --type bool true\n"; exit 1;;
   esac
 fi
 

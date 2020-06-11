@@ -1,14 +1,15 @@
-if [ "$(git config --bool sw1nn.allow-aws-keys)" = "true" ]; then
+flag=sw1nn.alow-aws-keys
+if test $(git config --type bool --default false ${flag}) = "true"; then
   # TODO allow only specific AWS keys?
   exit 0
 fi
 
 if git rev-parse --verify HEAD >/dev/null 2>&1
 then
-    against=HEAD
+  against=HEAD
 else
-    # Initial commit: diff against an empty tree object
-    against=$(git hash-object -t tree /dev/null)
+  # Initial commit: diff against an empty tree object
+  against=$(git hash-object -t tree /dev/null)
 fi
 
 # key match regex from http://blogs.aws.amazon.com/security/blog/tag/key+rotation
@@ -22,7 +23,7 @@ if [ $MATCH -ne 0 ]; then
   read -k 1 yn
   case $yn in
     [Yy]) exit 0;;
-    *) printf "\r\nAborted. git config --add sw1nn.allow-aws-keys true to skip this check.\n"; exit 1;;
+    *) printf "\r\nAborted. To skip this check add git config with:\n\n\tgit config --add ${flag} --type bool true\n"; exit 1;;
   esac
 fi
 
