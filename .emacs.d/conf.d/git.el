@@ -22,7 +22,7 @@
 	magit-repo-dirs '("~/workspace")
 	magit-revert-buffers 'silent)
   (defun sw1nn/ibuffer-mark-magit-buffers ()
-    "Mark buffers whose major mode is in variable `ibuffer-help-buffer-modes'."
+    "Mark buffers whose major mode is magit related."
     (interactive)
     (ibuffer-mark-on-buffer
      #'(lambda (buf)
