@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
 (when (string= (system-name) "eridani")
+  (setq temporary-file-directory "/home/neale/Downloads/tmp/")
   (defvar org-export-output-directory-prefix "/home/neale/Downloads/tmp/" "prefix of directory used for org-mode export")
 
   (advice-add 'org-export-output-file-name :around
