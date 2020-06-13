@@ -119,7 +119,7 @@
 	       ("\C-e" . mc/edit-ends-of-lines))))
 
 (use-package aggressive-indent
-  :hook (prog-mode . aggressive-indent-mode)
+  :config (global-aggressive-indent-mode)
   :diminish aggressive-indent-mode)
 
 (use-package helpful
