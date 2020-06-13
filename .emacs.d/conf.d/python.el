@@ -14,8 +14,12 @@
 
 (use-package pyenv-mode)
 
-(use-package python-mode
-  :hook (python-mode lsp))
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+			 (require 'lsp-python-ms)
+			 (lsp))))  ; or lsp-deferred
 
 ;; (use-package elpy
 ;;   :hook (python-mode . smartparens-mode)
