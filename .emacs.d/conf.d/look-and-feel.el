@@ -56,7 +56,8 @@
 				"*cider-macroexpansion*"
 				"*magit-commit*"
 				"*magit-diff*"
-				"*magit-edit-log*"))
+				"*magit-edit-log*"
+				" *MINIMAP*"))
   :bind (("<mouse-10>" . winner-redo)
 	 ("<mouse-11>" . winner-undo))
   :config (winner-mode))
@@ -292,3 +293,5 @@
 
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
+
+(load-theme 'sw1nn t)
