@@ -62,7 +62,6 @@ target/*
 
 .emacs.d/elpa/elpy*/elpy/__pycache__
 
-
 #octave
 octave-core
 
@@ -75,3 +74,9 @@ octave-core
 # Rust & Cargo
 /rusty-tags.emacs
 /Cargo.lock
+
+# Node
+npm-debug.log.*
+node_modules
+.eslintcache
+package-lock.json
