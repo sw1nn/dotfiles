@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-EMACS_VERSION=26.3
+EMACS_VERSION=27.1
 
 set -eu
 
@@ -28,20 +28,21 @@ if [ "$(hostname -s)" = "eridani" ]; then
              libgnutls28-dev \
              gcc \
              libpng-dev \
+             libjansson-dev \
              libjpeg-dev \
              libtiff5-dev \
-	     libxpm-dev \
-	     libgif-dev \
+             libxpm-dev \
+             libgif-dev \
              libgtk-3-dev \
              dnsutils \
              fuse \
              openvpn \
              imagemagick \
-	     python3-venv \
-	     cython3 \
-	     python3-numpy \
-	     python3-tk \
-	     jq \
+             python3-venv \
+             cython3 \
+             python3-numpy \
+             python3-tk \
+             jq \
              fd-find
 
         (
@@ -52,7 +53,7 @@ if [ "$(hostname -s)" = "eridani" ]; then
             curl -L http://ftp.gnu.org/gnu/emacs/emacs-${EMACS_VERSION}.tar.xz | tar xJf -
 
             cd emacs-${EMACS_VERSION}
-            ./autogen.sh && ./configure --prefix=${PREFIX} --with-modules && make install
+            ./autogen.sh && ./configure --prefix=${PREFIX} --with-cairo --with-json --with-modules && make install
           )
 
           [ ! -f ${PREFIX}/bin/fasd ] &&
