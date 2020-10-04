@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec google-chrome-stable --profile-directory=NealeSwinnerton $@
+exec gtk-launch $(xdg-mime query default text/html) $@
