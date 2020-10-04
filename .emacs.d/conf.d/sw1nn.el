@@ -176,6 +176,76 @@
        (ansi-term "/bin/zsh"))
     (ansi-term "/bin/zsh")))
 
+(defvar rustlings-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c C-w") 'sw1nn/rustlings:watch )
+    (define-key map (kbd "C-c C-r") 'sw1nn/rustlings:run)
+    (define-key map (kbd "C-c ?") 'sw1nn/rustlings:hint)
+    (define-key map (kbd "C-c C-k") (lambda () (interactive) (when-let (buffer (get-buffer "*rustlings:watch*"))
+                                                          (kill-buffer buffer))))
+    (define-key map (kbd "C-c C-d") (lambda () (interactive)
+                                      (flush-lines "^// I AM NOT DONE$" (point-min) (point-max))
+                                      (save-buffer)))
+    map))
+
+(defvar rustlings-interation-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "q") (lambda () (interactive) (kill-buffer)))
+    map))
+
+
+(define-minor-mode rustlings-mode "Rustlings")
+(define-minor-mode rustlings-interation-mode "Rustlings Interaction")
+
+(defun sw1nn/rustlings:watch ()
+  (interactive)
+  (let* ((watch-buffer-name "rustlings:watch")
+         (source-buffer (current-buffer))
+         (watch-buffer (get-buffer-create watch-buffer-name)))
+    (display-buffer watch-buffer)
+    (with-current-buffer watch-buffer
+      (comint-mode)
+      (rustlings-interation-mode)
+      (start-process watch-buffer-name
+                     watch-buffer
+                     "/bin/zsh" "--login" "-c"
+                     "cd /home/neale/workspace/rustlings; rustlings watch")
+      (set-process-filter (get-buffer-process watch-buffer) 'comint-output-filter)
+      (set-process-query-on-exit-flag (get-buffer-process watch-buffer) nil))))
+
+(defun sw1nn/rustlings:run ()
+  (interactive)
+  (let* ((run-buffer-name "rustlings:out")
+         (source-buffer (current-buffer))
+         (run-buffer (get-buffer-create run-buffer-name)))
+    (display-buffer run-buffer)
+    (let ((exercise (file-name-base (buffer-name source-buffer))))
+      (with-current-buffer run-buffer
+        (comint-mode)
+        (rustlings-interation-mode)
+        (start-process run-buffer-name
+                       run-buffer
+                       "/bin/zsh" "--login" "-c"
+                       (concat "cd /home/neale/workspace/rustlings; rustlings run " exercise))
+        (set-process-filter (get-buffer-process run-buffer) 'comint-output-filter)
+        (set-process-query-on-exit-flag (get-buffer-process run-buffer) nil)))))
+
+(defun sw1nn/rustlings:hint ()
+  (interactive)
+  (let* ((run-buffer-name "rustlings:out")
+         (source-buffer (current-buffer))
+         (run-buffer (get-buffer-create run-buffer-name)))
+    (display-buffer run-buffer)
+    (let ((exercise (file-name-base (buffer-name source-buffer))))
+      (with-current-buffer run-buffer
+        (comint-mode)
+        (rustlings-interation-mode)
+        (start-process run-buffer-name
+                       run-buffer
+                       "/bin/zsh" "--login" "-c"
+                       (concat "cd /home/neale/workspace/rustlings; rustlings hint " exercise))
+        (set-process-filter (get-buffer-process run-buffer) 'comint-output-filter)
+        (set-process-query-on-exit-flag (get-buffer-process run-buffer) nil)))))
 (defun sw1nn/kludge-gpg-agent
     ()
   (if (display-graphic-p)
