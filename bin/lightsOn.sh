@@ -1,4 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
+exec &> /tmp/lightsOn.log
+
+# Kill other versions of this script
+kill $(pgrep -u $UID -f ${BASH_SOURCE[0]} | grep -v $$)
+
+# Wait until the processes have been shut down
 
 youtube_detection=true
 netflix_detection=true
@@ -7,6 +14,7 @@ iplayer_detection=true
 all4_detection=true
 itvhub_detection=true
 twitch_detection=true
+zoom_detection=true
 
 xprop_active_info () {
     xprop -id "$(xprop -root _NET_ACTIVE_WINDOW | awk '{print $5}')"
@@ -15,16 +23,14 @@ xprop_active_info () {
 we_are_fullscreen () {
     xprop_active_info | grep -q _NET_WM_STATE_FULLSCREEN
 }
-
+    
 delay_screensaver () {
-  if we_are_fullscreen; then
     if xset -q | grep -q 'DPMS is Enabled'; then
         # reset (deactivate and reactivate) DPMS status:
         xset +dpms
         xset -dpms
     fi
     pgrep xscreensaver >& /dev/null && xscreensaver-command -deactivate
-  fi
 }
 
 app_is_running() {
@@ -34,6 +40,10 @@ app_is_running() {
     if $youtube_detection; then
         if [[ $active_win_title = *YouTube* ]]; then
             $verbose && echo "  active win seems to be YouTube"
+            return 0
+        fi
+        if [[ $active_win_title = 'www.youtube.com' ]]; then
+            $verbose && echo "  active win seems to be YouTube in SSB window"
             return 0
         fi
     fi
@@ -66,7 +76,7 @@ app_is_running() {
         fi
     fi
 
-    if $all4_detection; then
+    if $itvhub_detection; then
         if [[ $active_win_title = *ITV\ Hub\ -\ Google\ Chrome* ]]; then
             $verbose && echo "  active win seems to be ITV Hub"
             return 0
@@ -76,6 +86,13 @@ app_is_running() {
     if $twitch_detection; then
         if [[ $active_win_title = *Twitch* ]]; then
             $verbose && echo "  active win seems to be Twitch"
+            return 0
+        fi
+    fi
+
+    if $zoom_detection; then
+        if [[ $active_win_title = *Zoom* ]]; then
+            $verbose && echo "  active win seems to be zoom"
             return 0
         fi
     fi
@@ -107,7 +124,10 @@ EOF
     exit 1
 fi
 
+(
 while true; do
     maybe_delay_screensaver
     sleep "$delay"
 done
+) &
+disown %%
