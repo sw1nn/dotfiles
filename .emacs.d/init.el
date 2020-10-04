@@ -24,8 +24,8 @@
 (setq quelpa-use-package-inhibit-loading-quelpa t);; disable updates
 (quelpa-use-package-activate-advice)
 
-(add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
 (unless package-archive-contents
   (package-refresh-contents))
