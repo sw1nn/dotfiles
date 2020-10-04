@@ -3,16 +3,16 @@
 cmd=$1
 shift;
 
-instance="${1:-vpn0}.sw1nn.com"
+instance="WG0"
 
 case $cmd in
     start)
-        sudo /usr/bin/systemctl start openvpn-client@${instance}
-        notify-send "openvpn" "${instance} starting"
+        sudo /usr/bin/networkctl reload
+        notify-send "Wireguard" "${instance} starting"
         ;;
     stop)
-        sudo /usr/bin/systemctl stop openvpn-client@${instance}
-        notify-send "openvpn" "${instance} stopping"
+        sudo /usr/bin/networkctl delete wg0
+        notify-send "Wireguard" "${instance} stopping"
         ;;
     *)
         echo "No Such command"
