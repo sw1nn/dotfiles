@@ -70,12 +70,12 @@
 ;; (use-package idle-highlight-mode
 ;;   :hook (prog-mode . idle-highlight-mode))
 
-(use-package rainbow-mode
-  :hook (prog-mode . rainbow-mode)
-  :diminish rainbow-mode)
+;; (use-package rainbow-mode
+;;   :hook (prog-mode . rainbow-mode)
+;;   :diminish rainbow-mode)
 
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+;; (use-package rainbow-delimiters
+;;   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; (use-package rainbow-identifiers
 ;;   :hook (prog-mode . rainbow-identifiers-mode)
@@ -256,6 +256,8 @@
             (read-only-mode)))
 
 (add-hook 'help-mode 'rainbow-mode)
+
+(add-hook 'prog-mode 'show-paren-mode)
 
 (setq browse-url-browser-function 'browse-url-xdg-open)
 
