@@ -1,4 +1,4 @@
-mpg123 ${0:h}/../resources/job-well-done.mp3
+(( $+commands[mpg123] )) && mpg123 ${0:h}/../resources/job-well-done.mp3 &
 
 # Local Variables:
 # mode: Shell-Script

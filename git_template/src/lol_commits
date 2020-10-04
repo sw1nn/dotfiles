@@ -1,8 +1,13 @@
 [ -n "${SSH_CONNECTION}" ] && exit 0
 
+
 export LANG="en_GB.UTF-8"
 export PATH="/home/neale/.rvm/rubies/ruby-2.1.5/bin:/bin:$PATH"
-lolcommits --capture -d /dev/video1
+if (( $+commands[lolcommits] )); then
+  lolcommits --capture -d /dev/video1
+fi
+
+exit 0
 
 # Local Variables:
 # mode: Shell-Script

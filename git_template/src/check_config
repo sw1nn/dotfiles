@@ -1,17 +1,25 @@
-flag=sw1nn.allow-master
+flag=sw1nn.skip-config-check
 if test $(git config --type bool --default false ${flag}) = "true"; then
   exit 0
 fi
 
-if test $(git rev-parse --abbrev-ref HEAD) = "master" ; then
-  # NOTE: prompt matches default magit-process-yes-or-no-prompt-regexp
-  printf "Cannot commit to master by default. Override (y|n|A)? "
+local_user_name=$(git config --local user.name)
+local_user_email=$(git config --local user.email)
+
+if [[ -z "${local_user_name}" ]]; then
+  printf "user.name not found in local config, use value from global config? (y|n) 
+  read -k 1 yn
+  case $yn in
+    [Yy]) use_global = true
+    *) printf "\r\nAborted. To skip this check add git config with:\n\n\tgit config --local --add --type bool ${flag} true\n"; exit 1;;
+  esac
+  printf "Skip this check in future? (y|n)? "
   read -k 1 yn
   case $yn in
     [Yy]) exit 0;;
-    [A]) git config --local --add --type bool $flag true; exit 0;;
-    *) printf "\r\nAborted. To skip this check add git config with:\n\n\tgit config --local --add --type bool ${flag} true\n"; exit 1;;
+    *) 
   esac
+
 fi
 
 # Local Variables:

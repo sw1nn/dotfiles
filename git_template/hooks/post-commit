@@ -2,6 +2,8 @@
 
 source ${DOTFILES:-${HOME}/workspace/dotfiles}/git_template/init.zsh
 
-lol_commits
+
+lol_commits && 
+happy_commit
 
 exit 0

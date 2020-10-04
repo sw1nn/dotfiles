@@ -19,11 +19,12 @@ if [ $MATCH -ne 0 ]; then
   # NOTE: prompt matches default magit-process-yes-or-no-prompt-regexp
   printf "ERROR:"
   grep --color=always -nH -C 3 -P '((?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])|(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=]))' $(git diff --cached --name-only -z $against | xargs -0)
-  printf "Cannot commit something looking like an AWS key. Override (y|n)? "
+  printf "Cannot commit something looking like an AWS key. Override (y|n|A)? "
   read -k 1 yn
   case $yn in
     [Yy]) exit 0;;
-    *) printf "\r\nAborted. To skip this check add git config with:\n\n\tgit config --add ${flag} --type bool true\n"; exit 1;;
+    [A]) git config --local --add --type bool $flag true; exit 0;;
+    *) printf "\r\nAborted. To skip this check add git config with:\n\n\tgit config --local --add --type bool ${flag} true\n"; exit 1;;
   esac
 fi
 
