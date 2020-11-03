@@ -29,6 +29,9 @@
 	 (with-current-buffer buf
 	   (derived-mode-p 'magit-mode 'magit-popup-mode))))))
 
+(setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
+(pinentry-start)
+
 (use-package gist)
 
 ;; TODO - causes hangs sometimes? infinite recursion?
