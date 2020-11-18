@@ -30,9 +30,9 @@
 (use-package ivy
   :init (ivy-mode 1)
   :bind (([remap isearch-forward] . swiper)
-	 ([remap isearch-backward] . swiper-backward)
-	 ("C-c C-r" . ivy-resume))
+	 ([remap isearch-backward] . swiper-backward))
   :config
+  (global-set-key (kbd "C-c r") #'ivy-resume)
   (setq ivy-use-virtual-buffers t
         ivy-count-format "(%d/%d) ")
   (sw1nn/patch-ivy-13)
