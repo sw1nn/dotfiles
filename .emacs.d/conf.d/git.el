@@ -9,7 +9,7 @@
 
 (use-package magit
   :bind (("C-c g g" . magit-status)
-	 :map ibuffer-mode-map ("* g" . sw1nn/ibuffer-mark-magit-buffers))
+	 ("C-c g f" . magit-file-popup))
   :hook (((magit-post-stage magit-post-unstage) . git-gutter:update-all-windows)
 	 (after-save . magit-after-save-refresh-status))
   :config
@@ -20,14 +20,7 @@
 	magit-process-popup-time -1
 	magit-push-arguments '("--set-upstream")
 	magit-repo-dirs '("~/workspace")
-	magit-revert-buffers 'silent)
-  (defun sw1nn/ibuffer-mark-magit-buffers ()
-    "Mark buffers whose major mode is magit related."
-    (interactive)
-    (ibuffer-mark-on-buffer
-     #'(lambda (buf)
-	 (with-current-buffer buf
-	   (derived-mode-p 'magit-mode 'magit-popup-mode))))))
+	magit-revert-buffers 'silent))
 
 (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
 (pinentry-start)
