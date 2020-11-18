@@ -177,7 +177,9 @@
 	      x-select-enable-clipboard t
 	      x-select-enable-primary t
 	      xterm-extra-capabilities '(modifyOtherKeys reportBackground getSelection setSelection)
-	      xterm-query-timeout nil)
+	      xterm-query-timeout 0.1
+	      )
+
 
 (add-hook 'compilation-filter-hook
 	  (defun sw1nn/apply-ansi-color-to-compilation-buffer-h ()
