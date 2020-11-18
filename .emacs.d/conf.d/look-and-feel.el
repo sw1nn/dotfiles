@@ -207,7 +207,7 @@
       ;; during large-scale scrolling commands. If kept over 100, the window is
       ;; never automatically recentered.
       scroll-conservatively 101
-      scroll-margin 0
+      scroll-margin 5
       scroll-preserve-screen-position t
       ;; Reduce cursor lag by a tiny bit by not auto-adjusting `window-vscroll'
       ;; for tall lines.
