@@ -5,12 +5,6 @@
   :bind
   ("M-2" . er/expand-region))
 
-;; (use-package volatile-highlights
-;;   :defer 5
-;;   :config
-;;   (volatile-highlights-mode t)
-;;   :diminish volatile-highlights-mode)
-
 (defvar electrify-return-match
   "[\]}\)\"]"
   "If this regexp matches the text after the cursor, do an \"electric\" return.")
@@ -66,20 +60,6 @@
 
 (use-package ace-jump-mode
   :bind ("C-c SPC" . ace-jump-mode))
-
-;; (use-package idle-highlight-mode
-;;   :hook (prog-mode . idle-highlight-mode))
-
-;; (use-package rainbow-mode
-;;   :hook (prog-mode . rainbow-mode)
-;;   :diminish rainbow-mode)
-
-;; (use-package rainbow-delimiters
-;;   :hook (prog-mode . rainbow-delimiters-mode))
-
-;; (use-package rainbow-identifiers
-;;   :hook (prog-mode . rainbow-identifiers-mode)
-;;   :diminish rainbow-identifiers-mode)
 
 (use-package fancy-narrow
   :hook (prog-mode . fancy-narrow-mode))
@@ -139,6 +119,11 @@
   (sp-pair "(" ")" :wrap "M-(")
   (sp-pair "{" "}" :wrap "M-{"))
 
+(use-package rainbow-mode
+  :init (add-to-list 'safe-local-variable-values '(eval rainbow-mode t)))
+
+(use-package css-mode
+  :hook rainbow-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; look and feel tweaks
@@ -178,12 +163,6 @@
       same-window-regexps (quote '(("\\*magit: [[:ascii:]]\\*")))
       split-height-threshold nil
       split-width-threshold 160
-      safe-local-variable-values '((eval when
-					 (fboundp
-					  (quote rainbow-mode))
-					 (rainbow-mode 1))
-				   (compilation-read-command)
-				   (eval rainbow-mode t))
       tab-always-indent 'complete)
 
 (setq custom-theme-directory (concat user-emacs-directory "themes"))
