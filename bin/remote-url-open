@@ -1,0 +1,83 @@
+#!/bin/bash
+
+set -euo pipefail
+
+NC=ncat
+
+id=${BASH_SOURCE[0]##*/}
+
+LOGDIR=${HOME}/.local/var/log
+mkdir -p ${LOGDIR}
+exec &>> ${LOGDIR}/${id}
+#exec <&- > >(systemd-cat -t ${id} -p info) >(systemd-cat -t ${id} -p err)
+
+ACTION=client
+HOST=localhost
+
+while getopts 'sch:p:t:' c
+do
+  case $c in
+    s) ACTION=server ;;
+    c) ACTION=client ;;
+    t) ACTION=tunnel; TUNNEL=${OPTARG} ;;
+    h) HOST=${OPTARG} ;;
+    p) PORT=${OPTARG} ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+function get_destination() {
+    printf "%s:%s" ${HOST} ${REMOTE_URL_OPEN_PORT}
+}
+
+function get_dispatch_command() {
+    local cmd;
+    if command -v xdg-open >& /dev/null; then
+       cmd="xdg-open"
+    elif command -v wslview >& /dev/null; then
+       cmd="wslview"
+    else
+       printf "Couldn't find a suitable dispatch command!\n" >&2
+       exit 1
+    fi
+    printf "${cmd}"
+}
+
+function client() {
+    url="$1"
+    printf "Sending %s to %s:%s\n" "${url}" $(get_destination)
+    echo "${url}" | ${NC} ${HOST} ${REMOTE_URL_OPEN_PORT}
+}
+
+function server() {
+    local dispatch_cmd="$(get_dispatch_command)"
+    local netcat="${NC} -l ${HOST} ${REMOTE_URL_OPEN_PORT}"
+
+    printf "Using %s as dispatch command\n" "${dispatch_cmd}"
+
+    printf "Waiting for URLs on %s\n" "$(get_destination)"
+    while true; do
+	url=$(${netcat})
+        cmd=("$dispatch_cmd" "${url}")
+        echo "Executing: ${cmd[*]}"
+        "${cmd[@]}"
+    done 
+}
+
+function tunnel() {
+    export AUTOSSH_PIDFILE=${HOME}/.local/run/user/$(id -u)/${id}.pid
+    mkdir -p ${AUTOSSH_PIDFILE%/*}
+
+    if [[ ! -f ${AUTOSSH_PIDFILE} ]] || ! $(pgrep -F ${AUTOSSH_PIDFILE} >& /dev/null) ; then
+        rm -f ${AUTOSSH_PIDFILE}
+        autossh -f -N ${TUNNEL} <&- 
+    fi
+}
+
+case "${ACTION}" in 
+    client) client "${1}" ;;
+    server) server ;;
+    tunnel) tunnel ;;
+    *) echo "Usage:" ;;
+esac
